@@ -1,0 +1,118 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<!-- Dashboard Header -->
+<div class="content-header content-header-media">
+    <div class="header-section">
+        <div class="row">
+            <!-- Main Title (hidden on small devices for the statistics to fit) -->
+            <div class="col-md-4 col-lg-6 hidden-xs hidden-sm">
+                <h1>Welcome <strong>GM.service</strong><br><small>Tiện ích dành riêng cho webgame ddtank 7.x!</small></h1>
+            </div>
+            <!-- END Main Title -->
+            <!-- Top Stats -->
+            <div class="col-md-8 col-lg-6">
+                <div class="row text-center">
+                    <div class="col-xs-4 col-sm-3">
+                        <h2 class="animation-hatch">
+                            $<strong>93.7k</strong><br>
+                            <small><i class="fa fa-thumbs-o-up"></i> Great</small>
+                        </h2>
+                    </div>
+                    <div class="col-xs-4 col-sm-3">
+                        <h2 class="animation-hatch">
+                            <strong>167k</strong><br>
+                            <small><i class="fa fa-heart-o"></i> Likes</small>
+                        </h2>
+                    </div>
+                    <div class="col-xs-4 col-sm-3">
+                        <h2 class="animation-hatch">
+                            <strong>101</strong><br>
+                            <small><i class="fa fa-calendar-o"></i> Events</small>
+                        </h2>
+                    </div>
+                    <!-- We hide the last stat to fit the other 3 on small devices -->
+                    <div class="col-sm-3 hidden-xs">
+                        <h2 class="animation-hatch">
+                            <strong>27&deg; C</strong><br>
+                            <small><i class="fa fa-map-marker"></i> VietNam</small>
+                        </h2>
+                    </div>
+                </div>
+            </div>
+            <!-- END Top Stats -->
+        </div>
+    </div>
+    <!-- For best results use an image with a resolution of 2560x248 pixels (You can also use a blurred image with ratio 10:1 - eg: 1000x100 pixels - it will adjust and look great!) -->
+    <img src="@StaticFunction.Host("gm/Backend/img/placeholders/headers/dashboard_header.jpg")" alt="header image" class="animation-pulseSlow">
+</div>
+<!-- END Dashboard Header -->
+<style>
+.ibox {
+    position: relative;
+    width: 1920px;
+    height: 920px;
+    overflow:hidden;
+}
+.ibg_01 {    
+    position: absolute;
+    top: 0;
+    left: -150px;
+    width: 1920px;
+    height: 900px;
+}
+.ibx img {
+    position: absolute;  
+}
+.ibox .play-now {
+    position: absolute;  
+    top: 5px;
+    left: 1041px;
+     z-index: 4; 
+}
+.ibx .iboy {
+    width: 422px; 
+    height: 568px;
+    top: 223px;    
+    left: 550px;         
+    z-index: 3; 
+}
+.ibx .igirl_01 {
+    width: 393px; 
+    height: 364px;
+    top: 318px;    
+    left: 170px;    
+    z-index: 2; 
+}
+.ibx .igirl_02 {
+    width: 328px; 
+    height: 225px;
+    top: 308px;    
+    left: 855px;    
+    z-index: 1; 
+}
+</style>
+<!-- Mini Top Stats Row -->
+<div class="ibox">
+    <p class="play-now text-warning"><strong> DDTank 7.3</strong></p>
+    <img src="@StaticFunction.Host("gm/Backend/img/ddt/bg_01.jpg")" class="ibg_01" height="900" width="1920">
+    <div class="ibx">
+        <img src="@StaticFunction.Host("gm/Backend/img/ddt/boy.png")" class="iboy">
+        <img src="@StaticFunction.Host("gm/Backend/img/ddt/girl_01.png")" class="igirl_01">
+        <img src="@StaticFunction.Host("gm/Backend/img/ddt/girl_02.png")" class="igirl_02">
+    </div>
+</div>
+<!-- END Widgets Row -->
+@section Scripts {
+    <!-- Google Maps API + Gmaps Plugin, must be loaded in the page you would like to use maps 
+        <script src="//maps.google.com/maps/api/js?sensor=true"></script>
+        <script src="~/Backend/js/helpers/gmaps.min.js"></script>
+    -->    
+
+    <!-- Load and execute javascript code used only in this page
+         <script src="~/Backend/js/pages/index.js"></script>
+         <script>$(function(){ Index.init(); });</script>
+         -->
+   
+}

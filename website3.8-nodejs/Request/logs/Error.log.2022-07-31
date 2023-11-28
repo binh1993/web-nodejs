@@ -1,0 +1,266 @@
+2022-07-31 22:53:24,423 - [15] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-07-31 22:53:24,783 - [11] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-07-31 22:53:50,621 - [11] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-07-31 22:53:50,667 - [10] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-07-31 22:55:37,132 - [19] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-07-31 22:55:37,226 - [23] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-07-31 22:55:45,145 - [18] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-07-31 22:55:45,285 - [20] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-07-31 22:57:24,702 - [13] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-07-31 22:57:24,749 - [21] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-07-31 22:59:34,465 - [10] - ERROR - Bussiness.Interface.BaseInterface - centerServiceClient2.ActivePlayer
+2022-07-31 23:00:42,159 - [10] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-07-31 23:00:42,222 - [39] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-07-31 23:02:53,084 - [46] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220731.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-31 23:03:28,946 - [46] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-07-31 23:03:29,055 - [46] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-07-31 23:03:58,456 - [52] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-07-31 23:03:58,488 - [40] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-07-31 23:07:53,088 - [40] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220731.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-31 23:12:53,090 - [79] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220731.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-31 23:17:53,099 - [93] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220731.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-31 23:20:15,201 - [108] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-07-31 23:20:15,263 - [103] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-07-31 23:22:53,114 - [101] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220731.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-31 23:24:29,146 - [85] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-07-31 23:24:29,200 - [101] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-07-31 23:27:03,216 - [68] - ERROR - Bussiness.Interface.BaseInterface - centerServiceClient2.ActivePlayer
+2022-07-31 23:27:32,356 - [76] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-07-31 23:27:32,435 - [73] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-07-31 23:27:53,128 - [70] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220731.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-31 23:31:50,552 - [55] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-07-31 23:31:50,630 - [48] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-07-31 23:32:53,141 - [48] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220731.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-31 23:37:53,161 - [39] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220731.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-31 23:40:12,472 - [13] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-07-31 23:40:12,534 - [34] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-07-31 23:42:53,169 - [21] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220731.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-31 23:47:53,185 - [5] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220731.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-31 23:52:28,571 - [43] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-07-31 23:52:28,617 - [63] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-07-31 23:52:53,195 - [65] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220731.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-31 23:55:09,688 - [31] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-07-31 23:55:09,735 - [65] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-07-31 23:57:53,213 - [115] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220731.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)

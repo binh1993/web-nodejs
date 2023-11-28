@@ -1,0 +1,207 @@
+﻿@model GM.Service.Models.TableModel
+@{
+    ViewBag.Title = "Builder Code For";
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    var item = Model.Info;
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">
+        @ViewBag.Title <i class="gi gi-chevron-right" style="font-size:10px"></i>
+        <span class="text-success">@item.Name</span>
+    </h4>
+</div>
+<div class="modal-body">
+    <div class="block-content">
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <header class="navbar navbar-default" id="navbar-code">
+            <ul class="nav navbar-nav">
+                <li data-link="BussinessCRUD">
+                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">Bussiness CRUD <i class="fa fa-angle-down"></i></a>
+
+                    <ul class="dropdown-menu">
+                        <li>
+                            @Ajax.ActionLink("Read All", "CodeView", new { id = item.ID, type = eCodeView.Bussiness_RA },
+                                       new AjaxOptions { UpdateTargetId = "print-code", InsertionMode = InsertionMode.Replace, HttpMethod = "GET", LoadingElementId = "loading-bgr" })
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Read Single", "CodeView", new { id = item.ID, type = eCodeView.Bussiness_RS },
+                                       new AjaxOptions { UpdateTargetId = "print-code", InsertionMode = InsertionMode.Replace, HttpMethod = "GET", LoadingElementId = "loading-bgr" })
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Insert", "CodeView", new { id = item.ID, type = eCodeView.Bussiness_Add },
+                                       new AjaxOptions { UpdateTargetId = "print-code", InsertionMode = InsertionMode.Replace, HttpMethod = "GET", LoadingElementId = "loading-bgr" })
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Update", "CodeView", new { id = item.ID, type = eCodeView.Bussiness_Update },
+                                       new AjaxOptions { UpdateTargetId = "print-code", InsertionMode = InsertionMode.Replace, HttpMethod = "GET", LoadingElementId = "loading-bgr" })
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Delete", "CodeView", new { id = item.ID, type = eCodeView.Bussiness_Delete },
+                                       new AjaxOptions { UpdateTargetId = "print-code", InsertionMode = InsertionMode.Replace, HttpMethod = "GET", LoadingElementId = "loading-bgr" })
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            @Ajax.ActionLink("Web Read", "CodeView", new { id = item.ID, type = eCodeView.Bussiness_WebRead },
+                                       new AjaxOptions { UpdateTargetId = "print-code", InsertionMode = InsertionMode.Replace, HttpMethod = "GET", LoadingElementId = "loading-bgr" })
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Web Add", "CodeView", new { id = item.ID, type = eCodeView.Bussiness_WebAdd },
+                                       new AjaxOptions { UpdateTargetId = "print-code", InsertionMode = InsertionMode.Replace, HttpMethod = "GET", LoadingElementId = "loading-bgr" })
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Web Update", "CodeView", new { id = item.ID, type = eCodeView.Bussiness_WebUpdate },
+                                       new AjaxOptions { UpdateTargetId = "print-code", InsertionMode = InsertionMode.Replace, HttpMethod = "GET", LoadingElementId = "loading-bgr" })
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Web Delete", "CodeView", new { id = item.ID, type = eCodeView.Bussiness_WebDelete },
+                                       new AjaxOptions { UpdateTargetId = "print-code", InsertionMode = InsertionMode.Replace, HttpMethod = "GET", LoadingElementId = "loading-bgr" })
+                        </li>
+                    </ul>
+                </li>
+                <li data-link="Provider">
+                    @Ajax.ActionLink("Provider", "CodeView", new { id = item.ID, type = eCodeView.Provider },
+                                       new AjaxOptions { UpdateTargetId = "print-code", InsertionMode = InsertionMode.Replace, HttpMethod = "GET", LoadingElementId = "loading-bgr" })
+                </li>
+
+                <li data-link="Manager">
+                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">Manager <i class="fa fa-angle-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            @Ajax.ActionLink("Single Key", "CodeView", new { id = item.ID, type = eCodeView.Manager_SK },
+                                       new AjaxOptions { UpdateTargetId = "print-code", InsertionMode = InsertionMode.Replace, HttpMethod = "GET", LoadingElementId = "loading-bgr" })
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Multi Key", "CodeView", new { id = item.ID, type = eCodeView.Manager_MK },
+                                       new AjaxOptions { UpdateTargetId = "print-code", InsertionMode = InsertionMode.Replace, HttpMethod = "GET", LoadingElementId = "loading-bgr" })
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Multi Table", "CodeView", new { id = item.ID, type = eCodeView.Manager_MT },
+                                       new AjaxOptions { UpdateTargetId = "print-code", InsertionMode = InsertionMode.Replace, HttpMethod = "GET", LoadingElementId = "loading-bgr" })
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            @Ajax.ActionLink("Web Single Key", "CodeView", new { id = item.ID, type = eCodeView.Manager_WebSK },
+                                       new AjaxOptions { UpdateTargetId = "print-code", InsertionMode = InsertionMode.Replace, HttpMethod = "GET", LoadingElementId = "loading-bgr" })
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Web Multi Key", "CodeView", new { id = item.ID, type = eCodeView.Manager_WebMK },
+                                       new AjaxOptions { UpdateTargetId = "print-code", InsertionMode = InsertionMode.Replace, HttpMethod = "GET", LoadingElementId = "loading-bgr" })
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Web Multi Table", "CodeView", new { id = item.ID, type = eCodeView.Manager_WebMT },
+                                       new AjaxOptions { UpdateTargetId = "print-code", InsertionMode = InsertionMode.Replace, HttpMethod = "GET", LoadingElementId = "loading-bgr" })
+                        </li>
+                    </ul>
+                </li>
+
+                <li data-link="SQLCRUD">
+                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">SQL CRUD <i class="fa fa-angle-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            @Ajax.ActionLink("Store Get", "CodeView", new { id = item.ID, type = eCodeView.Store_Get },
+                                       new AjaxOptions { UpdateTargetId = "print-code", InsertionMode = InsertionMode.Replace, HttpMethod = "GET", LoadingElementId = "loading-bgr" })
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Store IUD", "CodeView", new { id = item.ID, type = eCodeView.Store_IUD },
+                                       new AjaxOptions { UpdateTargetId = "print-code", InsertionMode = InsertionMode.Replace, HttpMethod = "GET", LoadingElementId = "loading-bgr" })
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Store New Column", "CodeView", new { id = item.ID, type = eCodeView.Store_New_Column },
+                                       new AjaxOptions { UpdateTargetId = "print-code", InsertionMode = InsertionMode.Replace, HttpMethod = "GET", LoadingElementId = "loading-bgr" })
+                        </li>
+
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            @Ajax.ActionLink("LinQ Get", "CodeView", new { id = item.ID, type = eCodeView.LinQ_Get },
+                                       new AjaxOptions { UpdateTargetId = "print-code", InsertionMode = InsertionMode.Replace, HttpMethod = "GET", LoadingElementId = "loading-bgr" })
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("LinQ IUD", "CodeView", new { id = item.ID, type = eCodeView.LinQ_IUD },
+                                       new AjaxOptions { UpdateTargetId = "print-code", InsertionMode = InsertionMode.Replace, HttpMethod = "GET", LoadingElementId = "loading-bgr" })
+                        </li>
+                    </ul>
+                </li>
+                <li data-link="FlashUtils">
+                    @Ajax.ActionLink("Flash Utils", "CodeView", new { id = item.ID, type = eCodeView.Flash_Utils },
+                                       new AjaxOptions { UpdateTargetId = "print-code", InsertionMode = InsertionMode.Replace, HttpMethod = "GET", LoadingElementId = "loading-bgr" })
+                </li>
+                <li data-link="MVC">
+                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">MVC <i class="fa fa-angle-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            @Ajax.ActionLink("List View", "CodeView", new { id = item.ID, type = eCodeView.MVC_List },
+                                       new AjaxOptions { UpdateTargetId = "print-code", InsertionMode = InsertionMode.Replace, HttpMethod = "GET", LoadingElementId = "loading-bgr" })
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Create View", "CodeView", new { id = item.ID, type = eCodeView.MVC_Add },
+                                       new AjaxOptions { UpdateTargetId = "print-code", InsertionMode = InsertionMode.Replace, HttpMethod = "GET", LoadingElementId = "loading-bgr" })
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Edit View", "CodeView", new { id = item.ID, type = eCodeView.MVC_Edit },
+                                       new AjaxOptions { UpdateTargetId = "print-code", InsertionMode = InsertionMode.Replace, HttpMethod = "GET", LoadingElementId = "loading-bgr" })
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Delete View", "CodeView", new { id = item.ID, type = eCodeView.MVC_Delete },
+                                       new AjaxOptions { UpdateTargetId = "print-code", InsertionMode = InsertionMode.Replace, HttpMethod = "GET", LoadingElementId = "loading-bgr" })
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            @Ajax.ActionLink("Controller Detail", "CodeView", new { id = item.ID, type = eCodeView.MVC_Controller_Detail },
+                                       new AjaxOptions { UpdateTargetId = "print-code", InsertionMode = InsertionMode.Replace, HttpMethod = "GET", LoadingElementId = "loading-bgr" })
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Controller Create", "CodeView", new { id = item.ID, type = eCodeView.MVC_Controller_Create },
+                                       new AjaxOptions { UpdateTargetId = "print-code", InsertionMode = InsertionMode.Replace, HttpMethod = "GET", LoadingElementId = "loading-bgr" })
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Controller Edit", "CodeView", new { id = item.ID, type = eCodeView.MVC_Controller_Edit },
+                                       new AjaxOptions { UpdateTargetId = "print-code", InsertionMode = InsertionMode.Replace, HttpMethod = "GET", LoadingElementId = "loading-bgr" })
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Controller Delete", "CodeView", new { id = item.ID, type = eCodeView.MVC_Controller_Delete },
+                                       new AjaxOptions { UpdateTargetId = "print-code", InsertionMode = InsertionMode.Replace, HttpMethod = "GET", LoadingElementId = "loading-bgr" })
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            @Ajax.ActionLink("Deserialize Form", "CodeView", new { id = item.ID, type = eCodeView.MVC_DeserializeForm },
+                                       new AjaxOptions { UpdateTargetId = "print-code", InsertionMode = InsertionMode.Replace, HttpMethod = "GET", LoadingElementId = "loading-bgr" })
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Client", "CodeView", new { id = item.ID, type = eCodeView.MVC_Client },
+                                       new AjaxOptions { UpdateTargetId = "print-code", InsertionMode = InsertionMode.Replace, HttpMethod = "GET", LoadingElementId = "loading-bgr" })
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Xml Model", "CodeView", new { id = item.ID, type = eCodeView.MVC_XmlModel },
+                                       new AjaxOptions { UpdateTargetId = "print-code", InsertionMode = InsertionMode.Replace, HttpMethod = "GET", LoadingElementId = "loading-bgr" })
+                        </li>
+                        <li>
+                            @Ajax.ActionLink("Other Code", "CodeView", new { id = item.ID, type = eCodeView.MVC_Other },
+                                       new AjaxOptions { UpdateTargetId = "print-code", InsertionMode = InsertionMode.Replace, HttpMethod = "GET", LoadingElementId = "loading-bgr" })
+                        </li>
+                    </ul>
+                </li>
+                <li data-link="Validate">
+                    @Ajax.ActionLink("Validate", "CodeView", new { id = item.ID, type = eCodeView.Validate },
+                                       new AjaxOptions { UpdateTargetId = "print-code", InsertionMode = InsertionMode.Replace, HttpMethod = "GET", LoadingElementId = "loading-bgr" })
+                </li>
+            </ul>
+        </header><!-- /.navbar-collapse -->
+
+        <div class="block" id="print-code">
+            <!-- print code here Html.Partial("_CodeBussinessRAView", Model)-->
+            @Html.Partial("_CodeBussinessRAView", Model)
+        </div>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <div class="form-actions">
+        <div class="text-right">
+            <span id="alert-copy" class="pull-left text-success"></span>
+            <button type="button" class="btn btn-sm btn-success" id="copy-button">Copy Code</button>
+            <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal">Đóng</button>
+        </div>
+    </div>
+</div>

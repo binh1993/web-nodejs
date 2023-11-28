@@ -1,0 +1,89 @@
+﻿@using SqlDataProvider.Data;
+@using System.Text;
+@model GM.Service.Models.TableModel
+
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    TableInfo item = Model.Info;
+    List<TableDesignInfo> designs = Model.Designs;
+    string name = item.Class.Replace("Info", "");
+
+    StringBuilder sb = new StringBuilder();
+    StringBuilder para = new StringBuilder();
+    StringBuilder update = new StringBuilder();
+
+    int count = 0;
+    int totalCount = designs.Count;
+
+    sb.AppendLine(" ");
+    sb.AppendLine("public bool Update" + name + "(" + name + "Info item)");
+    sb.AppendLine("{");
+    sb.AppendLine("    bool result = false;");
+    sb.AppendLine("    try");
+    sb.AppendLine("    {");
+
+    bool IdEntity = false;
+    foreach (var d in designs)
+    {
+        if (d.IdEntity)
+        {
+            IdEntity = true;
+        }
+        para.AppendLine("        para[" + count + "] = new SqlParameter(\"@" + d.Name + "\", item." + d.Name + ");");
+        if (count == 0)
+        {
+            if (!d.IdEntity)
+            {
+                update.AppendLine("                               SET [" + d.Name + "] = @" + d.Name + "");
+            }
+        }
+        else
+        {
+            if (count == 1 && IdEntity)
+            {
+                update.AppendLine("                               SET [" + d.Name + "] = @" + d.Name + "");
+            }
+            else
+            {
+                update.AppendLine("                                  ,[" + d.Name + "] = @" + d.Name + "");
+            }
+        }
+        count++;
+    }
+    sb.AppendLine("        string sqlQuery = @\"UPDATE [dbo].[" + item.Name + "]");
+    sb.Append(update.ToString());
+    sb.AppendLine("                            WHERE [ID] = @ID\";");
+    sb.AppendLine("        SqlParameter[] para = new SqlParameter[" + totalCount + "];");
+    sb.Append(para.ToString());
+    sb.AppendLine("        result = db.Exesqlcomm(sqlQuery, para);");
+
+    sb.AppendLine("    }");
+    sb.AppendLine("    catch (Exception e)");
+    sb.AppendLine("    {");
+    sb.AppendLine("       Logger.Error(\"Update" + name + ": \" + e.ToString());");
+    sb.AppendLine("    }");
+    sb.AppendLine("    return result;");
+    sb.AppendLine("}");
+
+}
+<h4>@item.Name <i class="fa fa-angle-right"></i><span class="text-danger"> Bussiness Web Update</span></h4>
+<div style="overflow-y:auto; height:450px">
+<pre class="line-numbers">
+    <code class="language-csharp" id="highlight-code">
+        @sb.ToString()
+    </code>
+</pre>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+
+            navActive('BussinessCRUD');
+
+            var code = $('#highlight-code')[0];
+            Prism.highlightElement(code);
+
+            ZeroCopy.init();
+        });
+    </script>
+}

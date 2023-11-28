@@ -1,0 +1,146 @@
+﻿@model List<SqlDataProvider.Data.ChatInfo>
+@{
+    ViewBag.Title = "Service";
+}
+<!-- Header -->
+<div class="content-header">
+    <div class="header-section">
+        <h1>
+            <i class="gi gi-server"></i>@ViewBag.Title<br><small>Quản lý Area Config, Server List và Combine Server @ViewBag.Message .Theo dõi người chơi chat trên tất cả server.</small>
+        </h1>
+    </div>
+</div>
+<ul class="breadcrumb breadcrumb-top">
+    <li>Trang</li>
+    <li><a href="javascript:void(0)">@ViewBag.Title</a></li>
+</ul>
+<!-- END Header -->
+<!-- Block Tabs -->
+<div class="block full">
+    <!-- Block Tabs Title -->
+    <div class="block-title">
+        <div class="block-options pull-right">
+            <div class="btn-group">
+                <a class="btn btn-alt btn-sm btn-default dropdown-toggle" data-toggle="dropdown" href="javascript:void(0)"><i class="fa fa-angle-double-down text-info"> Nhiều hơn</i></a>
+                <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
+                    <li>
+                        <a href="@Html.Raw(Url.Action("SendSystermNotice", "Service"))" data-modal="btn-send-notice">Gửi thông báo toàn server</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li><a href="@Html.Raw(Url.Action("SendReloadToService", "Service", new { cmd = "clearchat" }))" id="btn-clear-chat">Xóa toàn bộ chat</a></li>
+                </ul>
+            </div>
+        </div>
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="@Url.Action("ChatMonitor", "Service")" data-target='#tabs-chat-monitor' data-toggle="tabajax">Chat Monitor</a></li>
+            <li><a href="@Url.Action("ServerManager", "Service")" data-target='#tabs-server-manager' data-toggle="tabajax">Server Manager</a></li>
+            <li><a href="@Url.Action("ServerCombine", "Service")" data-target='#tabs-server-combine' data-toggle="tabajax">Server Combine</a></li>
+
+            <!--<li><a href="@Url.Action("RemoteControl","Service")" data-target='#tabs-server-remote' data-toggle="tabajax">Server Remote</a></li>-->
+        </ul>
+    </div>
+    <!-- END Block Tabs Title -->
+    <!-- Tabs Content -->
+    <div class="tab-content">
+
+        <div class="tab-pane active" id="tabs-chat-monitor">
+            <div class="text-center text-warning">
+                <p>@Html.Raw(StaticFunction.GetTranslation("Views.WaitLoading"))</p>
+            </div>
+        </div>
+
+        <div class="tab-pane" id="tabs-server-manager">
+            <div class="text-center text-warning">
+                <p>@Html.Raw(StaticFunction.GetTranslation("Views.WaitLoading"))</p>
+            </div>
+        </div>
+
+        <div class="tab-pane" id="tabs-server-combine">
+            <div class="text-center text-warning">
+                <p>@Html.Raw(StaticFunction.GetTranslation("Views.WaitLoading"))</p>
+            </div>
+        </div>
+
+        <div class="tab-pane" id="tabs-server-remote">
+            <div class="text-center text-warning">
+                <p>@Html.Raw(StaticFunction.GetTranslation("Views.WaitLoading"))</p>
+            </div>
+        </div>
+
+    </div>
+    <!-- END Tabs Content -->
+</div>
+<!-- END Block Tabs -->
+
+@section Scripts{
+    <script>
+        $(function () {
+            /*add some code here!*/
+            GMApp.GetJson('#tabs-chat-monitor', '@Url.Action("ChatMonitor", "Service")');
+
+            $('.nav-tabs').on('click', 'li a', function (e) {
+                e.preventDefault();
+                var currentTab = $(this);
+                var loadurl = currentTab.attr('href');
+                var targ = currentTab.attr('data-target');
+
+                $.get(loadurl, function (data) {
+                    $(targ).html(data.Html);
+                    currentTab.tab('show');
+                });
+
+            });
+
+            $('#btn-clear-chat').bind('click', function (e) {
+                var loadurl = $(this).attr("href");
+                $.ajax({
+                    url: loadurl,
+                    type: 'POST',
+                    data: {},
+                    success: function (data) {
+                        if (data.Result) {
+                            showGrowl(data.Html);
+                        }
+                        else {
+                            showGrowl(data.Html, 'danger');
+                        }
+                        return false;
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        showGrowl(getError(xhr.status, xhr.statusText), 'danger');
+                    }
+                });
+                return false;
+            });
+
+            ModelGeneral.init('data-modal="btn-send-notice"');
+
+        });
+            
+
+        var timer;
+        var timer_is_on = 0;
+
+        function timedReresh() {
+            var loadurl = '@Url.Action("ChatMonitor", "Service")';
+            $.get(loadurl, function (data) {
+                $('#tabs-chat-monitor').html(data.Html);
+            });
+            timer = setTimeout(function () { timedReresh() }, 10000);
+        }
+
+        function startReresh() {
+            if (!timer_is_on) {
+                timer_is_on = 1;
+                timedReresh();
+            }
+        }
+
+        function stopReresh() {
+            clearTimeout(timer);
+            timer_is_on = 0;
+        }
+
+    </script>
+}
+

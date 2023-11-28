@@ -1,0 +1,96 @@
+2022-07-28 07:14:51,199 - [9] - ERROR - Tank.Request.ServerList - Load server list error:
+System.ServiceModel.CommunicationObjectFaultedException: The communication object, System.ServiceModel.Channels.ServiceChannel, cannot be used for communication because it is in the Faulted state.
+
+Server stack trace: 
+   at System.ServiceModel.Channels.CommunicationObject.Close(TimeSpan timeout)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at System.ServiceModel.ClientBase`1.System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at Tank.Request.ServerList.ProcessRequest(HttpContext context)
+2022-07-28 07:15:00,092 - [15] - ERROR - Bussiness.Interface.BaseInterface - LoginAndUpdate
+System.ServiceModel.CommunicationObjectFaultedException: The communication object, System.ServiceModel.Channels.ServiceChannel, cannot be used for communication because it is in the Faulted state.
+
+Server stack trace: 
+   at System.ServiceModel.Channels.CommunicationObject.Close(TimeSpan timeout)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at System.ServiceModel.ClientBase`1.System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at Bussiness.Interface.BaseInterface.CreateLogin(String name, String password, Int32 zoneId, String& message, Int32& isFirst, String IP, Boolean& isError, Boolean firstValidate, Boolean& isActive, String site, String nickname)
+2022-07-28 07:15:00,092 - [15] - ERROR - Tank.Request.Login - PlayerManager.Remove(name)
+2022-07-28 07:15:57,211 - [7] - ERROR - Tank.Request.ServerList - Load server list error:
+System.ServiceModel.CommunicationObjectFaultedException: The communication object, System.ServiceModel.Channels.ServiceChannel, cannot be used for communication because it is in the Faulted state.
+
+Server stack trace: 
+   at System.ServiceModel.Channels.CommunicationObject.Close(TimeSpan timeout)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at System.ServiceModel.ClientBase`1.System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at Tank.Request.ServerList.ProcessRequest(HttpContext context)
+2022-07-28 07:17:08,374 - [20] - ERROR - Tank.Request.ServerList - Load server list error:
+System.ServiceModel.CommunicationObjectFaultedException: The communication object, System.ServiceModel.Channels.ServiceChannel, cannot be used for communication because it is in the Faulted state.
+
+Server stack trace: 
+   at System.ServiceModel.Channels.CommunicationObject.Close(TimeSpan timeout)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at System.ServiceModel.ClientBase`1.System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at Tank.Request.ServerList.ProcessRequest(HttpContext context)
+2022-07-28 07:17:50,761 - [9] - ERROR - Tank.Request.ServerList - Load server list error:
+System.ServiceModel.CommunicationObjectFaultedException: The communication object, System.ServiceModel.Channels.ServiceChannel, cannot be used for communication because it is in the Faulted state.
+
+Server stack trace: 
+   at System.ServiceModel.Channels.CommunicationObject.Close(TimeSpan timeout)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at System.ServiceModel.ClientBase`1.System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at Tank.Request.ServerList.ProcessRequest(HttpContext context)
+2022-07-28 07:19:41,208 - [23] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220728.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-28 07:24:41,210 - [32] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220728.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-28 07:29:41,210 - [38] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220728.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-28 07:34:41,224 - [27] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220728.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-28 07:38:20,374 - [27] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220728.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)

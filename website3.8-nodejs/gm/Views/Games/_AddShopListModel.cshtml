@@ -1,0 +1,124 @@
+﻿@using MvcPaging;
+@model IPagedList<SqlDataProvider.Data.ShopItemInfo>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "List Item";
+}
+@if (Model.Count() > 0)
+{
+    <div style="min-height:486px">
+        <table class="table table-vcenter" id="list-items">
+            <thead>
+                <tr>
+                    <th class="text-center" style="width: 20px;">
+                        <label>
+                            <input type="checkbox" id="check-all" name="check-all"><span></span>
+                        </label>
+                    </th>
+                    <th style="width: 256px;" class="text-center">Name</th>
+                    <th style="width: 146px;" class="text-center">AValue</th>
+                    <th style="width: 146px;" class="text-center">BValue</th>
+                    <th style="width: 156px;" class="text-center">CValue</th> 
+                </tr>
+            </thead>
+            @if (Model.Count() > 0)
+            {
+                <tbody>
+                @foreach (var item in Model)
+                {
+                        <tr>
+                            <td class="text-center">
+                                <label>
+                                    <input type="checkbox" id="@item.ID" name="@item.ID" value="@item.ID"><span></span>
+                                </label>
+                            </td>
+                            <td>
+                                <label class="col-xs-2">
+                                    @Html.ItemImage(item.TemplateID, "", "", "37")
+                                </label>
+                                <div class="col-xs-10" style="margin-bottom:-15px">
+                                    <a href="javascript:void(0);">
+                                        <strong>@Html.TItemName(item.TemplateID)</strong>
+                                    </a>
+                                    <p>
+                                        <span class="text-success">@item.TemplateID.ToString()</span>
+                                        <span class="pull-right text-warning" style="font-size:11px"><em>shopId:</em> @item.ShopID</span>
+                                    </p>
+
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col-xs-12" style="margin-bottom:-15px">
+                                    <span class="text-primary">
+                                        <em>Giá: </em>@Html.TUnset(item.AValue1)
+                                    </span>
+                                    <p>
+                                        <span class="text-success"><em>Loại: </em>@Html.TPayment(item.APrice1)</span>
+                                        @if (item.AUnit != -1)
+                                        {
+                                            <span class="pull-right text-warning" style="font-size:11px">@Html.TBuyType(item.AUnit, item.BuyType)</span>
+                                        }
+                                    </p>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col-xs-12" style="margin-bottom:-15px">
+                                    <span class="text-primary">
+                                        <em>Giá: </em>@Html.TUnset(item.BValue1)
+                                    </span>
+                                    <p>
+                                        <span class="text-success"><em>Loại: </em>@Html.TPayment(item.BPrice1)</span>
+                                        @if (item.BUnit != -1)
+                                        {
+                                            <span class="pull-right text-warning" style="font-size:11px">@Html.TBuyType(item.BUnit, item.BuyType)</span>
+                                        }
+                                    </p>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="col-xs-12" style="margin-bottom:-15px">
+                                    <span class="text-primary">
+                                        <em>Giá: </em>@Html.TUnset(item.CValue1)
+                                    </span>
+                                    <p>
+                                        <span class="text-success"><em>Loại: </em>@Html.TPayment(item.CPrice1)</span>
+                                        @if (item.CUnit != -1)
+                                        {
+                                            <span class="pull-right text-warning" style="font-size:11px">@Html.TBuyType(item.CUnit, item.BuyType)</span>
+                                        }
+                                    </p>
+                                </div>
+                            </td> 
+                        </tr>
+                }
+                    </tbody>
+            }
+            else
+            {
+                <tbody>
+                    <tr>
+                        <td colspan="5" class="text-center" id="insert-avatar">
+                            @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+                        </td>
+                    </tr>
+                </tbody>
+            }
+        </table>
+    </div>
+    <div class="text-center" style="margin-top:-15px">
+        @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount, new AjaxOptions { UpdateTargetId = "items-content", LoadingElementId = "loading-bgr" }).Options(o => o
+                    .DisplayTemplate("_Pagination")
+                    .MaxNrOfPages(3)
+                    .Action("ListItemsModel")
+                    .AddRouteValue("type", ViewData["type"])
+                    .AddRouteValue("key", ViewData["key"])
+                    .AddRouteValue("cid", ViewData["cid"])
+                    .AlwaysAddFirstPageNumber())
+    </div>
+}
+else
+{
+    <div class="text-center">
+        @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+    </div>
+}

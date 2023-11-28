@@ -1,0 +1,254 @@
+﻿@using SqlDataProvider.Data;
+@model GM.Service.Models.SeletedItemModel
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+
+    ViewBag.Title = "Send Items In Cart ";
+    List<AreaConfigInfo> areas = Model.Areas;
+    var ani = "animation-fadeInQuickInv";
+}
+
+<style>
+    .nav-horizontal-c {
+        padding: 10px 7px 1px;
+        margin: 0;
+        list-style: none;
+    }
+
+        .nav-horizontal-c li {
+            position: relative;
+            display: inline-block;
+            margin: 0 3px 9px;
+        }
+
+        .nav-horizontal-c a {
+            display: block;
+            min-width: 140px;
+            font-weight: bold;
+            font-size:11px;
+        }
+
+            .nav-horizontal-c a:hover,
+            .nav-horizontal-c li.active a {
+                text-decoration: none;
+            }
+
+            .nav-horizontal-c a:focus {
+                text-decoration: none;
+            }
+
+            .nav-horizontal-c a:hover img,
+            .nav-horizontal li.active a img {
+                opacity: .8;
+                filter: alpha(opacity=80);
+            }
+
+        .nav-horizontal-c img {
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        .nav-horizontal-c a {
+            text-align: center;
+            padding: 17px 15px;
+        }
+
+        .nav-horizontal-c em, .span-count {
+            font-weight: normal;
+            font-size: 11px;
+        }
+        
+        .nav-horizontal-c img {
+            display: block;
+            height: 75px;
+            margin: 0px auto;
+            padding: 5px;
+            text-align: center;
+        }
+
+        .nav-horizontal-c li:hover .span-action {
+            display: block;
+        }
+</style>
+
+
+<div class="modal-header themed-background-default">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">
+        @ViewBag.Title
+    </h4>
+</div>
+<div class="modal-body">    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="block" style="min-height:651px; padding-bottom:21px">
+                <!-- Select Components Content -->
+                <form action="@Html.Raw(Url.Action("SendToGame","Cart"))" method="post" class="form-horizontal form-bordered" id="form-confirm">
+                    <fieldset>
+                        @Html.Raw(StaticFunction.GetTranslation("SendSeletedItems.LeftPanel"))
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="example-chosen">Danh sách server</label>
+                            <div class="col-md-8">
+                                <select id="server-chosen" name="ZoneID" class="select-chosen" data-placeholder="Chọn server..">
+                                    <option value="-1"></option>
+                                    @foreach (AreaConfigInfo item in areas)
+                                    {
+                                        <option value="@item.AreaID">@item.AreaName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="example-chosen-multiple">Danh sách Nickname</label>
+                            <div class="col-md-8" id="nickname-chosen-multiple">
+                                <select name="nickname-chosen-multiple" class="select-chosen" data-placeholder="Chọn.." multiple disabled>
+                                    <option value="-1"></option>                                    
+                                </select>
+                            </div>
+                            <input type="hidden" name="UserID" value="-1"  id="user-id"/>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        @Html.Raw(StaticFunction.GetTranslation("SendSeletedItems.ListItems"))
+                        <div id="media-filter-items">
+                            <ul class="nav-horizontal-c text-center" style="height:325px; overflow-y:auto">
+                                @foreach (var item in Model.Items)
+                                {
+                                    <li class="@ani">
+                                        <a href="@Html.Raw(Url.Action("EditItem","Cart", new { id = item.ItemID }))" class="edit-send-item">
+                                            @Html.ItemImage(item.TemplateID, "", "", "auto")
+                                            <span>@Html.TItemName(item.TemplateID)</span><br />
+                                            <span class="span-count">Số lượng: <em> @item.Count</em></span><br />
+                                            <span class="span-count">Trạng thái:
+                                                @if (item.IsBinds)
+                                                {
+                                                    <em class="text-danger"> Khóa</em>
+                                                }
+                                                else
+                                                {
+                                                    <em class="text-success"> Không khóa</em>
+                                                }
+                                                </span><br />
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </fieldset>
+
+                    <div class="form-group form-actions">
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-sm btn-primary">Send</button>
+                        </div>
+                    </div>
+                </form>
+                <!-- END Select Components Content -->
+            </div>
+        </div>   
+        <div class="col-md-6">
+            <div class="block" id="edit-panel"  style="padding-bottom:21px">
+                <div class="form-group text-center text-warning">
+                    @Html.Raw(StaticFunction.GetTranslation("Views.WaitLoading"))
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+<script>
+    $(function () {
+        var firstItem = $("#media-filter-items ul:first li a");
+        loadItemToEditPanel(firstItem.attr("href"));
+
+        /*edit send item!*/
+        $('.edit-send-item').on('click', function (e) {
+            return loadItemToEditPanel($(this).attr("href"));
+        });
+
+        /*submit form!*/
+        $('#form-confirm').on('submit', function (e) {
+
+            $('#user-id').val($('#select-nickname').val());
+            if ($("#server-chosen").val() == -1)
+            {
+                showGrowl('Bạn chưa chọn server', 'danger');
+            }
+            else if ($('#user-id').val() == '') {
+                showGrowl('Bạn chưa chọn Nhân vật', 'danger');
+            }
+            else {
+                $('#loading-bgr').show();
+                $.ajax({
+                    url: this.action,
+                    type: this.method,
+                    data: $(this).serialize(),
+                    success: function (result) {
+                        $('#loading-bgr').hide();
+                        $('#response-hodler').html(result);
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        showGrowl(getError(xhr.status, xhr.statusText), 'danger');
+                        $('#loading-bgr').hide();
+                    }
+                });
+            }
+            return false;
+        });
+
+        /*select server!*/
+        $("#server-chosen").change(function (e) {
+            loadNickName();
+        });
+    });
+    function loadNickName() {
+        $('#loading-bgr').show();
+        var zoneID = $("#server-chosen").val();
+        $.ajax({
+            url: '@Html.Raw(Url.Action("LoadNickName","Users"))',
+            type: 'POST',
+            data: 'zid=' + zoneID,
+            dataType: 'json',
+            success: function (data) {
+                if (data.Result) {
+                    //var list = $.parseJSON(data.Html);
+                    var seletedHtml = '<select id="select-nickname" data-placeholder="Select.." multiple>';
+                    seletedHtml += '<option value="-1"></option>';
+                    $.each(data.Html, function (i, item) {
+                        seletedHtml += '<option value="' + item.ID + '">' + item.NickName + '</option>';
+                    });
+                    seletedHtml += '</select>';
+                    
+                    $('#nickname-chosen-multiple').html(seletedHtml);
+                    $('#select-nickname').chosen({ width: "100%" });
+                    chosen_ajaxify('select-nickname', '@Html.Raw(Url.Action("LoadNickName2", "Users"))?zid=' + zoneID + '&key=');
+                    $('#loading-bgr').hide();
+                }
+                else {
+                    showGrowl(data.Html, 'danger');
+                }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                showGrowl(getError(xhr.status, xhr.statusText), 'danger');
+                $('#loading-bgr').hide();
+            }
+        });
+    }    
+    function loadItemToEditPanel(url) {
+        $('#loading-bgr').show();
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function (result) {
+                $('#loading-bgr').hide();
+                $('#edit-panel').html(result);
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                showGrowl(getError(xhr.status, xhr.statusText), 'danger');
+                $('#loading-bgr').hide();
+            }
+        });
+        return false;
+    }
+</script>
+}

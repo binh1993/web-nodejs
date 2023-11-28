@@ -1,0 +1,131 @@
+﻿@{
+    ViewBag.Title = "Thêm table mới";
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">
+        @ViewBag.Title
+</h4>
+</div>
+<div class="modal-body">
+    <!-- Clickable Wizard Block -->
+    <div class="block">        
+        <!-- Clickable Wizard Content -->
+        <form id="clickable-wizard" action="./" method="post" class="form-horizontal form-bordered" onsubmit="return false;">
+            <!-- First Step -->
+            <div id="clickable-first" class="step">
+                <!-- Step Info -->
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <ul class="nav nav-pills nav-justified clickable-steps">
+                            <li class="active"><a href="javascript:void(0)" data-gotostep="clickable-first"><strong>1. Account</strong></a></li>
+                            <li><a href="javascript:void(0)" data-gotostep="clickable-second"><strong>2. Personal</strong></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- END Step Info -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="example-clickable-username">Username</label>
+                    <div class="col-md-5">
+                        <input type="text" id="example-clickable-username" name="val_username" class="form-control" placeholder="Your username..">
+                    </div>
+                </div>
+                
+            </div>
+            <!-- END First Step -->
+            <!-- Second Step -->
+            <div id="clickable-second" class="step">
+                <!-- Step Info -->
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <ul class="nav nav-pills nav-justified clickable-steps">
+                            <li><a href="javascript:void(0)" data-gotostep="clickable-first"><i class="fa fa-check"></i> <strong>1. Account</strong></a></li>
+                            <li class="active"><a href="javascript:void(0)" data-gotostep="clickable-second"><strong>2. Personal</strong></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- END Step Info -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label" for="example-clickable-firstname">Firstname</label>
+                    <div class="col-md-5">
+                        <input type="text" id="example-clickable-firstname" name="val_firstname" class="form-control" placeholder="John..">
+                    </div>
+                </div>
+               
+            </div>
+            <!-- END Second Step -->            
+            <!-- Form Buttons -->
+            <div class="form-group form-actions">
+                <div class="col-md-8 col-md-offset-4">
+                    <input class="btn btn-sm btn-warning" id="btn-back" type="reset" />
+                    <input class="btn btn-sm btn-primary" id="btn-next" type="submit" />
+                </div>
+            </div>
+            <!-- END Form Buttons -->
+        </form>
+        <!-- END Clickable Wizard Content -->
+    </div>
+    <!-- END Clickable Wizard Block -->
+
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+
+            /* Initialize Clickable Wizard */
+            var clickableWizard = $('#clickable-wizard');
+
+            clickableWizard.formwizard(
+                {
+                    disableUIStyles: true,
+                    validationEnabled: true,
+                    validationOptions: {
+                        errorClass: 'help-block animation-slideDown', // You can change the animation class for a different entrance animation - check animations page
+                        errorElement: 'span',
+                        errorPlacement: function (error, e) {
+                            e.parents('.form-group > div').append(error);
+                        },
+                        highlight: function (e) {
+                            $(e).closest('.form-group').removeClass('has-success has-error').addClass('has-error');
+                            $(e).closest('.help-block').remove();
+                        },
+                        success: function (e) {
+                            // You can use the following if you would like to highlight with green color the input after successful validation!
+                            e.closest('.form-group').removeClass('has-success has-error'); // e.closest('.form-group').removeClass('has-success has-error').addClass('has-success');
+                            e.closest('.help-block').remove();
+                        },
+                        rules: {
+                            val_username: {
+                                required: true,
+                                minlength: 2
+                            },
+                            val_firstname: {
+                                required: true,
+                                minlength: 2
+                            }
+                        },
+                        messages: {
+                            val_username: {
+                                required: 'Please enter a username',
+                                minlength: 'Your username must consist of at least 2 characters'
+                            },
+                            val_firstname: {
+                                required: 'Please enter a firstname',
+                                minlength: 'Your username must consist of at least 2 characters'
+                            }
+                        },
+                        submitHandler: function () {
+                            alert("đang hoàn thành!");
+                        }
+                    },
+                    textSubmit: "Thêm mới",
+                    textNext: "Tiếp theo",
+                    textBack: "Trở lại",
+                    inDuration: 0,
+                    outDuration: 0
+                });
+        });
+    </script>
+}

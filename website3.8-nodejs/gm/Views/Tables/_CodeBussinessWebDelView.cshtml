@@ -1,0 +1,76 @@
+﻿@using SqlDataProvider.Data;
+@using System.Text;
+@model GM.Service.Models.TableModel
+
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    TableInfo item = Model.Info;
+    List<TableDesignInfo> designs = Model.Designs;
+    string getKeys = item.Keys;
+    if (string.IsNullOrEmpty(getKeys))
+    {
+        getKeys = "ID";
+    }
+    string[] keys = getKeys.Split(',');
+    string name = item.Class.Replace("Info", "");
+
+    StringBuilder sb = new StringBuilder();
+
+    sb.AppendLine(" ");
+    sb.AppendLine("public bool Delete" + name + "(" + TableTool.BuildHeaderVar(keys, designs) + ")");
+    sb.AppendLine("{");
+    sb.AppendLine("    bool result = false;");
+    sb.AppendLine("    try");
+    sb.AppendLine("    {");
+    sb.AppendLine("        string sqlQuery = @\"DELETE FROM [dbo].[" + item.Name + "] WHERE "+ TableTool.BuildWhere(keys) + "\";");
+    sb.AppendLine("        SqlParameter[] para = new SqlParameter[" + keys.Length + "];");
+    for (int i = 0; i < keys.Length; i++)
+    {
+        sb.AppendLine("        para[" + i + "] = new SqlParameter(\"@" + keys[i] + "\", " + TableTool.LowerFirstChar(keys[i]) + ");");
+    }
+    sb.AppendLine("        result = db.Exesqlcomm(sqlQuery, para);");
+    sb.AppendLine("    }");
+    sb.AppendLine("    catch (Exception e)");
+    sb.AppendLine("    {");
+    sb.AppendLine("       Logger.Error(\"Delete" + name + ": \" + e.ToString());");
+    sb.AppendLine("    }");
+    sb.AppendLine("    return result;");
+    sb.AppendLine("}");
+
+    sb.AppendLine("public bool DeleteAll" + name + "()");
+    sb.AppendLine("{");
+    sb.AppendLine("    bool result = false;");
+    sb.AppendLine("    try");
+    sb.AppendLine("    {");
+    sb.AppendLine("        string sqlQuery = @\"DELETE FROM [dbo].[" + item.Name + "]\";");
+    sb.AppendLine("        SqlParameter[] para = new SqlParameter[0];");
+    sb.AppendLine("        result = db.Exesqlcomm(sqlQuery, para);");
+    sb.AppendLine("    }");
+    sb.AppendLine("    catch (Exception e)");
+    sb.AppendLine("    {");
+    sb.AppendLine("       Logger.Error(\"Delete" + name + ": \" + e.ToString());");
+    sb.AppendLine("    }");
+    sb.AppendLine("    return result;");
+    sb.AppendLine("}");
+}
+<h4>@item.Name <i class="fa fa-angle-right"></i><span class="text-danger"> Bussiness Web Delete</span></h4>
+<div style="overflow-y:auto; height:450px">
+<pre class="line-numbers">
+    <code class="language-csharp" id="highlight-code">
+        @sb.ToString()
+    </code>
+</pre>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+
+            navActive('BussinessCRUD');
+
+            var code = $('#highlight-code')[0];
+            Prism.highlightElement(code);
+
+            ZeroCopy.init();
+        });
+    </script>
+}

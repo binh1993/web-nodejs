@@ -1,0 +1,269 @@
+﻿@using SqlDataProvider.Data;
+@{
+    ViewBag.Title = "ShopGame";
+    List<int> types = StaticFunction.GetShopType();
+}
+
+<!-- Blank Alternative Header -->
+<div class="content-header">
+    <div class="header-section">
+        <h1>
+            <i class="gi gi-shopping_bag"></i>@ViewBag.Title<br><small>Quản lý shop trong game!</small>
+        </h1>
+    </div>
+</div>
+<ul class="breadcrumb breadcrumb-top">
+    <li>Trang</li>
+    <li>Games</li>
+    <li><a href="">Shop InGame</a></li>
+</ul>
+<!-- END Blank Alternative Header -->
+<!-- Blank Alternative Content -->
+<div class="block block-alt-noborder">
+    <div class="sub-header">
+        <div class="row">
+            <div class="col-md-4">
+                <select id="shop-type-chosen" name="shop-type-chosen" class="select-chosen" data-placeholder="Chọn loại Shop...">
+					<option value="-1">Tất cả</option>
+                    <optgroup label="Shop Xu Nữ">
+                        @foreach (int type in types)
+                        {
+                            if (ShopCondition.FEMALE_MONEY.Contains((ShopType)type))
+                            {
+                                <option value="@type">@StaticFunction.GetTranslation("ShopGame.ShopType." + (ShopType)type)</option>
+                            }
+                        }
+                    </optgroup>
+                    <optgroup label="Shop Xu khóa Nữ">
+                        @foreach (int type in types)
+                        {
+                            if (ShopCondition.FEMALE_DDTMONEY.Contains((ShopType)type))
+                            {
+                                <option value="@type">@StaticFunction.GetTranslation("ShopGame.ShopType." + (ShopType)type)</option>
+                            }
+                        }
+                    </optgroup>
+                    <optgroup label="Shop Xu Nam">
+                        @foreach (int type in types)
+                        {
+                            if (ShopCondition.MALE_MONEY.Contains((ShopType)type))
+                            {
+                                <option value="@type">@StaticFunction.GetTranslation("ShopGame.ShopType." + (ShopType)type)</option>
+                            }
+                        }
+                    </optgroup>
+                    <optgroup label="Shop Xu khóa Nam">
+                        @foreach (int type in types)
+                        {
+                            if (ShopCondition.MALE_DDTMONEY.Contains((ShopType)type))
+                            {
+                                <option value="@type">@StaticFunction.GetTranslation("ShopGame.ShopType." + (ShopType)type)</option>
+                            }
+                        }
+                    </optgroup>                    
+                    <optgroup label="Shop quà tặng">
+                        @foreach (int type in types)
+                        {
+                            if (ShopCondition.GIFT_MONEY.Contains((ShopType)type))
+                            {
+                                <option value="@type">@StaticFunction.GetTranslation("ShopGame.ShopType." + (ShopType)type)</option>
+                            }
+                        }
+                    </optgroup>
+                    <optgroup label="Shop khác">
+                        @foreach (int type in types)
+                        {
+                            if (!((ShopType)type).ToString().Contains("M_") && !((ShopType)type).ToString().Contains("F_") && !ShopCondition.GIFT_MONEY.Contains((ShopType)type))
+                            {
+                                <option value="@type">@StaticFunction.GetTranslation("ShopGame.ShopType." + (ShopType)type)</option>
+                            }
+                        }
+                    </optgroup>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <form action="./" method="post" id="frm-shop-show-search" onsubmit="return false;">
+                    <div class="input-group">
+                        <input type="text" id="shop-show-quick-search" name="key" class="form-control" placeholder="Tìm kiếm...">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-4">
+                <a href="@Html.Raw(Url.Action("AddItemsModel","Games", new { type = "shopshow" }))" class="btn btn-alt btn-sm btn-default pull-right" data-dialog="-1" id="btn-add-shop-show">
+                    <i class="gi gi-circle_plus text-primary"></i> Thêm hàng mới
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- HTML -->
+    <div class="row">
+        <div class="col-md-4">    
+            <p class="text-warning" style="font-size:18px">
+                <i class="gi gi-log_in"></i> Thử đồ <small>nhấp vào tên item để thử</small>                
+            </p>        
+            <div id="avatar-content">
+                <div class="text-center text-warning">
+                    <p>@Html.Raw(StaticFunction.GetTranslation("Views.WaitLoading"))</p>
+                </div>
+            </div>  
+            <div style="width:225px">
+                <a href="javascript:resetAvatar()" class="btn btn-xs btn-success"><i class="hi hi-repeat"></i> Reset</a>
+                <!--<a href="javascript:showAvatar(-1, -1)" class="btn btn-xs btn-info pull-right">Tạo đồ ngẫu nhiên</a>-->
+            </div>         
+        </div>
+        <div class="col-md-8" id="shop-show-list">
+            <div class="text-center text-warning">
+                <p>@Html.Raw(StaticFunction.GetTranslation("Views.WaitLoading"))</p>
+            </div>
+        </div>
+    </div>    
+    <!-- END HTML -->
+</div>
+<input type="hidden" id="head-id" value="0" />
+<input type="hidden" id="glass-id" value="0" />
+<input type="hidden" id="hair-id" value="0" />
+<input type="hidden" id="eff-id" value="0" />
+<input type="hidden" id="cloth-id" value="0" />
+<input type="hidden" id="face-id" value="0" />
+<input type="hidden" id="arm-id" value="0" />
+<input type="hidden" id="wing-id" value="0" />
+<input type="hidden" id="suit-id" value="0" />
+<input type="hidden" id="all-id" value="0" />
+<input type="hidden" id="hide-set" value="false" />
+<input type="hidden" id="hide-head" value="false" />
+<input type="hidden" id="hide-glass" value="false" />
+<!-- END Blank Alternative Content -->
+
+@section Scripts {
+    <script>
+        $(function () {            
+            /*add some code here!*/
+            loadShopShow();
+            /*call add dailog*/
+            $('#btn-add-shop-show').bind('click', function (e) {
+                var currentOpt = $("#shop-type-chosen option:selected");
+                var type = currentOpt.val();
+                var name = currentOpt.closest('optgroup').prop('label'); 
+                name += ' ' + currentOpt.text();
+                var url = $(this).attr("href") + '&name=' + name;
+                GMApp.Dialog(url, e, 'tid=' + type, 'large');
+                return false;
+            });
+
+            //selecet category
+            $("#shop-type-chosen").change(function (e) {
+               loadShopShow();
+            });
+
+            //live search
+            $("#shop-show-quick-search").keyup(function (e) {
+                e.preventDefault();
+                var type = $("#shop-type-chosen option:selected").val();
+                var loadurl = '@Html.Raw(Url.Action("ShopShowList", "Games"))?type=' + type;
+                $.ajax({
+                    url: loadurl,
+                    type: 'POST',
+                    data: $('#frm-shop-show-search').serialize(),
+                    success: function (data) {
+                        $('#shop-show-list').html(data.Html);
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        $('#shop-show-list').html(getError(xhr.status, xhr.statusText));
+                    }
+                });
+            });
+
+        });
+        function loadShopShow() {
+            var val = $("#shop-type-chosen option:selected").val();
+            GMApp.GetJson('#shop-show-list', '@Html.Raw(Url.Action("ShopShowList","Games"))?type=' + val);
+            if ($('#all-id').val() === '0') {
+                showAvatar();
+            }
+        }
+        function showAvatar(id, cid, random) {
+            var type = $("#shop-type-chosen option:selected").val();
+            var empContent = '#avatar-content';
+            var avatarUrl = '@Url.Action("BuildAvatar","Games")?type=' + type;
+            var isShow = true;
+            if (id) {
+                switch (cid) {
+                    case 7:
+                    case 27:
+                        $('#arm-id').val(id);
+                        break;
+                    case 5:
+                        $('#cloth-id').val(id);
+                        break;
+                    case 1:
+                        $('#head-id').val(id);
+                        break;
+                    case 2:
+                        $('#glass-id').val(id);
+                        break;
+                    case 3:
+                        $('#hair-id').val(id);
+                        break;
+                    case 6:
+                        $('#face-id').val(id);
+                        break;
+                    case 4:
+                        $('#eff-id').val(id);
+                        break;
+                    case 13:
+                        $('#suit-id').val(id);
+                        break;
+                    case 15:
+                        $('#wing-id').val(id);
+                        break;
+                    default:
+                        isShow = false;
+                        break;
+                }
+
+                var ids = $('#arm-id').val();
+                ids += ',' + $('#cloth-id').val();
+                ids += ',' + $('#head-id').val();
+                ids += ',' + $('#hair-id').val();
+                ids += ',' + $('#glass-id').val();
+                ids += ',' + $('#eff-id').val();
+                ids += ',' + $('#face-id').val();
+                ids += ',' + $('#suit-id').val();
+                ids += ',' + $('#wing-id').val();
+
+                if ($('#all-id').val() != ids) {
+                    $('#all-id').val(ids);
+                }
+                else {
+                    isShow = false;
+                }
+                avatarUrl += '&ids=' + ids;
+            }
+            else {
+                avatarUrl += '&ids=0';
+            }
+            if (random) {
+                avatarUrl += '&random=' + random;
+            }
+            if (isShow) {
+                GMApp.GetJson(empContent, avatarUrl);
+            }
+        }
+        function resetAvatar() {
+            $('#arm-id').val(0);
+            $('#cloth-id').val(0);
+            $('#head-id').val(0);
+            $('#hair-id').val(0);
+            $('#glass-id').val(0);
+            $('#eff-id').val(0);
+            $('#face-id').val(0);
+            $('#suit-id').val(0);
+            $('#wing-id').val(0);
+            $('#all-id').val(0);
+            showAvatar();
+        }
+    </script>
+}

@@ -1,0 +1,161 @@
+﻿@using SqlDataProvider.Data;
+@using System.Text;
+@model GM.Service.Models.TableModel
+
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    TableInfo item = Model.Info;
+    List<TableDesignInfo> designs = Model.Designs;
+    int count = designs.Count;
+
+    StringBuilder sb = new StringBuilder();
+    StringBuilder sb11 = new StringBuilder();
+    StringBuilder sb12 = new StringBuilder();
+    StringBuilder sbu = new StringBuilder();
+    StringBuilder sbu11 = new StringBuilder();
+    StringBuilder sbd = new StringBuilder();
+    sb.AppendLine(" ");
+    if (item.Type == 1)
+    {
+        sb.AppendLine("USE [Db_Tank]");
+    }
+    else
+    {
+        sb.AppendLine("USE [Db_Tank_All]");
+    }
+    sb.AppendLine("GO");
+
+    sb.AppendLine("DROP PROCEDURE [dbo].[SP_" + item.Name + "_Add]");
+    sb.AppendLine("GO");
+    sb.AppendLine("SET ANSI_NULLS ON");
+    sb.AppendLine("GO");
+    sb.AppendLine("SET QUOTED_IDENTIFIER ON");
+    sb.AppendLine("GO");
+    sb.AppendLine("CREATE PROCEDURE [dbo].[SP_" + item.Name + "_Add]");
+
+    sbu.AppendLine(" ");
+    sbu.AppendLine("DROP PROCEDURE [dbo].[SP_" + item.Name + "_Update]");
+    sbu.AppendLine("GO");
+    sbu.AppendLine("SET ANSI_NULLS ON");
+    sbu.AppendLine("GO");
+    sbu.AppendLine("SET QUOTED_IDENTIFIER ON");
+    sbu.AppendLine("GO");
+    sbu.AppendLine("CREATE  PROCEDURE [dbo].[SP_" + item.Name + "_Update]");
+    bool hasIdEntity = false;
+    foreach (TableDesignInfo d in designs)
+    {
+        string type = d.Type;
+        if (count == designs.Count)
+        {
+            if (d.IdEntity)
+            {
+                hasIdEntity = true;
+                sb.AppendLine("     @" + d.Name + " int output");
+            }
+            else
+            {
+                sb.AppendLine("     @" + d.Name + " int");
+            }
+            sbu.AppendLine("        @" + d.Name + " " + type + " ");
+            sb11.AppendLine("           ([" + d.Name + "]");
+            sb12.AppendLine("           (@" + d.Name + "");
+            sbu11.AppendLine("                SET    [" + d.Name + "] = @" + d.Name + " ");
+        }
+        else
+        {
+            sb.AppendLine("    ,@" + d.Name + " " + type + " ");
+            sbu.AppendLine("       ,@" + d.Name + " " + type + " ");
+
+            if (count == 1)
+            {
+                sb11.AppendLine("          ,[" + d.Name + "])");
+                sb12.AppendLine("           ,@" + d.Name + ")");
+            }
+            else
+            {
+                sb11.AppendLine("          ,[" + d.Name + "]");
+                sb12.AppendLine("           ,@" + d.Name + " ");
+            }
+            sbu11.AppendLine("                      ,[" + d.Name + "] = @" + d.Name + "");
+        }
+        count--;
+    }
+    sb.AppendLine("AS");
+    sb.AppendLine("BEGIN");
+    sb.AppendLine("DECLARE @exitCount int");
+    sb.AppendLine("SELECT @exitCount = ISNULL(COUNT(*),0) FROM [dbo].[" + item.Name + "] WHERE [ID] =@ID");
+    sb.AppendLine("IF (@exitCount = 0)");
+    sb.AppendLine("BEGIN");
+    sb.AppendLine("    INSERT INTO [dbo].[" + item.Name + "]");
+    sb.AppendLine(sb11.ToString());
+    sb.AppendLine("     VALUES");
+    if (hasIdEntity)
+    {
+        sb12.AppendLine("    SELECT @@IDENTITY AS 'IDENTITY'");
+        sb12.AppendLine("    SET @ID=@@IDENTITY");
+    }
+    sb.Append(sb12.ToString());
+    sb.AppendLine("	IF(@@ERROR <> 0)");
+    sb.AppendLine("	BEGIN");
+    sb.AppendLine("	  RETURN 1");
+    sb.AppendLine("	END");
+    sb.AppendLine("END");
+    sb.AppendLine("ELSE ");
+    sb.AppendLine("	BEGIN");
+    sb.AppendLine("		RETURN 0");
+    sb.AppendLine("	END");
+    sb.AppendLine("END");
+    sb.Append("GO");
+
+    sbu.AppendLine(" AS");
+    sbu.AppendLine("   BEGIN");
+    sbu.AppendLine("		UPDATE [dbo].[" + item.Name + "]");
+    sbu.Append(sbu11.ToString());
+    sbu.AppendLine("		WHERE [ID] = @ID");
+
+    sbu.AppendLine("		RETURN 0");
+    sbu.AppendLine("    END");
+    sbu.AppendLine("IF(@@ERROR <> 0)");
+    sbu.AppendLine("BEGIN");
+    sbu.AppendLine("  RETURN 1");
+    sbu.AppendLine("END");
+    sbu.AppendLine("GO");
+
+    sbd.AppendLine(" ");
+    sbd.AppendLine("DROP PROCEDURE [dbo].[SP_" + item.Name + "_Delete]");
+    sbd.AppendLine("GO");
+    sbd.AppendLine("SET ANSI_NULLS ON");
+    sbd.AppendLine("GO");
+    sbd.AppendLine("SET QUOTED_IDENTIFIER ON");
+    sbd.AppendLine("GO");
+    sbd.AppendLine("CREATE  PROCEDURE [dbo].[SP_" + item.Name + "_Delete]");
+    sbd.AppendLine("	@ID int");
+    sbd.AppendLine(" AS");
+    sbd.AppendLine("   BEGIN");
+    sbd.AppendLine("     DELETE " + item.Name + " where ID=@ID");
+    sbd.AppendLine("   END");
+    sbd.Append("GO");
+}
+<h4>@item.Name <i class="fa fa-angle-right"></i><span class="text-danger"> Store IUD</span></h4>
+<div style="overflow-y:auto; height:450px">
+<pre class="line-numbers">
+    <code class="language-sql" id="highlight-code">
+        @sb.ToString()
+        @sbu.ToString()
+        @sbd.ToString()
+    </code>
+</pre>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+
+            navActive('SQLCRUD');
+
+            var code = $('#highlight-code')[0];
+            Prism.highlightElement(code);
+
+            ZeroCopy.init();
+        });
+    </script>
+}

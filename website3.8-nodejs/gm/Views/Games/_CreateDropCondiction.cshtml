@@ -1,0 +1,229 @@
+﻿@using SqlDataProvider.Data;
+@model DropCondiction
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "Tạo Drop Condiction mới";
+    //DropCondiction item = Model;
+    MissionInfo[] missions = StaticFunction.GetMissions();
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+<div class="modal-body">
+    <!-- Form add -->
+    <form action="@Html.Raw(Url.Action("CreateDropCondiction", "Games"))"
+          method="post" class="form-horizontal form-bordered" id="frm-edit-drop-condition">
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="DropId">DropId</label>
+            <div class="col-md-8">
+                <input type="text" id="DropId" name="DropId" class="form-control input-sm must-digits">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="CondictionType">CondictionType</label>
+            <div class="col-md-8">
+                <select id="CondictionType" name="CondictionType" class="form-control must-required" style="width: 100%;">
+                    <option value="" disabled selected>Chọn loại..</option>
+                    <option value="5">5 - Phó bản</option>
+                    <option value="1">1 - Chiến đấu</option>
+                    <option value="13">13 - Đặc biệt</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="Para1">Para1</label>
+            <div class="col-md-8">
+                <select id="Para1" name="Para1" class="form-control must-required" style="width:100%">
+                    <option value="" disabled selected>Chọn mã..</option>
+                    <optgroup label="Mã chiến đâu">
+                        <option value=",1,">Khiêu chiến</option>
+                        <option value=",0,">Chiến đấu tự do, Guild</option>
+                        <option value=",18,">Đấu trường</option>
+                        <option value=",25,">Ghép cặp nhanh</option>
+                        <option value=",68,">Loạn Đấu</option>
+                        <option value=",121,">1vs5</option>
+                    </optgroup>
+                    <optgroup label="Mã Mission">
+                        @foreach (MissionInfo mission in missions)
+                        {
+                            <option value=",@mission.Id,">@mission.Id - @mission.Name</option>
+                        }
+                    </optgroup>
+                </select>
+            </div>
+        </div>
+        <div class="form-group" style="display:none" id="ctr-o-1">
+            <label class="col-md-4 control-label text-primary" for="Option">Option</label>
+            <div class="col-md-8">
+                <select id="Option" name="Option" class="form-control" style="width: 100%;">
+                    <option value="12">Ải có 12 ô thẻ</option>
+                    <option value="24">Ải có 24 ô thẻ</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group" style="display:none"  id="ctr-o-2">
+            <label class="col-md-4 control-label text-primary" for="AdvancedOption">Advanced Option</label>
+            <div class="col-md-8">
+                <select id="AdvancedOption" name="AdvancedOption" class="form-control" style="width: 100%;">
+                    <option value=",1,2,3,4,">Đơn giản</option>
+                    <option value=",1,">Nâng cao</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="Para2">Para2</label>
+            <div class="col-md-8">
+                <input type="text" id="Para2" name="Para2" class="form-control input-sm must-required" placeholder="Nhập vào para2, vd: ,0,">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="Name">Name</label>
+            <div class="col-md-8">
+                <input type="text" id="Name" name="Name" class="form-control input-sm must-required" placeholder="Nhập vào tên, vd: Vượt ải cuối Kiến dễ">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4 control-label" for="Detail">Detail</label>
+            <div class="col-md-8">
+                <textarea id="Detail" name="Detail" rows="4" class="form-control" placeholder="Nhập vào mô tả, vd: Vượt ải thành công có cơ hội nhận được vật phẩm có giá trị"></textarea>
+            </div>
+        </div>
+        <div class="form-group form-actions">
+            <div class="col-md-12 text-right">
+                <button type="submit" class="btn btn-sm btn-primary btn-submit"> Thêm mới</button>
+                <button type="button" class="btn btn-sm btn-success" data-dismiss="modal"> Đóng</button>
+            </div>
+        </div>
+    </form>
+    <!-- END Form add -->
+</div>
+
+@section Scripts{
+    <script>
+        $(function () {
+            $("#Para11").select2({
+                tags: true,
+                placeholder: "Chọn mã.."
+                //ajax: {
+                //    url: "http://example.org/api/test",
+                //    cache: "false"
+                //}
+            });
+            var startBtn = $('.btn-submit');
+            // On start button click start loading again
+            startBtn.on('click', function () {
+                $(this).button('loading');
+            });
+
+            /* Validate required: true*/
+           
+            $('form#frm-edit-drop-condition').each(function () {   // <- selects every <form> on page
+                $(this).validate({        // <- initialize validate() on each form
+                    errorClass: 'help-block animation-slideDown', // You can change the animation class for a different entrance animation - check animations page
+                    errorElement: 'div',
+                    errorPlacement: function (error, e) {
+                        e.parents('.form-group > div').append(error);
+                    },
+                    highlight: function (e) {
+                        $(e).closest('.form-group').removeClass('has-success has-error').addClass('has-error');
+                        $(e).closest('.help-block').remove();
+                        startBtn.button('reset');
+                    },
+                    success: function (e) {
+                        e.closest('.form-group').removeClass('has-success has-error');
+                        e.closest('.help-block').remove();
+                    },
+                    submitHandler: function (e) {
+                        $('#loading-bgr').show();
+                        $.ajax({
+                            url: e.action,
+                            type: e.method,
+                            data: $(e).serialize(),
+                            success: function (result) {
+                                $('#loading-bgr').hide();
+                                $('#response-hodler').html(result);
+                                startBtn.button('reset');
+                                loadDrop();
+                            },
+                            error: function (result) {
+                                $('#loading-bgr').hide();
+                                startBtn.button('reset');
+                            }
+                        });
+                        return false;
+                    }
+                });
+            });
+            $("#Option").change(function (e) {
+                var val = $(this).val();
+                toggleAdvancedOption(val === 24);
+            });
+            $("#AdvancedOption").change(function (e) {
+                var val = $(this).val();
+                $("#Para2").val(val);
+            });
+            $("#CondictionType").change(function (e) {
+                var val = $(this).val();
+                toggleOption(val === 5);
+                $('#Para1').val($('#Para1').prop('defaultSelected'));
+            });
+            //Select Para1
+            $("#Para1").change(function (e) {
+                var mid = $(this).val();
+                var para = 'para=' + mid.replace(',', '').replace(',', '');
+                $("#loading-bgr").show();
+                $.ajax({
+                    type: "POST",
+                    url: '@Html.Raw(Url.Action("LoadDropTemplate","Games"))?' + para,
+                    dataType: "json",
+                    contentType: 'application/json; charset=utf-8',
+                    data: {},
+                    cache: false,
+                    success: function (data) {
+                        toggleOption(data.Result);
+
+                        $("#DropId").val(data.DropId);
+                        $("#Detail").val(data.Detail);
+                        $("#Para2").val(data.Para2);
+                        $('#CondictionType option').prop('selected', false)
+                       .filter('[value="' + data.CondictionType + '"]')
+                       .prop('selected', true);
+                        if (data.Result) {
+                            $("#Name").val(data.Name);                            
+                        }
+                        else {
+                            $("#Name").val($("#Para1 option:selected").text());
+                        }
+                        
+                        $("#loading-bgr").hide();
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        showGrowl('Error: ' + xhr.status + ' ' + xhr.statusText, 'danger');
+                        $("#loading-bgr").hide();
+                    }
+                });
+
+            });
+            /*end*/
+        });
+        function resetOption() {           
+            $("#Option").val(12);
+            $("#AdvancedOption").val(',1,2,3,4,');            
+        }
+        function toggleOption(show) {
+            resetOption();
+            $("#ctr-o-1").toggle(show);
+            toggleAdvancedOption(false);
+        }
+        function toggleAdvancedOption(show) {
+            $("#ctr-o-2").toggle(show);
+            if (show) {
+                $("#Para2").val($("#AdvancedOption").val());
+            }
+            else {
+                $("#Para2").val(',1,');
+            }
+        }
+    </script>
+}

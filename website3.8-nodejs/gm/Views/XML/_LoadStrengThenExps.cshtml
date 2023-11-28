@@ -1,0 +1,167 @@
+﻿
+
+@using MvcPaging;
+@model IPagedList<SqlDataProvider.Data.StrengThenExpInfo>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "LoadStrengThenExp";
+    int zoneId = -1;
+    int id = 0;
+}
+@if (Model.TotalItemCount > 0)
+{
+    <div style="display:none" id="total-items">
+        @if (ViewData["key"] == null || string.IsNullOrWhiteSpace((string)ViewData["key"]))
+        {
+            <p class="text-info" style="font-size:14px"> Có tổng cộng <strong class="text-danger">@Model.TotalItemCount</strong> item(s)</p>
+        }
+        else
+        {
+            <p class="text-info" style="font-size:14px"> Có tổng cộng <strong class="text-danger">@Model.TotalItemCount</strong> item(s) thỏa điều kiện</p>
+        }
+    </div>
+}
+<div class="block">
+    @if (Model.Count() > 0)
+    {
+        <div style="min-height:432px">
+            <table id="general-table" class="table table-striped table-vcenter">
+                <thead>
+                    <tr>
+                        <th style="width: 80px;" class="text-center">
+                            <label class="switch switch-primary" data-toggle="tooltip" title="Chọn tất cả">
+                                <input type="checkbox">
+                                <span></span>
+                            </label>
+                        </th>
+                        <th>ID</th>
+                        <th>Level</th>
+                        <th>Exp</th>
+                        <th>NecklaceStrengthExp</th>
+                        <th>NecklaceStrengthPlus</th>
+                        <th style="width: 80px;" class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                {
+                    id = item.Level;
+                        <tr>
+                            <td class="text-center">
+                                <label class="switch switch-primary">
+                                    <input type="checkbox" id="@id" name="@id" value="@id">
+                                    <span></span>
+                                </label>
+                            </td>
+                            <td>@item.ID</td>
+                            <td>@item.Level</td>
+                            <td>@item.Exp</td>
+                            <td>@item.NecklaceStrengthExp</td>
+                            <td>@item.NecklaceStrengthPlus</td>
+                            <td class="text-center">
+                                <div class="btn-group btn-group-xs">
+                                    <a href="@Html.Raw(Url.Action("Import", "XML", routeValues: new { ids = id, xml = ViewData["xml"] , url = ViewData["url"], isNew = false }))" data-modal="import"
+                                       data-toggle="tooltip" title="Import item này vào DB" class="btn btn-warning"><i class="gi gi-disk_import"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="btn-group btn-group-sm">
+                    <a href="@Html.Raw(Url.Action("Import", "XML", routeValues: new { xml = ViewData["xml"] , url = ViewData["url"] , isNew = false }))"
+                       class="btn btn-warning" data-toggle="tooltip" title="Import items được chọn" data-modal="Selected"><i class="gi gi-disk_import"></i></a>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="text-center">
+                    @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount, new AjaxOptions { LoadingElementId = "loading-bgr", OnSuccess = "AjaxStrengThenExpSuccess", OnFailure = "AjaxStrengThenExpFailure" }).Options(o => o
+                                .DisplayTemplate("_Pagination")
+                               .Action("LoadData")
+                                .MaxNrOfPages(3)
+                                .AddRouteValue("key", ViewData["key"])
+                                .AddRouteValue("xml", ViewData["xml"])
+                                .AddRouteValue("url", ViewData["url"])
+                                .AddRouteValue("cid", ViewData["cid"])
+                                .AddRouteValue("getNew", ViewData["getNew"]))
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="btn-group btn-group-sm pull-right">
+                    <div class="btn-group btn-group-sm dropup">
+                        <a href="javascript:void(0)" class="btn btn-primary pull-right dropdown-toggle" data-toggle="dropdown">Nhiều hơn</a>
+                        <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
+                            <li class="dropdown-header"><i class="fa fa-share pull-right"></i>Lựa chọn</li>
+                            <li>
+                                <a href="javascript:reload()">Tại lại</a>
+                                <a href="@Html.Raw(Url.Action("XmlView", "XML", routeValues: new { xml = ViewData["xml"] , url = ViewData["url"], isView = true }))" data-modal="viewXml">Xem định dạng XML</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="@Html.Raw(Url.Action("SaveToXml", "XML", routeValues: new { xml = ViewData["xml"] , url = ViewData["url"]}))" data-modal="savetoxml">Lưu thành file xml</a>
+                                <a href="@Html.Raw(Url.Action("Import", "XML", routeValues: new { xml = ViewData["xml"] , url = ViewData["url"] , isNew = true }))" data-modal="import">Import item mới vào DB</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="@Html.Raw(Url.Action("Import", "XML", routeValues: new { xml = ViewData["xml"] , url = ViewData["url"] , isNew = false }))" data-modal="import">Import tất cả vào DB</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="text-center">
+            @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+        </div>
+    }
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+            /*add some code here!*/
+            ModelGeneral.init('data-modal="viewXml"', 'large');
+
+            var total = $("#total-items").html();
+            $("#total-items-content").html(total);
+
+            $('a[data-modal="import"]').bind('click', function (e) {
+                var link = $(this).attr("href");
+                return callService(link);
+            });
+
+            $('a[data-modal="savetoxml"]').bind('click', function (e) {
+                var link = $(this).attr("href");
+                return callService(link);
+            });
+
+            $('a[data-modal="Selected"]').bind("click", function (e) {
+                var url = $(this).attr("href");
+                var _checked = [];
+
+                _checked = $("tbody input:checkbox:checked").map(function () {
+                    return this.value;
+                }).toArray();
+
+                if (_checked.length == 0) {
+                    showGrowl('Bạn chưa chọn item. Vui lòng chọn và thử lại', 'danger');
+                    return false;
+                }
+                url += '&ids=' + _checked;
+                return callService(url);
+            });
+        });
+        function AjaxStrengThenExpSuccess(data) {
+            $('#xml-content').html(data);
+        }
+        function AjaxStrengThenExpFailure(xhr) {
+            var text = "Error: " + xhr.status + " " + xhr.statusText;
+            showGrowl(text, 'danger');
+        }
+    </script>
+}

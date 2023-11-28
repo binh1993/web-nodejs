@@ -1,0 +1,60 @@
+2022-07-23 17:54:29,744 - [17] - ERROR - Tank.Request.ServerList - Load server list error:
+System.ServiceModel.CommunicationObjectFaultedException: The communication object, System.ServiceModel.Channels.ServiceChannel, cannot be used for communication because it is in the Faulted state.
+
+Server stack trace: 
+   at System.ServiceModel.Channels.CommunicationObject.Close(TimeSpan timeout)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at System.ServiceModel.ClientBase`1.System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at Tank.Request.ServerList.ProcessRequest(HttpContext context)
+2022-07-23 17:55:14,395 - [7] - ERROR - Tank.Request.ServerList - Load server list error:
+System.ServiceModel.CommunicationObjectFaultedException: The communication object, System.ServiceModel.Channels.ServiceChannel, cannot be used for communication because it is in the Faulted state.
+
+Server stack trace: 
+   at System.ServiceModel.Channels.CommunicationObject.Close(TimeSpan timeout)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at System.ServiceModel.ClientBase`1.System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at Tank.Request.ServerList.ProcessRequest(HttpContext context)
+2022-07-23 17:57:08,997 - [7] - ERROR - Tank.Request.ServerList - Load server list error:
+System.ServiceModel.CommunicationObjectFaultedException: The communication object, System.ServiceModel.Channels.ServiceChannel, cannot be used for communication because it is in the Faulted state.
+
+Server stack trace: 
+   at System.ServiceModel.Channels.CommunicationObject.Close(TimeSpan timeout)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at System.ServiceModel.ClientBase`1.System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at Tank.Request.ServerList.ProcessRequest(HttpContext context)
+2022-07-23 17:59:40,210 - [27] - ERROR - Tank.Request.ServerList - Load server list error:
+System.ServiceModel.CommunicationObjectFaultedException: The communication object, System.ServiceModel.Channels.ServiceChannel, cannot be used for communication because it is in the Faulted state.
+
+Server stack trace: 
+   at System.ServiceModel.Channels.CommunicationObject.Close(TimeSpan timeout)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at System.ServiceModel.ClientBase`1.System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at Tank.Request.ServerList.ProcessRequest(HttpContext context)
+2022-07-23 18:23:43,891 - [74] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-07-23 18:23:44,255 - [59] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)

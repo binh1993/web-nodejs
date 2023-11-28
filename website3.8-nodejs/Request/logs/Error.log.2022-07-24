@@ -1,0 +1,166 @@
+2022-07-24 22:01:19,503 - [32] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-07-24 22:01:19,565 - [23] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-07-24 22:03:10,567 - [28] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-07-24 22:03:10,692 - [33] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-07-24 22:21:43,259 - [35] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-07-24 22:21:43,305 - [33] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-07-24 22:23:08,438 - [35] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-07-24 22:23:08,485 - [31] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-07-24 22:32:47,790 - [38] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-07-24 22:32:47,837 - [32] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-07-24 22:54:29,889 - [35] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-07-24 22:54:29,920 - [31] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-07-24 23:22:46,299 - [34] - ERROR - Tank.Request.Login - User Login error: (--1024--)System.Security.Cryptography.CryptographicException: Bad Data.
+
+   at System.Security.Cryptography.CryptographicException.ThrowCryptographicException(Int32 hr)
+   at System.Security.Cryptography.RSACryptoServiceProvider.DecryptKey(SafeKeyHandle pKeyContext, Byte[] pbEncryptedKey, Int32 cbEncryptedKey, Boolean fOAEP, ObjectHandleOnStack ohRetDecryptedKey)
+   at System.Security.Cryptography.RSACryptoServiceProvider.Decrypt(Byte[] rgb, Boolean fOAEP)
+   at Road.Flash.CryptoHelper.RsaDecryt2(RSACryptoServiceProvider rsa, String src)
+   at Tank.Request.Login.ProcessRequest(HttpContext context)
+2022-07-24 23:22:46,299 - [34] - ERROR - Tank.Request.Login - --dataarray: fuckingbitch 127
+0000: BE BB B5 1D 49 FC D2 CE 04 4C 68 20 58 60 EB 8D   ....I....Lh X`..
+0010: 68 05 27 C8 D8 14 B0 3B 8C 84 0E AF 2A 29 17 BA   h.'....;....*)..
+0020: D7 01 55 D0 F1 1F B4 11 8A 37 8B 17 5E 9C CE 75   ..U......7..^..u
+0030: 82 7F 45 CF F4 3F 0C D5 E6 15 E4 8B 80 89 34 E2   .E..?........4.
+0040: 74 E8 9E 04 2D C8 9A B5 8B FE C4 D5 CB 33 E3 45   t...-........3.E
+0050: 3D 90 29 1C 46 A0 BE 49 F4 9E 95 44 8A EF 79 9B   =.).F..I...D..y.
+0060: 04 9D F4 B6 B9 38 BF 28 E7 90 F3 40 79 78 99 69   .....8.(...@yx.i
+0070: 43 87 74 BA 7C 06 DB 3A 38 6A B9 67 29 C4 5F      C.t.|..:8j.g)._ 
+
+2022-07-24 23:24:20,835 - [24] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-07-24 23:24:20,882 - [35] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-07-24 23:29:18,265 - [38] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-07-24 23:29:18,343 - [24] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-07-24 23:33:30,407 - [24] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-07-24 23:33:30,532 - [33] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-07-24 23:46:28,186 - [35] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-07-24 23:46:28,233 - [23] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-07-24 23:50:58,258 - [38] - ERROR - Tank.Request.Login - User Login error: (--1024--)System.Security.Cryptography.CryptographicException: Bad Data.
+
+   at System.Security.Cryptography.CryptographicException.ThrowCryptographicException(Int32 hr)
+   at System.Security.Cryptography.RSACryptoServiceProvider.DecryptKey(SafeKeyHandle pKeyContext, Byte[] pbEncryptedKey, Int32 cbEncryptedKey, Boolean fOAEP, ObjectHandleOnStack ohRetDecryptedKey)
+   at System.Security.Cryptography.RSACryptoServiceProvider.Decrypt(Byte[] rgb, Boolean fOAEP)
+   at Road.Flash.CryptoHelper.RsaDecryt2(RSACryptoServiceProvider rsa, String src)
+   at Tank.Request.Login.ProcessRequest(HttpContext context)
+2022-07-24 23:50:58,258 - [38] - ERROR - Tank.Request.Login - --dataarray: fuckingbitch 127
+0000: E6 8A 83 BB 34 D2 BB 0E 5E 03 5B 6A FC 63 F2 74   ....4...^.[j.c.t
+0010: 2C 07 79 E4 EB 9D 05 94 2E 8D FF 50 AB 00 1A ED   ,.y........P....
+0020: 19 8D 56 82 94 B1 98 FC 90 25 5E 14 12 0A CF 52   ..V......%^....R
+0030: D4 33 6C 96 13 2C EC E8 CF 49 D0 8F B2 CE 50 EF   .3l..,...I....P.
+0040: 2C B1 BA B7 95 4B 02 51 77 26 46 7B 0A 61 9D AA   ,....K.Qw&F{.a..
+0050: BF E2 43 FC 46 1A D7 9D 10 5C C7 11 61 EF 57 CA   ..C.F....\..a.W.
+0060: 93 D0 E4 7C D6 CE 6F 98 9F 68 CF 8A 8E ED 38 CD   ...|..o..h....8.
+0070: 5D 82 C5 F3 58 75 D4 9C 3A A6 66 27 91 0B 75      ]...Xu..:.f'..u 
+
+2022-07-24 23:51:31,805 - [31] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-07-24 23:51:31,852 - [28] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)

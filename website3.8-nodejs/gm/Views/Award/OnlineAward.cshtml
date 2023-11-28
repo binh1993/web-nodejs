@@ -1,0 +1,148 @@
+﻿@using SqlDataProvider.Data;
+@model List<AreaConfigInfo>
+@{
+    ViewBag.Title = "Phần thưởng InGame";
+    ViewBag.Message = "Quản lý phần thưởng ingame, trực quan dễ sữ dụng!";    
+}
+<!-- Header -->
+<div class="content-header">
+    <div class="header-section">
+        <h1>
+            <i class="gi gi-server"></i>@ViewBag.Title<br>
+            <small>@ViewBag.Message</small>
+        </h1>
+    </div>
+</div>
+<ul class="breadcrumb breadcrumb-top">
+    <li>Trang</li>
+    <li><a href="javascript:void(0)">@ViewBag.Title</a></li>
+</ul>
+<!-- END Header -->
+
+<div class="block">
+    <!-- Main Row -->
+    <div class="row">
+        <div class="col-lg-4">
+            <!-- Edit Award Block -->
+            <div class="block">
+                <!-- Edit Award Title -->
+                <div class="block-title clearfix">                    
+                    <div class="block-options">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <a href="@Html.Raw(Url.Action("CreateOnlineAward","Award"))" class="btn btn-alt btn-sm btn-default" data-dialog="addtop"><i class="gi gi-circle_plus text-primary"></i> Thêm
+                                </a>
+                            </div>
+                            <div class="col-md-8">
+                                <select id="server-chosen" name="server-chosen" class="select-chosen" data-placeholder="Chọn hiện theo server..." style="width: 250px;">
+                                    <option></option>
+                                    <option value="-1">Tất cả server</option>
+                                    @foreach (AreaConfigInfo item in Model)
+                                    {
+                                        <option value="@item.AreaID">@item.AreaName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+                <!-- END Edit Award Title -->
+                <!-- Edit Award Content -->
+                <div id="top-content">
+                    <div class="text-center text-warning">
+                        <p>@Html.Raw(StaticFunction.GetTranslation("Views.WaitLoading"))</p>
+                    </div>
+                </div>
+                <!-- END Edit Award Content -->
+            </div>
+            <!-- END Edit Award Block -->
+        </div>
+        <div class="col-lg-8">
+            <!-- TopAward Block -->
+            <div class="block">
+                <!-- TopAward Title -->
+                <div class="block-title clearfix">
+                    <div class="block-options">
+                        Phần thưởng <i class="gi gi-chevron-right" style="font-size:8px"></i> <span id="award-header" class="text-success">Chưa chọn..</span>
+                        <a href="@Html.Raw(Url.Action("AddItemsModel","Games", new { type = "topaward" }))" class="btn btn-alt btn-sm btn-default pull-right" 
+                        data-dialog="-1" id="btn-add-top-award" style="margin-top:4px"><i class="fa fa-pencil text-success"></i> Thêm phần thưởng
+                        </a>
+                    </div>
+                </div>
+                <!-- END TopAward Title -->
+                <!-- TopAward Content -->
+                <div id="award-content">
+                    <div class="text-center text-warning">
+                        <p>@Html.Raw(StaticFunction.GetTranslation("Views.WaitLoading"))</p>
+                    </div>
+                </div>
+                <!-- END TopAward Content -->
+            </div>
+            <!-- END TopAward Block -->
+        </div>
+    </div>
+    <!-- END Main Row -->
+</div>
+<input type="hidden" value="all" id="default-category" />
+@section Scripts{
+<script>
+
+    $(function () {
+
+        /*window resize*/
+        $(window).resize(function () {
+            fixHeight();
+        });
+
+        /*auto load top*/
+        loadTop();
+
+        /*select server*/
+        $("#server-chosen").change(function (e) {
+            var zoneID = $(this).val();
+            loadTop(zoneID);
+        });
+
+        /*call add dailog*/
+        $('#btn-add-top-award').bind('click', function (e) {
+            var _id = $(this).attr("data-dialog");
+            var url = $(this).attr("href") + '&name=' + $("#award-header").text();
+            GMApp.Dialog(url, e, 'tid=' + _id, 'large');
+            return false;
+        });
+
+        $('a[data-dialog="addtop"]').bind('click', function (e) {            
+            var url = $(this).attr("href");
+            GMApp.Dialog(url, e);
+            return false;
+        });
+    });
+
+    function loadTop(zoneId, loadurl) {        
+        var defaultUrl = '@Url.Action("LoadOnline", "Award")';
+        var defaultZone = '?zid=-1';
+        if (zoneId != undefined && zoneId != null) {
+            defaultZone = '?zid=' + zoneId;
+        }
+        if (loadurl != undefined && loadurl != null) {
+            defaultUrl = loadurle;
+        }
+        defaultUrl += defaultZone;
+        $("#loading-bgr").show();
+        $.get(defaultUrl, function (data) {
+            $("#top-content").html(data);
+            $("#loading-bgr").hide();
+            fixHeight();
+        })
+        .fail(function (data) {
+            $("#top-content").html(getError(data.status, data.statusText));
+            $("#loading-bgr").hide();
+        });
+    }
+    function fixHeight() {
+        $('#award-content').equalHeightTo('#top-content');
+        //$('#media-filter-items').equalHeightTo('#media-list');
+        //$('#media-filter').equalHeightTo('#media-list');
+    }
+</script>
+}

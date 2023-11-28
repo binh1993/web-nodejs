@@ -1,0 +1,130 @@
+﻿@using SqlDataProvider.Data;
+@using System.Text;
+@model GM.Service.Models.TableModel
+
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    TableInfo item = Model.Info;
+    List<TableDesignInfo> designs = Model.Designs;
+    string name = item.Class.Replace("Info", "");
+
+    StringBuilder sb = new StringBuilder();
+    if (designs.Count > 0)
+    {
+        TableDesignInfo d = designs[0];
+        sb.AppendLine(" ");
+        sb.AppendLine("public " + name + "Info[] GetAll" + name + "()");
+        sb.AppendLine("{");
+        sb.AppendLine("    List<" + name + "Info> infos = new List<" + name + "Info>();");
+        sb.AppendLine("    SqlDataReader reader = null;");
+        sb.AppendLine("    try");
+        sb.AppendLine("    {");
+        sb.AppendLine("        db.FillSqlDataReader(ref reader, \"SELECT * FROM [dbo].[" + item.Name + "]\");");
+        sb.AppendLine("        while (reader.Read())");
+        sb.AppendLine("        {");
+        sb.AppendLine("             infos.Add(Init" + name + "Info(reader));");
+        sb.AppendLine("        }");
+        sb.AppendLine("    }");
+        sb.AppendLine("    catch (Exception e)");
+        sb.AppendLine("    {");
+        sb.AppendLine("        Logger.Error(\"GetAll" + name + " \" + e.ToString());");
+        sb.AppendLine("    }");
+        sb.AppendLine("    finally");
+        sb.AppendLine("    {");
+        sb.AppendLine("        if (reader != null && !reader.IsClosed)");
+        sb.AppendLine("            reader.Close();");
+        sb.AppendLine("    }");
+        sb.AppendLine("    return infos.ToArray();");
+        sb.AppendLine("}");
+
+        sb.AppendLine("public " + name + "Info[] GetAll" + name + "By(int id)");
+        sb.AppendLine("{");
+        sb.AppendLine("    List<" + name + "Info> infos = new List<" + name + "Info>();");
+        sb.AppendLine("    SqlDataReader reader = null;");
+        sb.AppendLine("    try");
+        sb.AppendLine("    {");
+        sb.AppendLine("        db.FillSqlDataReader(ref reader, \"SELECT * FROM [dbo].[" + item.Name + "] WHERE ID = \" + id.ToString());");
+        sb.AppendLine("        while (reader.Read())");
+        sb.AppendLine("        {");
+        sb.AppendLine("             infos.Add(Init" + name + "Info(reader));");
+        sb.AppendLine("        }");
+        sb.AppendLine("    }");
+        sb.AppendLine("    catch (Exception e)");
+        sb.AppendLine("    {");
+        sb.AppendLine("        Logger.Error(\"GetAll" + name + "By \" + e.ToString());");
+        sb.AppendLine("    }");
+        sb.AppendLine("    finally");
+        sb.AppendLine("    {");
+        sb.AppendLine("        if (reader != null && !reader.IsClosed)");
+        sb.AppendLine("            reader.Close();");
+        sb.AppendLine("    }");
+        sb.AppendLine("    return infos.ToArray();");
+        sb.AppendLine("}");
+
+        sb.AppendLine("public " + name + "Info GetSingle" + name + "(int id)");
+        sb.AppendLine("{");
+        sb.AppendLine("    List<" + name + "Info> infos = new List<" + name + "Info>();");
+        sb.AppendLine("    SqlDataReader reader = null;");
+        sb.AppendLine("    try");
+        sb.AppendLine("    {");
+        sb.AppendLine("        db.FillSqlDataReader(ref reader, \"SELECT * FROM [dbo].[" + item.Name + "] WHERE ID = \" + id.ToString());");
+        sb.AppendLine("        while (reader.Read())");
+        sb.AppendLine("        {");
+        sb.AppendLine("             infos.Add(Init" + name + "Info(reader));");
+        sb.AppendLine("        }");
+        sb.AppendLine("    }");
+        sb.AppendLine("    catch (Exception e)");
+        sb.AppendLine("    {");
+        sb.AppendLine("        Logger.Error(\"GetSingle" + name + " \" + e.ToString());");
+        sb.AppendLine("    }");
+        sb.AppendLine("    finally");
+        sb.AppendLine("    {");
+        sb.AppendLine("        if (reader != null && !reader.IsClosed)");
+        sb.AppendLine("            reader.Close();");
+        sb.AppendLine("    }");
+        sb.AppendLine("    return infos.Count > 0 ? infos[0] : null;");
+        sb.AppendLine("}");
+
+        sb.AppendLine("public " + name + "Info Init" + name + "Info(SqlDataReader reader)");
+        sb.AppendLine("{");
+        sb.AppendLine("   " + name + "Info info = new " + name + "Info();");
+        foreach (var design in designs)
+        {
+            if (design.Type.Contains("nvarchar"))
+            {
+                sb.AppendLine("   info." + design.Name + " = reader[\"" + design.Name + "\"] == null ? \"\" : reader[\"" + design.Name + "\"].ToString();");
+            }
+            else
+            {
+                sb.AppendLine("   info." + design.Name + " = (" + TableTool.GetDataType(design.Type) + ")reader[\"" + design.Name + "\"];");
+            }
+        }
+        sb.AppendLine("   return info;");
+        sb.Append("}");
+    }
+    else
+    {
+        sb.Append(StaticFunction.GetTranslation("GM.DDTank.Empty"));
+    }
+}
+<h4>@item.Name <i class="fa fa-angle-right"></i><span class="text-danger"> Bussiness Web Read</span></h4>
+<div style="overflow-y:auto; height:450px">
+<pre class="line-numbers">
+    <code class="language-csharp" id="highlight-code">
+        @sb.ToString()
+    </code>
+</pre>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+
+            navActive('BussinessCRUD');
+
+            var code = $('#highlight-code')[0];
+            Prism.highlightElement(code);
+
+            ZeroCopy.init();
+        });
+    </script>
+}

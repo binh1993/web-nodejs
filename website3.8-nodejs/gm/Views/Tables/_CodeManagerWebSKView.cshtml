@@ -1,0 +1,106 @@
+﻿@using SqlDataProvider.Data;
+@using System.Text;
+@model GM.Service.Models.TableModel
+
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    TableInfo item = Model.Info;
+    string name = item.Class.Replace("Info", "");
+
+    StringBuilder sb = new StringBuilder();
+    sb.AppendLine(" ");
+    sb.AppendLine("using System;");
+    sb.AppendLine("using System.Collections.Generic;");
+    sb.AppendLine("using System.Reflection;");
+    sb.AppendLine("using System.Threading;");
+    sb.AppendLine("using SqlDataProvider.Data;");
+    sb.AppendLine("using System.Linq;");
+    sb.AppendLine("namespace Tank.Data");
+    sb.AppendLine("{");
+    sb.AppendLine("    public class " + name + "Mgr");
+    sb.AppendLine("    {");
+    sb.AppendLine("        private static Dictionary<int, " + name + "Info> m_" + TableTool.LowerFirstChar(name) + "s = new Dictionary<int, " + name + "Info>();");
+    sb.AppendLine("        public static bool Init()");
+    sb.AppendLine("        {");
+    sb.AppendLine("            return ReLoad();");
+    sb.AppendLine("        }");
+    sb.AppendLine("        public static bool ReLoad()");
+    sb.AppendLine("        {");
+    sb.AppendLine("            try");
+    sb.AppendLine("            {");
+    sb.AppendLine("               Dictionary<int, " + name + "Info> temp" + name + "s = LoadFromDatabase();");
+    sb.AppendLine("                if (temp" + name + "s.Values.Count > 0)");
+    sb.AppendLine("                {");
+    sb.AppendLine("                    Interlocked.Exchange(ref m_" + TableTool.LowerFirstChar(name) + "s, temp" + name + "s);");
+    sb.AppendLine("                    return true;");
+    sb.AppendLine("                }");
+    sb.AppendLine("            }");
+    sb.AppendLine("            catch (Exception ex)");
+    sb.AppendLine("            {");
+    sb.AppendLine("                Helpers.Logger.Error(\"" + name + "Mgr init error:\" + ex.ToString());");
+    sb.AppendLine("            }");
+    sb.AppendLine("            return false;");
+    sb.AppendLine("        }");
+    sb.AppendLine("        private static Dictionary<int, " + name + "Info> LoadFromDatabase()");
+    sb.AppendLine("        {");
+    sb.AppendLine("           Dictionary<int, " + name + "Info> list = new Dictionary<int, " + name + "Info>();");
+    if (item.Type == 1)
+    {
+        sb.AppendLine("           using (PlayerBussiness db = new PlayerBussiness())");
+    }
+    else
+    {
+        sb.AppendLine("           using (ProduceBussiness db = new ProduceBussiness())");
+    }
+    sb.AppendLine("           {");
+    sb.AppendLine("                " + name + "Info[] " + TableTool.LowerFirstChar(name) + "Infos = db.GetAll" + name + "();");
+    sb.AppendLine("                foreach (" + name + "Info info in " + TableTool.LowerFirstChar(name) + "Infos)");
+    sb.AppendLine("                {");
+    sb.AppendLine("                    if (!list.ContainsKey(info.ID))");
+    sb.AppendLine("                    {");
+    sb.AppendLine("                        list.Add(info.ID, info);");
+    sb.AppendLine("                    }");
+    sb.AppendLine("                }");
+    sb.AppendLine("            }");
+    sb.AppendLine("            return list;");
+    sb.AppendLine("        }");
+
+    sb.AppendLine("        public static List<" + name + "Info> GetAll" + name + "()");
+    sb.AppendLine("        {");
+    sb.AppendLine("            if (m_" + TableTool.LowerFirstChar(name) + "s.Count == 0)");
+    sb.AppendLine("                Init();");
+    sb.AppendLine("            return m_" + TableTool.LowerFirstChar(name) + "s.Values.ToList();");
+    sb.AppendLine("        }");
+
+    sb.AppendLine("        public static " + name + "Info Find" + name + "(int id)");
+    sb.AppendLine("        {");
+    sb.AppendLine("            if (m_" + TableTool.LowerFirstChar(name) + "s.Count == 0)");
+    sb.AppendLine("                Init();");
+    sb.AppendLine("            if (m_" + TableTool.LowerFirstChar(name) + "s.ContainsKey(id))");
+    sb.AppendLine("                return m_" + TableTool.LowerFirstChar(name) + "s[id];");
+    sb.AppendLine("            return null;");
+    sb.AppendLine("        }");
+    sb.AppendLine("    }");
+    sb.AppendLine("}");
+}
+<h4>@item.Name <i class="fa fa-angle-right"></i><span class="text-danger"> Web Single Key</span></h4>
+<div style="overflow-y:auto; height:450px">
+<pre class="line-numbers">
+    <code class="language-csharp" id="highlight-code">
+        @sb.ToString()
+    </code>
+</pre>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+
+            navActive('Manager');
+
+            var code = $('#highlight-code')[0];
+            Prism.highlightElement(code);
+
+            ZeroCopy.init();
+        });
+    </script>
+}

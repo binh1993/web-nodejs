@@ -1,0 +1,61 @@
+2022-08-13 04:30:45 Error: GetSingleUsersExtra System.IndexOutOfRangeException: ID
+   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at Tank.Data.PlayerBussiness.InitUsersExtraInfo(SqlDataReader reader)
+   at Tank.Data.PlayerBussiness.GetSigleUsersExtra(String swhere)
+2022-08-13 04:30:45 Error: GetSingleActiveSystem System.IndexOutOfRangeException: useableScore
+   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at Tank.Data.PlayerBussiness.InitActiveSystemInfo(SqlDataReader reader)
+   at Tank.Data.PlayerBussiness.GetSigleActiveSystem(String where)
+2022-08-13 06:26:56 Error: Combine error in line: System.Collections.Generic.KeyNotFoundException: The given key was not present in the dictionary.
+   at System.ThrowHelper.ThrowKeyNotFoundException()
+   at System.Collections.Generic.Dictionary`2.get_Item(TKey key)
+   at Tank.Data.CombineBussiness.Combine(String tableName, CombineTableInfo info, Dictionary`2 tableIdentity)
+2022-08-13 06:26:57 Error: Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: C. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonTextReader.Read()
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.ReadForType(JsonReader reader, JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at GM.Service.CacheMgr.LoadItemsFromFile(String clientId)
+2022-08-13 06:29:46 Error: Combine error in line: System.Collections.Generic.KeyNotFoundException: The given key was not present in the dictionary.
+   at System.ThrowHelper.ThrowKeyNotFoundException()
+   at System.Collections.Generic.Dictionary`2.get_Item(TKey key)
+   at Tank.Data.CombineBussiness.Combine(String tableName, CombineTableInfo info, Dictionary`2 tableIdentity)
+2022-08-13 06:29:50 Error: Combine error in line: System.Collections.Generic.KeyNotFoundException: The given key was not present in the dictionary.
+   at System.ThrowHelper.ThrowKeyNotFoundException()
+   at System.Collections.Generic.Dictionary`2.get_Item(TKey key)
+   at Tank.Data.CombineBussiness.Combine(String tableName, CombineTableInfo info, Dictionary`2 tableIdentity)
+2022-08-13 06:34:13 Error: Combine error in line: System.Collections.Generic.KeyNotFoundException: The given key was not present in the dictionary.
+   at System.ThrowHelper.ThrowKeyNotFoundException()
+   at System.Collections.Generic.Dictionary`2.get_Item(TKey key)
+   at Tank.Data.CombineBussiness.Combine(String tableName, CombineTableInfo info, Dictionary`2 tableIdentity)
+2022-08-13 06:36:29 Error: Version 3.6
+2022-08-13 06:36:29 Error: Version 3.6
+2022-08-13 06:36:29 Error: Version 3.6
+2022-08-13 06:36:34 Error: Combine error in line: System.Collections.Generic.KeyNotFoundException: The given key was not present in the dictionary.
+   at System.ThrowHelper.ThrowKeyNotFoundException()
+   at System.Collections.Generic.Dictionary`2.get_Item(TKey key)
+   at Tank.Data.CombineBussiness.Combine(String tableName, CombineTableInfo info, Dictionary`2 tableIdentity)
+2022-08-13 06:36:34 Error: Combine error in line: System.Collections.Generic.KeyNotFoundException: The given key was not present in the dictionary.
+   at System.ThrowHelper.ThrowKeyNotFoundException()
+   at System.Collections.Generic.Dictionary`2.get_Item(TKey key)
+   at Tank.Data.CombineBussiness.Combine(String tableName, CombineTableInfo info, Dictionary`2 tableIdentity)
+2022-08-13 06:36:34 Error: Combine error in line: System.Collections.Generic.KeyNotFoundException: The given key was not present in the dictionary.
+   at System.ThrowHelper.ThrowKeyNotFoundException()
+   at System.Collections.Generic.Dictionary`2.get_Item(TKey key)
+   at Tank.Data.CombineBussiness.Combine(String tableName, CombineTableInfo info, Dictionary`2 tableIdentity)
+2022-08-13 06:39:45 Error: Version 3.6
+2022-08-13 06:40:02 Error: Version 3.6
+2022-08-13 06:41:13 Error: Version 3.6
+2022-08-13 06:41:13 Error: Version 3.6
+2022-08-13 06:41:13 Error: Version 3.6
+2022-08-13 06:41:13 Error: Version 3.6
+2022-08-13 06:41:13 Error: Version 3.6
+2022-08-13 06:41:14 Error: Version 3.6
+2022-08-13 06:41:14 Error: Version 3.6

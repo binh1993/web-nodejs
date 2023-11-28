@@ -1,0 +1,135 @@
+﻿@model SqlDataProvider.Data.PlayerInfo
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "Chi tiết";
+    var item = Model;
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title <i class="gi gi-chevron-right" style="font-size:10px"></i>
+    <span class="text-success">@item.UserName</span> <i class="gi gi-chevron-right" style="font-size:10px"></i>
+    <span class="text-success">@item.NickName</span> 
+    </h4>
+</div>
+<div class="modal-body">
+    <!--Content -->
+    <header class="navbar navbar-default" style="margin-bottom:15px">
+        <!-- Horizontal Menu-->
+        <div id="horizontal-menu-collapse" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li data-link="info" class="active">
+                    <a href="javascript:reloadDetail();">Thông tin chính</a>
+                </li>
+                <li data-link="pet">
+                    <a href="javascript:void(0)">Thú cưng</a>
+                </li>
+                <li data-link="mount">
+                    <a href="javascript:void(0)">Thú cưỡi</a>
+                </li>
+                <li data-link="house">
+                    <a href="javascript:void(0)">Vườn-Nhà</a>
+                </li>
+                <li data-link="farm">
+                    <a href="javascript:void(0)">Nông trại</a>
+                </li>
+                <li data-link="card">
+                    <a href="javascript:void(0)">Thẻ bài</a>
+                </li>
+                <li data-link="bag" class="dropdown">
+                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">Túi đồ <i class="fa fa-angle-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="javascript:loadDetailUserData('EquipBag', 'detail-content', true);"><i class="fa fa-asterisk fa-fw pull-right"></i> Túi trang bị</a></li>
+                        <li><a href="javascript:loadDetailUserData('StoreBag', 'detail-content', true);"><i class="fa fa-lock fa-fw pull-right"></i> Túi đạo cụ</a></li>
+                        <li><a href="javascript:loadDetailUserData('DressBag', 'detail-content', true);"><i class="fa fa-user fa-fw pull-right"></i> Túi thời trang</a></li>
+                        <li><a href="javascript:loadDetailUserData('BeadBag', 'detail-content', true);"><i class="fa fa-magnet fa-fw pull-right"></i> Túi châu báu</a></li>
+                        <li><a href="javascript:loadDetailUserData('MagicStoneBag', 'detail-content', true);"><i class="fa fa-magnet fa-fw pull-right"></i> Túi ma thạch</a></li>
+                        <li><a href="javascript:loadDetailUserData('FarmBag', 'detail-content', true);"><i class="fa fa-magnet fa-fw pull-right"></i> Túi nông trại</a></li>
+                        <li class="divider"></li>
+                        <li><a href="javascript:loadDetailUserData('Consortia', 'detail-content', true);"><i class="fa fa-asterisk fa-fw pull-right"></i>Két sắt Guild</a></li>
+                        <li><a href="javascript:loadDetailUserData('MagicHouseBag', 'detail-content', true);"><i class="fa fa-asterisk fa-fw pull-right"></i>Nhà ma pháp</a></li>
+                    </ul>
+                </li>   
+                <li data-link="other" class="dropdown">
+                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">Thông tin khác <i class="fa fa-angle-down"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="javascript:void(0)">Quyền lợi Vip</a></li>
+                        <li><a href="javascript:void(0)">Chúc phúc vua gà</a></li>
+                    </ul>
+                </li>
+             
+            </ul>          
+        </div>
+        <!-- END Horizontal Menu + Search -->
+    </header>
+    <!-- END Header -->
+    <div id="detail-content" style="height:598px;color:">       
+    </div>
+    <!--Content -->    
+</div>
+<div class="modal-footer">
+    <div class="form-actions">
+        <div class="text-right">
+            <span class="pull-left text-danger">Lưu ý: Mục <span class="text-info">Thông tin chính</span> click vào chữ<span class="text-success"> xanh</span> để sửa trực tiếp</span>
+            <button type="button" class="btn btn-sm btn-danger open-model"
+                    data-link="@Html.Raw(Url.Action("ChangeServer", "Users", routeValues: new { id = item.ID, zid = item.ZoneID}))">Chuyển Server</button>
+             <button type="button" class="btn btn-sm btn-success open-model"
+                    data-link="@Html.Raw(Url.Action("UnForbidPlayer", "Users", routeValues: new { id = item.ID, zid = item.ZoneID, nick = item.NickName}))">Mở khóa</button>
+            <button type="button" class="btn btn-sm btn-warning open-model"
+                    data-link="@Html.Raw(Url.Action("ForbidPlayer", "Users", routeValues: new { id = item.ID, zid = item.ZoneID, nick = item.NickName}))">Tạm khóa 3 ngày</button>
+            <button type="button" class="btn btn-sm btn-danger open-model"
+                    data-link="@Html.Raw(Url.Action("KickPlayer", "Users", routeValues: new { id = item.ID, zid = item.ZoneID, nick = item.NickName}))">Kich khỏi game</button>
+            <button type="button" class="btn btn-sm btn-success" data-dismiss="modal">Đóng</button>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+            reloadDetail();
+            //call model
+            ModelGeneral.initBtn(null, 9999);
+        });
+
+        function loadDetailUserData(type, updateId, hasLazy) {
+            _hasLazy = false;
+            if (hasLazy != undefined && hasLazy != null)
+                _hasLazy = hasLazy;
+
+            if (_hasLazy)
+                $("#loading-bgr").show();
+            loadurl = '@Html.Raw(Url.Action("LoadDetailUserData", "Users", routeValues: new { id = item.ID, @zid = item.ZoneID}))' + "&type=" + type;
+            $.get(loadurl, function (data) {
+                $("#" + updateId).html(data);
+                if (_hasLazy)
+                    $("#loading-bgr").hide();
+            })
+            .fail(function (data) {
+                $("#" + updateId).html(getError(data.status, data.statusText));
+                $("#loading-bgr").hide();
+            });
+        }
+        function reloadDetail() {
+            loadurl = '@Html.Raw(Url.Action("ReloadDetails", "Users", routeValues: new { id = item.ID, @zid = item.ZoneID}))';
+            $.get(loadurl, function (data) {
+                $("#detail-content").html(data);
+            })
+            .fail(function (data) {
+                $("#detail-content").html(getError(data.status, data.statusText));
+                $("#loading-bgr").hide();
+            });
+        }
+        function navActive(name) {
+            var nav = $('div.navbar-collapse > ul > li');
+            $(nav).each(function () {
+                var trigger = $(this).attr("data-link");
+                if (trigger == name) {
+                    $(this).addClass("active");
+                }
+                else
+                {
+                    $(this).removeClass('active');
+                }
+            });
+        }        
+    </script>
+}

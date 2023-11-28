@@ -1,0 +1,79 @@
+﻿@model System.Collections.Generic.List<SqlDataProvider.Data.ServerInfo>
+
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+}
+@if (Model.Any())
+{
+    <div  id="general-table" style="min-height:532px; max-width:532px" class="block push-bit">
+        <table class="table table-striped table-vcenter">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Zone</th>
+                    <th>IP</th>
+                    <th>Port</th>
+                    <th>Online</th>
+                    <th style="width: 80px;" class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    int id = item.ID;
+                    <tr>
+                        <td>@item.ID</td>
+                        <td>@item.Name</td>
+                        <td>@item.ZoneId</td>
+                        <td>@item.IP</td>
+                        <td>@item.Port</td>
+                        <td>@item.Online</td>
+                        <td class="text-center">
+                            @if (item.State == 1)
+                            {
+                                <a href="javascript:void(0)" data-server-id="@id" data-command="start" class="btn btn-success send-command">Start</a>
+                            }
+                            else if (item.State == 2)
+                            {
+                                <a href="javascript:void(0)" data-server-id="@id" data-command="shutdown" class="btn btn-danger send-command">Shutdown</a>
+                            }
+                            else
+                            {
+                                <a href="javascript:void(0)" data-server-id="@id" data-command="shutdown" class="btn btn-default disabled">Loading</a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+}
+else
+{
+    <div class="text-center">
+        @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+    </div>
+}
+@section scripts {
+    <script>
+        $(function () {
+            GMApp.initResize("#remote-container", "#general-table");
+            /*BEGIN*/
+            $('.send-command').click(function () {
+                // Call the Send method on the hub.
+                var name = $(this).attr("data-server-id");
+                var command = $(this).attr("data-command");
+                if (command !== "") {
+                    $.connection.remoteHub.server.sendByHost('@StaticFunction.CryptoToken(User.Identity.Name)', name, command);
+                    $(this).button('loading');
+                    $.post("@Url.Action("UpdateChannelStatus", "Service")", { channelId: name }, function (data) {
+                        console.log('Update channel status result:: ' + data.Result);
+                    });
+                }
+            });
+            /*END*/
+        });
+    </script>
+}

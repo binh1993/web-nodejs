@@ -1,0 +1,3 @@
+2022-08-25 00:56:04 Error: Version 3.6
+2022-08-25 00:56:04 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-25 00:56:04 Error: zoneId1001

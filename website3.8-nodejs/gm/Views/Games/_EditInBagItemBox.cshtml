@@ -1,0 +1,196 @@
+﻿@model SqlDataProvider.Data.ItemBoxInfo
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "Cập nhật thông số";
+    var item = Model;
+    string chek = string.Empty;
+}
+<div class="modal-header themed-background-default">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title 
+        <i class="gi gi-chevron-right" style="font-size:10px"></i>
+        <span style="color:white"><strong> @Html.TItemName(item.TemplateId)</strong></span>
+    </h4>
+</div>
+<div class="modal-body">
+        <!-- From Block -->
+        <form action="@Html.Raw(Url.Action("UpdateItemInBag", "Games", routeValues: new { id = item.TemplateId, type = Request.QueryString["type"]}))"
+              method="post" class="form-horizontal form-bordered" id="frm-update-@item.TemplateId" onsubmit="return false;">
+
+            <input type="hidden" id="BID" name="BID" value="@item.ID"/>
+
+            <div class="form-group">
+                <label class="col-md-3 control-label">TemplateId</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control input-sm must-number" value="@item.TemplateId" disabled="disabled">
+                    <input type="hidden" id="TemplateId" name="TemplateId" value="@item.TemplateId" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="IsSelect">IsSelect</label>
+                <div class="col-md-9">
+                    <label class="switch switch-primary">
+                        @{
+                            chek = string.Empty;
+                            if (item.IsSelect)
+                            {
+                                chek = "checked";
+                            }
+                        }
+                        <input type="checkbox" id="IsSelect" name="IsSelect" value="true" @chek>
+                        <span></span>
+                        <input type="hidden" id="IsSelect" name="IsSelect" value="false">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="IsBind">IsBind</label>
+                <div class="col-md-9">
+                    <label class="switch switch-primary">
+                        @{
+                            chek = string.Empty;
+                            if (item.IsBind)
+                            {
+                                chek = "checked";
+                            }
+                        }
+                        <input type="checkbox" id="IsBind" name="IsBind" value="true" @chek>
+                        <span></span>
+                        <input type="hidden" id="IsBind" name="IsBind" value="false">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="ItemValid">ItemValid</label>
+                <div class="col-md-9">
+                    <input type="text" id="ItemValid" name="ItemValid" class="form-control input-sm must-number" value="@item.ItemValid">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="ItemCount">ItemCount</label>
+                <div class="col-md-9">
+                    <input type="text" id="ItemCount" name="ItemCount" class="form-control input-sm must-number" value="@item.ItemCount">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="StrengthenLevel">StrengthenLevel</label>
+                <div class="col-md-9">
+                    <input type="text" id="StrengthenLevel" name="StrengthenLevel" class="form-control input-sm must-number" value="@item.StrengthenLevel">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="AttackCompose">AttackCompose</label>
+                <div class="col-md-9">
+                    <input type="text" id="AttackCompose" name="AttackCompose" class="form-control input-sm must-number" value="@item.AttackCompose">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="DefendCompose">DefendCompose</label>
+                <div class="col-md-9">
+                    <input type="text" id="DefendCompose" name="DefendCompose" class="form-control input-sm must-number" value="@item.DefendCompose">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="AgilityCompose">AgilityCompose</label>
+                <div class="col-md-9">
+                    <input type="text" id="AgilityCompose" name="AgilityCompose" class="form-control input-sm must-number" value="@item.AgilityCompose">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="LuckCompose">LuckCompose</label>
+                <div class="col-md-9">
+                    <input type="text" id="LuckCompose" name="LuckCompose" class="form-control input-sm must-number" value="@item.LuckCompose">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="Random">Random</label>
+                <div class="col-md-9">
+                    <input type="text" id="Random" name="Random" class="form-control input-sm must-number" value="@item.Random">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="IsTips">IsTips</label>
+                <div class="col-md-9">
+                    <input type="text" id="IsTips" name="IsTips" class="form-control input-sm must-number" value="@item.IsTips">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="IsLogs">IsLogs</label>
+                <div class="col-md-9">
+                    <label class="switch switch-primary">
+                        @{
+                            chek = string.Empty;
+                            if (item.IsLogs)
+                            {
+                                chek = "checked";
+                            }
+                        }
+                        <input type="checkbox" id="IsLogs" name="IsLogs" value="true" @chek>
+                        <span></span>
+                        <input type="hidden" id="IsLogs" name="IsLogs" value="false">
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-group form-actions">
+                <div class="col-md-12 text-right">
+                    <button type="submit" class="btn btn-sm btn-warning btn-submit2"> Cập nhật</button>
+                    <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </form>
+        <!-- END From Block -->
+</div>
+
+@section Scripts{
+    <script>
+        $(function () {
+                     
+            var startBtn = $('.btn-submit2');
+            // On start button click start loading again
+            startBtn.on('click', function () {
+                $(this).button('loading');
+            });
+
+            /* Validate */
+           
+            $('form').each(function () {   // <- selects every <form> on page
+                $(this).validate({        // <- initialize validate() on each form
+                    errorClass: 'help-block animation-slideDown', // You can change the animation class for a different entrance animation - check animations page
+                    errorElement: 'div',
+                    errorPlacement: function (error, e) {
+                        e.parents('.form-group > div').append(error);
+                    },
+                    highlight: function (e) {
+                        $(e).closest('.form-group').removeClass('has-success has-error').addClass('has-error');
+                        $(e).closest('.help-block').remove();
+                    },
+                    success: function (e) {
+                        e.closest('.form-group').removeClass('has-success has-error');
+                        e.closest('.help-block').remove();
+                    },
+                    submitHandler: function (e) {
+                        $('#loading-bgr').show();
+                        $.ajax({
+                            url: e.action,
+                            type: e.method,
+                            data: $(e).serialize(),
+                            success: function (result) {
+                                $('#loading-bgr').hide();
+                                $('#response-hodler').html(result);
+                                startBtn.button('reset');
+                                LoadStoreBag();
+                            },
+                            error: function (xhr) {
+                                $('#loading-bgr').hide();
+                                showGrowl('Error: ' + xhr.status + ' ' + xhr.statusText, 'danger');
+                                startBtn.button('reset');
+                            }
+                        });
+                        return false;
+                    }
+                });
+            });
+        });
+    </script>
+}

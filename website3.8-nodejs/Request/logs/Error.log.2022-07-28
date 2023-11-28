@@ -1,0 +1,272 @@
+2022-07-28 21:52:21,963 - [22] - ERROR - Tank.Request.ServerList - Load server list error:
+System.ServiceModel.CommunicationObjectFaultedException: The communication object, System.ServiceModel.Channels.ServiceChannel, cannot be used for communication because it is in the Faulted state.
+
+Server stack trace: 
+   at System.ServiceModel.Channels.CommunicationObject.Close(TimeSpan timeout)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at System.ServiceModel.ClientBase`1.System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at Tank.Request.ServerList.ProcessRequest(HttpContext context)
+2022-07-28 21:52:39,287 - [9] - ERROR - Bussiness.Interface.BaseInterface - LoginAndUpdate
+System.ServiceModel.CommunicationObjectFaultedException: The communication object, System.ServiceModel.Channels.ServiceChannel, cannot be used for communication because it is in the Faulted state.
+
+Server stack trace: 
+   at System.ServiceModel.Channels.CommunicationObject.Close(TimeSpan timeout)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at System.ServiceModel.ClientBase`1.System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at Bussiness.Interface.BaseInterface.CreateLogin(String name, String password, Int32 zoneId, String& message, Int32& isFirst, String IP, Boolean& isError, Boolean firstValidate, Boolean& isActive, String site, String nickname)
+2022-07-28 21:52:39,287 - [9] - ERROR - Tank.Request.Login - PlayerManager.Remove(name)
+2022-07-28 21:53:16,092 - [26] - ERROR - Tank.Request.ServerList - Load server list error:
+System.ServiceModel.CommunicationObjectFaultedException: The communication object, System.ServiceModel.Channels.ServiceChannel, cannot be used for communication because it is in the Faulted state.
+
+Server stack trace: 
+   at System.ServiceModel.Channels.CommunicationObject.Close(TimeSpan timeout)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at System.ServiceModel.ClientBase`1.System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at Tank.Request.ServerList.ProcessRequest(HttpContext context)
+2022-07-28 21:53:49,940 - [26] - ERROR - Tank.Request.ServerList - Load server list error:
+System.ServiceModel.CommunicationObjectFaultedException: The communication object, System.ServiceModel.Channels.ServiceChannel, cannot be used for communication because it is in the Faulted state.
+
+Server stack trace: 
+   at System.ServiceModel.Channels.CommunicationObject.Close(TimeSpan timeout)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at System.ServiceModel.ClientBase`1.System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at Tank.Request.ServerList.ProcessRequest(HttpContext context)
+2022-07-28 21:57:18,138 - [25] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220728.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-28 21:57:48,985 - [22] - ERROR - Tank.Request.ServerList - Load server list error:
+System.ServiceModel.CommunicationObjectFaultedException: The communication object, System.ServiceModel.Channels.ServiceChannel, cannot be used for communication because it is in the Faulted state.
+
+Server stack trace: 
+   at System.ServiceModel.Channels.CommunicationObject.Close(TimeSpan timeout)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at System.ServiceModel.ClientBase`1.System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at Tank.Request.ServerList.ProcessRequest(HttpContext context)
+2022-07-28 22:02:18,152 - [26] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220728.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-28 22:02:48,508 - [34] - ERROR - Tank.Request.ServerList - Load server list error:
+System.ServiceModel.CommunicationObjectFaultedException: The communication object, System.ServiceModel.Channels.ServiceChannel, cannot be used for communication because it is in the Faulted state.
+
+Server stack trace: 
+   at System.ServiceModel.Channels.CommunicationObject.Close(TimeSpan timeout)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at System.ServiceModel.ClientBase`1.System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at Tank.Request.ServerList.ProcessRequest(HttpContext context)
+2022-07-28 22:03:25,694 - [28] - ERROR - Tank.Request.ServerList - Load server list error:
+System.ServiceModel.CommunicationObjectFaultedException: The communication object, System.ServiceModel.Channels.ServiceChannel, cannot be used for communication because it is in the Faulted state.
+
+Server stack trace: 
+   at System.ServiceModel.Channels.CommunicationObject.Close(TimeSpan timeout)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at System.ServiceModel.ClientBase`1.System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at Tank.Request.ServerList.ProcessRequest(HttpContext context)
+2022-07-28 22:03:51,706 - [29] - ERROR - Tank.Request.ServerList - Load server list error:
+System.ServiceModel.CommunicationObjectFaultedException: The communication object, System.ServiceModel.Channels.ServiceChannel, cannot be used for communication because it is in the Faulted state.
+
+Server stack trace: 
+   at System.ServiceModel.Channels.CommunicationObject.Close(TimeSpan timeout)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at System.ServiceModel.ClientBase`1.System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at Tank.Request.ServerList.ProcessRequest(HttpContext context)
+2022-07-28 22:07:18,164 - [31] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220728.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-28 22:12:18,179 - [34] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220728.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-28 22:17:18,191 - [28] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220728.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-28 22:22:18,193 - [31] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220728.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-28 22:27:18,217 - [40] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220728.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-28 22:32:18,229 - [47] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220728.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-28 22:37:18,254 - [53] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220728.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-28 22:42:18,258 - [64] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220728.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-28 22:47:18,272 - [69] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220728.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-28 22:52:18,276 - [74] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220728.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-28 22:57:18,279 - [78] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220728.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-28 23:02:18,298 - [88] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220728.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-28 23:07:18,313 - [81] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220728.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-28 23:12:18,335 - [71] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220728.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-28 23:17:18,354 - [64] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220728.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-28 23:22:18,363 - [49] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220728.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-28 23:27:18,379 - [17] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220728.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-28 23:32:18,390 - [11] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220728.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-28 23:37:18,403 - [104] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220728.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-28 23:42:18,415 - [111] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220728.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-28 23:47:18,431 - [99] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220728.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-28 23:52:18,435 - [13] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220728.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)
+2022-07-28 23:57:18,459 - [41] - ERROR - Tank.Request.StaticsMgr - Save log error
+System.IO.DirectoryNotFoundException: Could not find a part of the path 'D:\GameLog\reg-010110-20220728.log'.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share)
+   at System.IO.File.Open(String path, FileMode mode)
+   at Tank.Request.StaticsMgr.OnTimer(Object state)

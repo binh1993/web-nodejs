@@ -1,0 +1,218 @@
+﻿@using MvcPaging;
+@using SqlDataProvider.Data;
+@using GM.Service.Models;
+@model IPagedList<ItemTemplateInfo>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "List Item";
+    CategoryInfo[] categorys = StaticFunction.GetCategory();
+}
+
+@if (Model.TotalItemCount > 0)
+{
+    <div style="display:none" id="total-items">
+        @if (ViewData["key"] == null || string.IsNullOrWhiteSpace((string)ViewData["key"]))
+        {
+            <p class="text-info" style="font-size:14px"> Có tổng cộng <strong class="text-danger">@Model.TotalItemCount</strong> item(s)</p>
+        }
+        else
+        {
+            <p class="text-info" style="font-size:14px"> Có tổng cộng <strong class="text-danger">@Model.TotalItemCount</strong> item(s) thỏa điều kiện</p>
+        }
+    </div>
+}
+
+<div class="block">
+    <div style="min-height:491px">
+        @if (Model.Count() > 0)
+        {
+            <table class="table table-hover" id="list-items">
+                <thead>
+                    <tr>
+                        <th class="text-center" style="width: 20px;">
+                            <label class="switch switch-primary">
+                                <input type="checkbox" id="check-all" name="check-all"><span></span>
+                            </label>
+                        </th>
+                        <th style="width: 386px;" class="text-center">Name</th>
+                        <th>
+                            Attack
+                        </th>
+                        <th>
+                            Defence
+                        </th>
+                        <th>
+                            Luck
+                        </th>
+                        <th>
+                            Agility
+                        </th>
+                        <th>
+                            AddTime
+                        </th>
+                        <th style="width: 35px;" class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td class="text-center">
+                                <label class="switch switch-primary">
+                                    <input type="checkbox" id="@item.TemplateID" name="@item.TemplateID" value="@item.TemplateID"><span></span>
+                                </label>
+                            </td>
+                            <td>
+                                <label class="col-xs-2">
+                                    @Html.NewItemImage(item.TemplateID, "", "", "37")
+                                </label>
+                                <div class="col-xs-10" style="margin-bottom:-15px">
+                                    <a href="javascript:void(0);">
+                                        <strong>@StaticFunction.ItemName(item.TemplateID, item.Name)</strong>
+                                    </a>
+                                    <p>
+                                        <span class="text-success">@item.TemplateID.ToString()</span>
+                                        <span class="pull-right text-warning" style="font-size:12px"><em>category: </em>@item.CategoryID</span>
+                                    </p>
+                                </div>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Attack)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Defence)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Luck)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Agility)
+                            </td>
+                            <td>
+                                @Html.TOnline(DateTime.Parse(item.AddTime))
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group btn-group-xs">
+                                    <a href="@Html.Raw(Url.Action("Import", "XML", routeValues: new { ids = item.TemplateID, xml = ViewData["xml"] , url = ViewData["url"], isNew = false }))" data-modal="import"
+                                       data-toggle="tooltip" title="Import item này vào DB" class="btn btn-warning"><i class="gi gi-disk_import"></i></a>
+                                    <a href="@Html.Raw(Url.Action("RipResource", "XML", routeValues: new { ids = item.TemplateID, xml = ViewData["xml"] , url = ViewData["url"], isNew = false }))" data-modal="rip"
+                                       data-toggle="tooltip" title="Rip hình item này" class="btn btn-info"><i class="hi hi-cloud_download"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="text-center">
+                @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+            </div>
+        }
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="btn-group btn-group-sm">
+                <a href="@Html.Raw(Url.Action("Import", "XML", routeValues: new { xml = ViewData["xml"] , url = ViewData["url"] , isNew = false }))" 
+                   class="btn btn-warning" data-toggle="tooltip" title="Import items được chọn" data-modal="Selected"><i class="gi gi-disk_import"></i></a>
+                <a href="@Html.Raw(Url.Action("RipResource", "XML", routeValues: new { xml = ViewData["xml"] , url = ViewData["url"] , isNew = false }))" 
+                   class="btn btn-info" data-toggle="tooltip" title="Tải hình items được chọn" data-modal="Selected"><i class="hi hi-cloud_download"></i></a>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="text-center">
+                @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount, new AjaxOptions { UpdateTargetId = "xml-content", LoadingElementId = "loading-bgr" }).Options(o => o
+                    .DisplayTemplate("_Pagination")
+                    .MaxNrOfPages(3)
+                    .Action("LoadData")
+                    .AddRouteValue("key", ViewData["key"])
+                    .AddRouteValue("xml", ViewData["xml"])
+                    .AddRouteValue("url", ViewData["url"])
+                    .AddRouteValue("cid", ViewData["cid"])
+                    .AddRouteValue("getNew", ViewData["getNew"]))
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="btn-group btn-group-sm pull-right">
+                <div class="btn-group btn-group-sm dropup">
+                    <a href="javascript:void(0)" class="btn btn-primary pull-right dropdown-toggle" data-toggle="dropdown">Nhiều hơn</a>
+                    <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
+                        <li class="dropdown-header"><i class="fa fa-share pull-right"></i>Lựa chọn</li>
+                        <li>
+                            <a href="javascript:reload()">Tại lại</a>
+                            <a href="@Html.Raw(Url.Action("XmlView", "XML", routeValues: new { xml = ViewData["xml"] , url = ViewData["url"], isView = true }))" data-modal="viewXml">Xem định dạng XML</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="@Html.Raw(Url.Action("SaveToXml", "XML", routeValues: new { xml = ViewData["xml"] , url = ViewData["url"]}))" data-modal="savetoxml">Lưu thành file xml</a>
+                            <a href="@Html.Raw(Url.Action("Import", "XML", routeValues: new { xml = ViewData["xml"] , url = ViewData["url"] , isNew = true }))" data-modal="import">Import item mới vào DB</a>
+                            <a href="@Html.Raw(Url.Action("RipResource", "XML", routeValues: new { xml = ViewData["xml"] , url = ViewData["url"] , isNew = true }))" data-modal="rip">Rip hình ảnh item mới</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="@Html.Raw(Url.Action("Import", "XML", routeValues: new { xml = ViewData["xml"] , url = ViewData["url"] , isNew = false }))" data-modal="import">Import tất cả vào DB</a>
+                            <a href="@Html.Raw(Url.Action("RipResource", "XML", routeValues: new { xml = ViewData["xml"] , url = ViewData["url"] , isNew = false }))" data-modal="rip">Rip tất cả hình ảnh</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="btn-group btn-group-sm dropup">
+                    <a href="javascript:void(0)" class="btn btn-info pull-right dropdown-toggle" data-toggle="dropdown">Category</a>
+                    <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
+                        <li class="dropdown-header"><i class="fa fa-share pull-right"></i> Chọn Category</li>
+                        <li style="overflow-y:auto; height:442px" id="">
+                            @foreach (CategoryInfo cat in categorys)
+                            {
+                                <a href="javascript:void(0)" onclick="loadCategory(@cat.CategoryID)">@cat.CategoryID - @cat.Name</a>
+                            }
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+            ModelGeneral.init('data-modal="viewXml"', 'large');
+
+            var total = $("#total-items").html();
+            $("#total-items-content").html(total);
+
+            ModelGeneral.init('data-modal="rip"');
+
+            $('a[data-modal="savetoxml"]').bind('click', function (e) {
+                var link = $(this).attr("href");
+                return callService(link);
+            });
+
+            $('a[data-modal="import"]').bind('click', function (e) {
+                var link = $(this).attr("href");
+                return callService(link);
+            });
+
+            $('a[data-modal="Selected"]').bind("click", function (e) {
+                var url = $(this).attr("href");
+                var _checked = [];
+
+                _checked = $("tbody input:checkbox:checked").map(function () {
+                    return this.value;
+                }).toArray();
+
+                if (_checked.length == 0) {
+                    showGrowl('Bạn chưa chọn item. Vui lòng chọn và thử lại', 'danger');
+                    return false;
+                }                
+                if (url.indexOf('RipResource') != -1) {
+                     var params = 'ids=' + _checked;
+                     GMApp.Dialog(url, e, params);
+                     return false;
+                }
+                url += '&ids=' + _checked;
+                return callService(url);
+            });
+
+        });        
+    </script>
+}

@@ -1,0 +1,22 @@
+﻿@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "Lổi đăng nhập";
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+<div class="modal-body">
+    <!-- Warning Alert -->
+    <div class="alert alert-warning">
+        <p>Vui lòng đăng nhập để sử dụng chức năng này.</p>
+        <p>Nếu bạn đã đăng nhập có thể thời gian đăng nhập hết hiệu lực, tải lại trang để đăng nhập lại.</p>        
+    </div>
+    <!-- END Warning Alert -->
+    <div class="form-actions">
+        <div class="text-right">
+            @Html.ActionLink("Đăng nhập", "Login", "Account", routeValues: null, htmlAttributes: new { id = "login-link", @class = "btn btn-sm btn-success" })
+            <button type="button" class="btn btn-sm btn-success" data-dismiss="modal">Huỷ</button>
+        </div>
+    </div>
+</div>

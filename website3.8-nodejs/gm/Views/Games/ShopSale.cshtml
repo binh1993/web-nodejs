@@ -1,0 +1,100 @@
+﻿@{
+    ViewBag.Title = "Shop Sale";
+}
+
+<!-- Blank Alternative Header -->
+<div class="content-header">
+    <div class="header-section">
+        <h1>
+            <i class="gi gi-cart_in"></i>@ViewBag.Title<br><small>Quản lý shop giảm giá trong game!</small>
+        </h1>
+    </div>
+</div>
+<ul class="breadcrumb breadcrumb-top">
+    <li>Trang</li>
+    <li>Games</li>
+    <li><a href="">Shop Sale</a></li>
+</ul>
+<!-- END Blank Alternative Header -->
+
+<!-- Blank Alternative Content -->
+<div class="block block-alt-noborder">
+    <div class="sub-header">
+        <div class="row">     
+            <div class="col-md-4">
+                <select id="shop-enddate-chosen" name="shop-enddate-chosen" class="select-chosen" data-placeholder="Chọn..">                    
+                    <option value="0">Tất cả</option>
+                    <option value="1">Item còn hạn</option>
+                    <option value="2">Item hết hạn</option>
+                </select>
+            </div>      
+            <div class="col-md-4">
+                <form action="./" method="post" id="frm-shop-sale-search" onsubmit="return false;">
+                    <div class="input-group">
+                        <input type="text" id="shop-sale-quick-search" name="key" class="form-control" placeholder="Tìm kiếm...">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-4">
+                <a href="@Html.Raw(Url.Action("AddItemsModel","Games", new { type = "shopsale" }))" class="btn btn-alt btn-sm btn-default pull-right" data-dialog="-1"
+                   data-toggle="tooltip" title="Thêm item mới" id="btn-add-shop-sale">
+                    <i class="gi gi-circle_plus text-primary"></i> Thêm hàng mới
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- HTML -->
+    <div id="shop-sale-list">
+        <div class="text-center text-warning">
+            <p>@Html.Raw(StaticFunction.GetTranslation("Views.WaitLoading"))</p>
+        </div>
+    </div>
+    <!-- END HTML -->
+</div>
+<!-- END Blank Alternative Content -->
+
+@section Scripts {
+    <script>
+        $(function () {
+            /*add some code here!*/
+            loadShopSale();
+
+            /*call add dailog*/
+            $('#btn-add-shop-sale').bind('click', function (e) {
+                var _id = $(this).attr("data-dialog");
+                var url = $(this).attr("href") + '&name=@Html.Raw(StaticFunction.GetTranslation("Request.shopcheap.Name"))';
+                //GMApp.Dialog(url, e, 'tid=' + _id, 'large');
+                return false;
+            });
+
+            $("#shop-enddate-chosen").change(function (e) {
+                var cid = $(this).val();
+                GMApp.GetJson('#shop-sale-list', '@Html.Raw(Url.Action("ShopSaleList", "Games"))?cid=' + cid);
+            });
+
+            //live search
+            $("#shop-sale-quick-search").keyup(function (e) {
+                e.preventDefault();
+                var loadurl = '@Html.Raw(Url.Action("ShopSaleList", "Games"))';
+                $.ajax({
+                    url: loadurl,
+                    type: 'POST',
+                    data: $('#frm-shop-sale-search').serialize(),
+                    success: function (data) {
+                        $('#shop-sale-list').html(data.Html);
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        $('#shop-sale-list').html(getError(xhr.status, xhr.statusText));
+                    }
+                });
+            });
+
+        });
+        function loadShopSale() {
+            GMApp.GetJson('#shop-sale-list', '@Html.Raw(Url.Action("ShopSaleList", "Games"))');
+        }
+    </script>
+}

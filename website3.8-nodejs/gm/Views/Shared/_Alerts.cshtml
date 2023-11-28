@@ -1,0 +1,26 @@
+﻿@using Helpers;
+
+                <!-- Warning Alert -->
+                @{
+                    int count = 0;
+                    if (TempData.ContainsKey(Alerts.WARNING))
+                    {
+
+                        <div class="alert alert-@Alerts.WARNING text-left" id="alert-content">
+                            <h3 class="font-w300 push-15">Attention!</h3>
+                            @Html.Raw(TempData[Alerts.WARNING])
+                        </div>
+                        count++;
+                    }
+                    foreach (string key in Alerts.ALL.Except(new[] { Alerts.WARNING }))
+                    {
+                        if (TempData.ContainsKey(key))
+                        {
+                            <div class="alert alert-@key alert-dismissable text-left" id="alert-content">
+                                @Html.Raw(TempData[key])
+                            </div>
+                            count++;
+                        }
+                    }
+                }
+                <!-- END Warning Alert -->

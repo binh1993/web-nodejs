@@ -1,0 +1,127 @@
+﻿@using MvcPaging;
+@model GM.Service.Models.TableModel
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    var info = Model.Info;
+    IPagedList<SqlDataProvider.Data.TableDesignInfo> items = Model.DesignPages;
+}
+@if (items != null && items.Count() > 0)
+{
+    <div id="table-design-page-content">
+        <div style="min-height:450px">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Type
+                        </th>
+                        <th>
+                            IdEntity
+                        </th>
+                        <th>
+                            IsPrimary
+                        </th>
+                        <th>
+                            IsNotNull
+                        </th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in items)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Type)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IdEntity)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IsPrimary)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IsNotNull)
+                            </td>
+                            <td>
+                                <button class="btn btn-xs btn-default edit-column" type="button" data-toggle="tooltip" title="Sửa" id="editTableDesign"
+                                        data-link="@Url.Action("EditTableDesign", "Tables", new { id = item.ID })">
+                                    <i class="fa fa-pencil"></i>
+                                </button>
+
+                                <button class="btn btn-xs btn-default open-model-delete" type="button" data-toggle="tooltip" title="Xóa" data-modal="deleteTableDesign"
+                                        data-link="@Url.Action("DeleteTableDesign", "Tables", new { id = item.ID })">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div style="text-align:center">
+            @Html.Pager(items.PageSize, items.PageNumber, items.TotalItemCount, new AjaxOptions { UpdateTargetId = "table-design-container", LoadingElementId = "loading-bgr" }).Options(o => o
+                    .DisplayTemplate("_Pagination")
+                    .MaxNrOfPages(5)
+                    .Action("TableDesignPages")
+                    .AddRouteValue("id", info.ID))
+        </div>
+    </div>
+    <div id="edit-table-design-content" style="display:none;">
+    </div>
+}
+else
+{
+    <div class="alert text-center text-danger" style="min-height:450px">
+        @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+    </div>
+}
+
+@section Scripts{
+    <script>
+        $(function () {
+            ModelGeneral.initBtn(null, 19999, 'delete');
+
+            var listContent = $('#table-design-page-content');
+            var editContent = $('#edit-table-design-content');
+            var clasaAni = 'animation-fadeInQuick';
+
+            $('.edit-column').on('click', function () {
+                var url = $(this).attr('data-link');
+                $("#loading-bgr").show();
+                $.ajax({
+                    type: "GET",
+                    url: url,
+                    cache: false,
+                    success: function (data) {
+                        editContent.html(data);
+                        listContent.hide();
+                        editContent.show();
+                        editContent.addClass(clasaAni);                        
+                        $("#loading-bgr").hide();
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        showGrowl('Error: ' + xhr.status + ' ' + xhr.statusText, 'danger');
+                        $("#loading-bgr").hide();
+                    }
+                });                
+            });
+        });
+        function reloadTableDesignList(addNew) {
+             @{ int curentPage = (items.TotalItemCount - ((items.PageNumber - 1) * items.PageSize)) == 1? items.PageNumber - 1: items.PageNumber;
+                 curentPage = items.PageNumber == 1 ? items.PageNumber : curentPage;}
+            var getUrl = '@Html.Raw(Url.Action("TableDesignPages", "Tables", new { id = info.ID, page = curentPage, key = @ViewData["key"] }))';
+            if (addNew) {
+                @{ int lastPage = items.TotalItemCount / items.PageSize + 1; }
+                getUrl =  '@Html.Raw(Url.Action("TableDesignPages", "Tables", new { id = info.ID, page = lastPage, key = @ViewData["key"] }))';
+            }
+            GMApp.GetAjax('#table-design-container', getUrl);
+        }
+    </script>
+}

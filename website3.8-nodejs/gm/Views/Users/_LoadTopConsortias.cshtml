@@ -1,0 +1,79 @@
+﻿@using MvcPaging;
+@model List<SqlDataProvider.Data.ConsortiaInfo>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "LoadData";
+    int zoneId = -1;
+    int count = 1;
+}
+
+    <table id="general-table" class="table table-striped table-vcenter">
+        <thead>
+            <tr>            
+                <th>STT</th>   
+                <th>ID</th>
+                <th>ConsortiaName</th>
+                <th>ChairmanName</th>
+                @if (ViewData["cond"].ToString() == "Level")
+                {
+                    <th>Level</th>
+                }                    
+                @if (ViewData["cond"].ToString() == "FightPower")
+                {
+                    <th>FightPower</th>
+                }      
+                <th>Riches</th>
+            </tr>
+        </thead>
+
+                  
+            @if (Model.Count() > 0)
+            {
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        zoneId = item.ZoneID;
+                        <tr>                        
+                            <td>@count</td>               
+                            <td>@item.ConsortiaID</td>
+                            <td>
+                                <a href="javascript:void(0)">
+                                    <strong>@item.ConsortiaName</strong>
+                                </a>
+                            </td>
+                            <td>@item.ChairmanName.ToString()</td>
+                            @if (ViewData["cond"].ToString() == "Level")
+                            {
+                                <td>@item.Level</td>
+                            }      
+                            @if (ViewData["cond"].ToString() == "FightPower")
+                            {
+                                <td>@item.FightPower</td>
+                            }     
+                            <td>@item.Riches</td>                            
+                        </tr>
+                        count++;
+                    }
+                </tbody>
+            }
+            else
+            {
+                <tbody>
+                    <tr>
+                        <td colspan="8" class="text-center" id="insert-avatar">
+                            @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+                        </td>
+                    </tr>
+                </tbody>
+            }          
+    </table>
+
+@section Scripts{
+    <script>
+        /* Initialize app when page loads */
+        $(function () {
+            $('.popover:visible').popover('destroy');
+            GMApp.GetJson('#insert-avatar', '@Url.Action("Avatar","Users")');
+        });
+    </script>
+}

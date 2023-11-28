@@ -1,0 +1,100 @@
+﻿@using MvcPaging;
+@model IPagedList<SqlDataProvider.Data.TopInfo>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "LoadTop";
+}
+
+    @if (Model.Count() > 0)
+    {        
+        <ul class="media-list" id="media-list" style="min-height:532px">           
+            @foreach (var item in Model)
+            {
+                <li class="media">
+                    <div class="media-body">
+                        <span class="text-warning pull-right"><small><em>area id <i class="gi gi-chevron-right" style="font-size:8px"></i>@item.ZoneID</em></small></span>
+                        <a href="@Html.Raw(Url.Action("LoadTopAward","Award", new { id = item.ID, zid = item.ZoneID }))" id="@item.ID"><strong>@item.Name</strong></a>
+                        <div>@item.Detail</div>
+                        <span class="btn-group">
+                            <a href="@Html.Raw(Url.Action("EditTop","Award", new { id = item.ID }))" class="btn btn-xs btn-success" 
+                               data-toggle="tooltip" title="Sửa" data-modal="editTop"><i class="fa fa-pencil"></i></a>
+                            <a href="@Html.Raw(Url.Action("DeleteTop","Award", new { id = item.ID }))" class="btn btn-xs btn-warning" 
+                               data-toggle="tooltip" title="Xóa" data-modal="deleteTop"><i class="fa fa-times"></i></a>
+                        </span>
+                    </div>
+                </li>
+            }
+        </ul>
+        <div class="text-center" style="margin-top:-5px">
+            @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount, new AjaxOptions { UpdateTargetId = "top-content", LoadingElementId = "loading-bgr" }).Options(o => o
+                                .DisplayTemplate("_Pagination")
+                                .Action("LoadTop")
+                                .AddRouteValue("zid", ViewData["zid"])
+                                .MaxNrOfPages(3))
+        </div>
+    }
+    else
+    {
+        <div class="text-center">
+            @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+        </div>
+    }
+
+@section Scripts{
+    <script>
+        $(function () {
+            /* page load*/
+            loadTopAward();
+            ModelGeneral.init('data-modal="editTop"');
+            ModelGeneral.init('data-modal="deleteTop"');
+            /*Auto load top award*/
+            $(".media-list").on("click", "li a", function () {
+                $(".media-list li a").removeClass('active text-danger');
+                $(this).addClass('active text-danger');
+                $('#default-category').attr('value', 'all');
+                loadTopAward();
+                return false;
+            });
+        });
+
+        function reloadTop() {
+           var loadurl = '@Html.Raw(Url.Action("LoadTop", "Award", routeValues: new { zid = ViewData["zid"], @page = Model.PageNumber }))';
+            $.get(loadurl, function (data) {
+                $("#top-content").html(data);
+                $("#loading-bgr").hide();
+            })
+            .fail(function (data) {
+                $("#top-content").html(getError(data.status, data.statusText));
+            });
+        }
+        function loadTopAward() {
+            var curentAvtive = $(".media-list").find('.active');
+            if (curentAvtive.length === 0) {
+                curentAvtive = $(".media-list li:first a");
+                curentAvtive.addClass('active text-danger');
+            }
+            if (curentAvtive.length > 0) {
+                var name = curentAvtive.html();
+                var link = curentAvtive.attr("href");
+                var id = curentAvtive.attr("id");
+                $("#loading-bgr").show();
+                $.get(link, function (data) {
+                    $("#award-content").html(data);
+                    $("#award-header").html(name);
+                    $("#btn-add-top-award").attr("data-dialog", id);
+                    ReadyFiles.showCurrentCategory();
+                    $("#loading-bgr").hide();
+                })
+                .fail(function (data) {
+                    $("#award-content").html(getError(data.status, data.statusText));
+                    $("#loading-bgr").hide();
+                });
+            }
+            else {
+                $("#award-content").html('<div class="text-center">@Html.Raw(StaticFunction.GetTranslation("Views.Empty"))</div>');
+                $("#award-header").html('Chưa chọn');
+            }
+        }
+    </script>
+}
+

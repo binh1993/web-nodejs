@@ -1,0 +1,115 @@
+﻿@using SqlDataProvider.Data;
+@model IPagedList<DropItem>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "LoadDropItems";
+}
+
+@if (Model.Count() > 0)
+{
+        <!-- Files Content -->
+        <!-- Add the category value for each item in its data-category attribute (for the filter functionality to work) -->
+    <div class="row media-filter-items" id="media-filter-items"  style="height:543px;">
+        @foreach (var item in Model)
+        {
+            <div class="col-sm-6 col-lg-4">
+                <div class="media-items animation-fadeInQuickInv" data-category="rank-@item.Id" style="height:250px; min-width:150px">
+
+                    <div class="media-items-options text-left">
+                        <a href="@Html.Raw(Url.Action("EditDropItem", "Games", new { id = item.Id , page =  Model.PageNumber}))" class="btn btn-xs btn-primary"
+                           data-modal="editDropItem"><i class="fa fa-pencil"></i></a>
+                        <a href="@Html.Raw(Url.Action("DeleteDropItem", "Games", new { id = item.Id }))"
+                           class="btn btn-xs btn-warning" data-modal="deleteDropItem"><i class="fa fa-remove"></i></a>                       
+                        <span class="pull-right text-warning" style="font-size:11px"><em>Drop <i class="gi gi-chevron-right" style="font-size:8px"></i></em> @item.DropId</span>
+                    </div>
+                    <div class="media-items-content" style="margin-top:-10px; margin-bottom:-15px">
+                        @if (item.DropId == 6131)
+                        {
+                            @Html.PetImage(item.ItemId, "", "", "75")
+                        }
+                        else
+                        {
+                            @Html.ItemImage(item.ItemId, "", "", "75")
+                        }                        
+                    </div>
+                    <h4>
+                        <span class="text-info" style="font-size:14px">
+                            @if (item.DropId == 6131)
+                            {
+                                @Html.PetName(item.ItemId)
+                            }
+                            else
+                            {
+                                @Html.TItemName(item.ItemId)
+                            }                            
+                        </span><br>
+                        <small style="font-size:12px">
+                            <em>Random:</em><span class="text-success"> @item.Random </span><br>
+                        </small>
+                        <small style="font-size:12px">
+                            <em>Số lượng:</em> @if (item.BeginData != item.EndData)
+                            { <span class="text-success"> Ngẫu nhiên </span> }
+                            else
+                            { <span class="text-info">@item.BeginData </span> }
+                        </small><br>
+                        <small style="font-size:12px">
+                            <em>Hiệu lực:</em> @if (item.ValueDate == 0)
+                            { <span class="text-success"> Vĩnh viễn </span> }
+                            else
+                            { <span class="text-info">@item.ValueDate ngày </span> }
+                        </small><br>
+                        <small style="font-size:12px">
+                            <em>Trạng thái:</em> @if (item.IsBind)
+                            { <span class="text-danger"> Khóa</span> }
+                            else
+                            { <span class="text-success"> Không khóa </span> }
+                        </small>
+                    </h4>
+                </div>
+            </div>
+        }
+    </div>
+        <!-- END Files Content -->       
+        <div class="row">
+            <div class="col-md-3">                
+            </div>
+            <div class="col-md-6">
+                <div class="text-center">
+                    @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount, new AjaxOptions { LoadingElementId = "loading-bgr", OnSuccess = "AjaxDropItemsSuccess" }).Options(o => o
+                                .DisplayTemplate("_Pagination")
+                                .Action("LoadDropItems")
+                                .AddRouteValue("key", ViewData["key"])
+                                .AddRouteValue("id", ViewContext.RouteData.Values["id"])
+                                .MaxNrOfPages(3))
+                </div>
+            </div>
+            <div class="col-md-3">
+                <a href="@Html.Raw(Url.Action("SendReloadToService", "Service", new { cmd = "drop" }))" class="btn btn-sm btn-success pull-right" id="btn-schema-xml">Cập nhật cho server</a>
+            </div>
+        </div>
+}
+else
+{
+    <div class="text-center">
+        @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+    </div>
+}
+
+@section Scripts{
+    <script>
+        $(function () {
+            ModelGeneral.init('data-modal="editDropItem"');
+            ModelGeneral.init('data-modal="deleteDropItem"');
+            GMApp.initSchema("#btn-schema-xml");
+        });
+        function AjaxDropItemsSuccess(data) {//OnSuccess = "AjaxSuccess"
+            if (data.Result) {
+                $('#drop-items-content').html(data.Html);
+            }
+            else {
+                showGrowl(data.Html, 'danger');
+            }
+        }
+    </script>
+}
+

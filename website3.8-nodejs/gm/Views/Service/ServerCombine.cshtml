@@ -1,0 +1,170 @@
+﻿@model GM.Service.Models.CombineModel
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "Service Area";
+}
+<div class="row">
+    <div class="col-md-8" style="border-right: 1px dotted gray">
+        <div class="form-group">
+            <label class="col-md-2 control-label text-primary" for="server-chosen-version">Chọn phiên bản</label>
+            <div class="col-md-8">
+                <select id="server-chosen-version" name="server-chosen" class="select-chosen" data-placeholder="Chọn server..." style="width: 250px;">
+                    <option value="1">Bản 3.4 by HimeChibi</option>
+                    <option value="1">Bản 7.5 hoặc hơn</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="block" id="combine-content">
+            <br/>
+            <div class="form-horizontal form-control-borderless">
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="server-chosen-a">Primary Server</label>
+                    <div class="col-md-8">
+                        <select id="server-chosen-a" name="server-chosen" class="select-chosen" data-placeholder="Chọn server..." style="width: 250px;">
+                            <option value="-1"></option>
+                            @foreach (var item in Model.Areas)
+                            {
+                                <option value="@item.AreaID">@item.AreaName</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="server-chosen-b">Combine Server</label>
+                    <div class="col-md-8">
+                        <select id="server-chosen-b" name="server-chosen" class="select-chosen" data-placeholder="Chọn server..." style="width: 250px;">
+                            <option value="-1"></option>
+                            @foreach (var item in Model.Areas)
+                            {
+                                <option value="@item.AreaID">@item.AreaName</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="block">
+            <div class="block-title">
+                <h2 class="text-info">Result</h2>
+                <div class="btn-group btn-group-sm pull-right" style="margin-top: 3px; margin-right: 15px">
+                    <a href="javascript:void(0)" class="btn btn-primary" id="start-process">@StaticFunction.GetTranslation("Server.Combine.Buttom.Process")</a>
+                </div>
+            </div>
+            <div class="block-content" id="combine-result" style="height: 265px; margin-left: 50px">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4" >
+        <p class="text-warning" style="font-size: 18px;">
+            <i class="gi gi-log_in"></i><small> @StaticFunction.GetTranslation("Server.Combine.Title1")</small>
+            <a href="@Html.Raw(Url.Action("CreateNewTable", "Service"))" class="btn btn-alt btn-sm btn-default pull-right" data-dialog="-1"
+               id="btn-add-table">
+                <i class="gi gi-circle_plus text-primary"></i> @StaticFunction.GetTranslation("Server.Combine.Buttom.Title")
+            </a>
+        </p>
+        <div id="area-list" style="height: 420px; overflow-y: auto">
+            <table class="table table-hover" id="media-list">
+                @if (Model.Tables.Any())
+                {
+                    <tbody>
+                    @foreach (var item in Model.Tables)
+                    {
+                        <tr>
+                            <td class="text-center" style="width: 25px">
+                                <label>
+                                    <input type="checkbox" id="cb-@item.ID" name="@item.ID" value="@item.ID"><span></span>
+                                </label>
+                            </td>
+                            <td>
+                                <div>
+                                    <span class="text-primary"><strong>@item.Name</strong></span>
+                                    <div class="btn-group btn-group-xs pull-right">
+                                        <a href="@Html.Raw(Url.Action("EditEditCombineTable", "Service", new {id = item.ID}))" class="btn btn-xs btn-warning"
+                                           data-toggle="tooltip" title="Chỉnh sửa" data-modal="edit"><i class="gi gi-edit"></i></a>
+                                        <a href="@Url.Action("DeleteCombineTable", "Service", routeValues: new {id = item.ID})" data-modal="delete"
+                                           data-toggle="tooltip" title="Xóa" class="btn btn-danger"><i class="fa fa-times"></i></a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                }
+                else
+                {
+                    <tbody>
+                    <tr>
+                        <td colspan="2" class="text-center" id="insert-avatar">
+                            @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+                        </td>
+                    </tr>
+                    </tbody>
+                }
+            </table>
+
+        </div>
+        <div class="btn-group btn-group-sm">
+            <a href="javascript:void(0)" class="btn btn-warning" id="tables-selected">@StaticFunction.GetTranslation("Server.Combine.Buttom.Multi.Delete.Title")</a>
+        </div>
+    </div>
+
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+            /*add some code here!*/
+
+            ModelGeneral.init('data-modal="delete"');
+            ModelGeneral.init('data-modal="edit"');
+
+            $('#start-process').bind('click', function (e) {
+                if ($("#server-chosen-a").val() === $("#server-chosen-b").val()) {
+                    showGrowl('Vui lòng chọn hai server khác nhau!', 'danger');
+                } else {
+                    $(this).button('loading');
+                    ProcessCombineServer();
+                }
+                return false;
+            });
+
+            $('#btn-add-table').bind('click', function (e) {
+                var url = $(this).attr("href");
+                GMApp.Dialog(url, e);
+                return false;
+            });
+            //--stop callback monitor chat
+            stopReresh();
+        });
+        function ProcessCombineServer() {
+            var srva = $("#server-chosen-a").val();
+            var srvb = $("#server-chosen-b").val();
+            var url = '@Url.Action("ProcessCombine","Service")?srva=' + srva + '&srvb=' + srvb;
+
+            $.ajax({
+                url: url,
+                dataType: "json",
+                contentType: 'application/json; charset=utf-8',
+                cache: false,
+                success: function (data) {
+                    $('#combine-result').html(data.Html);
+                    if (data.Html.indexOf("Complete") === -1) {
+                        setTimeout(function() { ProcessCombineServer() }, 100);
+                    } else {
+                        $('#start-process').button('reset');
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    var text = "Error: " + xhr.status + " " + xhr.statusText;
+                    showGrowl(text, 'danger');
+                    $("#loading-bgr").hide();
+                }
+            });
+        }
+        function reloadServer() {
+            //GMApp.GetJson('#tabs-server-manager', '@Url.Action("ServerManager", "Service")');
+        }
+    </script>
+}
+

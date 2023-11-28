@@ -1,0 +1,283 @@
+﻿@model IEnumerable<SqlDataProvider.Data.ActiveInfo>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = StaticFunction.GetTranslation("Model.Add.Title.Active");
+}
+<div class="modal-header themed-background-default">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">
+        @ViewBag.Title
+    </h4>
+</div>
+<div class="modal-body">   
+    <div id="tips-create" style="display:none">
+        <h4>Lưu ý quan trọng</h4>
+        <p class="text-danger">
+            'Nạp xu để nhận quà' là nạp xu người chơi đang có. Số xu mặc định là 10000xu không thể thay đổi
+        </p>
+    </div> 
+    <div class="sub-header">
+        <div class="row text-warning" style="font-size:18px">
+            <div class="col-md-2">
+                <i class="gi gi-log_out"></i><small> Chọn mẫu</small>
+            </div>
+            <div class="col-md-6">
+                <select id="template-chosen" name="template-chosen" class="select-chosen" data-placeholder="Hoạt động..">
+                    <option></option>
+                    @foreach (var item in Model)
+                    {
+                        <option value="@item.HasKey">@item.Title (@item.ActionTimeContent)</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-4 text-right">
+                <a href="javascript:showTips('#tips-create')" class="btn btn-alt btn-sm btn-warning">
+                <small><i class="gi gi-circle_question_mark" style="font-size:12px"></i> </small> Lưu ý </a>  
+            </div>
+        </div>
+    </div>
+    <form action="@Html.Raw(Url.Action("CreateActive", "Games"))"  method="post" class="form-horizontal form-bordered" id="frm-add-active">        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="ActiveID">ActiveID</label>
+                    <div class="col-md-9">
+                        <input type="text" id="ActiveID" name="ActiveID" class="form-control input-sm must-number" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Int")">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="Title">Title</label>
+                    <div class="col-md-9">
+                        <textarea id="Title" name="Title" rows="5" class="form-control must-required" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Text")"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="Description">Description</label>
+                    <div class="col-md-9">
+                        <textarea id="Description" name="Description" rows="5" class="form-control" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Text")"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="Content">Content</label>
+                    <div class="col-md-9">
+                        <textarea id="Content" name="Content" rows="5" class="form-control must-required" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Text")"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="AwardContent">AwardContent</label>
+                    <div class="col-md-9">
+                        <textarea id="AwardContent" name="AwardContent" rows="5" class="form-control" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Text")"></textarea>
+                    </div>
+                </div>                
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="ActionTimeContent">ActionTimeContent</label>
+                    <div class="col-md-9">
+                        <input type="text" id="ActionTimeContent" name="ActionTimeContent" class="form-control input-sm" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Text")">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="IsAdvance">IsAdvance</label>
+                    <div class="col-md-9">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="switch switch-primary">
+                                    <input type="checkbox" id="IsAdvance" name="IsAdvance" value="true">
+                                    <span></span>
+                                    <input type="hidden" id="IsAdvance" name="IsAdvance" value="false">
+                                </label>
+                            </div>
+                            <div class="col-md-9">
+                                <label class="col-md-3 control-label" for="IsShow">IsShow</label>
+                                <div class="col-md-9">
+                                    <label class="switch switch-primary">
+                                        <input type="checkbox" id="IsShow" name="IsShow" value="true">
+                                        <span></span>
+                                        <input type="hidden" id="IsShow" name="IsShow" value="false">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>                       
+                    </div>
+                </div>                
+            </div>            
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="HasKey">HasKey</label>
+                    <div class="col-md-9">
+                        <input type="text" id="HasKey" name="HasKey" class="form-control input-sm must-number" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Int")">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="StartDate">StartDate</label>
+                    <div class="col-md-9">
+                        <input type="text" id="StartDate" name="StartDate" class="form-control input-sm must-date" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Date")">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="EndDate">EndDate</label>
+                    <div class="col-md-9">
+                        <input type="text" id="EndDate" name="EndDate" class="form-control input-sm must-date" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Date")">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="IsOnly">IsOnly</label>
+                    <div class="col-md-9">
+                        <input type="text" id="IsOnly" name="IsOnly" class="form-control input-sm must-number" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Int")">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="Type">Type</label>
+                    <div class="col-md-9">
+                        <input type="text" id="Type" name="Type" class="form-control input-sm must-number" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Int")">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="GoodsExchangeTypes">GoodsExchangeTypes</label>
+                    <div class="col-md-9">
+                        <input type="text" id="GoodsExchangeTypes" name="GoodsExchangeTypes" class="form-control input-sm" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Text")">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="GoodsExchangeNum">GoodsExchangeNum</label>
+                    <div class="col-md-9">
+                        <input type="text" id="GoodsExchangeNum" name="GoodsExchangeNum" class="form-control input-sm" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Text")">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="limitType">limitType</label>
+                    <div class="col-md-9">
+                        <input type="text" id="limitType" name="limitType" class="form-control input-sm" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Text")">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="limitValue">limitValue</label>
+                    <div class="col-md-9">
+                        <input type="text" id="limitValue" name="limitValue" class="form-control input-sm" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Text")">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="ActiveType">ActiveType</label>
+                    <div class="col-md-9">
+                        <input type="text" id="ActiveType" name="ActiveType" class="form-control input-sm must-number" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Int")">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="IconID">IconID</label>
+                    <div class="col-md-9">
+                        <input type="text" id="IconID" name="IconID" class="form-control input-sm must-number" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Int")">
+                    </div>
+                </div>
+            </div>
+        </div>  
+        <div class="form-group form-actions">
+            <div class="col-md-12 text-right">
+                <button type="submit" class="btn btn-sm btn-warning btn-submit2"> @StaticFunction.GetTranslation("Model.Add")</button>
+                <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal"> @StaticFunction.GetTranslation("Model.CLose")</button>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts{
+    <script>       
+
+        $(function () {
+            $('.popover:visible').popover('destroy');
+            /*select template*/
+            $("#template-chosen").change(function (e) {
+                var hasKey = $(this).val();
+                var getUrl = '@Html.Raw(Url.Action("GetActiveTemplate", "Games"))';
+
+                $.ajax({
+                    type: "GET",
+                    url: getUrl,
+                    dataType: "json",
+                    contentType: 'application/json; charset=utf-8',
+                    data: { 'hasKey': hasKey },
+                    cache: false,
+                    success: function (data) {
+                        if (data.Result) {
+                            $.each(data.Template, function (key, val) {
+                                switch (key) {
+                                    case 'ActiveID':
+                                        $('input[name="' + key + '"]').val('210x');
+                                        break;
+                                    case 'Title':
+                                    case 'Description':
+                                    case 'Content':
+                                    case 'AwardContent':
+                                        $('textarea[name="' + key + '"]').val(val);
+                                        break;
+                                    case 'IsAdvance':
+                                    case 'IsShow':
+                                        $('#' + key).prop('checked', val);
+                                        break;
+                                    case 'StartDate':
+                                    case 'EndDate':
+                                        var getDate = JSONDateWithTime(val);//val.replace(/\/Date\((.*?)\)\//gi, "new Date($1)");
+                                        $('input[name="' + key + '"]').val(getDate)
+                                        break;
+                                    default:
+                                        $('input[name="' + key + '"]').val(val);
+                                        break;
+                                }
+                            });
+                        }
+                        else {
+                            showGrowl(data.Error, 'danger');
+                        }
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        showGrowl('Error: ' + xhr.status + ' ' + xhr.statusText, 'danger');
+                    }
+                });
+
+            });
+            var startBtn = $('.btn-submit2');
+            // On start button click start loading again
+            startBtn.on('click', function () {
+                $(this).button('loading');
+            });
+
+            /* Validate */
+
+            $('form#frm-add-active').each(function () {
+                $(this).validate({
+                    errorClass: 'help-block animation-slideDown',
+                    errorElement: 'div',
+                    errorPlacement: function (error, e) {
+                        e.parents('.form-group > div').append(error);
+                    },
+                    highlight: function (e) {
+                        $(e).closest('.form-group').removeClass('has-success has-error').addClass('has-error');
+                        $(e).closest('.help-block').remove();
+                    },
+                    success: function (e) {
+                        e.closest('.form-group').removeClass('has-success has-error');
+                        e.closest('.help-block').remove();
+                    },
+                    submitHandler: function (e) {
+                        $('#loading-bgr').show();
+                        $.ajax({
+                            url: e.action,
+                            type: e.method,
+                            data: $(e).serialize(),
+                            success: function (result) {
+                                $('#loading-bgr').hide();
+                                $('#response-hodler').html(result);
+                                startBtn.button('reset');
+                                loadEventsList();
+                            },
+                            error: function (xhr) {
+                                $('#loading-bgr').hide();
+                                showGrowl('Error: ' + xhr.status + ' ' + xhr.statusText, 'danger');
+                                startBtn.button('reset');
+                            }
+                        });
+                        return false;
+                    }
+                });
+            });
+        });        
+    </script>
+}

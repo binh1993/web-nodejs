@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNet.Identity
+<!-- User Info -->
+    @if (Request.IsAuthenticated)
+    {
+        string content = User.Identity.GetUserName();
+        <div class="sidebar-section sidebar-user clearfix sidebar-nav-mini-hide">            
+            <div class="sidebar-user-avatar">
+                <a href="@Url.Action("Index","Home")">
+                    <img src="@Url.Action("img/placeholders/avatars/avatar2.jpg","Backend")" alt="avatar">
+                </a>
+            </div>
+            <div class="sidebar-user-name">@Html.TUserNameFor(content)</div>
+            <div class="sidebar-user-links">
+                <a href="@Url.Action("Index","Manage")" data-toggle="tooltip" data-placement="bottom" title="Profile"><i class="gi gi-user"></i></a>
+                <a href="javascript:void(0)" data-toggle="tooltip" data-placement="bottom" title="Messages"><i class="gi gi-envelope"></i></a>
+                <a href="javascript:void(0)" class="enable-tooltip" data-placement="bottom" title="Settings"><i class="gi gi-cogwheel"></i></a>
+                <a href="@Url.Action("LogOff","Account")" data-toggle="tooltip" data-placement="bottom" title="Logout"><i class="gi gi-exit"></i></a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="sidebar-section sidebar-themes clearfix sidebar-nav-mini-hide">
+            <div class="btn-group btn-group-justified btn-group-sm">
+                @Html.ActionLink("Đăng nhập", "Login", "Account", routeValues: null, htmlAttributes: new { id = "login-link", @class = "btn btn-sm btn-success" })
+                @Html.ActionLink("Đăng Ký", "Register", "Account", routeValues: null, htmlAttributes: new { id = "login-link", @class = "btn btn-sm btn-warning" })
+            </div>
+        </div>
+    }
+<!-- END User Info -->    

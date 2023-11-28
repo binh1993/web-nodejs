@@ -1,0 +1,371 @@
+﻿@model SqlDataProvider.Data.UsersExtraInfo
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "_Edit";
+    var item = Model;
+}
+<form action="@Html.Raw(Url.Action("UpdateUsersData", "Users", routeValues: new { @zid = Request.QueryString["zid"], @type = "UsersExtraInfo" }))"
+      method="post" class="form-horizontal" id="frm-usersextra">
+    <input type="hidden" id="ID" name="ID" value="@item.ID">   
+    <input type="hidden" id="UserID" name="UserID" value="@item.UserID">
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="starlevel">starlevel</label>
+        <div class="col-md-7">
+            <input type="text" id="starlevel" name="starlevel" class="form-control input-sm" value="@item.starlevel">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="nowPosition">nowPosition</label>
+        <div class="col-md-7">
+            <input type="text" id="nowPosition" name="nowPosition" class="form-control input-sm" value="@item.nowPosition">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="FreeCount">FreeCount</label>
+        <div class="col-md-7">
+            <input type="text" id="FreeCount" name="FreeCount" class="form-control input-sm" value="@item.FreeCount">
+        </div>
+    </div>    
+    <input type="hidden" id="SearchGoodItems" name="SearchGoodItems" value="@item.SearchGoodItems">
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="FreeAddAutionCount">FreeAddAutionCount</label>
+        <div class="col-md-7">
+            <input type="text" id="FreeAddAutionCount" name="FreeAddAutionCount" class="form-control input-sm" value="@item.FreeAddAutionCount">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="FreeSendMailCount">FreeSendMailCount</label>
+        <div class="col-md-7">
+            <input type="text" id="FreeSendMailCount" name="FreeSendMailCount" class="form-control input-sm" value="@item.FreeSendMailCount">
+        </div>
+    </div>    
+    <input type="hidden" id="KingBlessInfo" name="KingBlessInfo" value="@item.KingBlessInfo">
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="MissionEnergy">MissionEnergy</label>
+        <div class="col-md-7">
+            <input type="text" id="MissionEnergy" name="MissionEnergy" class="form-control input-sm" value="@item.MissionEnergy">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="buyEnergyCount">buyEnergyCount</label>
+        <div class="col-md-7">
+            <input type="text" id="buyEnergyCount" name="buyEnergyCount" class="form-control input-sm" value="@item.buyEnergyCount">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="KingBlessEnddate">KingBlessEnddate</label>
+        <div class="col-md-7">
+            <input type="text" id="KingBlessEnddate" name="KingBlessEnddate" class="form-control input-sm" value="@item.KingBlessEnddate">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="KingBlessIndex">KingBlessIndex</label>
+        <div class="col-md-7">
+            <input type="text" id="KingBlessIndex" name="KingBlessIndex" class="form-control input-sm" value="@item.KingBlessIndex">
+        </div>
+    </div>    
+    <input type="hidden" id="DressModelArr" name="DressModelArr" value="@item.DressModelArr">
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="CurentDressModel">CurentDressModel</label>
+        <div class="col-md-7">
+            <input type="text" id="CurentDressModel" name="CurentDressModel" class="form-control input-sm" value="@item.CurentDressModel">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="ScoreMagicstone">ScoreMagicstone</label>
+        <div class="col-md-7">
+            <input type="text" id="ScoreMagicstone" name="ScoreMagicstone" class="form-control input-sm" value="@item.ScoreMagicstone">
+        </div>
+    </div>    
+    <input type="hidden" id="DeedInfo" name="DeedInfo" value="@item.DeedInfo">
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="DeedEnddate">DeedEnddate</label>
+        <div class="col-md-7">
+            <input type="text" id="DeedEnddate" name="DeedEnddate" class="form-control input-sm" value="@item.DeedEnddate">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="DeedIndex">DeedIndex</label>
+        <div class="col-md-7">
+            <input type="text" id="DeedIndex" name="DeedIndex" class="form-control input-sm" value="@item.DeedIndex">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="Score">Score</label>
+        <div class="col-md-7">
+            <input type="text" id="Score" name="Score" class="form-control input-sm" value="@item.Score">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="SummerScore">SummerScore</label>
+        <div class="col-md-7">
+            <input type="text" id="SummerScore" name="SummerScore" class="form-control input-sm" value="@item.SummerScore">
+        </div>
+    </div>    
+    <input type="hidden" id="CatchInsectGetPrize" name="CatchInsectGetPrize" value="@item.CatchInsectGetPrize">
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="PrizeStatus">PrizeStatus</label>
+        <div class="col-md-7">
+            <input type="text" id="PrizeStatus" name="PrizeStatus" class="form-control input-sm" value="@item.PrizeStatus">
+        </div>
+    </div>
+    <div class="form-group"> 
+        <label class="col-md-5 control-label" for="CakeStatus">CakeStatus</label>
+        <div class="col-md-7">
+            <label class="switch switch-primary">
+                @{
+                    string chek = string.Empty;
+                    if (item.CakeStatus) { chek = "checked"; }
+                }
+                <input type="checkbox" id="CakeStatus" name="CakeStatus" value="true" @chek>
+                <span></span>
+                <input type="hidden" id="CakeStatus" name="CakeStatus" value="false">
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="NormalFightNum">NormalFightNum</label>
+        <div class="col-md-7">
+            <input type="text" id="NormalFightNum" name="NormalFightNum" class="form-control input-sm" value="@item.NormalFightNum">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="HardFightNum">HardFightNum</label>
+        <div class="col-md-7">
+            <input type="text" id="HardFightNum" name="HardFightNum" class="form-control input-sm" value="@item.HardFightNum">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="IsDoubleScore">IsDoubleScore</label>
+        <div class="col-md-7">
+            <label class="switch switch-primary">
+                @{
+                    chek = string.Empty;
+                    if (item.IsDoubleScore) { chek = "checked"; }
+                }
+                <input type="checkbox" id="IsDoubleScore" name="IsDoubleScore" value="true" @chek>
+                <span></span>
+                <input type="hidden" id="IsDoubleScore" name="IsDoubleScore" value="false">
+            </label>
+        </div>
+    </div>     
+    <input type="hidden" id="MagpieBridgeItems" name="MagpieBridgeItems" value="@item.MagpieBridgeItems">
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="NowPositionMB">NowPositionMB</label>
+        <div class="col-md-7">
+            <input type="text" id="NowPositionMB" name="NowPositionMB" class="form-control input-sm" value="@item.NowPositionMB">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="LastNum">LastNum</label>
+        <div class="col-md-7">
+            <input type="text" id="LastNum" name="LastNum" class="form-control input-sm" value="@item.LastNum">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="MagpieNum">MagpieNum</label>
+        <div class="col-md-7">
+            <input type="text" id="MagpieNum" name="MagpieNum" class="form-control input-sm" value="@item.MagpieNum">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="FreePresentGoodsCount">FreePresentGoodsCount</label>
+        <div class="col-md-7">
+            <input type="text" id="FreePresentGoodsCount" name="FreePresentGoodsCount" class="form-control input-sm" value="@item.FreePresentGoodsCount">
+        </div>
+    </div>
+    <div class="form-group form-actions">
+        <div class="col-md-12 text-right">
+            <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-ok"></i> Lưu thay đổi</button>
+        </div>
+    </div>
+</form>
+@section Scripts{
+    <script>
+        //$('#KingBlessEnddate').mask('99/99/9999 99:99:99 AM');
+        //$('#DeedEnddate').mask('99/99/9999 99:99:99 AM');
+        $.validator.setDefaults({
+            submitHandler: function (e) {
+                $('#loading-bgr').show();
+                $.ajax({
+                    url: e.action,
+                    type: e.method,
+                    data: $(e).serialize(),
+                    success: function (result) {
+                        $('#loading-bgr').hide();
+                        $('#response-hodler').html(result);
+                    },
+                    error: function (result) {
+                        $('#loading-bgr').hide();
+                        showAjaxResponse("@StaticFunction.GetTranslation("Views.ErrorRequest")");
+                    }
+                });
+                return false;
+            }
+        });
+        $('#frm-usersextra').validate({
+            errorClass: 'help-block animation-slideDown',
+            errorElement: 'div',
+            errorPlacement: function (error, e) {
+                e.parents('.form-group > div').append(error);
+            },
+            highlight: function (e) {
+                $(e).closest('.form-group').removeClass('has-success has-error').addClass('has-error');
+                $(e).closest('.help-block').remove();
+            },
+            success: function (e) {
+                e.closest('.form-group').removeClass('has-success has-error');
+                e.closest('.help-block').remove();
+            },
+            rules: {
+                'ID': {
+                    required: true,
+                    digits: true
+                },
+                'UserID': {
+                    required: true,
+                    digits: true
+                },
+                'starlevel': {
+                    required: true,
+                    digits: true
+                },
+                'nowPosition': {
+                    required: true,
+                    digits: true
+                },
+                'FreeCount': {
+                    required: true,
+                    digits: true
+                },
+                'SearchGoodItems': {
+                    required: true,
+                },
+                'FreeAddAutionCount': {
+                    required: true,
+                    digits: true
+                },
+                'FreeSendMailCount': {
+                    required: true,
+                    digits: true
+                },
+                'KingBlessInfo': {
+                    required: true,
+                },
+                'MissionEnergy': {
+                    required: true,
+                    digits: true
+                },
+                'buyEnergyCount': {
+                    required: true,
+                    digits: true
+                },
+                'KingBlessEnddate': {
+                    required: true,
+                    date: true
+                },
+                'KingBlessIndex': {
+                    required: true,
+                    digits: true
+                },
+                'DressModelArr': {
+                    required: true,
+                },
+                'CurentDressModel': {
+                    required: true,
+                    digits: true
+                },
+                'ScoreMagicstone': {
+                    required: true,
+                    digits: true
+                },
+                'DeedInfo': {
+                    required: true,
+                },
+                'DeedEnddate': {
+                    required: true,
+                    date: true
+                },
+                'DeedIndex': {
+                    required: true,
+                    digits: true
+                },
+                'Score': {
+                    required: true,
+                    digits: true
+                },
+                'SummerScore': {
+                    required: true,
+                    digits: true
+                },
+                'CatchInsectGetPrize': {
+                    required: true,
+                },
+                'PrizeStatus': {
+                    required: true,
+                    digits: true
+                },               
+                'NormalFightNum': {
+                    required: true,
+                    digits: true
+                },
+                'HardFightNum': {
+                    required: true,
+                    digits: true
+                },                
+                'MagpieBridgeItems': {
+                    required: true,
+                },
+                'NowPositionMB': {
+                    required: true,
+                    digits: true
+                },
+                'LastNum': {
+                    required: true,
+                    digits: true
+                },
+                'MagpieNum': {
+                    required: true,
+                    digits: true
+                },
+                'FreePresentGoodsCount': {
+                    required: true,
+                    digits: true
+                }
+            },
+            messages: {
+                'ID': 'Vui lòng nhập vào 1 số',
+                'UserID': 'Vui lòng nhập vào 1 số',
+                'starlevel': 'Vui lòng nhập vào 1 số',
+                'nowPosition': 'Vui lòng nhập vào 1 số',
+                'FreeCount': 'Vui lòng nhập vào 1 số',
+                'SearchGoodItems': 'Vui lòng nhập vào 1 số',
+                'FreeAddAutionCount': 'Vui lòng nhập vào 1 số',
+                'FreeSendMailCount': 'Vui lòng nhập vào 1 số',
+                'KingBlessInfo': 'Vui lòng nhập vào 1 số',
+                'MissionEnergy': 'Vui lòng nhập vào 1 số',
+                'buyEnergyCount': 'Vui lòng nhập vào 1 số',
+                'KingBlessEnddate': 'Vui lòng nhập vào theo mẫu 1/30/2015 12:59:00 AM',
+                'KingBlessIndex': 'Vui lòng nhập vào 1 số',
+                'DressModelArr': 'Vui lòng nhập vào 1 số',
+                'CurentDressModel': 'Vui lòng nhập vào 1 số',
+                'ScoreMagicstone': 'Vui lòng nhập vào 1 số',
+                'DeedInfo': 'Vui lòng nhập vào 1 số',
+                'DeedEnddate': 'Vui lòng nhập vào theo mẫu 1/30/2015 12:59:00 AM',
+                'DeedIndex': 'Vui lòng nhập vào 1 số',
+                'Score': 'Vui lòng nhập vào 1 số',
+                'SummerScore': 'Vui lòng nhập vào 1 số',
+                'CatchInsectGetPrize': 'Vui lòng nhập vào 1 số',
+                'PrizeStatus': 'Vui lòng nhập vào 1 số',
+                'NormalFightNum': 'Vui lòng nhập vào 1 số',
+                'HardFightNum': 'Vui lòng nhập vào 1 số',
+                'MagpieBridgeItems': 'Vui lòng nhập vào 1 số',
+                'NowPositionMB': 'Vui lòng nhập vào 1 số',
+                'LastNum': 'Vui lòng nhập vào 1 số',
+                'MagpieNum': 'Vui lòng nhập vào 1 số',
+                'FreePresentGoodsCount': 'Vui lòng nhập vào 1 số'
+            }
+        });
+    </script>
+}
+

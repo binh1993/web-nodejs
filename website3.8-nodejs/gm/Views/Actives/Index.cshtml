@@ -1,0 +1,64 @@
+﻿@{
+    ViewBag.Title = "Actives";
+}
+
+<!-- Blank Alternative Header -->
+<div class="content-header">
+    <div class="header-section">
+        <h1>
+            <i class="gi gi-gift"></i>@ViewBag.Title<br><small>Quản lý các hoạt động trong game!</small>
+        </h1>
+    </div>
+</div>
+<ul class="breadcrumb breadcrumb-top">
+    <li>Trang</li>
+    <li>Games</li>
+    <li><a href="">Actives</a></li>
+</ul>
+<!-- END Blank Alternative Header -->
+
+<!-- Blank Alternative Content -->
+<div class="block block-alt-noborder">
+    <div class="sub-header">
+        <div class="row">
+            <div class="col-md-6">
+                <div style="width: 350px; ">
+                    <form action="./" method="post" id="active-sale-search" onsubmit="return false;">
+                        <div class="input-group">
+                            <input type="text" id="active-quick-search" name="key" class="form-control" placeholder="Tìm kiếm...">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-6 text-right">
+                <a href="@Html.Raw(Url.Action("OpenOrCloseActives","Actives", new { type = "closeall" }))" class="btn btn-alt btn-sm btn-danger" data-dialog="-1"
+                   id="btn-close-all" data-modal="openorclose"> <i class="fa fa-times"></i> Đóng tất cả hoạt động
+                </a>
+                <a href="@Html.Raw(Url.Action("OpenOrCloseActives","Actives", new { type = "openall" }))" class="btn btn-alt btn-sm btn-primary" data-dialog="-1"
+                   id="btn-open-all" data-modal="openorclose"> <i class="gi gi-circle_plus"></i> Mở tất cả hoạt động
+                </a>
+               
+            </div> 
+        </div>
+    </div>
+    <!-- HTML -->
+    <div id="shop-sale-list">
+        <div class="text-center text-warning">
+            <p>@Html.Raw(StaticFunction.GetTranslation("Views.WaitLoading"))</p>
+        </div>
+    </div>
+    <!-- END HTML -->
+</div>
+<!-- END Blank Alternative Content -->
+
+@section Scripts {
+    <script>
+        $(function () {
+            /* page load*/
+            ModelGeneral.init('data-modal="openorclose"');
+        });
+    </script>
+}

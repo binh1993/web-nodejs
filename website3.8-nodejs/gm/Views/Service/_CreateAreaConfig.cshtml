@@ -1,0 +1,151 @@
+﻿@model SqlDataProvider.Data.AreaConfigInfo
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = StaticFunction.GetTranslation("Model.Add.Title.AreaConfig");
+    var item = Model;
+    string chek = string.Empty;
+}
+<div class="modal-header themed-background-default">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">
+        @ViewBag.Title
+    </h4>
+</div>
+<div class="modal-body">
+    <form action="@Html.Raw(Url.Action("Create", "Service"))" method="post" class="form-horizontal form-bordered" id="frm-add-areaconfig">
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="AreaID">AreaID</label>
+            <div class="col-md-9">
+                <input type="text" id="AreaID" name="AreaID" class="form-control input-sm must-digits" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Int")" value="1001">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="AreaServer">AreaServer</label>
+            <div class="col-md-9">               
+                    <input type="text" id="AreaServer" name="AreaServer" class="form-control input-sm" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Text")" value="Private Server">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="AreaName">AreaName</label>
+            <div class="col-md-9">               
+                    <input type="text" id="AreaName" name="AreaName" class="form-control input-sm must-required" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Text")" value="Server 01">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="DataSource">DataSource</label>
+            <div class="col-md-9">               
+                    <input type="text" id="DataSource" name="DataSource" class="form-control input-sm must-required" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Text")" value="\.GUNNY">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Catalog">Catalog</label>
+            <div class="col-md-9">              
+                    <input type="text" id="Catalog" name="Catalog" class="form-control input-sm must-required" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Text")" value="Db_Tank_S">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="UserID">UserID</label>
+            <div class="col-md-9">              
+                    <input type="text" id="UserID" name="UserID" class="form-control input-sm must-required" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Text")" value="sa">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Password">Password</label>
+            <div class="col-md-9">               
+                    <input type="text" id="Password" name="Password" class="form-control input-sm must-required" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Text")" value="123456">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Password">RequestUrl</label>
+            <div class="col-md-9">
+                <input type="text" id="RequestUrl" name="RequestUrl" class="form-control input-sm must-required" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Text")" value="http://gunviet.vn/quest2/">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="CrossChatAllow">CrossChatAllow</label>
+            <div class="col-md-9">
+                <label class="switch switch-primary">
+                    <input type="checkbox" id="CrossChatAllow" name="CrossChatAllow" value="true" checked>
+                    <span></span>
+                    <input type="hidden" id="CrossChatAllow" name="CrossChatAllow" value="false">
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="CrossPrivateChat">CrossPrivateChat</label>
+            <div class="col-md-9">
+                <label class="switch switch-primary">
+                    <input type="checkbox" id="CrossPrivateChat" name="CrossPrivateChat" value="true" checked>
+                    <span></span>
+                    <input type="hidden" id="CrossPrivateChat" name="CrossPrivateChat" value="false">
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Version">Version</label>
+            <div class="col-md-9">
+                <input type="text" id="Version" name="Version" class="form-control input-sm must-required" value="7.0">
+            </div>
+        </div>
+        <div class="form-group form-actions">
+            <div class="col-md-12 text-right">
+                <button type="submit" class="btn btn-sm btn-warning btn-submit2"> @StaticFunction.GetTranslation("Model.Add")</button>
+                <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal"> @StaticFunction.GetTranslation("Model.CLose")</button>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts{
+    <script>
+
+          $(function () {
+            var startBtn = $('.btn-submit2');
+            // On start button click start loading again
+            startBtn.on('click', function () {
+                $(this).button('loading');
+            });
+
+            /* Validate */
+
+            $('form#frm-add-areaconfig').each(function () {
+                $(this).validate({
+                    errorClass: 'help-block animation-slideDown',
+                    errorElement: 'div',
+                    errorPlacement: function (error, e) {
+                        e.parents('.form-group > div').append(error);
+                    },
+                    highlight: function (e) {
+                        $(e).closest('.form-group').removeClass('has-success has-error').addClass('has-error');
+                        $(e).closest('.help-block').remove();
+                        startBtn.button('reset');
+                    },
+                    success: function (e) {
+                        e.closest('.form-group').removeClass('has-success has-error');
+                        e.closest('.help-block').remove();
+                    },
+                    submitHandler: function (e) {
+                        $('#loading-bgr').show();
+                        $.ajax({
+                            url: e.action,
+                            type: e.method,
+                            data: $(e).serialize(),
+                            success: function (result) {
+                                $('#loading-bgr').hide();
+                                $('#response-hodler').html(result);
+                                startBtn.button('reset');
+                                reloadServer();
+                            },
+                            error: function (xhr) {
+                                $('#loading-bgr').hide();
+                                showGrowl('Error: ' + xhr.status + ' ' + xhr.statusText, 'danger');
+                                startBtn.button('reset');
+                            }
+                        });
+                        return false;
+                    }
+                });
+            });
+        });
+
+    </script>
+}

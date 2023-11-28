@@ -1,0 +1,174 @@
+2022-09-10 08:30:20,360 - [25] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-09-10 08:30:20,485 - [27] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-09-10 08:30:20,500 - [20] - ERROR - Bussiness.BaseBussiness - Init
+System.InvalidCastException: Specified cast is not valid.
+   at Bussiness.ConsortiaBussiness.GetConsortiaUsersPage(Int32 page, Int32 size, Int32& total, Int32 order, Int32 consortiaID, Int32 userID, Int32 state)
+2022-09-10 10:13:40,345 - [27] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-09-10 10:13:40,423 - [7] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-09-10 10:13:40,423 - [25] - ERROR - Bussiness.BaseBussiness - Init
+System.InvalidCastException: Specified cast is not valid.
+   at Bussiness.ConsortiaBussiness.GetConsortiaUsersPage(Int32 page, Int32 size, Int32& total, Int32 order, Int32 consortiaID, Int32 userID, Int32 state)
+2022-09-10 10:28:36,728 - [30] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-09-10 10:28:36,822 - [13] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-09-10 10:28:36,822 - [20] - ERROR - Bussiness.BaseBussiness - Init
+System.InvalidCastException: Specified cast is not valid.
+   at Bussiness.ConsortiaBussiness.GetConsortiaUsersPage(Int32 page, Int32 size, Int32& total, Int32 order, Int32 consortiaID, Int32 userID, Int32 state)
+2022-09-10 10:42:38,644 - [10] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-09-10 10:42:38,753 - [14] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-09-10 10:42:38,769 - [27] - ERROR - Bussiness.BaseBussiness - Init
+System.InvalidCastException: Specified cast is not valid.
+   at Bussiness.ConsortiaBussiness.GetConsortiaUsersPage(Int32 page, Int32 size, Int32& total, Int32 order, Int32 consortiaID, Int32 userID, Int32 state)
+2022-09-10 12:19:31,023 - [21] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-09-10 12:19:31,148 - [7] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-09-10 12:19:31,148 - [22] - ERROR - Bussiness.BaseBussiness - Init
+System.InvalidCastException: Specified cast is not valid.
+   at Bussiness.ConsortiaBussiness.GetConsortiaUsersPage(Int32 page, Int32 size, Int32& total, Int32 order, Int32 consortiaID, Int32 userID, Int32 state)
+2022-09-10 12:19:42,654 - [9] - ERROR - Bussiness.BaseBussiness - Init
+System.InvalidCastException: Specified cast is not valid.
+   at Bussiness.ConsortiaBussiness.GetConsortiaUsersPage(Int32 page, Int32 size, Int32& total, Int32 order, Int32 consortiaID, Int32 userID, Int32 state)
+2022-09-10 12:20:31,757 - [23] - ERROR - Bussiness.BaseBussiness - Init
+System.InvalidCastException: Specified cast is not valid.
+   at Bussiness.ConsortiaBussiness.GetConsortiaUsersPage(Int32 page, Int32 size, Int32& total, Int32 order, Int32 consortiaID, Int32 userID, Int32 state)
+2022-09-10 12:21:37,253 - [15] - ERROR - Bussiness.BaseBussiness - Init
+System.InvalidCastException: Specified cast is not valid.
+   at Bussiness.ConsortiaBussiness.GetConsortiaUsersPage(Int32 page, Int32 size, Int32& total, Int32 order, Int32 consortiaID, Int32 userID, Int32 state)
+2022-09-10 12:24:27,521 - [15] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-09-10 12:24:27,599 - [7] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-09-10 12:24:27,599 - [20] - ERROR - Bussiness.BaseBussiness - Init
+System.InvalidCastException: Specified cast is not valid.
+   at Bussiness.ConsortiaBussiness.GetConsortiaUsersPage(Int32 page, Int32 size, Int32& total, Int32 order, Int32 consortiaID, Int32 userID, Int32 state)
+2022-09-10 12:57:19,958 - [7] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-09-10 12:57:20,083 - [24] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-09-10 12:57:20,098 - [11] - ERROR - Bussiness.BaseBussiness - Init
+System.InvalidCastException: Specified cast is not valid.
+   at Bussiness.ConsortiaBussiness.GetConsortiaUsersPage(Int32 page, Int32 size, Int32& total, Int32 order, Int32 consortiaID, Int32 userID, Int32 state)
+2022-09-10 14:23:31,770 - [11] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-09-10 14:23:31,849 - [24] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-09-10 14:23:31,849 - [13] - ERROR - Bussiness.BaseBussiness - Init
+System.InvalidCastException: Specified cast is not valid.
+   at Bussiness.ConsortiaBussiness.GetConsortiaUsersPage(Int32 page, Int32 size, Int32& total, Int32 order, Int32 consortiaID, Int32 userID, Int32 state)
+2022-09-10 14:56:42,934 - [10] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-09-10 14:56:43,074 - [27] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-09-10 14:56:43,074 - [20] - ERROR - Bussiness.BaseBussiness - Init
+System.InvalidCastException: Specified cast is not valid.
+   at Bussiness.ConsortiaBussiness.GetConsortiaUsersPage(Int32 page, Int32 size, Int32& total, Int32 order, Int32 consortiaID, Int32 userID, Int32 state)
+2022-09-10 15:15:06,509 - [27] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-09-10 15:15:06,603 - [21] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-09-10 15:15:06,603 - [20] - ERROR - Bussiness.BaseBussiness - Init
+System.InvalidCastException: Specified cast is not valid.
+   at Bussiness.ConsortiaBussiness.GetConsortiaUsersPage(Int32 page, Int32 size, Int32& total, Int32 order, Int32 consortiaID, Int32 userID, Int32 state)
+2022-09-10 19:40:34,252 - [9] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2022-09-10 19:40:34,314 - [21] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2022-09-10 19:40:34,330 - [27] - ERROR - Bussiness.BaseBussiness - Init
+System.InvalidCastException: Specified cast is not valid.
+   at Bussiness.ConsortiaBussiness.GetConsortiaUsersPage(Int32 page, Int32 size, Int32& total, Int32 order, Int32 consortiaID, Int32 userID, Int32 state)

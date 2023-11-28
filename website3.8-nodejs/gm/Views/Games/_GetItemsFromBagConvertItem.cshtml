@@ -1,0 +1,75 @@
+﻿@using MvcPaging;
+@model IPagedList<SqlDataProvider.Data.ActiveConvertItemInfo>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "LoadActiveConvertInBag";
+}
+
+@if (Model.Count() > 0)
+{
+    <ul class="media-list" style="min-height:485px">
+        @foreach (var item in Model)
+        {
+            <li class="media" style="margin-bottom:-10px">
+                <a href="javascript:void(0)" class="pull-left">
+                    @Html.ItemImage(item.TemplateID, "thumbnail", "", "64")
+                </a>
+                <div class="media-body">
+                    <span class="text-warning pull-right"><small><em>TemplateID <i class="gi gi-chevron-right" style="font-size:8px"></i> @item.TemplateID</em></small></span>
+                    <a href="javascript:void(0)"><strong>@StaticFunction.ItemName(item.TemplateID);</strong></a>
+                    <div style="font-size:11px">                                     
+                        @if (item.ItemType == 0 || item.ItemType == 2 || item.ItemType == 4 || item.ItemType == 6)
+                        {
+                             <em class="text-warning">Vật phẩm cần @StaticFunction.ItemType(item.ItemType)</em>
+                        }
+                        @if (item.ItemType == 1 || item.ItemType == 3 || item.ItemType == 5 || item.ItemType == 7)
+                        {
+                             <em class="text-success">Phần thưởng @StaticFunction.ItemType(item.ItemType)</em>
+                        }
+                        | <em>Số lượng:</em> @item.ItemCount       
+                    </div>
+                    <span class="btn-group">
+                        <a href="@Html.Raw(Url.Action("EditItemInBag","Games", new { id = item.TemplateID, type = "activeconvert" }))" class="btn btn-xs btn-warning"
+                           data-modal="editActiveAward"><i class="fa fa-pencil"></i></a>
+                        <a href="@Html.Raw(Url.Action("DeleteItemInBag","Games", new { id = item.TemplateID, type = "activeconvert" }))" class="btn btn-xs btn-danger"
+                           data-growl="deleteActiveAward"><i class="fa fa-times"></i></a>
+                    </span>
+                </div>
+            </li>
+        }
+    </ul>
+    <div class="text-center" style="margin-top:-5px">
+        @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount, new AjaxOptions { UpdateTargetId = "bag-content", LoadingElementId = "loading-bgr" }).Options(o => o
+                                .DisplayTemplate("_Pagination")
+                                .Action("GetItemsFromBag")
+                                .AddRouteValue("type", Request.QueryString["type"])
+                                .MaxNrOfPages(3))
+    </div>
+}
+else
+{
+    <div class="text-center">
+        @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+    </div>
+}
+
+@section Scripts{
+    <script>
+        $(function () {
+            ModelGeneral.init('data-modal="editActiveAward"', null, 9019);
+            $('a[data-growl="deleteActiveAward"]').on('click', function () {
+                loadurl = $(this).attr("href");
+                $.get(loadurl, function (data) {
+                    $('#response-hodler').html(data);
+                    LoadStoreBag();
+                })
+                .fail(function (data) {
+                    showGrowl(data);
+                });                
+                return false;
+            });
+        });
+    </script>
+}
+
+

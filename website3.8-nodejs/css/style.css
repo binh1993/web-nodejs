@@ -1,0 +1,275 @@
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro);
+
+body, html {
+	font-family: "Source Sans Pro";
+	height: 100%;
+	margin: 0;
+}
+
+.main {
+	width: 100%;
+	margin: 0 auto;
+	/* The image used */
+	background-image: url("../img/bg.jpg");
+
+	/* Full height */
+	height: 100%; 
+
+	/* Center and scale the image nicely */
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.topbar{
+	width: 100%;
+	min-height: 200px;
+	margin: 0 auto;
+}
+
+.img_bg {
+	/* Set rules to fill background */
+	min-height: 100%;
+	min-width: 1024px;
+	
+	/* Set up proportionate scaling */
+	width: 100%;
+	height: auto;
+	
+	/* Set up positioning */
+	position: fixed;
+	top: 0;
+	left: 0;
+}
+
+.bg_top_sv, .top_1, .top_2,.top_3 {
+	position: absolute;
+	margin: 0 auto;
+}
+
+.top_1{
+	top: 44.5%;
+	left: 46%;
+	position: fixed;
+}
+
+.img_top_1 , .img_top_2, .img_top_3{
+	width: 44%;
+}
+
+.img_title{
+	margin-top: 31vh;
+	margin-left: 93.5vh;
+	max-width: 100%; 
+	height: auto;
+	position: fixed;
+	top: 0;
+	left: 0;
+}
+
+.danh_hieu{
+	min-width: 100px;
+}
+
+.topsv{
+	width: 100%;
+	display: flex;
+}
+
+.top_1, .top_2, .top_3{
+	width: 21.3%;
+	z-index: 10;
+}
+
+.top_2{
+	bottom: 19%;
+	left: 12%;
+}
+.top_3{
+	bottom: 19%;
+	left: 78%;
+}
+
+.hieu_ung{
+	position: absolute;
+	bottom: 5vh;
+}
+.vong_1{
+	width: 150%;
+}
+.vong_2{
+	width: 100%;
+	position: absolute;
+	left: 3.6vh;
+	top: 3.6vh;
+}
+.img_top_2, .img_top_3{
+	position: relative;
+}
+.xoay360 {
+	animation: app-logo-spin infinite 5s linear
+}
+
+@keyframes app-logo-spin {
+	from {
+		transform: rotate(0deg)
+	}
+	to {
+		transform: rotate(360deg)
+	}
+}
+
+.xoay360nguoc {
+	animation: app-logo-spin-nguoc infinite 5s linear
+}
+
+@keyframes app-logo-spin-nguoc {
+	to {
+		transform: rotate(0deg)
+	}
+	from {
+		transform: rotate(360deg)
+	}
+}
+
+.choi_ngay{
+	position: absolute;
+	top: 3%;
+	left: 46%;
+	width: 7%;
+	animation: pulse 0.8s linear infinite;
+	z-index: 100;
+}
+
+.choi_ngay:hover{
+	animation: pulse 0s linear infinite;
+}
+
+@keyframes pulse {
+	0% {
+		transform: scale(1);
+	}
+
+	50% {
+		transform: scale(1.1);
+	}
+
+	100% {
+		transform: scale(1);
+	}
+}
+
+
+
+.center {
+	position: relative;
+	left: 14vh;
+	bottom: 3vh;
+	transform: translate(-50%, -50%);
+	width: 200px;
+}
+.center_1{
+	position: relative;
+	left: 24vh;
+	transform: translate(-50%, -50%);
+	bottom: 6vh;
+}
+
+/* add custom cursor */
+.typewriter::after {
+	color: #fff;
+	content: "|";
+	display: inline;
+	animation: blink 1s infinite;
+}
+
+/* custom cursor animation */
+@keyframes blink {
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.img_title_1{
+	position: relative;
+	left: 3vh;
+	bottom: 3vh;
+}
+
+@keyframes glow {
+	0% {
+		box-shadow: 0 0 0 0 $crimson;
+	}
+
+	50% {
+		box-shadow: 0 0 30px 0 $crimson;
+	}
+}
+
+.button_1{
+	position: relative;
+	z-index: 100;
+	left: 29%;
+	top: 6vh;
+	transition: all 1s;
+}
+
+.button_2{
+	position: relative;
+	z-index: 100;
+	left: 45%;
+	top: 6vh;
+	transition: all 0.8s;
+}
+
+.button_1:hover{
+	-webkit-transform: scale(1.1); 
+	transform: scale(1.1);
+}
+
+.button_2:hover{
+	-webkit-transform: scale(1.1); 
+	transform: scale(1.1);
+}
+
+@media all and (max-width: 1440px){
+	.top_2 {
+		bottom: 22%;
+	}
+
+	.img_top_2, .img_top_3{
+		left: 3vh;
+	}
+	
+	.hieu_ung {
+		bottom: 2vh;
+	}
+
+	.top_3 {
+		bottom: 22%;
+	}
+
+	.top_1 {
+		top: 45.5%;
+		left: 45%;
+	}
+
+	.img_title {
+		margin-left: 73.5vh;
+		margin-top: 26vh;
+	}
+
+	.center_1 {
+		left: 19vh;
+		bottom: 13vh;
+	}
+	.button_1 {
+		left: 21%;
+	}
+}

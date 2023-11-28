@@ -1,0 +1,135 @@
+﻿@using MvcPaging;
+@model IPagedList<SqlDataProvider.Data.ItemInfo>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "LoadData";
+    int zoneId = -1;
+    int userId = -1;
+}
+<table id="general-table" class="table table-striped table-vcenter">
+    <thead>
+        <tr>
+            <th style="width: 25px;" class="text-center">
+                <label data-toggle="tooltip" title="Chọn tất cả">
+                    <input type="checkbox">
+                    <span></span>
+                </label>
+            </th>
+            <th style="width: 366px;" class="text-center">Name</th>
+            <th>ItemID</th>
+            <th>Place</th>
+            <th>Count</th>
+            <th>ValidDate</th>
+            <th style="width: 40px;" class="text-center"></th>
+        </tr>
+    </thead>
+    @if (Model.Count() > 0)
+    {
+        <tbody>
+            @foreach (var item in Model)
+            {
+                zoneId = item.ZoneID;
+                userId = item.UserID;
+                <tr>
+                    <td class="text-center">
+                        <label>
+                            <input type="checkbox" id="@item.ItemID" name="@item.ItemID" value="@item.ItemID">
+                            <span></span>
+                        </label>
+                    </td>
+                    <td>
+                        <label class="col-xs-2"> @Html.ItemImage(item.TemplateID, "", "", "37")</label>
+                        <div class="col-xs-10" style="margin-bottom:-15px">
+                            <a href="@Html.Raw(Url.Action("LoadDetailUserData", "Users", routeValues: new { id = item.ItemID, zid = zoneId, type = "Item", func = "loadDataSub()" }))"
+                               class="over-popup" data-link="@Url.Action("ItemsPopover","Users", new { id = item.ItemID, zid = zoneId })"
+                               data-modal="loadDetailUserData"><strong>@Html.TItemName(item.TemplateID, item.Hole1.ToString())</strong></a>
+                            <p>@Html.THighlight(item.TemplateID.ToString(), ViewData["key"])</p>
+                        </div>
+                    </td>
+                    <td>@item.ItemID</td>
+                    <td>@Html.TEquip(item.Place, item.BagType)</td>
+                    <td>@item.Count</td>
+                    <td>@Html.TValidateFor(item)</td>
+                    <td class="text-center">
+                        <div class="btn-group btn-group-xs">
+                            <a href="@Html.Raw(Url.Action("DeleteUsersData", "Users", routeValues: new { ids = item.ItemID, zid = zoneId, type = "ItemInfo", func = "loadDataSub()" }))"
+                               data-toggle="tooltip" data-modal="deleteUsersData" title="Xóa" class="btn btn-danger"><i class="fa fa-times"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="7">
+                    <div class="btn-group btn-group-sm pull-right">
+                        <span class="text-info"><strong>Tổng cộng: </strong></span><span class="text-success">@Model.TotalItemCount item(s)</span>
+                    </div>
+                    <div class="btn-group btn-group-sm">
+                        <a href="javascript:void(0)" class="btn btn-primary" data-toggle="tooltip" data-dialog="delSelectItem">Xóa item(s) được chọn</a>
+                    </div>
+                    <div class="text-center" style="margin-top:-35px">
+                        @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount, new AjaxOptions { UpdateTargetId = "detail-content", LoadingElementId = "loading-bgr" }).Options(o => o
+                                .DisplayTemplate("_Pagination")
+                                .Action("LoadDetailUserData")
+                                .AddRouteValue("id", userId)
+                                .AddRouteValue("zid", zoneId)
+                                .AddRouteValue("type", ViewData["type"])
+                                .MaxNrOfPages(3))
+                    </div>
+                </td>
+            </tr>
+        </tfoot>
+    }
+    else
+    {
+        <tbody>
+            <tr>
+                <td colspan="7" class="text-center" id="insert-avatar">
+                    @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+                </td>
+            </tr>
+        </tbody>
+    }
+</table>
+@section Scripts{
+    <script>
+
+    $(function () {
+        navActive('bag');
+        ModelGeneral.init('data-modal="deleteUsersData"', null, 9999);
+        ModelGeneral.init('data-modal="loadDetailUserData"', 'large2', 9999);
+        //multi delete
+        $('a[data-dialog="delSelectItem"]').bind("click", function (e) {
+            var _checked = [];
+
+            _checked = $("tbody input:checkbox:checked").map(function () {
+                return this.value;
+            }).toArray();
+
+            if (_checked.length == 0) {
+                showGrowl("Bạn chưa chọn item. Vui lòng chọn và thử lại", 'danger');
+                return false;
+            }
+            var url = '@Html.Raw(Url.Action("DeleteUsersData", "Users", routeValues: new {zid = zoneId, type = "ItemInfo", func = "loadDataSub()" }))';
+            GMApp.Dialog(url, e, 'ids=' + _checked, null, 19999);
+        });
+        PopOver.init('.navbar-collapse');
+        $('.popover:visible').popover('destroy');
+        GMApp.GetJson('#insert-avatar', '@Url.Action("Avatar","Users")');
+    });
+    function loadDataSub() {
+        loadurl = '@Html.Raw(Url.Action("LoadDetailUserData", "Users", routeValues: new { id = userId, zid = zoneId, type = ViewData["type"], page = Model.PageNumber }))';
+        $("#loading-bgr").show();
+        $.get(loadurl, function (data) {
+            $("#detail-content").html(data);
+            $("#loading-bgr").hide();
+        })
+        .fail(function (data) {
+            $("#detail-content").html(getError(data.status, data.statusText));
+            $("#loading-bgr").hide();
+        });
+    }
+    </script>
+}
+

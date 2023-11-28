@@ -1,0 +1,53 @@
+﻿@model List<SqlDataProvider.Data.QuestAwardInfo>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "Xác nhận";
+    string callBackStr = "'" + Request.QueryString["table"] + "', ";
+    callBackStr += "'" + Request.QueryString["key"] + "', ";
+    callBackStr += Request.QueryString["cid"] == null ? "-1, " : Request.QueryString["cid"] + ", ";
+    callBackStr += Request.QueryString["Page"] == null ? "-1," : Request.QueryString["Page"] + ", ";
+    callBackStr += ViewContext.RouteData.Values["id"] + ", ";
+    callBackStr += "'" + Request.QueryString["tagName"] + "'";
+}
+<div class="modal-header themed-background-fire" style="color:white;">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+<div class="modal-body">
+    <!-- Danger Alert Content -->
+    <div class="alert alert-danger">
+        <strong>@Html.Raw(StaticFunction.GetTranslation("Controllers.DeleteConfirm7", Model.Any() ? StaticFunction.QuestTitle(Model[0].QuestID.ToString()) : "Null"))</strong>
+        <ul class="fa-ul list-li-push">
+            @foreach (var item in Model)
+            {
+                <li class="text-info"> @item.RewardItemID<i class="gi gi-chevron-right" style="font-size:8px"></i> @Html.TItemName(item.RewardItemID)</li>
+            }
+        </ul>
+    </div>
+    <!-- END Danger Alert Content -->
+    <form action="@Html.Raw(Url.Action("DeleteData", "Games",  new { id = ViewContext.RouteData.Values["id"], ids = Request.QueryString["ids"], table = Request.QueryString["table"],
+                 func = "reloadData("+ callBackStr + ")" }))"
+          class="form-horizontal" id="form-confirm" method="post" role="form">
+        <div class="form-actions text-right">
+            <input class="btn btn-sm btn-danger " type="submit" value="Xác nhận" />
+            <input class="btn btn-sm btn-success " type="button" value="Huỷ bỏ" data-dismiss="modal" />
+        </div>
+    </form>
+</div>
+@section Scripts{
+    <script>
+        $('#form-confirm').on('submit', function (e) {
+            $('#loading-bgr').show();
+            $.ajax({
+                url: this.action,
+                type: this.method,
+                data: $(this).serialize(),
+                success: function (result) {
+                    $('#loading-bgr').hide();
+                    $('#modal-content').html(result);
+                }
+            });
+            return false;
+        });
+    </script>
+}

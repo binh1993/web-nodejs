@@ -1,0 +1,306 @@
+﻿@using SqlDataProvider.Data;
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "Thêm Item vào";
+    CategoryInfo[] categorys = StaticFunction.GetCategory();
+    var m_type = Request.QueryString["type"];
+    var m_tid = Request.QueryString["tid"];
+    var m_name = Request.QueryString["name"];
+    string callBackStr = "'" + Request.QueryString["table"] + "', ";
+    callBackStr += "'" + Request.QueryString["key"] + "', ";
+    callBackStr += Request.QueryString["cid"] == null ? "-1," : Request.QueryString["cid"] + ", ";
+    callBackStr += Request.QueryString["Page"] == null ? "-1," : Request.QueryString["Page"] + ", ";
+    callBackStr += m_tid + ", ";
+    callBackStr += "'" + Request.QueryString["tagName"] + "'";
+}
+<div class="modal-header">
+    <button type="button" class="close btn-dismiss" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">
+        @ViewBag.Title <i class="gi gi-chevron-right" style="font-size:10px"></i>
+    <span class="text-warning">@StaticFunction.GetTranslation("Request." + m_type) <strong>@m_name</strong></span>
+</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <div class="col-md-6" style="margin-left:-15px">
+                    <select id="chosen-category" name="chosen-category" class="select-chosen" data-placeholder="Hiện item theo Category..">
+                        <option></option>
+                        @foreach (CategoryInfo cat in categorys)
+                        {
+                            <option value="@cat.CategoryID">@cat.CategoryID - @cat.Name</option>
+                        }
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <form action="./" method="post" class="form-horizontal" id="frm-quick-search" onsubmit="return false;">
+                <div class="form-group">
+                    <div class="col-md-8 pull-right">
+                        <div class="input-group">
+                            <input type="text" id="quick-search" name="key" class="form-control" placeholder="Tìm kiếm...">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!--Content -->
+    <div class="row">
+        <div class="col-md-8">
+            <!-- Items Block -->
+            <div class="block" id="find-items">
+                <!-- Bag Title -->
+                <div class="block-title clearfix">
+                    <div class="block-options">
+                        Danh sách item(s)
+                    </div>
+                </div>
+                <!-- END Items Title -->
+                <!-- Items Content -->
+                <div id="items-content">
+                    <div class="text-center text-warning">
+                        <p>@Html.Raw(StaticFunction.GetTranslation("Views.WaitLoading"))</p>
+                    </div>
+                </div>
+                <!-- END Items Content -->
+            </div>
+            <!-- END Items Block -->
+            <!-- Regular -->
+            <div style="display:none;" id="quick-add">
+                <textarea id="list-template-ids" name="Detail" rows="32" class="form-control"  placeholder="Nhập vào template id, vd: 11025,11002,11006,11010,11014,313201,313102,313107,313108,312101,312102,312111,311101,311103,311121,11001,11005,11009,11013 "></textarea>
+            </div>
+            <!-- END Regular -->
+
+        </div>
+        <div class="col-md-4">
+            <!-- Bag Block -->
+            <div class="block">
+                <!-- Bag Title -->
+                <div class="block-title clearfix">
+                    <div class="block-options">
+                        Giỏ hàng
+                        <a href="@Html.Raw(Url.Action("AddItemsTo", "Games", new { type = m_type, msg = m_name}))"
+                           class="btn btn-alt btn-sm btn-default pull-right" data-growl="additemto" id="btn-add-top-award" style="margin-top:4px">
+                            <i class="gi gi-circle_plus text-primary"></i>
+                            <span class="text-success">Thêm tất cả vào DB</span>
+                        </a>
+                    </div>
+                </div>
+                <!-- END Bag Title -->
+                <!-- Bag Content -->
+                <div id="bag-content" style="min-height:513px;">
+                    <div class="text-center text-warning">
+                        <p>@Html.Raw(StaticFunction.GetTranslation("Views.Empty"))</p>
+                    </div>
+                </div>
+                <!-- END Bag Content -->
+            </div>
+            <!-- END Bag Block -->
+        </div>
+    </div>
+</div>
+<!--End Content -->
+<div class="modal-footer">
+    <div class="form-actions">
+        <div class="text-left">
+            @Html.ActionLink("Thêm vào giỏ items đã chọn", "AddItemsToBag", "Games", new { type = m_type, tid = m_tid, name = m_name },
+            new { id = "add-to-bag", @class = "btn btn-sm btn-success" })
+            <a href="javascritp:void(0);" id="show-quick-add-to-bag" class="btn btn-sm btn-danger">Thêm vào giỏ items đã biết</a>            
+            <button style="display:none;" type="button" class="btn btn-sm btn-warning" id="quick-add-to-bag">Thêm tất cả vào Giỏ hàng</button>
+            <button style="display:none;" type="button" class="btn btn-sm btn-primary" id="back-finder">Trở lại</button>
+            <button type="button" class="btn btn-sm btn-primary pull-right btn-dismiss" data-dismiss="modal">Đóng</button>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+
+        $(function () {
+
+            GMApp.GetAjax('#items-content', '@Html.Raw(Url.Action("ListItemsModel", "Games", new { type = m_type }))');
+
+            $('a[data-growl="additemto"]').on('click', function () {
+                loadurl = $(this).attr("href");
+                var type = '@Request.QueryString["type"]';
+                $.get(loadurl, function (data) {
+                    $('#response-hodler').html(data);
+                    switch(type)
+                    {
+                        case 'questitems':
+                            reloadData(@Html.Raw(callBackStr));
+                            break;
+                        case 'topaward':
+                            loadTopAward();
+                            break;
+                        case 'dropitems':
+                            loadDropItems();
+                            break;
+                        case 'shopshow':
+                            loadShopShow();
+                            break;
+                        case 'shopsale':
+                            loadShopSale();
+                            break;
+                        case 'active':
+                            loadEventAwardList();
+                            break;
+                        case 'boxitem':
+                            reloadBoxAward();
+                            break;
+                    }
+                    LoadStoreBag();
+                })
+                .fail(function (data) {
+                    showGrowl('Error: ' + xhr.status + ' ' + xhr.statusText, 'danger');
+                });
+                return false;
+            });
+
+            //call add dailog
+            $('#add-to-bag').bind("click", function (e) {
+                var _type = $(this).attr("data-type");
+                var url = $(this).attr("href");
+                var _checked = [];
+
+                _checked = $("tbody input:checkbox:checked").map(function () {
+                    return this.value;
+                }).toArray();
+
+                if (_checked.length == 0) {
+                    showGrowl('Bạn chưa chọn item. Vui lòng chọn và thử lại', 'danger');
+                    return false;
+                }
+                var params = 'ids=' + _checked;
+                if ('@m_type' == 'shopshow') {
+                    GMApp.Dialog(url, e, params, null, 9009);
+                }
+                else {
+                    GMApp.Dialog(url, e, params, 'large2', 9009);
+                }
+                return false;
+            });
+
+            $('#quick-add-to-bag').bind("click", function (e) {
+                var url = $('#add-to-bag').attr("href");
+                var _val = $('#list-template-ids').val();
+                if (_val.length == 0) {
+                    showGrowl('Bạn chưa nhập item. Vui lòng nhập và thử lại', 'danger');
+                    return false;
+                }
+                var params = 'ids=' + _val;
+                if ('@m_type' == 'shopshow') {
+                    GMApp.Dialog(url, e, params, null, 9009);
+                }
+                else {
+                    GMApp.Dialog(url, e, params, 'large2', 9009);
+                }
+                return false;
+            });
+
+            $('#show-quick-add-to-bag').bind("click", function (e) {
+                showQuick();
+                return false;
+            });
+            $('#back-finder').on('click', function (e) {
+                showFinder();
+            });
+            //selecet category
+            $("#chosen-category").change(function (e) {
+                var val = $(this).val();
+                showFinder();
+                $("#loading-bgr").show();
+                var loadurl = '@Html.Raw(Url.Action("ListItemsModel", "Games", new { type = m_type }))' + '&cid=' + val;
+                $.get(loadurl, function (data) {
+                    $("#items-content").html(data);
+                    $("#loading-bgr").hide();
+                })
+                .fail(function (data) {
+                    $("#items-content").html(getError(data.status, data.statusText));
+                    $("#loading-bgr").hide();
+                });
+            });
+
+            //live search
+            $("#quick-search").keyup(function (e) {
+                e.preventDefault();
+                var loadurl = '@Html.Raw(Url.Action("ListItemsModel", "Games", new { type = m_type }))';
+                showFinder();
+                $.ajax({
+                    url: loadurl,
+                    type: 'POST',
+                    data: $('#frm-quick-search').serialize(),
+                    success: function (data) {
+                        $('#items-content').html(data);
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        $('#items-content').html(getError(xhr.status, xhr.statusText));
+                    }
+                });
+            });
+        });
+
+        function showQuick() {
+            var findItems = '#find-items';
+            var quickAdd = '#quick-add';
+
+            var btnAddToBag = '#add-to-bag';
+            var btnShowQuickAddToBag = '#show-quick-add-to-bag';
+            var btnQuickAddToBag = '#quick-add-to-bag';
+            var btnBackFinder = '#back-finder';
+
+            var clasaAni = 'animation-fadeInQuick';
+
+            $(findItems).hide();
+            $(quickAdd).show();
+            $(quickAdd).addClass(clasaAni);
+
+            $(btnAddToBag).hide();
+            $(btnShowQuickAddToBag).hide();
+
+            $(btnQuickAddToBag).show();
+            $(btnBackFinder).show();
+            $(btnQuickAddToBag).addClass(clasaAni);
+            $(btnBackFinder).addClass(clasaAni);
+        }
+
+        function showFinder() {
+            var findItems = '#find-items';
+            var quickAdd = '#quick-add';
+
+            var btnAddToBag = '#add-to-bag';
+            var btnShowQuickAddToBag = '#show-quick-add-to-bag';
+            var btnQuickAddToBag = '#quick-add-to-bag';
+            var btnBackFinder = '#back-finder';
+
+            var clasaAni = 'animation-fadeInQuick';
+
+            $(quickAdd).hide();
+            $(findItems).show();
+            $(findItems).addClass(clasaAni);
+
+            $(btnQuickAddToBag).hide();
+            $(btnBackFinder).hide();
+
+            $(btnAddToBag).show();
+            $(btnShowQuickAddToBag).show();
+            $(btnAddToBag).addClass(clasaAni);
+            $(btnShowQuickAddToBag).addClass(clasaAni);
+        }
+        function LoadStoreBag()
+        {
+            loadurl = '@Html.Raw(Url.Action("GetItemsFromBag", "Games", new { type = m_type}))';
+            $.get(loadurl, function (data) {
+                $("#bag-content").html(data);
+            })
+            .fail(function (data) {
+                $("#bag-content").html(getError(data.status, data.statusText));
+            });
+        }
+    </script>
+}

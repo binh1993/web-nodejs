@@ -1,0 +1,66 @@
+﻿@using SqlDataProvider.Data;
+@using System.Text;
+@model GM.Service.Models.TableModel
+
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    TableInfo item = Model.Info;
+    List<TableDesignInfo> designs = Model.Designs;
+    string name = item.Class.Replace("Info", "");
+
+    StringBuilder sb = new StringBuilder();
+
+    int count = 0;
+    int totalCount = designs.Count;
+
+    sb.AppendLine(" ");
+    sb.AppendLine("public bool Update" + name + "(" + name + "Info item)");
+    sb.AppendLine("{");
+    sb.AppendLine("    bool result = false;");
+    sb.AppendLine("    try");
+    sb.AppendLine("    {");
+    sb.AppendLine("        SqlParameter[] para = new SqlParameter[" + (totalCount + 1) + "];");
+    foreach (var d in designs)
+    {
+        sb.AppendLine("        para[" + count + "] = new SqlParameter(\"@" + d.Name + "\", item." + d.Name + ");");
+        count++;
+    }
+    sb.AppendLine("        para[" + totalCount + "] = new SqlParameter(\"@Result\", SqlDbType.Int);");
+    sb.AppendLine("        para[" + totalCount + "].Direction = ParameterDirection.ReturnValue;");
+
+    sb.AppendLine("        db.RunProcedure(\"SP_" + item.Name + "_Update\", para);");
+    sb.AppendLine("        result = (int)para[" + totalCount + "].Value == 0;");
+    //sb.AppendLine("        item.ID = (int)para[0].Value;");
+    //sb.AppendLine("        item.IsDirty = false;");
+
+    sb.AppendLine("    }");
+    sb.AppendLine("    catch (Exception e)");
+    sb.AppendLine("    {");
+    sb.AppendLine("       if (log.IsErrorEnabled)");
+    sb.AppendLine("            log.Error(\"Update" + name + "\", e);");
+    sb.AppendLine("    }");
+    sb.AppendLine("    return result;");
+    sb.AppendLine("}");
+
+}
+<h4>@item.Name <i class="fa fa-angle-right"></i><span class="text-danger"> Bussiness Update</span></h4>
+<div style="overflow-y:auto; height:450px">
+<pre class="line-numbers">
+    <code class="language-csharp" id="highlight-code">
+        @sb.ToString()
+    </code>
+</pre>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+
+            navActive('BussinessCRUD');
+
+            var code = $('#highlight-code')[0];
+            Prism.highlightElement(code);
+
+            ZeroCopy.init();
+        });
+    </script>
+}

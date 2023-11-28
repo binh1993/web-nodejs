@@ -1,0 +1,74 @@
+﻿@using SqlDataProvider.Data;
+@using System.Text;
+@model GM.Service.Models.TableModel
+
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    TableInfo item = Model.Info;
+    List<TableDesignInfo> designs = Model.Designs;
+    string name = item.Class.Replace("Info", "");
+
+    StringBuilder sb = new StringBuilder();
+    if (designs.Count > 0)
+    {
+        TableDesignInfo d = designs[0];
+        sb.AppendLine(" ");
+        sb.AppendLine("public bool Delete" + name + "(" + TableTool.GetDataType(d.Type) + " " + d.Name + ")");
+        sb.AppendLine("{");
+        sb.AppendLine("    bool result = false;");
+        sb.AppendLine("    try");
+        sb.AppendLine("    {");
+        sb.AppendLine("        SqlParameter[] para = new SqlParameter[1];");
+        sb.AppendLine("        para[0] = new SqlParameter(\"@" + d.Name + "\", info." + d.Name + ");");
+        sb.AppendLine("        result = db.RunProcedure(\"SP_" + item.Name + "_Delete\", para);");
+        sb.AppendLine("    }");
+        sb.AppendLine("    catch (Exception e)");
+        sb.AppendLine("    {");
+        sb.AppendLine("        if (log.IsErrorEnabled)");
+        sb.AppendLine("           log.Error(\"SP_" + item.Name + "_Delete\", e);");
+        sb.AppendLine("    }");
+        sb.AppendLine("    return result;");
+        sb.AppendLine("}");
+
+        sb.AppendLine("public bool DeleteAll" + name + "()");
+        sb.AppendLine("{");
+        sb.AppendLine("    bool result = false;");
+        sb.AppendLine("    try");
+        sb.AppendLine("    {");
+        sb.AppendLine("        SqlParameter[] para = new SqlParameter[0];");
+        sb.AppendLine("        result = db.RunProcedure(\"SP_" + item.Name + "_Delete\", para);");
+        sb.AppendLine("    }");
+        sb.AppendLine("    catch (Exception e)");
+        sb.AppendLine("    {");
+        sb.AppendLine("        if (log.IsErrorEnabled)");
+        sb.AppendLine("            log.Error(\"SP_" + item.Name + "_Delete\", e);");
+        sb.AppendLine("    }");
+        sb.AppendLine("    return result;");
+        sb.AppendLine("}");
+    }
+    else
+    {
+        sb.Append("TableDesignInfo is empty!");
+    }
+}
+<h4>@item.Name <i class="fa fa-angle-right"></i><span class="text-danger"> Bussiness Delete</span></h4>
+<div style="overflow-y:auto; height:450px">
+<pre class="line-numbers">
+    <code class="language-csharp" id="highlight-code">
+        @sb.ToString()
+    </code>
+</pre>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+
+            navActive('BussinessCRUD');
+
+            var code = $('#highlight-code')[0];
+            Prism.highlightElement(code);
+
+            ZeroCopy.init();
+        });
+    </script>
+}

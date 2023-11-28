@@ -1,0 +1,121 @@
+﻿@using SqlDataProvider.Data;
+@model List<AreaConfigInfo>
+@{
+    ViewBag.Title = "Trao thưởng InGame";
+    ViewBag.Message = "Quản lý trao thưởng ingame, nhanh chóng tiện lợi!";
+}
+<!-- Header -->
+<div class="content-header">
+    <div class="header-section">
+        <h1>
+            <i class="gi gi-server"></i>@ViewBag.Title<br><small>@ViewBag.Message</small>
+        </h1>
+    </div>
+</div>
+<ul class="breadcrumb breadcrumb-top">
+    <li>Trang</li>
+    <li><a href="javascript:void(0)">@ViewBag.Title</a></li>
+</ul>
+<!-- END Header -->
+
+<div class="block">
+    <!-- Main Row -->
+    <div class="row">
+        <div class="col-lg-4">
+            <!-- Edit Award Block -->
+            <div class="block">
+                <!-- Edit Award Title -->
+                <div class="block-title clearfix">
+                    <div class="block-options">
+                        <div class="row">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-8">
+                                <select id="server-chosen" name="server-chosen" class="select-chosen" data-placeholder="Chọn hiện theo server..." style="width: 250px;">
+                                    <option></option>
+                                    <option value="-1">Tất cả server</option>
+                                    @foreach (AreaConfigInfo item in Model)
+                                    {
+                                        <option value="@item.AreaID">@item.AreaName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END Edit Award Title -->
+                <!-- Edit Award Content -->
+                <div id="top-content" style="min-height:607px;">
+                    <div class="text-center text-warning">
+                        <p>@Html.Raw(StaticFunction.GetTranslation("Views.WaitLoading"))</p>
+                    </div>
+                </div>
+                <!-- END Edit Award Content -->
+            </div>
+            <!-- END Edit Award Block -->
+        </div>
+        <div class="col-lg-8">
+            <!-- Top Player Block -->
+            <div class="block">
+                <!-- Top Player Title -->
+                <div class="block-title clearfix">
+                    <div class="block-options">
+                        Danh sách <i class="gi gi-chevron-right" style="font-size:8px"></i> <span id="award-header" class="text-success">Chưa chọn..</span>
+                        <a href="@Html.Raw(Url.Action("SendAwardToGame","Games"))" class="btn btn-alt btn-sm btn-default pull-right"
+                           data-dialog="sendAwardToGame" id="btn-send-award-to-game" style="margin-top:4px">
+                           <span class="text-danger"><i class="fa fa-pencil"></i> Trao phần thưởng</span>
+                        </a>
+                    </div>
+                </div>
+                <!-- END Top Player Title -->
+                <!-- Top Player Content -->
+                <div id="top-player-content" style="height:607px;">
+                    <div class="text-center text-warning">
+                        <p>@Html.Raw(StaticFunction.GetTranslation("Views.WaitLoading"))</p>
+                    </div>
+                </div>
+                <!-- END Top Player Content -->
+            </div>
+            <!-- END Top Player Block -->
+        </div>
+    </div>
+    <!-- END Main Row -->
+</div>
+@section Scripts{
+    <script>   
+        $(function () {
+            //pageload
+            loadTop('@Url.Action("LoadSendOnlineAward", "Award")?zid=-1');
+            //select server
+            $("#server-chosen").change(function (e) {
+                var zoneID = $(this).val();
+                var loadurl = '@Url.Action("LoadSendOnlineAward", "Award")?zid=' + zoneID;
+                loadTop(loadurl);
+            });
+            //call add dailog
+            $('a[data-dialog="sendAwardToGame"]').bind("click", function (e) {
+                var id = $(this).attr("data-dialog");
+                var type = 'topaward';
+                var url = $(this).attr("href");
+                var params = { id, type };
+                GMApp.DialogJson(url, e, params);
+                return false;
+            });
+            //window resize
+            $('#top-player-content').equalHeightTo('#top-content');
+            $(window).resize(function () {
+                $('#top-player-content').equalHeightTo('#top-content');
+            });
+        });
+        function loadTop(loadurl) {
+            $("#loading-bgr").show();
+            $.get(loadurl, function (data) {
+                $("#top-content").html(data);
+                $("#loading-bgr").hide();
+            })
+            .fail(function (data) {
+                $("#top-content").html(getError(data.status, data.statusText));
+                $("#loading-bgr").hide();
+            });
+        }
+    </script>
+}

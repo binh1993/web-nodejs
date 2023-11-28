@@ -1,0 +1,455 @@
+﻿@model SqlDataProvider.Data.ItemTemplateInfo
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = StaticFunction.GetTranslation("ViewBag.Title.ItemTemplate");
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title @Html.DisplayFor(model => model.Name)</h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-6">
+            <!-- Customer Info -->
+            <div class="block-section text-center">
+                <a href="javascript:void(0)">
+                    @Html.ItemImage(Model.TemplateID, "", "", "100")
+                </a>
+                <h3>
+                    <strong>
+                        <span data-type="text" data-pk="@Model.TemplateID" id="Name" data-url="@Html.Raw(Url.Action("EditableShopGood", "XEditable"))" class="text-success">
+                            @Model.Name
+                        </span>
+                    </strong>
+                    <br>
+                    <small></small>
+                </h3>
+            </div>
+            <table class="table table-borderless table-striped table-vcenter">
+                <tbody>
+                    <tr>
+                        <td class="text-right" style="width: 50%;"><strong>@Html.DisplayNameFor(model => model.TemplateID)</strong></td>
+                        <td>@Html.DisplayFor(model => model.TemplateID)</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right" style="width: 50%;"><strong>@Html.DisplayNameFor(model => model.CategoryID)</strong></td>
+                        <td>
+                            <span data-type="text" data-pk="@Model.TemplateID" id="CategoryID" data-url="@Html.Raw(Url.Action("EditableShopGood", "XEditable"))" class="text-success">@Model.CategoryID</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right" style="width: 50%;"><strong>@Html.DisplayNameFor(model => model.Pic)</strong></td>
+                        <td>
+                            <span data-type="text" data-pk="@Model.TemplateID" id="Pic" data-url="@Html.Raw(Url.Action("EditableShopGood", "XEditable"))" class="text-success">@Model.Pic</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right" style="width: 50%;"><strong>@Html.DisplayNameFor(model => model.Attack)</strong></td>
+                        <td>
+                            <span data-type="text" data-pk="@Model.TemplateID" id="Attack" data-url="@Html.Raw(Url.Action("EditableShopGood", "XEditable"))" class="text-success">@Model.Attack</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right" style="width: 50%;"><strong>@Html.DisplayNameFor(model => model.Defence)</strong></td>
+                        <td>
+                            <span data-type="text" data-pk="@Model.TemplateID" id="Defence" data-url="@Html.Raw(Url.Action("EditableShopGood", "XEditable"))" class="text-success">@Model.Defence</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right" style="width: 50%;"><strong>@Html.DisplayNameFor(model => model.Agility)</strong></td>
+                        <td>
+                            <span data-type="text" data-pk="@Model.TemplateID" id="Agility" data-url="@Html.Raw(Url.Action("EditableShopGood", "XEditable"))" class="text-success">@Model.Agility</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right" style="width: 50%;"><strong>@Html.DisplayNameFor(model => model.Luck)</strong></td>
+                        <td>
+                            <span data-type="text" data-pk="@Model.TemplateID" id="Luck" data-url="@Html.Raw(Url.Action("EditableShopGood", "XEditable"))" class="text-success">@Model.Luck</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right" style="width: 50%;"><strong>@Html.DisplayNameFor(model => model.Quality)</strong></td>
+                        <td>
+                            <span data-type="text" data-pk="@Model.TemplateID" id="Quality" data-url="@Html.Raw(Url.Action("EditableShopGood", "XEditable"))" class="text-success">@Model.Quality</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right" style="width: 50%;"><strong>@Html.DisplayNameFor(model => model.MaxCount)</strong></td>
+                        <td>@Html.DisplayFor(model => model.MaxCount)</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right" style="width: 50%;"><strong>@Html.DisplayNameFor(model => model.FusionType)</strong></td>
+                        <td>
+                            <span data-type="text" data-pk="@Model.TemplateID" id="FusionType" data-url="@Html.Raw(Url.Action("EditableShopGood", "XEditable"))" class="text-success">@Model.FusionType</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right" style="width: 50%;"><strong>@Html.DisplayNameFor(model => model.FusionRate)</strong></td>
+                        <td>
+                            <span data-type="text" data-pk="@Model.TemplateID" id="FusionRate" data-url="@Html.Raw(Url.Action("EditableShopGood", "XEditable"))" class="text-success">@Model.FusionRate</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right" style="width: 50%;"><strong>@Html.DisplayNameFor(model => model.FusionNeedRate)</strong></td>
+                        <td>
+                            <span data-type="text" data-pk="@Model.TemplateID" id="FusionNeedRate" data-url="@Html.Raw(Url.Action("EditableShopGood", "XEditable"))" class="text-success">@Model.FusionNeedRate</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><strong>@Html.DisplayNameFor(model => model.Description) :</strong></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <span data-type="text" data-pk="@Model.TemplateID" id="Description" data-url="@Html.Raw(Url.Action("EditableShopGood", "XEditable"))" class="text-success">
+                                @if (string.IsNullOrEmpty(Model.Description))
+                                {
+                                    <span>@Html.Raw(StaticFunction.GetTranslation("View.StringEmpty"))</span>
+                                }
+                                else
+                                {
+                                    <span>@Html.Raw(Model.Description)</span>
+                                }
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- END Customer Info -->
+
+        </div>
+        <div class="col-md-6">
+            <table class="table table-borderless table-striped table-vcenter">
+                <tbody>
+                    <tr>
+                        <td class="text-right" style="width: 25%;"><strong>@Html.DisplayNameFor(model => model.IsDirty)</strong></td>
+                        <td style="width: 25%;">@Html.DisplayFor(model => model.IsDirty)</td>
+                        <td style="width: 25%;" class="text-right"><strong>@Html.DisplayNameFor(model => model.CanDrop)</strong></td>
+                        <td style="width: 25%;">
+                            @{ string CanDrop = "0"; }  @if (Model.CanDrop) { CanDrop = "1"; }
+                            <span data-type="select" data-pk="@Model.TemplateID" id="CanDrop" data-url="@Html.Raw(Url.Action("EditableShopGood", "XEditable"))"
+                                  data-value="@CanDrop" class="text-success">@Model.CanDrop</span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-right" style="width: 25%;"><strong>@Html.DisplayNameFor(model => model.CanDelete)</strong></td>
+                        <td style="width: 25%;">
+                            @{ string CanDelete = "0"; }  @if (Model.CanDelete) { CanDelete = "1"; }
+                            <span data-type="select" data-pk="@Model.TemplateID" id="CanDelete" data-url="@Html.Raw(Url.Action("EditableShopGood", "XEditable"))"
+                                  data-value="@CanDelete" class="text-success">@Model.CanDelete</span></td>
+                        <td style="width: 25%;" class="text-right"><strong>@Html.DisplayNameFor(model => model.CanEquip)</strong></td>
+                        <td style="width: 25%;">
+                            @{ string CanEquip = "0"; }  @if (Model.CanEquip) { CanEquip = "1"; }
+                            <span data-type="select" data-pk="@Model.TemplateID" id="CanEquip" data-url="@Html.Raw(Url.Action("EditableShopGood", "XEditable"))"
+                                  data-value="@CanEquip" class="text-success">@Model.CanEquip</span></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 25%;" class="text-right"><strong>@Html.DisplayNameFor(model => model.CanStrengthen)</strong></td>
+                        <td style="width: 25%;">
+                            @{ string CanStrengthen = "0"; }  @if (Model.CanStrengthen) { CanStrengthen = "1"; }
+                            <span data-type="select" data-pk="@Model.TemplateID" id="CanStrengthen" data-url="@Html.Raw(Url.Action("EditableShopGood", "XEditable"))"
+                                  data-value="@CanStrengthen" class="text-success">@Model.CanStrengthen</span>
+                        </td>
+                        <td class="text-right" style="width: 25%;"><strong>@Html.DisplayNameFor(model => model.CanUse)</strong></td>
+                        <td style="width: 25%;">
+                            @{ string CanUse = "0"; }  @if (Model.CanUse) { CanStrengthen = "1"; }
+                            <span data-type="select" data-pk="@Model.TemplateID" id="CanUse" data-url="@Html.Raw(Url.Action("EditableShopGood", "XEditable"))"
+                                  data-value="@CanUse" class="text-success">@Model.CanUse</span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-right" style="width: 25%;"><strong>@Html.DisplayNameFor(model => model.CanCompose)</strong></td>
+                        <td style="width: 25%;">
+                            @{ string CanCompose = "0"; }  @if (Model.CanCompose) { CanCompose = "1"; }
+                            <span data-type="select" data-pk="@Model.TemplateID" id="CanCompose" data-url="@Html.Raw(Url.Action("EditableShopGood", "XEditable"))"
+                                  data-value="@CanCompose" class="text-success">@Model.CanCompose</span></td>
+                        <td style="width: 25%;" class="text-right"><strong>@Html.DisplayNameFor(model => model.Level)</strong></td>
+                        <td style="width: 25%;">@Html.DisplayFor(model => model.Level)</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right" style="width: 25%;"><strong>@Html.DisplayNameFor(model => model.Property1)</strong></td>
+                        <td style="width: 25%;">
+                            <span data-type="text" data-pk="@Model.TemplateID" id="Property1" data-url="@Html.Raw(Url.Action("EditableShopGood", "XEditable"))" class="text-success">@Model.Property1</span>
+                        </td>
+                        <td style="width: 25%;" class="text-right"><strong>@Html.DisplayNameFor(model => model.Property2)</strong></td>
+                        <td style="width: 25%;">
+                            <span data-type="text" data-pk="@Model.TemplateID" id="Property2" data-url="@Html.Raw(Url.Action("EditableShopGood", "XEditable"))" class="text-success">@Model.Property2</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right" style="width: 25%;"><strong>@Html.DisplayNameFor(model => model.Property3)</strong></td>
+                        <td style="width: 25%;">
+                            <span data-type="text" data-pk="@Model.TemplateID" id="Property3" data-url="@Html.Raw(Url.Action("EditableShopGood", "XEditable"))" class="text-success">@Model.Property3</span>
+                        </td>
+                        <td style="width: 25%;" class="text-right"><strong>@Html.DisplayNameFor(model => model.Property4)</strong></td>
+                        <td style="width: 25%;">
+                            <span data-type="text" data-pk="@Model.TemplateID" id="Property4" data-url="@Html.Raw(Url.Action("EditableShopGood", "XEditable"))" class="text-success">@Model.Property4</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right" style="width: 25%;"><strong>@Html.DisplayNameFor(model => model.Property5)</strong></td>
+                        <td style="width: 25%;">
+                            <span data-type="text" data-pk="@Model.TemplateID" id="Property5" data-url="@Html.Raw(Url.Action("EditableShopGood", "XEditable"))" class="text-success">@Model.Property5</span>
+                        </td>
+                        <td style="width: 25%;" class="text-right"><strong>@Html.DisplayNameFor(model => model.Property6)</strong></td>
+                        <td style="width: 25%;">
+                            <span data-type="text" data-pk="@Model.TemplateID" id="Property6" data-url="@Html.Raw(Url.Action("EditableShopGood", "XEditable"))" class="text-success">@Model.Property6</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right" style="width: 25%;"><strong>@Html.DisplayNameFor(model => model.Property7)</strong></td>
+                        <td style="width: 25%;">
+                            <span data-type="text" data-pk="@Model.TemplateID" id="Property7" data-url="@Html.Raw(Url.Action("EditableShopGood", "XEditable"))" class="text-success">@Model.Property7</span>
+                        </td>
+                        <td style="width: 25%;" class="text-right"><strong>@Html.DisplayNameFor(model => model.Property8)</strong></td>
+                        <td style="width: 25%;">
+                            <span data-type="text" data-pk="@Model.TemplateID" id="Property8" data-url="@Html.Raw(Url.Action("EditableShopGood", "XEditable"))" class="text-success">@Model.Property8</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 25%;" class="text-right"><strong>@Html.DisplayNameFor(model => model.Data)</strong></td>
+                        <td style="width: 75%;" colspan="3">
+                            @if (string.IsNullOrEmpty(Model.Data))
+                            {
+                                <span>@Html.Raw(StaticFunction.GetTranslation("View.StringEmpty2"))</span>
+                            }
+                            else
+                            {
+                                <span>@Html.Raw(Model.Data)</span>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right" style="width: 25%;"><strong>@Html.DisplayNameFor(model => model.NeedSex)</strong></td>
+                        <td style="width: 25%;">@Html.DisplayFor(model => model.NeedSex)</td>
+                        <td style="width: 25%;" class="text-right"><strong>@Html.DisplayNameFor(model => model.NeedLevel)</strong></td>
+                        <td style="width: 25%;">@Html.DisplayFor(model => model.NeedLevel)</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right" style="width: 25%;"><strong>@Html.DisplayNameFor(model => model.Script)</strong></td>
+                        <td style="width: 25%;">
+                            @if (string.IsNullOrEmpty(Model.Script))
+                            {
+                                <span>@Html.Raw(StaticFunction.GetTranslation("View.StringEmpty2"))</span>
+                            }
+                            else
+                            {
+                                <span>@Html.Raw(Model.Script)</span>
+                            }
+                        </td>
+                        <td style="width: 25%;" class="text-right"><strong>@Html.DisplayNameFor(model => model.Colors)</strong></td>
+                        <td style="width: 25%;">
+                            @if (string.IsNullOrEmpty(Model.Colors))
+                            {
+                                <span>@Html.Raw(StaticFunction.GetTranslation("View.StringEmpty2"))</span>
+                            }
+                            else
+                            {
+                                <span>@Html.Raw(Model.Colors)</span>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right" style="width: 25%;"><strong>@Html.DisplayNameFor(model => model.BindType)</strong></td>
+                        <td style="width: 25%;">@Html.DisplayFor(model => model.BindType)</td>
+                        <td style="width: 25%;" class="text-right"><strong>@Html.DisplayNameFor(model => model.RefineryType)</strong></td>
+                        <td style="width: 25%;">@Html.DisplayFor(model => model.RefineryType)</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right" style="width: 25%;"><strong>@Html.DisplayNameFor(model => model.RefineryLevel)</strong></td>
+                        <td style="width: 25%;">@Html.DisplayFor(model => model.RefineryLevel)</td>
+                        <td style="width: 25%;" class="text-right"><strong>@Html.DisplayNameFor(model => model.Hole)</strong></td>
+                        <td style="width: 25%;">@Html.DisplayFor(model => model.Hole)</td>
+                    </tr>
+                    <tr>
+                        <td style="width: 25%;" class="text-right"><strong>@Html.DisplayNameFor(model => model.ReclaimType)</strong></td>
+                        <td style="width: 25%;">@Html.DisplayFor(model => model.ReclaimType)</td>
+                        <td class="text-right" style="width: 25%;"><strong>@Html.DisplayNameFor(model => model.ReclaimValue)</strong></td>
+                        <td style="width: 25%;">@Html.DisplayFor(model => model.ReclaimValue)</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right" style="width: 25%;"><strong>@Html.DisplayNameFor(model => model.CanRecycle)</strong></td>
+                        <td style="width: 25%;">@Html.DisplayFor(model => model.CanRecycle)</td>
+                        <td style="width: 25%;" class="text-right"><strong>@Html.DisplayNameFor(model => model.FloorPrice)</strong></td>
+                        <td style="width: 25%;">@Html.DisplayFor(model => model.FloorPrice)</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right" style="width: 25%;"><strong>@Html.DisplayNameFor(model => model.SuitId)</strong></td>
+                        <td style="width: 25%;">@Html.DisplayFor(model => model.SuitId)</td>
+                        <td style="width: 25%;" class="text-right"><strong>@Html.DisplayNameFor(model => model.CanTransfer)</strong></td>
+                        <td style="width: 25%;">@Html.DisplayFor(model => model.CanTransfer)</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right" style="width: 25%;"><strong>@Html.DisplayNameFor(model => model.AddTime)</strong></td>
+                        <td style="width: 75%;" colspan="3">@Html.DisplayFor(model => model.AddTime)</td>
+                    <tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(function() {
+
+            $.fn.editable.defaults.mode = 'inline';
+            //$.fn.editable.defaults.validate = function (value) {
+            //    var v = valib.String.isNumeric(value);
+            //    if (v === false) return '@Html.Raw(StaticFunction.GetTranslation("validate.isNumber"))';
+            //};
+
+            $('#Name').editable();
+
+            $('#FusionType')
+                .editable({
+                    validate: function(value) {
+                        var v = valib.String.isNumeric(value);
+                        if (v === false) return '@Html.Raw(StaticFunction.GetTranslation("validate.isNumber"))';
+                    }
+                });
+            $('#FusionRate').editable({
+                validate: function (value) {
+                    var v = valib.String.isNumeric(value);
+                    if (v === false) return '@Html.Raw(StaticFunction.GetTranslation("validate.isNumber"))';
+                }
+            });
+            $('#FusionNeedRate').editable({
+                validate: function (value) {
+                    var v = valib.String.isNumeric(value);
+                    if (v === false) return '@Html.Raw(StaticFunction.GetTranslation("validate.isNumber"))';
+                }
+            });
+
+            $('#CategoryID').editable({
+                validate: function (value) {
+                    var v = valib.String.isNumeric(value);
+                    if (v === false) return '@Html.Raw(StaticFunction.GetTranslation("validate.isNumber"))';
+                }
+            });
+            $('#Pic').editable();
+            $('#Description').editable();
+            $('#Attack').editable({
+                validate: function (value) {
+                    var v = valib.String.isNumeric(value);
+                    if (v === false) return '@Html.Raw(StaticFunction.GetTranslation("validate.isNumber"))';
+                }
+            });
+            $('#Defence').editable({
+                validate: function (value) {
+                    var v = valib.String.isNumeric(value);
+                    if (v === false) return '@Html.Raw(StaticFunction.GetTranslation("validate.isNumber"))';
+                }
+            });
+            $('#Agility').editable({
+                validate: function (value) {
+                    var v = valib.String.isNumeric(value);
+                    if (v === false) return '@Html.Raw(StaticFunction.GetTranslation("validate.isNumber"))';
+                }
+            });
+            $('#Luck').editable({
+                validate: function (value) {
+                    var v = valib.String.isNumeric(value);
+                    if (v === false) return '@Html.Raw(StaticFunction.GetTranslation("validate.isNumber"))';
+                }
+            });
+            $('#Quality').editable({
+                validate: function (value) {
+                    var v = valib.String.isNumeric(value);
+                    if (v === false) return '@Html.Raw(StaticFunction.GetTranslation("validate.isNumber"))';
+                }
+            });
+
+            $('#Data').editable();
+
+            $('#Property1').editable({
+                validate: function (value) {
+                    var v = valib.String.isNumeric(value);
+                    if (v === false) return '@Html.Raw(StaticFunction.GetTranslation("validate.isNumber"))';
+                }
+            });
+            $('#Property2').editable({
+                validate: function (value) {
+                    var v = valib.String.isNumeric(value);
+                    if (v === false) return '@Html.Raw(StaticFunction.GetTranslation("validate.isNumber"))';
+                }
+            });
+            $('#Property3').editable({
+                validate: function (value) {
+                    var v = valib.String.isNumeric(value);
+                    if (v === false) return '@Html.Raw(StaticFunction.GetTranslation("validate.isNumber"))';
+                }
+            });
+            $('#Property4').editable({
+                validate: function (value) {
+                    var v = valib.String.isNumeric(value);
+                    if (v === false) return '@Html.Raw(StaticFunction.GetTranslation("validate.isNumber"))';
+                }
+            });
+            $('#Property5').editable({
+                validate: function (value) {
+                    var v = valib.String.isNumeric(value);
+                    if (v === false) return '@Html.Raw(StaticFunction.GetTranslation("validate.isNumber"))';
+                }
+            });
+            $('#Property6').editable({
+                validate: function (value) {
+                    var v = valib.String.isNumeric(value);
+                    if (v === false) return '@Html.Raw(StaticFunction.GetTranslation("validate.isNumber"))';
+                }
+            });
+            $('#Property7').editable({
+                validate: function (value) {
+                    var v = valib.String.isNumeric(value);
+                    if (v === false) return '@Html.Raw(StaticFunction.GetTranslation("validate.isNumber"))';
+                }
+            });
+            $('#Property8').editable({
+                validate: function (value) {
+                    var v = valib.String.isNumeric(value);
+                    if (v === false) return '@Html.Raw(StaticFunction.GetTranslation("validate.isNumber"))';
+                }
+            });
+
+            $('#CanStrengthen').editable({
+                showbuttons: false,
+                source: [
+                    { value: 0, text: 'False' },
+                    { value: 1, text: 'True' }
+                ]});
+            $('#CanCompose').editable({
+                showbuttons: false,
+                source: [
+                    { value: 0, text: 'False' },
+                    { value: 1, text: 'True' }
+                ]
+            });
+            $('#CanDrop').editable({
+                showbuttons: false,
+                source: [
+                    { value: 0, text: 'False' },
+                    { value: 1, text: 'True' }
+                ]
+            });
+            $('#CanEquip').editable({
+                showbuttons: false,
+                source: [
+                    { value: 0, text: 'False' },
+                    { value: 1, text: 'True' }
+                ]
+            });
+            $('#CanUse').editable({
+                showbuttons: false,
+                source: [
+                    { value: 0, text: 'False' },
+                    { value: 1, text: 'True' }
+                ]
+            });
+            $('#CanDelete').editable({
+                showbuttons: false,
+                source: [
+                    { value: 0, text: 'False' },
+                    { value: 1, text: 'True' }
+                ]
+            });
+            
+        });
+    </script>
+}

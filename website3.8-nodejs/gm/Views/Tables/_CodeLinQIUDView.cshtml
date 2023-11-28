@@ -1,0 +1,36 @@
+﻿@using SqlDataProvider.Data;
+@using System.Text;
+@model GM.Service.Models.TableModel
+
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    TableInfo item = Model.Info;
+    StringBuilder sb = new StringBuilder();
+    StringBuilder sb1 = new StringBuilder();
+    for (int i = 0; i < 10; i++)
+    {
+        sb.AppendLine(",[endTime]" + i.ToString());
+        sb1.AppendLine(",<endTime, datetime>," + i.ToString());
+    }
+}
+<h4>@item.Name <i class="fa fa-angle-right"></i><span class="text-danger"> LINQ IUD</span></h4>
+<div style="overflow-y:auto; height:450px">
+<pre class="line-numbers">
+    <code class="language-csharp" id="highlight-code">
+        @sb.ToString()
+    </code>
+</pre>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+
+            navActive('SQLCRUD');
+
+            var code = $('#highlight-code')[0];
+            Prism.highlightElement(code);
+
+            ZeroCopy.init();
+        });
+    </script>
+}

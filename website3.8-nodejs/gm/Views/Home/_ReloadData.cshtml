@@ -1,0 +1,20 @@
+﻿@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "Thông báo";
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">Thông báo!</h4>
+</div>
+<div class="modal-body">
+    <!--Content -->
+    <div class="text-success">
+        <p>@Html.Raw(Model)</p> 
+    </div>
+    <!-- ENDContent -->
+    <div class="form-actions">
+        <div class="text-right">
+            <button type="button" class="btn btn-sm btn-success" data-dismiss="modal">Đồng ý</button>
+        </div>
+    </div>
+</div>

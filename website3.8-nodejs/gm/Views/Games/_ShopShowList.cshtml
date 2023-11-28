@@ -1,0 +1,195 @@
+﻿@using MvcPaging;
+@model IPagedList<SqlDataProvider.Data.ShopItemInfo>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "List Item";
+}
+<div style="min-height:452px">
+    <table class="table table-hover" id="list-items">
+        <thead>
+            <tr>
+                <th class="text-center" style="width: 20px;">
+                    <label>
+                        <input type="checkbox" id="check-all" name="check-all"><span></span>
+                    </label>
+                </th>
+                <th style="width: 276px;" class="text-center">Name</th>
+                <th class="text-center">
+                    AValue
+                </th>
+                <th class="text-center">
+                    BValue
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+        </thead>
+        @if (Model.Count() > 0)
+        {
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-center">
+                            <label>
+                                <input type="checkbox" id="@item.ID" name="@item.ID" value="@item.ID"><span></span>
+                            </label>
+                        </td>
+                        <td>
+                            <label class="col-xs-2">
+                                @Html.ItemImage(item.TemplateID, "", "", "37")
+                            </label>
+                            <div class="col-xs-10" style="margin-bottom:-15px">
+                                <a href="javascript:showAvatar('@item.TemplateID', @item.CategoryID);">
+                                    <strong>@Html.TItemName(item.TemplateID)</strong>
+                                </a>
+                                <p>
+                                    <span class="text-success">@item.TemplateID.ToString()</span>
+                                    <span class="pull-right text-warning" style="font-size:11px"><em>id:</em> @item.ID</span>
+                                </p>
+
+                            </div>
+                        </td>
+                        <td>
+                            <div class="col-xs-12" style="margin-bottom:-15px">
+                                <span class="text-primary">
+                                    <em>Giá: </em>@Html.TUnset(item.AValue1)
+                                </span>
+                                <p>
+                                    <span class="text-success"><em>Loại: </em>@Html.TPayment(item.APrice1)</span>
+                                    @if (item.AUnit > 0)
+                                    {
+                                        <span class="pull-right text-warning" style="font-size:11px">@Html.TBuyType(item.AUnit, item.BuyType)</span>
+                                    }
+                                </p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="col-xs-12" style="margin-bottom:-15px">
+                                <span class="text-primary">
+                                    <em>Giá: </em>@Html.TUnset(item.BValue1)
+                                </span>
+                                <p>
+                                    <span class="text-success"><em>Loại: </em>@Html.TPayment(item.BPrice1)</span>
+                                    @if (item.BUnit > 0)
+                                    {
+                                        <span class="pull-right text-warning" style="font-size:11px">@Html.TBuyType(item.BUnit, item.BuyType)</span>
+                                    }
+                                </p>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="btn-group btn-group-xs">
+                                <a href="@Html.Raw(Url.Action("EditShopItem","Games", new { id = item.ID, type = "shopshow"}))" class="btn btn-xs btn-warning"
+                                 data-toggle="tooltip"  title="Chỉnh sửa"  data-modal="editshopshow"><i class="gi gi-edit"></i></a>
+                                <a href="@Url.Action("DeleteShopGoodsShowList", "Games", routeValues: new { id = item.ID, type = ViewData["type"] })" data-modal="deleteshopshow"
+                                 data-toggle="tooltip"  title="Xóa" class="btn btn-danger"><i class="fa fa-times"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+        }
+        else
+        {
+            <tbody>
+                <tr>
+                    <td colspan="5" class="text-center" id="insert-avatar">
+                        @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+                    </td>
+                </tr>
+            </tbody>
+        }
+    </table>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="btn-group btn-group-sm">
+            <a href="@Html.Raw(Url.Action("DeleteMultiShopGoodsShowList", "Games", new {type = ViewData["type"]}))" class="btn btn-warning" id="delete-select-items" data-toggle="tooltip" title="Xóa items được chọn" data-dialog="get"><i class="fa fa-times"></i></a>
+            <a href="@Html.Raw(Url.Action("InvertPlaceShopGoodsShow", "Games", new { type = ViewData["type"] }))" class="btn btn-danger" id="invert-place-items" data-toggle="tooltip" title="Đảo vị trí vật phẩm" data-dialog="get"><i class="gi gi-roundabout"></i></a>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="text-center">
+            @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount, new AjaxOptions { LoadingElementId = "loading-bgr", OnSuccess = "AjaxShopSaleSuccess", OnFailure = "AjaxShopSaleFailure" }).Options(o => o
+                    .DisplayTemplate("_Pagination")
+                    .MaxNrOfPages(3)
+                    .Action("ShopShowList")
+                    .AddRouteValue("key", ViewData["key"])
+                    .AddRouteValue("type", ViewData["type"])
+                    .AlwaysAddFirstPageNumber())
+        </div>
+    </div>
+    <div class="col-md-3">
+        <a href="@Html.Raw(Url.Action("SendReloadToService", "Service", new { cmd = "shop" }))" class="btn btn-sm btn-info pull-right" id="btn-schema-xml">Cập nhật xml</a>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(function() {
+            /* page load*/
+            ModelGeneral.init('data-modal="deleteshopshow"');
+            ModelGeneral.init('data-modal="editshopshow"', 'large3');
+            GMApp.initSchema("#btn-schema-xml");
+
+            $('#invert-place-items').bind("click", function(e) {
+                var loadurl = $(this).attr("href");
+                $.ajax({
+                    url: loadurl,
+                    type: 'POST',
+                    dataType: "json",
+                    contentType: 'application/json; charset=utf-8',
+                    data: '',
+                    success: function(data) {
+                        if (data.Result) {
+                            loadShopShow();
+                            return false;
+                        } else {
+                            showGrowl('Xãy ra lổi. Vui lòng thử lại sau!', 'danger');
+                            return false;
+                        }
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        showGrowl(getError(xhr.status, xhr.statusText), 'danger');
+                        return false;
+                    }
+                });
+                return false;
+            });
+
+            $('#delete-select-items').bind("click", function(e) {
+                var url = $(this).attr("href");
+                var checked = [];
+
+                checked = $("tbody input:checkbox:checked").map(function() {
+                    return this.value;
+                }).toArray();
+
+                if (checked.length === 0) {
+                    showGrowl('Bạn chưa chọn item. Vui lòng chọn và thử lại', 'danger');
+                    return false;
+                }
+                var params = 'ids=' + checked;
+                GMApp.Dialog(url, e, params, null, 9009);
+                return false;
+            });
+        });
+
+        function AjaxShopSaleSuccess(data) { //OnSuccess = "AjaxSuccess"
+            if (data.Result) {
+                $('#shop-show-list').html(data.Html);
+            } else {
+                showGrowl(data.Html, 'danger');
+            }
+        }
+
+        function AjaxShopSaleFailure(xhr) { //OnFailure = "AjaxFailure"
+            var text = "Error: " + xhr.status + " " + xhr.statusText;
+            showGrowl(text, 'danger');
+        }
+    </script>
+}
+

@@ -1,0 +1,268 @@
+﻿@model SqlDataProvider.Data.BattleBonusInfo
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = StaticFunction.GetTranslation("Model.Add.Title.BattleBonus");
+    var item = Model;
+    string chek = string.Empty;
+}
+<div class="modal-header themed-background-default">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">
+        @ViewBag.Title
+    </h4>
+</div>
+<div class="modal-body">
+    <form action="@Html.Raw(Url.Action("CreateBattleBonus", "Games"))"
+          method="post" class="form-horizontal form-bordered" id="frm-add-battlebonus">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="ID">ID</label>
+                    <div class="col-md-9">
+                        <input type="text" id="ID" name="ID" class="form-control input-sm must-digits" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Int")">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="Detail">Detail</label>
+                    <div class="col-md-9">
+                        <textarea id="Detail" name="Detail" rows="4" class="form-control must-required" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Text")">@item.Detail</textarea>                      
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="Rate">Rate</label>
+                    <div class="col-md-9">
+                        <input type="text" id="Rate" name="Rate" class="form-control input-sm must-number" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Int")" value="@item.Rate">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="MinValue">MinValue</label>
+                    <div class="col-md-9">
+                        <input type="text" id="MinValue" name="MinValue" class="form-control input-sm must-number" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Int")" value="@item.MinValue">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="MaxValue">MaxValue</label>
+                    <div class="col-md-9">
+                        <input type="text" id="MaxValue" name="MaxValue" class="form-control input-sm must-number" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Int")" value="@item.MaxValue">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="BeginTime">BeginTime</label>
+                    <div class="col-md-9">
+                        <input type="text" id="BeginTime" name="BeginTime" class="form-control input-sm must-date" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Date")" value="@item.BeginTime">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="EndTime">EndTime</label>
+                    <div class="col-md-9">
+                        <input type="text" id="EndTime" name="EndTime" class="form-control input-sm must-date" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Date")" value="@item.EndTime">
+                    </div>
+                </div>     
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="HasValidate">HasValidate</label>
+                    <div class="col-md-9">
+                        <label class="switch switch-primary">
+                            <input type="checkbox" id="HasValidate" name="HasValidate" value="true">
+                            <span></span>
+                            <input type="hidden" id="HasValidate" name="HasValidate" value="false">
+                        </label>
+                    </div>
+                </div>               
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="DisableRandom">DisableRandom</label>
+                    <div class="col-md-9">
+                        <label class="switch switch-primary">
+                            <input type="checkbox" id="DisableRandom" name="DisableRandom" value="true">
+                            <span></span>
+                            <input type="hidden" id="DisableRandom" name="DisableRandom" value="false">
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="IsExist">IsExist</label>
+                    <div class="col-md-9">
+                        <label class="switch switch-primary">
+                            <input type="checkbox" id="IsExist" name="IsExist" value="true">
+                            <span></span>
+                            <input type="hidden" id="IsExist" name="IsExist" value="false">
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="IsLog">IsLog</label>
+                    <div class="col-md-9">
+                        <label class="switch switch-primary">
+                            <input type="checkbox" id="IsLog" name="IsLog" value="true">
+                            <span></span>
+                            <input type="hidden" id="IsLog" name="IsLog" value="false">
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="IsBinds">IsBinds</label>
+                    <div class="col-md-9">
+                        <label class="switch switch-primary">
+                            <input type="checkbox" id="IsBinds" name="IsBinds" value="true">
+                            <span></span>
+                            <input type="hidden" id="IsBinds" name="IsBinds" value="false">
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="Type">Type</label>
+                    <div class="col-md-9">
+                        <input type="text" id="Type" name="Type" class="form-control input-sm must-number" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Int")" value="@item.Type">
+                    </div>
+                </div>                     
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="Notice">Notice</label>
+                    <div class="col-md-9">
+                       <textarea id="Notice" name="Notice" rows="4" class="form-control must-required" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Text")">@item.Notice</textarea>                       
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="TemplateID">TemplateID</label>
+                    <div class="col-md-9">
+                        <input type="text" id="TemplateID" name="TemplateID" class="form-control input-sm must-number" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Int")" value="@item.TemplateID">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="ValidDate">ValidDate</label>
+                    <div class="col-md-9">
+                        <input type="text" id="ValidDate" name="ValidDate" class="form-control input-sm must-number" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Int")" value="@item.ValidDate">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="StrengthenLevel">StrengthenLevel</label>
+                    <div class="col-md-9">
+                        <input type="text" id="StrengthenLevel" name="StrengthenLevel" class="form-control input-sm must-number" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Int")" value="@item.StrengthenLevel">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="AttackCompose">AttackCompose</label>
+                    <div class="col-md-9">
+                        <input type="text" id="AttackCompose" name="AttackCompose" class="form-control input-sm must-number" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Int")" value="@item.AttackCompose">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="DefendCompose">DefendCompose</label>
+                    <div class="col-md-9">
+                        <input type="text" id="DefendCompose" name="DefendCompose" class="form-control input-sm must-number" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Int")" value="@item.DefendCompose">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="AgilityCompose">AgilityCompose</label>
+                    <div class="col-md-9">
+                        <input type="text" id="AgilityCompose" name="AgilityCompose" class="form-control input-sm must-number" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Int")" value="@item.AgilityCompose">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="LuckCompose">LuckCompose</label>
+                    <div class="col-md-9">
+                        <input type="text" id="LuckCompose" name="LuckCompose" class="form-control input-sm must-number" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Int")" value="@item.LuckCompose">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="Random">Random</label>
+                    <div class="col-md-9">
+                        <input type="text" id="Random" name="Random" class="form-control input-sm must-number" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Int")" value="@item.Random">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="MagicAttack">MagicAttack</label>
+                    <div class="col-md-9">
+                        <input type="text" id="MagicAttack" name="MagicAttack" class="form-control input-sm must-number" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Int")" value="@item.MagicAttack">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="MagicDefence">MagicDefence</label>
+                    <div class="col-md-9">
+                        <input type="text" id="MagicDefence" name="MagicDefence" class="form-control input-sm must-number" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Int")" value="@item.MagicDefence">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="goldValidate">goldValidate</label>
+                    <div class="col-md-9">
+                        <input type="text" id="goldValidate" name="goldValidate" class="form-control input-sm must-number" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Int")" value="@item.goldValidate">
+                    </div>
+                </div>
+            </div>
+        </div>     
+        <div class="form-group form-actions">
+            <div class="col-md-12 text-right">
+                <button type="submit" class="btn btn-sm btn-warning btn-submit2"> @StaticFunction.GetTranslation("Model.Add")</button>
+                <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal"> @StaticFunction.GetTranslation("Model.CLose")</button>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts{
+    <script>
+
+          $(function () {
+            var startBtn = $('.btn-submit2');
+            // On start button click start loading again
+            startBtn.on('click', function () {
+                $(this).button('loading');
+            });
+
+            /* Validate */
+
+            $('form#frm-add-battlebonus').each(function () {
+                $(this).validate({
+                    errorClass: 'help-block animation-slideDown',
+                    errorElement: 'div',
+                    errorPlacement: function (error, e) {
+                        e.parents('.form-group > div').append(error);
+                    },
+                    highlight: function (e) {
+                        $(e).closest('.form-group').removeClass('has-success has-error').addClass('has-error');
+                        $(e).closest('.help-block').remove();
+                        startBtn.button('reset');
+                    },
+                    success: function (e) {
+                        e.closest('.form-group').removeClass('has-success has-error');
+                        e.closest('.help-block').remove();
+                    },
+                    rules: {                    
+                        'ID': {
+                            required: true,
+                            remote: {
+                                url: "@Url.Action("CheckBattleBonusId", "Games")",
+                                type: "post"
+                            }						
+                        }
+                    },
+                    messages: {                    
+                        'ID': {
+                            required: '@StaticFunction.GetTranslation("Model.Add.Required")',
+                            remote: "@StaticFunction.GetTranslation("Model.Add.Remote")"
+                        }
+                    },
+                    submitHandler: function (e) {
+                        $('#loading-bgr').show();
+                        $.ajax({
+                            url: e.action,
+                            type: e.method,
+                            data: $(e).serialize(),
+                            success: function (result) {
+                                $('#loading-bgr').hide();
+                                $('#response-hodler').html(result);
+                                startBtn.button('reset');
+                            },
+                            error: function (xhr) {
+                                $('#loading-bgr').hide();
+                                showGrowl('Error: ' + xhr.status + ' ' + xhr.statusText, 'danger');
+                                startBtn.button('reset');
+                            }
+                        });
+                        return false;
+                    }
+                });
+            });
+        });
+
+    </script>
+}

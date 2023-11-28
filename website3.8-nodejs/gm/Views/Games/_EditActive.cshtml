@@ -1,0 +1,205 @@
+﻿@model SqlDataProvider.Data.ActiveInfo
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = StaticFunction.GetTranslation("Model.Edit.Title");
+    var item = Model;
+    string chek = string.Empty;
+}
+<div class="modal-header themed-background-default">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">
+        @ViewBag.Title
+        <i class="gi gi-chevron-right" style="font-size:10px"></i>
+        <span style="color:white"><strong> @item.Title</strong></span>
+    </h4>
+</div>
+<div class="modal-body">
+    <form action="@Html.Raw(Url.Action("EditActive", "Games", routeValues: new {@id = item.ActiveID}))"
+          method="post" class="form-horizontal form-bordered" id="frm-edit-active">
+        <input type="hidden" id="ActiveID" name="ActiveID" value="@item.ActiveID">
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Title">Title</label>
+            <div class="col-md-9">               
+                <textarea id="Title" name="Title" rows="4" class="form-control must-required">@item.Title</textarea>              
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Description">Description</label>
+            <div class="col-md-9">               
+                <textarea id="Description" name="Description" rows="5" class="form-control">@item.Description</textarea>              
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Content">Content</label>
+            <div class="col-md-9">              
+                <textarea id="Content" name="Content" rows="7" class="form-control must-required">@item.Content</textarea>               
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="AwardContent">AwardContent</label>
+            <div class="col-md-9">               
+                <textarea id="AwardContent" name="AwardContent" rows="7" class="form-control">@item.AwardContent</textarea>               
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="HasKey">HasKey</label>
+            <div class="col-md-9">
+                <input type="text" id="HasKey" name="HasKey" class="form-control input-sm must-number" value="@item.HasKey">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="StartDate">StartDate</label>
+            <div class="col-md-9">
+                <input type="text" id="StartDate" name="StartDate" class="form-control input-sm must-date" value="@item.StartDate">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="EndDate">EndDate</label>
+            <div class="col-md-9">
+                <input type="text" id="EndDate" name="EndDate" class="form-control input-sm must-date" value="@item.EndDate">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="IsOnly">IsOnly</label>
+            <div class="col-md-9">
+                <input type="text" id="IsOnly" name="IsOnly" class="form-control input-sm must-number" value="@item.IsOnly">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Type">Type</label>
+            <div class="col-md-9">
+                <input type="text" id="Type" name="Type" class="form-control input-sm must-number" value="@item.Type">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="ActionTimeContent">ActionTimeContent</label>
+            <div class="col-md-9">               
+                    <input type="text" id="ActionTimeContent" name="ActionTimeContent" class="form-control input-sm" value="@item.ActionTimeContent">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="IsAdvance">IsAdvance</label>
+            <div class="col-md-9">
+                <label class="switch switch-primary">
+                    @{
+                        chek = string.Empty;
+                        if (item.IsAdvance) { chek = "checked"; }
+                    }
+                    <input type="checkbox" id="IsAdvance" name="IsAdvance" value="true" @chek>
+                    <span></span>
+                    <input type="hidden" id="IsAdvance" name="IsAdvance" value="false">
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="GoodsExchangeTypes">GoodsExchangeTypes</label>
+            <div class="col-md-9">               
+                    <input type="text" id="GoodsExchangeTypes" name="GoodsExchangeTypes" class="form-control input-sm" value="@item.GoodsExchangeTypes">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="GoodsExchangeNum">GoodsExchangeNum</label>
+            <div class="col-md-9">               
+                    <input type="text" id="GoodsExchangeNum" name="GoodsExchangeNum" class="form-control input-sm" value="@item.GoodsExchangeNum">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="limitType">limitType</label>
+            <div class="col-md-9">               
+                    <input type="text" id="limitType" name="limitType" class="form-control input-sm" value="@item.limitType">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="limitValue">limitValue</label>
+            <div class="col-md-9">              
+                    <input type="text" id="limitValue" name="limitValue" class="form-control input-sm" value="@item.limitValue">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="IsShow">IsShow</label>
+            <div class="col-md-9">
+                <label class="switch switch-primary">
+                    @{
+                        chek = string.Empty;
+                        if (item.IsShow) { chek = "checked"; }
+                    }
+                    <input type="checkbox" id="IsShow" name="IsShow" value="true" @chek>
+                    <span></span>
+                    <input type="hidden" id="IsShow" name="IsShow" value="false">
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="ActiveType">ActiveType</label>
+            <div class="col-md-9">
+                <input type="text" id="ActiveType" name="ActiveType" class="form-control input-sm must-number" value="@item.ActiveType">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="IconID">IconID</label>
+            <div class="col-md-9">
+                <input type="text" id="IconID" name="IconID" class="form-control input-sm must-number" value="@item.IconID">
+            </div>
+        </div>
+        <div class="form-group form-actions">
+            <div class="col-md-12 text-right">
+                <button type="submit" class="btn btn-sm btn-warning btn-submit2"> @StaticFunction.GetTranslation("Model.Update")</button>
+                <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal"> @StaticFunction.GetTranslation("Model.CLose")</button>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts{
+    <script>
+
+          $(function () {
+            var startBtn = $('.btn-submit2');
+            // On start button click start loading again
+            startBtn.on('click', function () {
+                $(this).button('loading');
+            });
+
+            /* Validate */
+
+            $('form#frm-edit-active').each(function () {
+                $(this).validate({
+                    errorClass: 'help-block animation-slideDown',
+                    errorElement: 'div',
+                    errorPlacement: function (error, e) {
+                        e.parents('.form-group > div').append(error);
+                    },
+                    highlight: function (e) {
+                        $(e).closest('.form-group').removeClass('has-success has-error').addClass('has-error');
+                        $(e).closest('.help-block').remove();
+                        startBtn.button('reset');
+                    },
+                    success: function (e) {
+                        e.closest('.form-group').removeClass('has-success has-error');
+                        e.closest('.help-block').remove();
+                    },
+                    submitHandler: function (e) {
+                        $('#loading-bgr').show();
+                        $.ajax({
+                            url: e.action,
+                            type: e.method,
+                            data: $(e).serialize(),
+                            success: function (result) {
+                                $('#loading-bgr').hide();
+                                $('#response-hodler').html(result);
+                                startBtn.button('reset');
+                                loadEventsList();
+                            },
+                            error: function (xhr) {
+                                $('#loading-bgr').hide();
+                                showGrowl('Error: ' + xhr.status + ' ' + xhr.statusText, 'danger');
+                                startBtn.button('reset');
+                            }
+                        });
+                        return false;
+                    }
+                });
+            });
+        });
+
+    </script>
+}

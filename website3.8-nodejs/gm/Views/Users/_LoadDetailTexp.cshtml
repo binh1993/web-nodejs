@@ -1,0 +1,178 @@
+﻿@model SqlDataProvider.Data.TexpInfo
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "_LoadDetailTexp";
+    var item = Model;
+}
+<form action="@Html.Raw(Url.Action("UpdateUsersData", "Users", routeValues: new {@zid = Request.QueryString["zid"], @type = "TexpInfo" }))" 
+      method="post" class="form-horizontal" id="frm-update-texp">
+    <input type="hidden" id="ID" name="ID" value="@item.ID">
+    <input type="hidden" id="UserID" name="UserID" value="@item.UserID">
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="spdTexpExp">spdTexpExp</label>
+        <div class="col-md-8">
+            <input type="text" id="spdTexpExp" name="spdTexpExp" class="form-control input-sm" value="@item.spdTexpExp">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="attTexpExp">attTexpExp</label>
+        <div class="col-md-8">
+            <input type="text" id="attTexpExp" name="attTexpExp" class="form-control input-sm" value="@item.attTexpExp">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="defTexpExp">defTexpExp</label>
+        <div class="col-md-8">
+            <input type="text" id="defTexpExp" name="defTexpExp" class="form-control input-sm" value="@item.defTexpExp">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="hpTexpExp">hpTexpExp</label>
+        <div class="col-md-8">
+            <input type="text" id="hpTexpExp" name="hpTexpExp" class="form-control input-sm" value="@item.hpTexpExp">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="lukTexpExp">lukTexpExp</label>
+        <div class="col-md-8">
+            <input type="text" id="lukTexpExp" name="lukTexpExp" class="form-control input-sm" value="@item.lukTexpExp">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="texpTaskCount">texpTaskCount</label>
+        <div class="col-md-8">
+            <input type="text" id="texpTaskCount" name="texpTaskCount" class="form-control input-sm" value="@item.texpTaskCount">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="texpCount">texpCount</label>
+        <div class="col-md-8">
+            <input type="text" id="texpCount" name="texpCount" class="form-control input-sm" value="@item.texpCount">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="texpTaskDate">texpTaskDate</label>
+        <div class="col-md-8">
+            <input type="text" id="texpTaskDate" name="texpTaskDate" class="form-control input-sm" value="@item.texpTaskDate" placeholder="dd/mm/yyyy hh:mm:ss AM">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="magicAtkTexpExp">magicAtkTexpExp</label>
+        <div class="col-md-8">
+            <input type="text" id="magicAtkTexpExp" name="magicAtkTexpExp" class="form-control input-sm must-number" value="@item.magicAtkTexpExp">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="magicDefTexpExp">magicDefTexpExp</label>
+        <div class="col-md-8">
+            <input type="text" id="magicDefTexpExp" name="magicDefTexpExp" class="form-control input-sm must-number" value="@item.magicDefTexpExp">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="magicTexpCount">magicTexpCount</label>
+        <div class="col-md-8">
+            <input type="text" id="magicTexpCount" name="magicTexpCount" class="form-control input-sm must-number" value="@item.magicTexpCount">
+        </div>
+    </div>    
+    <div class="form-group form-actions">
+        <div class="col-md-12 text-right">
+            <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-ok"></i> Lưu thay đổi</button>
+        </div>
+    </div>
+</form>
+@section Scripts{
+    <script>
+        // Initialize Masked Inputs
+        // a - Represents an alpha character (A-Z,a-z)
+        // 9 - Represents a numeric character (0-9)
+        // * - Represents an alphanumeric character (A-Z,a-z,0-9)
+        //$('#texpTaskDate').mask('99/99/9999 99:99:99 aa');
+
+        $.validator.setDefaults({
+            submitHandler: function (e) {
+                $('#loading-bgr').show();
+                $.ajax({
+                    url: e.action,
+                    type: e.method,
+                    data: $(e).serialize(),
+                    success: function (result) {
+                        $('#loading-bgr').hide();
+                        $('#response-hodler').html(result);
+                    },
+                    error: function (result) {
+                        $('#loading-bgr').hide();
+                        showAjaxResponse("@StaticFunction.GetTranslation("Views.ErrorRequest")");
+                    }
+                });
+                return false;
+            }
+        });
+        /*Initialize Validation */
+        $('#frm-update-texp').validate({
+            errorClass: 'help-block animation-slideDown', // You can change the animation class for a different entrance animation - check animations page
+            errorElement: 'div',
+            errorPlacement: function (error, e) {
+                e.parents('.form-group > div').append(error);
+            },
+            highlight: function (e) {
+                $(e).closest('.form-group').removeClass('has-success has-error').addClass('has-error');
+                $(e).closest('.help-block').remove();
+            },
+            success: function (e) {
+                e.closest('.form-group').removeClass('has-success has-error');
+                e.closest('.help-block').remove();
+            },
+            rules: {
+                'spdTexpExp': {
+                    required: true,
+                    digits: true
+                },
+                'attTexpExp': {
+                    required: true,
+                    digits: true
+                },
+                'defTexpExp': {
+                    required: true,
+                    digits: true
+                },
+                'hpTexpExp': {
+                    required: true,
+                    digits: true
+                },
+                'spdTexpExp': {
+                    required: true,
+                    digits: true
+                }
+                ,
+                'lukTexpExp': {
+                    required: true,
+                    digits: true
+                }
+                ,
+                'texpTaskCount': {
+                    required: true,
+                    digits: true
+                },
+                'texpCount': {
+                    required: true,
+                    digits: true
+                }
+                ,
+                'texpTaskDate': {
+                    required: true,
+                    date: true
+                }
+            },
+            messages: {
+                'spdTexpExp': 'Vui lòng nhập vào 1 số',
+                'attTexpExp': 'Vui lòng nhập vào 1 số',
+                'defTexpExp': 'Vui lòng nhập vào 1 số',
+                'hpTexpExp': 'Vui lòng nhập vào 1 số',
+                'lukTexpExp': 'Vui lòng nhập vào 1 số',
+                'texpTaskCount': 'Vui lòng nhập vào 1 số',
+                'texpCount': 'Vui lòng nhập vào 1 số',
+                'texpTaskDate': 'Vui lòng nhập vào ngày tháng theo mẫu 1/30/2015 12:59:00 AM'
+            }
+        });
+    </script>
+}

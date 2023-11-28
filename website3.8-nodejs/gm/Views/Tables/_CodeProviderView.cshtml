@@ -1,0 +1,67 @@
+﻿@using SqlDataProvider.Data;
+@using System.Text;
+@model GM.Service.Models.TableModel
+
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    TableInfo item = Model.Info;
+    List<TableDesignInfo> designs = Model.Designs;
+
+    StringBuilder sb = new StringBuilder();
+    sb.AppendLine(" ");
+    sb.AppendLine("using System;");
+    sb.AppendLine("using System.Collections.Generic;");
+    sb.AppendLine("using System.Text;");
+    sb.AppendLine(" ");
+    sb.AppendLine("namespace SqlDataProvider.Data");
+    sb.AppendLine("{");
+    if (item.Type == 1)
+    {
+        sb.AppendLine("    public class " + item.Class + " : DataObject");
+    }
+    else
+    {
+        sb.AppendLine("    public class " + item.Class);
+    }
+    sb.AppendLine("    {");
+    foreach (var d in designs)
+    {
+        if (item.Type == 1)
+        {
+            sb.AppendLine("        private " + TableTool.GetDataType(d.Type) + " _" + TableTool.LowerFirstChar(d.Name) + ";");
+            sb.AppendLine("        public " + TableTool.GetDataType(d.Type) + " " + d.Name);
+            sb.AppendLine("        {");
+            sb.AppendLine("             get { return _" + TableTool.LowerFirstChar(d.Name) + "; }");
+            sb.AppendLine("             set { _" + TableTool.LowerFirstChar(d.Name) + " = value; _isDirty = true; }");
+            sb.AppendLine("        }");
+        }
+        else
+        {
+            sb.AppendLine("        public " + TableTool.GetDataType(d.Type) + " " + d.Name + " { get; set; }");
+        }
+    }
+    sb.AppendLine("    }");
+    sb.AppendLine("}");
+
+}
+<h4>@item.Name <i class="fa fa-angle-right"></i><span class="text-danger"> Provider</span></h4>
+<div style="overflow-y:auto; height:450px">
+<pre class="line-numbers">
+    <code class="language-csharp" id="highlight-code">
+        @sb.ToString()
+    </code>
+</pre>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+
+            navActive('Provider');
+
+            var code = $('#highlight-code')[0];
+            Prism.highlightElement(code);
+
+            ZeroCopy.init();
+        });
+    </script>
+}

@@ -1,0 +1,791 @@
+﻿@model SqlDataProvider.Data.ItemInfo
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "_EditItem";
+    var item = Model;
+    string chek = string.Empty;
+}
+<div class="modal-header themed-background-night" style="color:white;">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">Chỉnh sữa mã item<strong class="text-warning"> @item.ItemID </strong>cho mã tài khoản <strong class="text-danger">@item.UserID</strong></h4>
+</div>
+<div class="modal-body">
+    <form action="@Html.Raw(Url.Action("UpdateUsersData", "Users", routeValues: new {@zid = Request.QueryString["zid"], @type = "ItemInfo", func = Request.QueryString["func"] }))"
+          method="post" class="form-horizontal" id="frm-item">
+        <div style="overflow-y:auto; height:657px" class="block">
+            <input type="hidden" id="ItemID" name="ItemID" value="@item.ItemID">
+            <input type="hidden" id="UserID" name="UserID" value="@item.UserID">
+            <!-- Customer Content -->
+            <div class="row">
+                <div class="col-lg-4">
+                    <!-- Customer Info Block -->
+                    <div class="block">
+                        <!-- Customer Info Title -->
+                        <div class="block-title">
+                            <h2><i class="fa fa-file-o"></i> <strong>Thông tin chính</strong></h2>
+                        </div>
+                        <!-- END Customer Info Title -->
+                        <!-- Customer Info -->
+                        <div class="block-section text-center">
+                            <a href="javascript:void(0)">
+                                @Html.ItemImage(item.TemplateID, "", "", "100")
+                            </a>
+                            <h3>
+                                <strong>@Html.TItemName(item.TemplateID) @{ if (item.IsBead()) { string runelv = "lv." + item.Hole1; @runelv } }</strong><br><small></small>
+                            </h3>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label" for="TemplateID">TemplateID</label>
+                            <div class="col-md-7">
+                                <input type="text" id="TemplateID" name="TemplateID" class="form-control input-sm" value="@item.TemplateID">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-5 control-label" for="Place">Place</label>
+                            <div class="col-md-7">
+                                <input type="text" id="Place" name="Place" class="form-control input-sm" value="@item.Place">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-5 control-label" for="Count">Count</label>
+                            <div class="col-md-7">
+                                <input type="text" id="Count" name="Count" class="form-control input-sm" value="@item.Count">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-5 control-label" for="BagType">BagType</label>
+                            <div class="col-md-7">
+                                <input type="text" id="BagType" name="BagType" class="form-control input-sm" value="@item.BagType">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-5 control-label" for="StrengthenLevel">StrengthenLevel</label>
+                            <div class="col-md-7">
+                                <input type="text" id="StrengthenLevel" name="StrengthenLevel" class="form-control input-sm" value="@item.StrengthenLevel">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-5 control-label" for="StrengthenExp">StrengthenExp</label>
+                            <div class="col-md-7">
+                                <input type="text" id="StrengthenExp" name="StrengthenExp" class="form-control input-sm" value="@item.StrengthenExp">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-5 control-label" for="AttackCompose">AttackCompose</label>
+                            <div class="col-md-7">
+                                <input type="text" id="AttackCompose" name="AttackCompose" class="form-control input-sm" value="@item.AttackCompose">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-5 control-label" for="DefendCompose">DefendCompose</label>
+                            <div class="col-md-7">
+                                <input type="text" id="DefendCompose" name="DefendCompose" class="form-control input-sm" value="@item.DefendCompose">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-5 control-label" for="LuckCompose">LuckCompose</label>
+                            <div class="col-md-7">
+                                <input type="text" id="LuckCompose" name="LuckCompose" class="form-control input-sm" value="@item.LuckCompose">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-5 control-label" for="AgilityCompose">AgilityCompose</label>
+                            <div class="col-md-7">
+                                <input type="text" id="AgilityCompose" name="AgilityCompose" class="form-control input-sm" value="@item.AgilityCompose">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-5 control-label" for="BeginDate">BeginDate</label>
+                            <div class="col-md-7">
+                                <input type="text" id="BeginDate" name="BeginDate" class="form-control input-sm" value="@item.BeginDate">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-5 control-label" for="ValidDate">ValidDate</label>
+                            <div class="col-md-7">
+                                <input type="text" id="ValidDate" name="ValidDate" class="form-control input-sm" value="@item.ValidDate">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-5 control-label" for="MagicAttack">MagicAttack</label>
+                            <div class="col-md-7">
+                                <input type="text" id="MagicAttack" name="MagicAttack" class="form-control input-sm" value="@item.MagicAttack">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-5 control-label" for="MagicDefence">MagicDefence</label>
+                            <div class="col-md-7">
+                                <input type="text" id="MagicDefence" name="MagicDefence" class="form-control input-sm" value="@item.MagicDefence">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-5 control-label" for="MagicExp">MagicExp</label>
+                            <div class="col-md-7">
+                                <input type="text" id="MagicExp" name="MagicExp" class="form-control input-sm" value="@item.MagicExp">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-5 control-label" for="MagicLevel">MagicLevel</label>
+                            <div class="col-md-7">
+                                <input type="text" id="MagicLevel" name="MagicLevel" class="form-control input-sm" value="@item.MagicLevel">
+                            </div>
+                        </div>
+                        <!-- END Customer Info -->
+                    </div>
+                    <!-- END Customer Info Block -->
+                </div>
+                <div class="col-lg-8">
+                    <!-- Customer  Block -->
+                    <!-- Customer  Content -->
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <!-- Active System Data Block -->
+                            <div class="block">
+                                <!-- User Extra Title -->
+                                <div class="block-title">
+                                    <h2><strong>Mở Rộng</strong> 1</h2>
+                                </div>
+                                <!-- END User Extra Title -->
+                                <!-- Active System Data Content -->
+                                <div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="IsJudge">IsJudge</label>
+                                        <div class="col-md-7">
+                                            <label class="switch switch-primary">
+                                                @{
+                                                    chek = string.Empty;
+                                                    if (item.IsJudge) { chek = "checked"; }
+                                                }
+                                                <input type="checkbox" id="IsJudge" name="IsJudge" value="true" @chek>
+                                                <span></span>
+                                                <input type="hidden" id="IsJudge" name="IsJudge" value="false">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="Color">Color</label>
+                                        <div class="col-md-7">
+                                            @if (item.Color.Length > 20)
+                                            {
+                                                <textarea id="Color" name="Color" rows="4" class="form-control">@item.Color</textarea>
+                                            }
+                                            else
+                                            {
+                                                <input type="text" id="Color" name="Color" class="form-control input-sm" value="@item.Color">
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="IsExist">IsExist</label>
+                                        <div class="col-md-7">
+                                            <label class="switch switch-primary">
+                                                @{
+                                                    chek = string.Empty;
+                                                    if (item.IsExist) { chek = "checked"; }
+                                                }
+                                                <input type="checkbox" id="IsExist" name="IsExist" value="true" @chek>
+                                                <span></span>
+                                                <input type="hidden" id="IsExist" name="IsExist" value="false">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="Skin">Skin</label>
+                                        <div class="col-md-7">
+                                            @if (item.Skin.Length > 20)
+                                            {
+                                                <textarea id="Skin" name="Skin" rows="4" class="form-control">@item.Skin</textarea>
+                                            }
+                                            else
+                                            {
+                                                <input type="text" id="Skin" name="Skin" class="form-control input-sm" value="@item.Skin">
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="IsBinds">IsBinds</label>
+                                        <div class="col-md-7">
+                                            <label class="switch switch-primary">
+                                                @{
+                                                    chek = string.Empty;
+                                                    if (item.IsBinds) { chek = "checked"; }
+                                                }
+                                                <input type="checkbox" id="IsBinds" name="IsBinds" value="true" @chek>
+                                                <span></span>
+                                                <input type="hidden" id="IsBinds" name="IsBinds" value="false">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="IsUsed">IsUsed</label>
+                                        <div class="col-md-7">
+                                            <label class="switch switch-primary">
+                                                @{
+                                                    chek = string.Empty;
+                                                    if (item.IsUsed) { chek = "checked"; }
+                                                }
+                                                <input type="checkbox" id="IsUsed" name="IsUsed" value="true" @chek>
+                                                <span></span>
+                                                <input type="hidden" id="IsUsed" name="IsUsed" value="false">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="RemoveDate">RemoveDate</label>
+                                        <div class="col-md-7">
+                                            <input type="text" id="RemoveDate" name="RemoveDate" class="form-control input-sm" value="@item.RemoveDate">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="RemoveType">RemoveType</label>
+                                        <div class="col-md-7">
+                                            <input type="text" id="RemoveType" name="RemoveType" class="form-control input-sm" value="@item.RemoveType">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="Hole1">Hole1</label>
+                                        <div class="col-md-7">
+                                            <input type="text" id="Hole1" name="Hole1" class="form-control input-sm" value="@item.Hole1">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="Hole2">Hole2</label>
+                                        <div class="col-md-7">
+                                            <input type="text" id="Hole2" name="Hole2" class="form-control input-sm" value="@item.Hole2">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="Hole3">Hole3</label>
+                                        <div class="col-md-7">
+                                            <input type="text" id="Hole3" name="Hole3" class="form-control input-sm" value="@item.Hole3">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="Hole4">Hole4</label>
+                                        <div class="col-md-7">
+                                            <input type="text" id="Hole4" name="Hole4" class="form-control input-sm" value="@item.Hole4">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="Hole5">Hole5</label>
+                                        <div class="col-md-7">
+                                            <input type="text" id="Hole5" name="Hole5" class="form-control input-sm" value="@item.Hole5">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="Hole6">Hole6</label>
+                                        <div class="col-md-7">
+                                            <input type="text" id="Hole6" name="Hole6" class="form-control input-sm" value="@item.Hole6">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="Hole5Level">Hole5Level</label>
+                                        <div class="col-md-7">
+                                            <input type="text" id="Hole5Level" name="Hole5Level" class="form-control input-sm" value="@item.Hole5Level">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="Hole5Exp">Hole5Exp</label>
+                                        <div class="col-md-7">
+                                            <input type="text" id="Hole5Exp" name="Hole5Exp" class="form-control input-sm" value="@item.Hole5Exp">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="Hole6Level">Hole6Level</label>
+                                        <div class="col-md-7">
+                                            <input type="text" id="Hole6Level" name="Hole6Level" class="form-control input-sm" value="@item.Hole6Level">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="Hole6Exp">Hole6Exp</label>
+                                        <div class="col-md-7">
+                                            <input type="text" id="Hole6Exp" name="Hole6Exp" class="form-control input-sm" value="@item.Hole6Exp">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="curExp">curExp</label>
+                                        <div class="col-md-7">
+                                            <input type="text" id="curExp" name="curExp" class="form-control input-sm must-number" value="@item.curExp">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END Active System Data Content -->
+                            </div>
+                            <!-- END Active System Data Block -->
+                        </div>
+                        <div class="col-lg-6">
+                            <!-- User Extra Block -->
+                            <div class="block">
+                                <!-- User Extra Title -->
+                                <div class="block-title">
+                                    <h2><strong>Mở Rộng</strong> 2</h2>
+                                </div>
+                                <!-- END User Extra Title -->
+                                <!-- User Extra Content -->
+                                <div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="StrengthenTimes">StrengthenTimes</label>
+                                        <div class="col-md-7">
+                                            <input type="text" id="StrengthenTimes" name="StrengthenTimes" class="form-control input-sm" value="@item.StrengthenTimes">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="IsGold">IsGold</label>
+                                        <div class="col-md-7">
+                                            <label class="switch switch-primary">
+                                                @{
+                                                    chek = string.Empty;
+                                                    if (item.IsGold) { chek = "checked"; }
+                                                }
+                                                <input type="checkbox" id="IsGold" name="IsGold" value="true" @chek>
+                                                <span></span>
+                                                <input type="hidden" id="IsGold" name="IsGold" value="false">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="goldBeginTime">goldBeginTime</label>
+                                        <div class="col-md-7">
+                                            <input type="text" id="goldBeginTime" name="goldBeginTime" class="form-control input-sm" value="@item.goldBeginTime">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="goldValidDate">goldValidDate</label>
+                                        <div class="col-md-7">
+                                            <input type="text" id="goldValidDate" name="goldValidDate" class="form-control input-sm" value="@item.goldValidDate">
+                                        </div>
+                                    </div>                                    
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="beadExp">beadExp</label>
+                                        <div class="col-md-7">
+                                            <input type="text" id="beadExp" name="beadExp" class="form-control input-sm" value="@item.beadExp">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="beadLevel">beadLevel</label>
+                                        <div class="col-md-7">
+                                            <input type="text" id="beadLevel" name="beadLevel" class="form-control input-sm" value="@item.beadLevel">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="beadIsLock">beadIsLock</label>
+                                        <div class="col-md-7">
+                                            <label class="switch switch-primary">
+                                                @{
+                                                    chek = string.Empty;
+                                                    if (item.beadIsLock) { chek = "checked"; }
+                                                }
+                                                <input type="checkbox" id="beadIsLock" name="beadIsLock" value="true" @chek>
+                                                <span></span>
+                                                <input type="hidden" id="beadIsLock" name="beadIsLock" value="false">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="isShowBind">isShowBind</label>
+                                        <div class="col-md-7">
+                                            <label class="switch switch-primary">
+                                                @{
+                                                    chek = string.Empty;
+                                                    if (item.isShowBind) { chek = "checked"; }
+                                                }
+                                                <input type="checkbox" id="isShowBind" name="isShowBind" value="true" @chek>
+                                                <span></span>
+                                                <input type="hidden" id="isShowBind" name="isShowBind" value="false">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="latentEnergyCurStr">latentEnergyCurStr</label>
+                                        <div class="col-md-7">
+                                            @if (!string.IsNullOrWhiteSpace(item.latentEnergyCurStr) && item.latentEnergyCurStr.Length > 20)
+                                            {
+                                                <textarea id="latentEnergyCurStr" name="latentEnergyCurStr" rows="4" class="form-control">@item.latentEnergyCurStr</textarea>
+                                            }
+                                            else
+                                            {
+                                                <input type="text" id="latentEnergyCurStr" name="latentEnergyCurStr" class="form-control input-sm" value="@item.latentEnergyCurStr">
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="latentEnergyNewStr">latentEnergyNewStr</label>
+                                        <div class="col-md-7">
+                                            @if (!string.IsNullOrWhiteSpace(item.latentEnergyNewStr) && item.latentEnergyNewStr.Length > 20)
+                                            {
+                                                <textarea id="latentEnergyNewStr" name="latentEnergyNewStr" rows="4" class="form-control">@item.latentEnergyNewStr</textarea>
+                                            }
+                                            else
+                                            {
+                                                <input type="text" id="latentEnergyNewStr" name="latentEnergyNewStr" class="form-control input-sm" value="@item.latentEnergyNewStr">
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="latentEnergyEndTime">latentEnergyEndTime</label>
+                                        <div class="col-md-7">
+                                            <input type="text" id="latentEnergyEndTime" name="latentEnergyEndTime" class="form-control input-sm" value="@item.latentEnergyEndTime">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="Damage">Damage</label>
+                                        <div class="col-md-7">
+                                            <input type="text" id="Damage" name="Damage" class="form-control input-sm" value="@item.Damage">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="Guard">Guard</label>
+                                        <div class="col-md-7">
+                                            <input type="text" id="Guard" name="Guard" class="form-control input-sm" value="@item.Guard">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="Blood">Blood</label>
+                                        <div class="col-md-7">
+                                            <input type="text" id="Blood" name="Blood" class="form-control input-sm" value="@item.Blood">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="Bless">Bless</label>
+                                        <div class="col-md-7">
+                                            <input type="text" id="Bless" name="Bless" class="form-control input-sm" value="@item.Bless">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="AdvanceDate">AdvanceDate</label>
+                                        <div class="col-md-7">
+                                            <input type="text" id="AdvanceDate" name="AdvanceDate" class="form-control input-sm" value="@item.AdvanceDate">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="AvatarActivity">AvatarActivity</label>
+                                        <div class="col-md-7">
+                                            <label class="switch switch-primary">
+                                                @{
+                                                    chek = string.Empty;
+                                                    if (item.AvatarActivity) { chek = "checked"; }
+                                                }
+                                                <input type="checkbox" id="AvatarActivity" name="AvatarActivity" value="true" @chek>
+                                                <span></span>
+                                                <input type="hidden" id="AvatarActivity" name="AvatarActivity" value="false">
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="goodsLock">goodsLock</label>
+                                        <div class="col-md-7">
+                                            <label class="switch switch-primary">
+                                                @{
+                                                    chek = string.Empty;
+                                                    if (item.goodsLock) { chek = "checked"; }
+                                                }
+                                                <input type="checkbox" id="goodsLock" name="goodsLock" value="true" @chek>
+                                                <span></span>
+                                                <input type="hidden" id="goodsLock" name="goodsLock" value="false">
+                                            </label>
+                                        </div>
+                                    </div>                                    
+                                    <div class="form-group">
+                                        <label class="col-md-5 control-label" for="cellLocked">cellLocked</label>
+                                        <div class="col-md-7">
+                                            <label class="switch switch-primary">
+                                                @{
+                                                    chek = string.Empty;
+                                                    if (item.cellLocked) { chek = "checked"; }
+                                                }
+                                                <input type="checkbox" id="cellLocked" name="cellLocked" value="true" @chek>
+                                                <span></span>
+                                                <input type="hidden" id="cellLocked" name="cellLocked" value="false">
+                                            </label>
+                                        </div>
+                                    </div>    
+                                </div>
+                                <!-- END User Extra Content -->
+                            </div>
+                            <!-- END User Extra Block -->
+                        </div>
+                    </div>
+                    <!-- END Customer Content -->
+                    <!-- END Customer Block -->
+                </div>
+            </div>
+            <!-- END Customer Content -->
+
+        </div>
+        <div class="form-group form-actions">
+            <div class="col-md-12 text-right">
+                <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-ok"></i> Lưu thay đổi</button>
+                <button type="button" class="btn btn-sm btn-success" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts{
+    <script>
+        $.validator.setDefaults({
+            submitHandler: function (e) {
+                $('#loading-bgr').show();
+                $.ajax({
+                    url: e.action,
+                    type: e.method,
+                    data: $(e).serialize(),
+                    success: function (result) {
+                        $('#loading-bgr').hide();
+                        $('#response-hodler').html(result);
+                    },
+                    error: function (result) {
+                        $('#loading-bgr').hide();
+                        showGrowl("@StaticFunction.GetTranslation("Views.ErrorRequest")");
+                    }
+                });
+                return false;
+            }
+        });
+        $('#frm-item').validate({
+            errorClass: 'help-block animation-slideDown',
+            errorElement: 'div',
+            errorPlacement: function (error, e) {
+                e.parents('.form-group > div').append(error);
+            },
+            highlight: function (e) {
+                $(e).closest('.form-group').removeClass('has-success has-error').addClass('has-error');
+                $(e).closest('.help-block').remove();
+            },
+            success: function (e) {
+                e.closest('.form-group').removeClass('has-success has-error');
+                e.closest('.help-block').remove();
+            },
+            rules: {
+                'ItemID': {
+                    required: true,
+                    digits: true
+                },
+                'UserID': {
+                    required: true,
+                    digits: true
+                },
+                'BagType': {
+                    required: true
+                },
+                'TemplateID': {
+                    required: true,
+                    digits: true
+                },
+                'Place': {
+                    required: true
+                },
+                'Count': {
+                    required: true,
+                    digits: true
+                },                
+                'StrengthenLevel': {
+                    required: true,
+                    digits: true
+                },
+                'AttackCompose': {
+                    required: true,
+                    digits: true
+                },
+                'DefendCompose': {
+                    required: true,
+                    digits: true
+                },
+                'LuckCompose': {
+                    required: true,
+                    digits: true
+                },
+                'AgilityCompose': {
+                    required: true,
+                    digits: true
+                },                
+                'BeginDate': {
+                    required: true,
+                    date: true
+                },
+                'ValidDate': {
+                    required: true,
+                    digits: true
+                },
+                'RemoveDate': {
+                    required: true,
+                    date: true
+                },
+                'RemoveType': {
+                    required: true,
+                    digits: true
+                },
+                'Hole1': {
+                    required: true
+                },
+                'Hole2': {
+                    required: true
+                },
+                'Hole3': {
+                    required: true
+                },
+                'Hole4': {
+                    required: true
+                },
+                'Hole5': {
+                    required: true
+                },
+                'Hole6': {
+                    required: true
+                },
+                'StrengthenRefineryLevel': {
+                    required: true,
+                    digits: true
+                },
+                'StrengthenTimes': {
+                    required: true,
+                    digits: true
+                },
+                'Hole5Level': {
+                    required: true,
+                    digits: true
+                },
+                'Hole5Exp': {
+                    required: true,
+                    digits: true
+                },
+                'Hole6Level': {
+                    required: true,
+                    digits: true
+                },
+                'Hole6Exp': {
+                    required: true,
+                    digits: true
+                },
+                'goldBeginTime': {
+                    required: true,
+                    date: true
+                },
+                'goldValidDate': {
+                    required: true,
+                    digits: true
+                },
+                'StrengthenExp': {
+                    required: true,
+                    digits: true
+                },
+                'beadExp': {
+                    required: true,
+                    digits: true
+                },
+                'beadLevel': {
+                    required: true,
+                    digits: true
+                },
+                'latentEnergyCurStr': {
+                    required: true,
+                },
+                'latentEnergyNewStr': {
+                    required: true,
+                },
+                'latentEnergyEndTime': {
+                    required: true,
+                    date: true
+                },
+                'Damage': {
+                    required: true,
+                    digits: true
+                },
+                'Guard': {
+                    required: true,
+                    digits: true
+                },
+                'Blood': {
+                    required: true,
+                    digits: true
+                },
+                'Bless': {
+                    required: true,
+                    digits: true
+                },
+                'AdvanceDate': {
+                    required: true,
+                    date: true
+                },
+                'MagicAttack': {
+                    required: true,
+                    digits: true
+                },
+                'MagicDefence': {
+                    required: true,
+                    digits: true
+                },
+                'MagicExp': {
+                    required: true,
+                    digits: true
+                },
+                'MagicLevel': {
+                    required: true,
+                    digits: true
+                }
+            },
+            messages: {
+                'ItemID': 'Vui lòng nhập vào 1 số',
+                'UserID': 'Vui lòng nhập vào 1 số',
+                'BagType': 'Vui lòng nhập vào 1 số',
+                'TemplateID': 'Vui lòng nhập vào 1 số',
+                'Place': 'Vui lòng nhập vào 1 số',
+                'Count': 'Vui lòng nhập vào 1 số',
+                'Color': 'Vui lòng nhập vào 1 số',
+                'StrengthenLevel': 'Vui lòng nhập vào 1 số',
+                'AttackCompose': 'Vui lòng nhập vào 1 số',
+                'DefendCompose': 'Vui lòng nhập vào 1 số',
+                'LuckCompose': 'Vui lòng nhập vào 1 số',
+                'AgilityCompose': 'Vui lòng nhập vào 1 số',
+                'Skin': 'Vui lòng nhập vào 1 số',
+                'BeginDate': 'Vui lòng nhập vào ngày tháng theo mẫu 1/30/2015 12:59:00 AM',
+                'ValidDate': 'Vui lòng nhập vào 1 số',
+                'RemoveDate': 'Vui lòng nhập vào ngày tháng theo mẫu 1/30/2015 12:59:00 AM',
+                'RemoveType': 'Vui lòng nhập vào 1 số',
+                'Hole1': 'Vui lòng nhập vào 1 số',
+                'Hole2': 'Vui lòng nhập vào 1 số',
+                'Hole3': 'Vui lòng nhập vào 1 số',
+                'Hole4': 'Vui lòng nhập vào 1 số',
+                'Hole5': 'Vui lòng nhập vào 1 số',
+                'Hole6': 'Vui lòng nhập vào 1 số',
+                'StrengthenRefineryLevel': 'Vui lòng nhập vào 1 số',
+                'StrengthenTimes': 'Vui lòng nhập vào 1 số',
+                'Hole5Level': 'Vui lòng nhập vào 1 số',
+                'Hole5Exp': 'Vui lòng nhập vào 1 số',
+                'Hole6Level': 'Vui lòng nhập vào 1 số',
+                'Hole6Exp': 'Vui lòng nhập vào 1 số',
+                'goldBeginTime': 'Vui lòng nhập vào ngày tháng theo mẫu 1/30/2015 12:59:00 AM',
+                'goldValidDate': 'Vui lòng nhập vào 1 số',
+                'StrengthenExp': 'Vui lòng nhập vào 1 số',
+                'beadExp': 'Vui lòng nhập vào 1 số',
+                'beadLevel': 'Vui lòng nhập vào 1 số',
+                'latentEnergyCurStr': 'Vui lòng nhập vào 1 số',
+                'latentEnergyNewStr': 'Vui lòng nhập vào 1 số',
+                'latentEnergyEndTime': 'Vui lòng nhập vào ngày tháng theo mẫu 1/30/2015 12:59:00 AM',
+                'Damage': 'Vui lòng nhập vào 1 số',
+                'Guard': 'Vui lòng nhập vào 1 số',
+                'Blood': 'Vui lòng nhập vào 1 số',
+                'Bless': 'Vui lòng nhập vào 1 số',
+                'AdvanceDate': 'Vui lòng nhập vào ngày tháng theo mẫu 1/30/2015 12:59:00 AM',
+                'MagicAttack': 'Vui lòng nhập vào 1 số',
+                'MagicDefence': 'Vui lòng nhập vào 1 số',
+                'MagicExp': 'Vui lòng nhập vào 1 số',
+                'MagicLevel': 'Vui lòng nhập vào 1 số'
+            }
+        });
+    </script>
+}
+

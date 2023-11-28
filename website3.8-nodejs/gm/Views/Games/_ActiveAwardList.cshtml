@@ -1,0 +1,105 @@
+﻿@using SqlDataProvider.Data;
+@model IPagedList<ActiveAwardInfo>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "LoadDropItems";
+    var hasKey = Request.QueryString["type"];
+    var title = Request.QueryString["title"];
+}
+
+@if (Model.Count() > 0)
+{    
+    <!-- Files Content -->
+    <div class="row media-filter-items" id="media-filter-items" style="height:543px;">
+        @foreach (var item in Model)
+        {
+            //activeId = item.ActiveID;
+            <div class="col-sm-6 col-lg-4">
+                <div class="media-items animation-fadeInQuickInv" data-category="rank-@item.ID" style="height:250px; min-width:150px">
+                    <div class="media-items-options text-left">
+                        <a href="@Html.Raw(Url.Action("EditActiveAward", "Games", new { id = item.ID }))" class="btn btn-xs btn-primary"
+                           data-modal="editEventAward"><i class="fa fa-pencil"></i></a>
+                        <a href="@Html.Raw(Url.Action("DeleteActiveAward", "Games", new { id = item.ID }))"
+                           class="btn btn-xs btn-warning" data-modal="deleteEventAward"><i class="fa fa-remove"></i></a>
+                        <span class="pull-right text-warning" style="font-size:11px"><em>Active <i class="gi gi-chevron-right" style="font-size:8px"></i></em> @item.ActiveID</span>
+                    </div>
+                    <div class="media-items-content" style="margin-top:-10px; margin-bottom:-15px">
+                        @Html.ItemImage(item.ItemID, "", "", "75")
+                    </div>
+                    <h4>
+                        <span class="text-info" style="font-size:14px">@Html.TItemName(item.ItemID)</span><br>
+                        <small style="font-size:12px">
+                            @if (item.StrengthenLevel != 0)
+                            {
+                                <em>Cường hóa:</em><span class="text-success"> @item.StrengthenLevel </span><br>
+                            }
+                        </small>
+                        <small style="font-size:12px">
+                            @if (item.Count != 0)
+                            {
+                                <em>Số lượng: </em> <span class="text-success">@item.Count </span>
+                            }
+                            else if (item.Money != 0)
+                            {
+                                <em>Xu: </em><span class="text-info">@item.Money </span>
+                            }
+                            else
+                            {
+                                <em>Vàng: </em><span class="text-info">@item.Gold </span>
+                            }
+                        </small><br>
+                        <span class="text-info" style="font-size:12px"><em>Tấn công: </em> @item.AttackCompose </span>|
+                        <span class="text-info" style="font-size:12px"><em>Phòng thủ: </em>@item.DefendCompose</span><br>
+                        <span class="text-info" style="font-size:12px"><em>Nhanh nhẹn: </em>@item.AgilityCompose </span>|
+                        <span class="text-info" style="font-size:12px"><em>May mắn: </em>@item.LuckCompose</span><br>
+                        <small style="font-size:12px">
+                            <em>Hiệu lực:</em> @if (item.ValidDate == 0)
+                            { <span class="text-success"> Vĩnh viễn </span> }
+                            else
+                            { <span class="text-info">@item.ValidDate ngày </span> }
+                        </small><br>
+                    </h4>
+                </div>
+            </div>
+        }
+    </div>
+    <!-- END Files Content -->
+    <div class="text-center">
+        @if (hasKey == "1") {
+            <a href="@Html.Raw(Url.Action("ActiveNumber","Games", new { id = ViewContext.RouteData.Values["id"], @title = title }))" class="btn btn-primary btn-sm pull-right" data-modal="getActiveNumber">Giftcode</a>
+        }
+        @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount, new AjaxOptions { LoadingElementId = "loading-bgr", OnSuccess = "AjaxDropItemsSuccess" }).Options(o => o
+                                .DisplayTemplate("_Pagination")
+                                .Action("EventAwardList")
+                                .AddRouteValue("key", ViewData["key"])
+                                .AddRouteValue("id", ViewContext.RouteData.Values["id"])
+                                .AddRouteValue("type", ViewData["type"])
+                                .MaxNrOfPages(3))
+    </div>
+    
+}
+else
+{
+    <div class="text-center">
+        @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+    </div>
+}
+
+@section Scripts{
+    <script>
+        $(function () {
+            ModelGeneral.init('data-modal="getActiveNumber"', 'large3');
+            ModelGeneral.init('data-modal="editEventAward"', 'large3');
+            ModelGeneral.init('data-modal="deleteEventAward"');
+        });
+        function AjaxDropItemsSuccess(data) {//OnSuccess = "AjaxSuccess"
+            if (data.Result) {
+                $('#event-award-list').html(data.Html);
+            }
+            else {
+                showGrowl(data.Html, 'danger');
+            }
+        }
+    </script>
+}
+

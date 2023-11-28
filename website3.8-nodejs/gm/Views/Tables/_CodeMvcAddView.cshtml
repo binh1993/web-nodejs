@@ -1,0 +1,163 @@
+﻿@using SqlDataProvider.Data;
+@using System.Text;
+@model GM.Service.Models.TableModel
+
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    TableInfo item = Model.Info;
+    List<TableDesignInfo> designs = Model.Designs;
+    string name = item.Class.Replace("Info", "");
+    int count = 0;
+
+    StringBuilder sb = new StringBuilder();
+    sb.AppendLine(" ");
+    sb.AppendLine("@model SqlDataProvider.Data." + name + "Info");
+    sb.AppendLine("@{");
+    sb.AppendLine("    Layout = \"~/Views/Shared/_RenderLayout.cshtml\";");
+    sb.AppendLine("    ViewBag.Title = StaticFunction.GetTranslation(\"Model.Add.Title." + name + "\");");
+    sb.AppendLine("    var item = Model;");
+    sb.AppendLine("    string chek = string.Empty;");
+    sb.AppendLine("}");
+    sb.AppendLine("<div class=\"modal-header themed-background-default\">");
+    sb.AppendLine("    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">&times;</button>");
+    sb.AppendLine("    <h4 class=\"modal-title\">");
+    sb.AppendLine("         @ViewBag.Title");
+    sb.AppendLine("    </h4>");
+    sb.AppendLine("</div>");
+    sb.AppendLine("<div class=\"modal-body\">");
+    sb.AppendLine("<form action=\"@Html.Raw(Url.Action(\"Create" + name + "\", \"Games\"))\" ");
+    sb.AppendLine("      method=\"post\" class=\"form-horizontal form-bordered\" id=\"frm-add-" + name.ToLower() + "\">");
+    foreach (var d in designs)
+    {
+        sb.AppendLine("    <div class=\"form-group\">");
+        sb.AppendLine("        <label class=\"col-md-3 control-label\" for=\"" + d.Name + "\">" + d.Name + "</label>");
+        sb.AppendLine("        <div class=\"col-md-9\">");
+        if (count == 0)
+        {
+            sb.AppendLine("            <input type=\"text\" id=\"" + d.Name + "\" name=\"" + d.Name + "\" class=\"form-control input-sm must-digits\" placeholder=\"@StaticFunction.GetTranslation(\"Model.PlaceHolder.Int\")\">");
+        }
+        else
+        {
+            if (d.Type.Contains("nvarchar"))
+            {
+                sb.AppendLine("         @if(item." + d.Name + ".Length > 20)");
+                sb.AppendLine("         { ");
+                sb.AppendLine("             <textarea id=\"" + d.Name + "\" name=\"" + d.Name + "\" rows=\"4\" class=\"form-control must-required\" placeholder=\"@StaticFunction.GetTranslation(\"Model.PlaceHolder.Text\")\"></textarea>");
+                sb.AppendLine("         } ");
+                sb.AppendLine("         else ");
+                sb.AppendLine("         {");
+                sb.AppendLine("            <input type=\"text\" id=\"" + d.Name + "\" name=\"" + d.Name + "\" class=\"form-control input-sm must-required\" placeholder=\"@StaticFunction.GetTranslation(\"Model.PlaceHolder.Text\")\">");
+                sb.AppendLine("         }");
+            }
+            else if (d.Type.Contains("bit"))
+            {
+                sb.AppendLine("            <label class=\"switch switch-primary\">");
+                sb.AppendLine("                <input type=\"checkbox\" id=\"" + d.Name + "\" name=\"" + d.Name + "\" value=\"true\" >");
+                sb.AppendLine("                <span></span>");
+                sb.AppendLine("                <input type=\"hidden\" id=\"" + d.Name + "\" name=\"" + d.Name + "\" value=\"false\">");
+                sb.AppendLine("            </label>");
+            }
+            else
+            {
+                string mustStr = "must-number";
+                string holderStr = "Model.PlaceHolder.Text";
+                if (d.Type.Contains("datetime"))
+                {
+                    mustStr = "must-date";
+                    holderStr = "Model.PlaceHolder.Date";
+                }
+                if (d.Type.Contains("int") || d.Type.Contains("number") || d.Type.Contains("float"))
+                {
+                    holderStr = "Model.PlaceHolder.Int";
+                }
+                sb.AppendLine("            <input type=\"text\" id=\"" + d.Name + "\" name=\"" + d.Name + "\" class=\"form-control input-sm " + mustStr + "\" placeholder=\"@StaticFunction.GetTranslation(\"" + holderStr + "\")\">");
+            }
+        }
+        sb.AppendLine("        </div>");
+        sb.AppendLine("    </div>    ");
+        count++;
+    }
+    sb.AppendLine("    <div class=\"form-group form-actions\">");
+    sb.AppendLine("        <div class=\"col-md-12 text-right\">");
+    sb.AppendLine("            <button type=\"submit\" class=\"btn btn-sm btn-warning btn-submit2\"> @StaticFunction.GetTranslation(\"Model.Add\")</button>");
+    sb.AppendLine("            <button type=\"button\" class=\"btn btn-sm btn-primary\" data-dismiss=\"modal\"> @StaticFunction.GetTranslation(\"Model.CLose\")</button>");
+    sb.AppendLine("        </div>");
+    sb.AppendLine("    </div>");
+    sb.AppendLine("</form>");
+    sb.AppendLine("</div>");
+    sb.AppendLine("@section Scripts{");
+    sb.AppendLine("    <script>");
+    sb.AppendLine(@"
+          $(function () {
+            var startBtn = $('.btn-submit2');
+            // On start button click start loading again
+            startBtn.on('click', function () {
+                $(this).button('loading');
+            });
+
+            /* Validate */
+
+            $('form#frm-add-" + name.ToLower() + @"').each(function () {
+                $(this).validate({
+                    errorClass: 'help-block animation-slideDown',
+                    errorElement: 'div',
+                    errorPlacement: function (error, e) {
+                        e.parents('.form-group > div').append(error);
+                    },
+                    highlight: function (e) {
+                        $(e).closest('.form-group').removeClass('has-success has-error').addClass('has-error');
+                        $(e).closest('.help-block').remove();
+                        startBtn.button('reset');
+                    },
+                    success: function (e) {
+                        e.closest('.form-group').removeClass('has-success has-error');
+                        e.closest('.help-block').remove();
+                    },
+                    submitHandler: function (e) {
+                        $('#loading-bgr').show();
+                        $.ajax({
+                            url: e.action,
+                            type: e.method,
+                            data: $(e).serialize(),
+                            success: function (result) {
+                                $('#loading-bgr').hide();
+                                $('#response-hodler').html(result);
+                                startBtn.button('reset');
+                                //loadDropItems();
+                            },
+                            error: function (xhr) {
+                                $('#loading-bgr').hide();
+                                showGrowl('Error: ' + xhr.status + ' ' + xhr.statusText, 'danger');
+                                startBtn.button('reset');
+                            }
+                        });
+                        return false;
+                    }
+                });
+            });
+        });
+    ");
+    sb.AppendLine("    </script>");
+    sb.AppendLine("}");
+}
+<h4>@item.Name <i class="fa fa-angle-right"></i><span class="text-danger"> MVC Create</span></h4>
+<div style="overflow-y:auto; height:450px">
+<pre class="line-numbers">
+    <code class="language-php" id="highlight-code">
+        @sb.ToString()
+    </code>
+</pre>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+
+            navActive('MVC');
+
+            var code = $('#highlight-code')[0];
+            Prism.highlightElement(code);
+
+            ZeroCopy.init();
+        });
+    </script>
+}

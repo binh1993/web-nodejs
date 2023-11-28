@@ -1,0 +1,355 @@
+﻿@model SqlDataProvider.Data.QuestInfo
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = StaticFunction.GetTranslation("Model.Edit.Title");
+    var item = Model;
+    string chek = string.Empty;
+
+    string callBackStr = "'" + Request.QueryString["table"] + "', ";
+    callBackStr += "'" + Request.QueryString["key"] + "', ";
+    callBackStr += Request.QueryString["cid"] == null ? "-1," : Request.QueryString["cid"] + ", ";
+    callBackStr += Request.QueryString["Page"] == null ? "-1," : Request.QueryString["Page"] + ", ";
+    callBackStr += Model.ID + ", ";
+    callBackStr += "'" + Request.QueryString["tagName"] + "'";
+}
+<div class="modal-header themed-background-default">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">
+        @ViewBag.Title
+        <i class="gi gi-chevron-right" style="font-size:10px"></i>
+        <span style="color:white"><strong> @item.Title</strong></span>
+    </h4>
+</div>
+<div class="modal-body">
+    <form action="@Html.Raw(Url.Action("EditData", "Games", routeValues: new {@id1 = item.ID, @id2=-1, table = Request.QueryString["table"] }))"
+          method="post" class="form-horizontal form-bordered" id="frm-edit-quest">
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="ID">ID</label>
+            <div class="col-md-9">
+                <input type="text" class="form-control input-sm" disabled="disabled" value="@item.ID">
+                <input type="hidden" id="ID" name="ID" value="@item.ID">
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="QuestID">QuestID</label>
+            <div class="col-md-9">
+                <input type="text" id="QuestID" name="QuestID" class="form-control input-sm must-number" value="@item.QuestID">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Title">Title</label>
+            <div class="col-md-9">              
+                    <textarea id="Title" name="Title" rows="2" class="form-control must-required">@item.Title</textarea>               
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Detail">Detail</label>
+            <div class="col-md-9">               
+                    <textarea id="Detail" name="Detail" rows="5" class="form-control must-required">@item.Detail</textarea>               
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Objective">Objective</label>
+            <div class="col-md-9">                
+                    <input type="text" id="Objective" name="Objective" class="form-control input-sm" value="@item.Objective">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="NeedMinLevel">NeedMinLevel</label>
+            <div class="col-md-9">
+                <input type="text" id="NeedMinLevel" name="NeedMinLevel" class="form-control input-sm must-number" value="@item.NeedMinLevel">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="NeedMaxLevel">NeedMaxLevel</label>
+            <div class="col-md-9">
+                <input type="text" id="NeedMaxLevel" name="NeedMaxLevel" class="form-control input-sm must-number" value="@item.NeedMaxLevel">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="PreQuestID">PreQuestID</label>
+            <div class="col-md-9">                
+                    <input type="text" id="PreQuestID" name="PreQuestID" class="form-control input-sm must-required" value="@item.PreQuestID">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="NextQuestID">NextQuestID</label>
+            <div class="col-md-9">               
+                    <input type="text" id="NextQuestID" name="NextQuestID" class="form-control input-sm must-required" value="@item.NextQuestID">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="IsOther">IsOther</label>
+            <div class="col-md-9">
+                <input type="text" id="IsOther" name="IsOther" class="form-control input-sm must-number" value="@item.IsOther">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="CanRepeat">CanRepeat</label>
+            <div class="col-md-9">
+                <label class="switch switch-primary">
+                    @{
+                        chek = string.Empty;
+                        if (item.CanRepeat) { chek = "checked"; }
+                    }
+                    <input type="checkbox" id="CanRepeat" name="CanRepeat" value="true" @chek>
+                    <span></span>
+                    <input type="hidden" id="CanRepeat" name="CanRepeat" value="false">
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="RepeatInterval">RepeatInterval</label>
+            <div class="col-md-9">
+                <input type="text" id="RepeatInterval" name="RepeatInterval" class="form-control input-sm must-number" value="@item.RepeatInterval">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="RepeatMax">RepeatMax</label>
+            <div class="col-md-9">
+                <input type="text" id="RepeatMax" name="RepeatMax" class="form-control input-sm must-number" value="@item.RepeatMax">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="RewardGP">RewardGP</label>
+            <div class="col-md-9">
+                <input type="text" id="RewardGP" name="RewardGP" class="form-control input-sm must-number" value="@item.RewardGP">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="RewardGold">RewardGold</label>
+            <div class="col-md-9">
+                <input type="text" id="RewardGold" name="RewardGold" class="form-control input-sm must-number" value="@item.RewardGold">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="RewardBindMoney">RewardBindMoney</label>
+            <div class="col-md-9">
+                <input type="text" id="RewardBindMoney" name="RewardBindMoney" class="form-control input-sm must-number" value="@item.RewardBindMoney">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="RewardOffer">RewardOffer</label>
+            <div class="col-md-9">
+                <input type="text" id="RewardOffer" name="RewardOffer" class="form-control input-sm must-number" value="@item.RewardOffer">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="RewardRiches">RewardRiches</label>
+            <div class="col-md-9">
+                <input type="text" id="RewardRiches" name="RewardRiches" class="form-control input-sm must-number" value="@item.RewardRiches">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="RewardBuffID">RewardBuffID</label>
+            <div class="col-md-9">
+                <input type="text" id="RewardBuffID" name="RewardBuffID" class="form-control input-sm must-number" value="@item.RewardBuffID">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="RewardBuffDate">RewardBuffDate</label>
+            <div class="col-md-9">
+                <input type="text" id="RewardBuffDate" name="RewardBuffDate" class="form-control input-sm must-number" value="@item.RewardBuffDate">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="RewardMoney">RewardMoney</label>
+            <div class="col-md-9">
+                <input type="text" id="RewardMoney" name="RewardMoney" class="form-control input-sm must-number" value="@item.RewardMoney">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Rands">Rands</label>
+            <div class="col-md-9">
+                <input type="text" id="Rands" name="Rands" class="form-control input-sm must-number" value="@item.Rands">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="RandDouble">RandDouble</label>
+            <div class="col-md-9">
+                <input type="text" id="RandDouble" name="RandDouble" class="form-control input-sm must-number" value="@item.RandDouble">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="TimeMode">TimeMode</label>
+            <div class="col-md-9">
+                <label class="switch switch-primary">
+                    @{
+                        chek = string.Empty;
+                        if (item.TimeMode) { chek = "checked"; }
+                    }
+                    <input type="checkbox" id="TimeMode" name="TimeMode" value="true" @chek>
+                    <span></span>
+                    <input type="hidden" id="TimeMode" name="TimeMode" value="false">
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="StartDate">StartDate</label>
+            <div class="col-md-9">
+                <input type="text" id="StartDate" name="StartDate" class="form-control input-sm must-date" value="@item.StartDate">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="EndDate">EndDate</label>
+            <div class="col-md-9">
+                <input type="text" id="EndDate" name="EndDate" class="form-control input-sm must-date" value="@item.EndDate">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="MapID">MapID</label>
+            <div class="col-md-9">
+                <input type="text" id="MapID" name="MapID" class="form-control input-sm must-number" value="@item.MapID">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="AutoEquip">AutoEquip</label>
+            <div class="col-md-9">
+                <label class="switch switch-primary">
+                    @{
+                        chek = string.Empty;
+                        if (item.AutoEquip) { chek = "checked"; }
+                    }
+                    <input type="checkbox" id="AutoEquip" name="AutoEquip" value="true" @chek>
+                    <span></span>
+                    <input type="hidden" id="AutoEquip" name="AutoEquip" value="false">
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="OneKeyFinishNeedMoney">OneKeyFinishNeedMoney</label>
+            <div class="col-md-9">
+                <input type="text" id="OneKeyFinishNeedMoney" name="OneKeyFinishNeedMoney" class="form-control input-sm must-number" value="@item.OneKeyFinishNeedMoney">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Rank">Rank</label>
+            <div class="col-md-9">              
+                    <input type="text" id="Rank" name="Rank" class="form-control input-sm" value="@item.Rank">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="StarLev">StarLev</label>
+            <div class="col-md-9">
+                <input type="text" id="StarLev" name="StarLev" class="form-control input-sm must-number" value="@item.StarLev">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="NotMustCount">NotMustCount</label>
+            <div class="col-md-9">
+                <input type="text" id="NotMustCount" name="NotMustCount" class="form-control input-sm must-number" value="@item.NotMustCount">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Level2NeedMoney">Level2NeedMoney</label>
+            <div class="col-md-9">
+                <input type="text" id="Level2NeedMoney" name="Level2NeedMoney" class="form-control input-sm must-number" value="@item.Level2NeedMoney">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Level3NeedMoney">Level3NeedMoney</label>
+            <div class="col-md-9">
+                <input type="text" id="Level3NeedMoney" name="Level3NeedMoney" class="form-control input-sm must-number" value="@item.Level3NeedMoney">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Level4NeedMoney">Level4NeedMoney</label>
+            <div class="col-md-9">
+                <input type="text" id="Level4NeedMoney" name="Level4NeedMoney" class="form-control input-sm must-number" value="@item.Level4NeedMoney">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Level5NeedMoney">Level5NeedMoney</label>
+            <div class="col-md-9">
+                <input type="text" id="Level5NeedMoney" name="Level5NeedMoney" class="form-control input-sm must-number" value="@item.Level5NeedMoney">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="CollocationCost">CollocationCost</label>
+            <div class="col-md-9">
+                <input type="text" id="CollocationCost" name="CollocationCost" class="form-control input-sm must-number" value="@item.CollocationCost">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="CollocationColdTime">CollocationColdTime</label>
+            <div class="col-md-9">
+                <input type="text" id="CollocationColdTime" name="CollocationColdTime" class="form-control input-sm must-number" value="@item.CollocationColdTime">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="IsAccept">IsAccept</label>
+            <div class="col-md-9">
+                <label class="switch switch-primary">
+                    @{
+                        chek = string.Empty;
+                        if (item.IsAccept) { chek = "checked"; }
+                    }
+                    <input type="checkbox" id="IsAccept" name="IsAccept" value="true" @chek>
+                    <span></span>
+                    <input type="hidden" id="IsAccept" name="IsAccept" value="false">
+                </label>
+            </div>
+        </div>
+        <div class="form-group form-actions">
+            <div class="col-md-12 text-right">
+                <button type="submit" class="btn btn-sm btn-warning btn-submit2"> @StaticFunction.GetTranslation("Model.Update")</button>
+                <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal"> @StaticFunction.GetTranslation("Model.CLose")</button>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts{
+    <script>
+
+          $(function () {
+            var startBtn = $('.btn-submit2');
+            // On start button click start loading again
+            startBtn.on('click', function () {
+                $(this).button('loading');
+            });
+
+            /* Validate */
+
+            $('form#frm-edit-quest').each(function () {
+                $(this).validate({
+                    errorClass: 'help-block animation-slideDown',
+                    errorElement: 'div',
+                    errorPlacement: function (error, e) {
+                        e.parents('.form-group > div').append(error);
+                    },
+                    highlight: function (e) {
+                        $(e).closest('.form-group').removeClass('has-success has-error').addClass('has-error');
+                        $(e).closest('.help-block').remove();
+                        startBtn.button('reset');
+                    },
+                    success: function (e) {
+                        e.closest('.form-group').removeClass('has-success has-error');
+                        e.closest('.help-block').remove();
+                    },
+                    submitHandler: function (e) {
+                        $('#loading-bgr').show();
+                        $.ajax({
+                            url: e.action,
+                            type: e.method,
+                            data: $(e).serialize(),
+                            success: function (result) {
+                                $('#loading-bgr').hide();
+                                $('#response-hodler').html(result);
+                                startBtn.button('reset');
+                                reloadData(@Html.Raw(callBackStr));
+                            },
+                            error: function (xhr) {
+                                $('#loading-bgr').hide();
+                                showGrowl('Error: ' + xhr.status + ' ' + xhr.statusText, 'danger');
+                                startBtn.button('reset');
+                            }
+                        });
+                        return false;
+                    }
+                });
+            });
+        });
+
+    </script>
+}

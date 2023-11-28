@@ -1,0 +1,77 @@
+﻿@using SqlDataProvider.Data;
+@using System.Text;
+@model GM.Service.Models.TableModel
+
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    TableInfo item = Model.Info;
+    string name = item.Class.Replace("Info", "");
+
+    StringBuilder sb = new StringBuilder();
+    sb.AppendLine(" ");
+
+    sb.AppendLine("@model SqlDataProvider.Data." + item.Class + "");
+    sb.AppendLine("@{");
+    sb.AppendLine("    Layout = \"~/Views/Shared/_RenderLayout.cshtml\";");
+    sb.AppendLine("    ViewBag.Title = StaticFunction.GetTranslation(\"Model.Confirm\");");
+    sb.AppendLine("    string name = StaticFunction.ItemName(Model.TemplateID);");
+    sb.AppendLine("}");
+    sb.AppendLine("<div class=\"modal-header themed-background-fire\" style=\"color:white;\">");
+    sb.AppendLine("    <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-hidden=\"true\">&times;</button>");
+    sb.AppendLine("    <h4 class=\"modal-title\">@ViewBag.Title</h4>");
+    sb.AppendLine("</div>");
+    sb.AppendLine("<div class=\"modal-body\">");
+    sb.AppendLine("    <!-- Danger Alert Content -->");
+    sb.AppendLine("    <div class=\"alert alert-danger\">");
+    sb.AppendLine("        @Html.Raw(StaticFunction.GetTranslation(\"Controllers.DeleteConfirm\", name))");
+    sb.AppendLine("    </div>");
+    sb.AppendLine("    <!-- END Danger Alert Content -->");
+    sb.AppendLine("    <form action=\"@Html.Raw(Url.Action(\"Delete" + name + "\", \"Games\",  new { id = Model.ID, func = \"load" + name + "()\"}))\"");
+    sb.AppendLine("          class=\"form-horizontal\" id=\"form-confirm\" method=\"post\" role=\"form\">");
+    sb.AppendLine("        <input type=\"hidden\" value=\"@name\" id=\"Name\" name=\"Name\" />");
+    sb.AppendLine("        <input type=\"hidden\" value=\"@Model.ID\" id=\"ID\" name=\"ID\" />");
+    sb.AppendLine("        <div class=\"form-actions text-right\">");
+    sb.AppendLine("            <input class=\"btn btn-sm btn-danger\" type=\"submit\" value=\"@StaticFunction.GetTranslation(\"Model.Confirm\")\" />");
+    sb.AppendLine("            <input class=\"btn btn-sm btn-success\" type=\"button\" value=\"@StaticFunction.GetTranslation(\"Model.Cancel\")\" data-dismiss=\"modal\" />");
+    sb.AppendLine("        </div>");
+    sb.AppendLine("    </form>");
+    sb.AppendLine("</div>");
+    sb.AppendLine("@section Scripts{");
+    sb.AppendLine("    <script>");
+    sb.AppendLine("        $('#form-confirm').on('submit', function (e) {");
+    sb.AppendLine("            $('#loading-bgr').show();");
+    sb.AppendLine("            $.ajax({");
+    sb.AppendLine("                url: this.action,");
+    sb.AppendLine("                type: this.method,");
+    sb.AppendLine("                data: $(this).serialize(),");
+    sb.AppendLine("                success: function (result) {");
+    sb.AppendLine("                    $('#loading-bgr').hide();");
+    sb.AppendLine("                    $('#modal-content').html(result);");
+    sb.AppendLine("                }");
+    sb.AppendLine("            });");
+    sb.AppendLine("            return false;");
+    sb.AppendLine("        });");
+    sb.AppendLine("    </script>");
+    sb.AppendLine("}");
+}
+<h4>@item.Name <i class="fa fa-angle-right"></i><span class="text-danger"> MVC Delete</span></h4>
+<div style="overflow-y:auto; height:450px">
+<pre class="line-numbers">
+    <code class="language-markup" id="highlight-code">
+        @sb.ToString()
+    </code>
+</pre>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+
+            navActive('MVC');
+
+            var code = $('#highlight-code')[0];
+            Prism.highlightElement(code);
+
+            ZeroCopy.init();
+        });
+    </script>
+}

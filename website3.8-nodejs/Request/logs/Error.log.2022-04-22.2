@@ -1,0 +1,54 @@
+2022-04-22 19:26:56,644 - [11] - ERROR - Tank.Request.ServerList - Load server list error:
+System.ServiceModel.CommunicationObjectFaultedException: The communication object, System.ServiceModel.Channels.ServiceChannel, cannot be used for communication because it is in the Faulted state.
+
+Server stack trace: 
+   at System.ServiceModel.Channels.CommunicationObject.Close(TimeSpan timeout)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at System.ServiceModel.ClientBase`1.System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at Tank.Request.ServerList.ProcessRequest(HttpContext context) in C:\NEWGUN\Source Server\Tank.Request\ServerList.ashx.cs:line 49
+2022-04-22 19:28:22,913 - [17] - ERROR - Tank.Request.Login - login != nulltrue
+2022-04-22 19:28:22,913 - [17] - ERROR - Tank.Request.Login - flag2false!
+2022-04-22 19:28:29,413 - [9] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context) in C:\NEWGUN\Source Server\Tank.Request\IMListLoad.ashx.cs:line 33
+2022-04-22 19:28:29,460 - [11] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context) in C:\NEWGUN\Source Server\Tank.Request\AdvanceQuestTime.ashx.cs:line 33
+2022-04-22 19:44:47,326 - [79] - ERROR - Tank.Request.Login - login != nulltrue
+2022-04-22 19:44:47,326 - [79] - ERROR - Tank.Request.Login - flag2false!
+2022-04-22 19:44:53,858 - [98] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context) in C:\NEWGUN\Source Server\Tank.Request\IMListLoad.ashx.cs:line 33
+2022-04-22 19:44:53,904 - [79] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context) in C:\NEWGUN\Source Server\Tank.Request\AdvanceQuestTime.ashx.cs:line 33
+2022-04-22 20:26:37,647 - [165] - ERROR - Tank.Request.Login - login != nulltrue
+2022-04-22 20:26:37,647 - [165] - ERROR - Tank.Request.Login - flag2false!
+2022-04-22 20:26:43,115 - [160] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context) in C:\NEWGUN\Source Server\Tank.Request\IMListLoad.ashx.cs:line 33
+2022-04-22 20:26:43,230 - [157] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context) in C:\NEWGUN\Source Server\Tank.Request\AdvanceQuestTime.ashx.cs:line 33

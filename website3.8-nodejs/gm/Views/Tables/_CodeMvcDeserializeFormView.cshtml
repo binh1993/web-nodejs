@@ -1,0 +1,67 @@
+﻿@using SqlDataProvider.Data;
+@using System.Text;
+@model GM.Service.Models.TableModel
+
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    TableInfo item = Model.Info;
+    List<TableDesignInfo> designs = Model.Designs;
+    string name = item.Class.Replace("Info", "");
+    StringBuilder sb = new StringBuilder();
+
+    sb.AppendLine(" ");
+
+    sb.AppendLine("public static " + name + "Info Init" + name + "(" + name + "Info info, FormCollection collect)");
+    sb.AppendLine("{");
+    foreach (var d in designs)
+    {
+        if (d.Type.Contains("nvarchar"))
+        {
+            sb.AppendLine("   info." + d.Name + " = string.IsNullOrWhiteSpace(collect[\"" + d.Name + "\"]) ? \"\" : collect[\"" + d.Name + "\"].ToString();");
+        }
+        else if (d.Type.Contains("bit"))
+        {
+            sb.AppendLine("   info." + d.Name + " = string.IsNullOrWhiteSpace(collect[\"" + d.Name + "\"]) ? false : Convert.ToBoolean(collect[\"" + d.Name + "\"].ToString().Split(',')[0]);");
+        }
+        else if (d.Type.Contains("varbinary"))
+        {
+            sb.AppendLine("   info." + d.Name + " = string.IsNullOrWhiteSpace(collect[\"" + d.Name + "\"]) ? new byte[200] : (byte[])collect[\"" + d.Name + "\"];");
+        }
+        else if (d.Type.Contains("datetime"))
+        {
+            sb.AppendLine("   info." + d.Name + " = string.IsNullOrWhiteSpace(collect[\"" + d.Name + "\"]) ? DateTime.Now : Convert.ToDateTime(collect[\"" + d.Name + "\"]);");
+        }
+        else if (d.Type.Contains("numeric"))
+        {
+            sb.AppendLine("   info." + d.Name + " = string.IsNullOrWhiteSpace(collect[\"" + d.Name + "\"]) ? 0.0 : Convert.ToDecimal(collect[\"" + d.Name + "\"]);");
+        }
+        else
+        {
+            sb.AppendLine("   info." + d.Name + " = Convert.ToInt32(collect[\"" + d.Name + "\"]);");
+        }
+    }
+    sb.AppendLine("   return info;");
+    sb.Append("}");
+
+}
+<h4>@item.Name <i class="fa fa-angle-right"></i><span class="text-danger"> MVC Control</span></h4>
+<div style="overflow-y:auto; height:450px">
+<pre class="line-numbers">
+    <code class="language-csharp" id="highlight-code">
+        @sb.ToString()
+    </code>
+</pre>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+
+            navActive('MVC');
+
+            var code = $('#highlight-code')[0];
+            Prism.highlightElement(code);
+
+            ZeroCopy.init();
+        });
+    </script>
+}

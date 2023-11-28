@@ -1,0 +1,13 @@
+﻿@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "Chưa đăng nhập";
+}
+<div class="block">
+    <!-- Warning Alert -->
+    <div class="alert alert-warning">
+        <p>Vui lòng đăng nhập để sử dụng chức năng này.</p>
+        <p>Nếu bạn đã đăng nhập có thể thời gian đăng nhập hết hiệu lực, tải lại trang để đăng nhập lại.</p>
+        <p>Hoặc nhấp vào @Html.ActionLink("Đăng nhập", "Login", "Account", routeValues: null, htmlAttributes: new { id = "login-link", @class = "btn btn-sm btn-success" })</p>
+    </div>
+    <!-- END Warning Alert -->
+</div>

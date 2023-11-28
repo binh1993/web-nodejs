@@ -1,0 +1,162 @@
+﻿@model SqlDataProvider.Data.AreaConfigInfo
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = StaticFunction.GetTranslation("Model.Edit.Title");
+    var item = Model;
+    string chek = string.Empty;
+}
+<div class="modal-header themed-background-default">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">
+        @ViewBag.Title
+        <i class="gi gi-chevron-right" style="font-size:10px"></i>
+        <span style="color:white"><strong> @item.AreaName</strong></span>
+    </h4>
+</div>
+<div class="modal-body">
+    <form action="@Html.Raw(Url.Action("Edit", "Service", routeValues: new {@id = item.AreaID}))"
+          method="post" class="form-horizontal form-bordered" id="frm-edit-areaconfig">
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="AreaServer">AreaID</label>
+            <div class="col-md-9">
+                <input type="text" class="form-control input-sm" value="@item.AreaID" disabled />
+            </div>
+            <input type="hidden" id="AreaID" name="AreaID" value="@item.AreaID">
+        </div>        
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="AreaServer">AreaServer</label>
+            <div class="col-md-9">                
+                    <input type="text" id="AreaServer" name="AreaServer" class="form-control input-sm" value="@item.AreaServer">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="AreaName">AreaName</label>
+            <div class="col-md-9">               
+                    <input type="text" id="AreaName" name="AreaName" class="form-control input-sm must-required" value="@item.AreaName">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="DataSource">DataSource</label>
+            <div class="col-md-9">               
+                    <input type="text" id="DataSource" name="DataSource" class="form-control input-sm must-required" value="@item.DataSource">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Catalog">Catalog</label>
+            <div class="col-md-9">               
+                    <input type="text" id="Catalog" name="Catalog" class="form-control input-sm must-required" value="@item.Catalog">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="UserID">UserID</label>
+            <div class="col-md-9">               
+                    <input type="text" id="UserID" name="UserID" class="form-control input-sm must-required" value="@item.UserID">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Password">Password</label>
+            <div class="col-md-9">               
+                    <input type="text" id="Password" name="Password" class="form-control input-sm must-required" value="@item.Password">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Password">RequestUrl</label>
+            <div class="col-md-9">
+                <input type="text" id="RequestUrl" name="RequestUrl" class="form-control input-sm must-required" value="@item.RequestUrl">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="CrossChatAllow">CrossChatAllow</label>
+            <div class="col-md-9">
+                <label class="switch switch-primary">
+                    @{
+                        chek = string.Empty;
+                        if (item.CrossChatAllow) { chek = "checked"; }
+                    }
+                    <input type="checkbox" id="CrossChatAllow" name="CrossChatAllow" value="true" @chek>
+                    <span></span>
+                    <input type="hidden" id="CrossChatAllow" name="CrossChatAllow" value="false">
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="CrossPrivateChat">CrossPrivateChat</label>
+            <div class="col-md-9">
+                <label class="switch switch-primary">
+                    @{
+                        chek = string.Empty;
+                        if (item.CrossPrivateChat) { chek = "checked"; }
+                    }
+                    <input type="checkbox" id="CrossPrivateChat" name="CrossPrivateChat" value="true" @chek>
+                    <span></span>
+                    <input type="hidden" id="CrossPrivateChat" name="CrossPrivateChat" value="false">
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Version">Version</label>
+            <div class="col-md-9">
+                <input type="text" id="Version" name="Version" class="form-control input-sm must-required" value="@item.Version">
+            </div>
+        </div>
+        <div class="form-group form-actions">
+            <div class="col-md-12 text-right">
+                <button type="submit" class="btn btn-sm btn-warning btn-submit2"> @StaticFunction.GetTranslation("Model.Update")</button>
+                <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal"> @StaticFunction.GetTranslation("Model.CLose")</button>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts{
+    <script>
+
+          $(function () {
+            var startBtn = $('.btn-submit2');
+            // On start button click start loading again
+            startBtn.on('click', function () {
+                $(this).button('loading');
+            });
+
+            /* Validate */
+
+            $('form#frm-edit-areaconfig').each(function () {
+                $(this).validate({
+                    errorClass: 'help-block animation-slideDown',
+                    errorElement: 'div',
+                    errorPlacement: function (error, e) {
+                        e.parents('.form-group > div').append(error);
+                    },
+                    highlight: function (e) {
+                        $(e).closest('.form-group').removeClass('has-success has-error').addClass('has-error');
+                        $(e).closest('.help-block').remove();
+                    },
+                    success: function (e) {
+                        e.closest('.form-group').removeClass('has-success has-error');
+                        e.closest('.help-block').remove();
+                    },
+                    submitHandler: function (e) {
+                        $('#loading-bgr').show();
+                        $.ajax({
+                            url: e.action,
+                            type: e.method,
+                            data: $(e).serialize(),
+                            success: function (result) {
+                                $('#loading-bgr').hide();
+                                $('#response-hodler').html(result);
+                                startBtn.button('reset');
+                                reloadServer();
+                            },
+                            error: function (xhr) {
+                                $('#loading-bgr').hide();
+                                showGrowl('Error: ' + xhr.status + ' ' + xhr.statusText, 'danger');
+                                startBtn.button('reset');
+                            }
+                        });
+                        return false;
+                    }
+                });
+            });
+        });
+
+    </script>
+}

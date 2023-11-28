@@ -1,0 +1,131 @@
+﻿@model SqlDataProvider.Data.QuestConditionInfo
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = StaticFunction.GetTranslation("Model.Add.Title.QuestCondition", Request.QueryString["name"]);
+    int nextConditionID = Model.CondictionID + 1;
+
+    string callBackStr = "'" + Request.QueryString["table"] + "', ";
+    callBackStr += "'" + Request.QueryString["key"] + "', ";
+    callBackStr += Request.QueryString["cid"] == null ? "-1," : Request.QueryString["cid"] + ", ";
+    callBackStr += Request.QueryString["Page"] == null ? "-1," : Request.QueryString["Page"] + ", ";
+    callBackStr += Model.QuestID + ", ";
+    callBackStr += "'" + Request.QueryString["tagName"] + "'";
+}
+<div class="modal-header themed-background-default">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">
+        @Html.Raw(ViewBag.Title)
+    </h4>
+</div>
+<div class="modal-body">
+    <form action="@Html.Raw(Url.Action("CreateQuestCondition", "Games"))"
+          method="post" class="form-horizontal form-bordered" id="frm-add-questcondition">
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="QuestID">QuestID</label>
+            <div class="col-md-9">
+                <input type="text"  class="form-control input-sm" disabled="disabled" value="@Model.QuestID">
+                <input type="hidden" id="QuestID" name="QuestID" value="@Model.QuestID" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="CondictionID">CondictionID</label>
+            <div class="col-md-9">
+                <input type="text" id="CondictionID" name="CondictionID" class="form-control input-sm must-number" value="@nextConditionID">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="CondictionType">CondictionType</label>
+            <div class="col-md-9">
+                <input type="text" id="CondictionType" name="CondictionType" class="form-control input-sm must-number" value="@Model.CondictionType">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="CondictionTitle">CondictionTitle</label>
+            <div class="col-md-9">              
+                    <input type="text" id="CondictionTitle" name="CondictionTitle" class="form-control input-sm must-required" value="@Model.CondictionTitle">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Para1">Para1</label>
+            <div class="col-md-9">
+                <input type="text" id="Para1" name="Para1" class="form-control input-sm must-required" value="@Model.Para1">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Para2">Para2</label>
+            <div class="col-md-9">
+                <input type="text" id="Para2" name="Para2" class="form-control input-sm must-required" value="@Model.Para2">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="isOpitional">isOpitional</label>
+            <div class="col-md-9">
+                <label class="switch switch-primary">
+                    <input type="checkbox" id="isOpitional" name="isOpitional" value="true">
+                    <span></span>
+                    <input type="hidden" id="isOpitional" name="isOpitional" value="false">
+                </label>
+            </div>
+        </div>
+        <div class="form-group form-actions">
+            <div class="col-md-12 text-right">
+                <button type="submit" class="btn btn-sm btn-warning btn-submit2"> @StaticFunction.GetTranslation("Model.Add")</button>
+                <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal"> @StaticFunction.GetTranslation("Model.CLose")</button>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts{
+    <script>
+
+          $(function () {
+            var startBtn = $('.btn-submit2');
+            // On start button click start loading again
+            startBtn.on('click', function () {
+                $(this).button('loading');
+            });
+
+            /* Validate */
+
+            $('form#frm-add-questcondition').each(function () {
+                $(this).validate({
+                    errorClass: 'help-block animation-slideDown',
+                    errorElement: 'div',
+                    errorPlacement: function (error, e) {
+                        e.parents('.form-group > div').append(error);
+                    },
+                    highlight: function (e) {
+                        $(e).closest('.form-group').removeClass('has-success has-error').addClass('has-error');
+                        $(e).closest('.help-block').remove();
+                        startBtn.button('reset');
+                    },
+                    success: function (e) {
+                        e.closest('.form-group').removeClass('has-success has-error');
+                        e.closest('.help-block').remove();
+                    },
+                    submitHandler: function (e) {
+                        $('#loading-bgr').show();
+                        $.ajax({
+                            url: e.action,
+                            type: e.method,
+                            data: $(e).serialize(),
+                            success: function (result) {
+                                $('#loading-bgr').hide();
+                                $('#response-hodler').html(result);
+                                startBtn.button('reset');
+                                reloadData(@Html.Raw(callBackStr));
+                            },
+                            error: function (xhr) {
+                                $('#loading-bgr').hide();
+                                showGrowl('Error: ' + xhr.status + ' ' + xhr.statusText, 'danger');
+                                startBtn.button('reset');
+                            }
+                        });
+                        return false;
+                    }
+                });
+            });
+        });
+
+    </script>
+}

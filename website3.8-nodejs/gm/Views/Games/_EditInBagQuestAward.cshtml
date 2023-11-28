@@ -1,0 +1,211 @@
+﻿@model SqlDataProvider.Data.QuestAwardInfo
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "Cập nhật thông số";
+    var item = Model;
+    string chek = string.Empty;
+
+    string cssRowA = "col-md-6";
+    string cssRowB = "col-md-6";
+    if (item.Type == 0)
+    {
+        cssRowA = "col-md-12";
+        cssRowB = string.Empty;
+    }
+}
+<div class="modal-header themed-background-default">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title 
+        <i class="gi gi-chevron-right" style="font-size:10px"></i>
+        <span style="color:white"><strong> @Html.TItemName(item.RewardItemID)</strong></span>
+    </h4>
+</div>
+<div class="modal-body">
+        <!-- From Block -->
+        <form action="@Html.Raw(Url.Action("UpdateItemInBag", "Games", routeValues: new { id = item.RewardItemID, type = Request.QueryString["type"]}))"
+              method="post" class="form-horizontal form-bordered" id="frm-update-@item.RewardItemID" onsubmit="return false;">
+
+            <div class="row">
+                <div class="@cssRowA">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="QuestID">QuestID</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control input-sm" value="@item.QuestID" disabled>
+                        </div>
+                        <input type="hidden" id="QuestID" name="QuestID" value="@item.QuestID">
+                    </div>                  
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="RewardItemID">TemplateID</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control input-sm" value="@item.RewardItemID" disabled>
+                        </div>
+                        <input type="hidden" id="RewardItemID" name="RewardItemID" value="@item.RewardItemID">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="RewardItemCount1">Count</label>
+                        <div class="col-md-8">
+                            <input type="text" id="RewardItemCount1" name="RewardItemCount1" class="form-control input-sm must-digits" value="@item.RewardItemCount1">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="RewardItemValid">ValidDate</label>
+                        <div class="col-md-8">
+                            <input type="text" id="RewardItemValid" name="RewardItemValid" class="form-control input-sm must-digits" value="@item.RewardItemValid">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="IsSelect">IsSelect</label>
+                        <div class="col-md-8 text-left">
+                            <label class="switch switch-primary">
+                                @{
+                                    if (item.IsSelect) { chek = "checked"; }
+                                }
+                                <input type="checkbox" id="IsSelect" name="IsSelect" value="true" @chek>
+                                <span></span>
+                                <input type="hidden" id="IsSelect" name="IsSelect" value="false">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="IsBinds">IsBinds</label>
+                        <div class="col-md-8 text-left">
+                            <label class="switch switch-primary">
+                                @{
+                                    if (item.IsBind) { chek = "checked"; }
+                                }
+                                <input type="checkbox" id="IsBinds" name="IsBinds" value="true" @chek>
+                                <span></span>
+                                <input type="hidden" id="IsBinds" name="IsBinds" value="false">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="IsCount">IsCount</label>
+                        <div class="col-md-8 text-left">
+                            <label class="switch switch-primary">
+                                @{
+                                    if (item.IsCount) { chek = "checked"; }
+                                }
+                                <input type="checkbox" id="IsCount" name="IsCount" value="true" @chek>
+                                <span></span>
+                                <input type="hidden" id="IsCount" name="IsCount" value="false">
+                            </label>
+                        </div>
+                    </div>
+                        
+                </div>
+                <div class="@cssRowB">
+                    @if (item.Type != 0)
+                    {
+                        if (item.Type == 2)
+                        {
+                            <div class="form-group">
+                                <label class="col-md-4 control-label" for="StrengthenLevel">StrengthenLevel</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="StrengthenLevel" name="StrengthenLevel" class="form-control input-sm must-digits" value="@item.StrengthenLevel">
+                                </div>
+                            </div>
+                        }
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="AttackCompose">AttackCompose</label>
+                            <div class="col-md-8">
+                                <input type="text" id="AttackCompose" name="AttackCompose" class="form-control input-sm must-digits" value="@item.AttackCompose">
+                            </div>
+                        </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="DefendCompose">DefendCompose</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" id="DefendCompose" name="DefendCompose" class="form-control input-sm must-digits" value="@item.DefendCompose">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="AgilityCompose">AgilityCompose</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" id="AgilityCompose" name="AgilityCompose" class="form-control input-sm must-digits" value="@item.AgilityCompose">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="LuckCompose">LuckCompose</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" id="LuckCompose" name="LuckCompose" class="form-control input-sm must-digits" value="@item.LuckCompose">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="MagicAttack">MagicAttack</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" id="MagicAttack" name="MagicAttack" class="form-control input-sm must-digits" value="@item.MagicAttack">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="MagicDefence">MagicDefend</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" id="MagicDefence" name="MagicDefence" class="form-control input-sm must-digits" value="@item.MagicDefence">
+                                                    </div>
+                                                </div>
+
+                    }
+                </div>
+            </div>
+
+            <div class="form-group form-actions">
+                <div class="col-md-12 text-right">
+                    <button type="submit" class="btn btn-sm btn-warning btn-submit2"> Cập nhật</button>
+                    <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </form>
+        <!-- END From Block -->
+</div>
+
+@section Scripts{
+    <script>
+        $(function () {
+                     
+            var startBtn = $('.btn-submit2');
+            // On start button click start loading again
+            startBtn.on('click', function () {
+                $(this).button('loading');
+            });
+
+            /* Validate */
+           
+            $('form').each(function () {   // <- selects every <form> on page
+                $(this).validate({        // <- initialize validate() on each form
+                    errorClass: 'help-block animation-slideDown', // You can change the animation class for a different entrance animation - check animations page
+                    errorElement: 'div',
+                    errorPlacement: function (error, e) {
+                        e.parents('.form-group > div').append(error);
+                    },
+                    highlight: function (e) {
+                        $(e).closest('.form-group').removeClass('has-success has-error').addClass('has-error');
+                        $(e).closest('.help-block').remove();
+                    },
+                    success: function (e) {
+                        e.closest('.form-group').removeClass('has-success has-error');
+                        e.closest('.help-block').remove();
+                    },
+                    submitHandler: function (e) {
+                        $('#loading-bgr').show();
+                        $.ajax({
+                            url: e.action,
+                            type: e.method,
+                            data: $(e).serialize(),
+                            success: function (result) {
+                                $('#loading-bgr').hide();
+                                $('#response-hodler').html(result);
+                                startBtn.button('reset');
+                                LoadStoreBag();
+                            },
+                            error: function (xhr) {
+                                $('#loading-bgr').hide();
+                                showGrowl('Error: ' + xhr.status + ' ' + xhr.statusText, 'danger');
+                                startBtn.button('reset');
+                            }
+                        });
+                        return false;
+                    }
+                });
+            });
+        });
+    </script>
+}

@@ -1,0 +1,113 @@
+﻿@using GM.Service.Models;
+@model RequestResultModel
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    var templateId = String.Format("dialog-view-{0}", DateTime.Now.Ticks.ToString());
+    var dialogId = templateId.Replace("-view-", "-");
+    var contentId = templateId.Replace("-view-", "-content-");
+
+    switch (Model.NotiteType)
+    {
+        case NotifyType.Dialog:
+            {
+                if (Model.IsSeftModel)
+                {
+                    <!-- Dialog defenition -->
+                    <div class="modal-header @Model.GetThemed()">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">@Html.Raw(Model.Title)</h4>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Danger Alert Content -->
+                        <div class="@Model.GetCss()">
+                            @Html.Raw(Model.Message)
+                        </div>
+                        <!-- END Danger Alert Content -->
+                        <div class="form-actions">
+                            <div class="text-right">
+                                @if (!string.IsNullOrWhiteSpace(Model.JSCallBack))
+                                {
+                                    <button type="button" class="btn btn-sm btn-info" data-dismiss="modal" onclick="@Html.Raw(Model.JSCallBack)">Đóng</button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn btn-sm btn-info" data-dismiss="modal">Đồng ý</button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                  <!-- END Dialog defenition -->
+                }
+                else
+                {
+                <!-- Dialog defenition -->
+                    <div class="modal fade in" id="@dialogId" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-sm" style="width:@Model.Width">
+                            <div class="modal-content" id='@contentId-content'>
+                                <div class="modal-header @Model.GetThemed()">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                    <h4 class="modal-title">@Html.Raw(Model.Title)</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- Danger Alert Content -->
+                                    <div class="@Model.GetCss()">
+                                        @Html.Raw(Model.Message)
+                                    </div>
+                                    <!-- END Danger Alert Content -->
+                                    <div class="form-actions">
+                                        <div class="text-right">
+                                            @if (!string.IsNullOrWhiteSpace(Model.JSCallBack))
+                                            {
+                                                <button type="button" class="btn btn-sm btn-info" data-dismiss="modal" onclick="@Html.Raw(Model.JSCallBack)">Đóng</button>
+                                            }
+                                            else
+                                            {
+                                                <button type="button" class="btn btn-sm btn-info" data-dismiss="modal">Đồng ý</button>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <!-- END Dialog defenition -->
+                }
+            }
+            break;
+    }
+}
+@if (Model.NotiteType == NotifyType.Growl)
+{
+ <!-- Growl hoder-->
+<div id="grow-html-@templateId" style="display:none">
+    @Html.Raw(Model.Message)   
+</div>
+ <!--END Growl hoder-->
+}
+@if (Model.NotiteType == NotifyType.PageInline)
+{
+ <!-- PageInline hoder-->
+    <div class="@Model.GetCss()">
+        @Html.Raw(Model.Message)
+    </div>
+ <!--END PageInline hoder-->
+}
+@section Scripts{
+<script type="text/javascript">
+    $(function () {
+        /*run when load*/
+        if('@Model.NotiteType' == 'Dialog'){
+            $('#@dialogId').css('z-index', '99999');
+            $('#@dialogId').modal({
+                backdrop: 'static',
+                keyboard: true,
+            }, 'show');
+        }
+        if('@Model.NotiteType' == 'Growl'){
+            var html = $('#grow-html-@templateId').html();
+            showGrowl(html, '@Model.GetCssGrowl()', null, null, @Model.Width.Replace("px", ""));
+             @Html.Raw(Model.JSCallBack);
+        }
+    });
+    </script>
+}

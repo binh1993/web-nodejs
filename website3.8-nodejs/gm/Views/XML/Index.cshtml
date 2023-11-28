@@ -1,0 +1,220 @@
+﻿@using SqlDataProvider.Data;
+@model List<TableInfo>
+@{
+    ViewBag.Title = "XML Helper";
+    UrlTankInfo[] urls = StaticFunction.GetUrls();
+}
+<!-- Header -->
+<div class="content-header">
+    <div class="header-section">
+        <h1>
+            <i class="gi gi-server"></i>@ViewBag.Title<br><small>Quản lý và rip xml từ các website được hổ trợ @ViewBag.Message</small>
+        </h1>
+    </div>
+</div>
+<ul class="breadcrumb breadcrumb-top">
+    <li>Trang</li>
+    <li><a href="javascript:void(0)">@ViewBag.Title</a></li>
+</ul>
+<!-- END Header -->
+<!-- Blank Alternative Content -->
+<div class="block block-alt-noborder">
+        <h3 class="sub-header">
+            File <small id="xml-name" class="text-primary">không xác định</small>
+            <span class="pull-right" id="total-items-content"></span>
+        </h3>
+    <!-- HTML -->
+    <div class="row">
+        <div class="col-md-3"> 
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <select id="urls-chosen" name="urls-chosen" class="select-chosen" data-placeholder="Chọn nguồn...">
+                            @foreach (UrlTankInfo url in urls)
+                            {
+                                <option value="@url.Name">@url.Detail</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>           
+        </div>
+        <div class="col-md-4">
+            <div class="form-horizontal form-control-borderless">
+                <div class="form-group">
+                    <div class="col-md-8">
+                        <select id="xmls-chosen" name="xmls-chosen" class="select-chosen" data-placeholder="Chọn file...">
+                            <optgroup label="Truy cập nhanh">
+                                <option value="templatealllist">templatealllist</option>
+                                <option value="shopitemlist">shopitemlist</option>
+                                <option value="shopgoodsshowlist">shopgoodsshowlist</option>
+                                <option value="balllist">balllist</option>
+                                <option value="bombconfig">bombconfig</option>
+                            </optgroup>
+                            <optgroup label="Tất cả">
+                                @foreach (TableInfo tb in Model)
+                                {
+                                    <option value="@tb.XmlName">@tb.XmlName</option>
+                                }
+                            </optgroup>
+                        </select>
+
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-primary btn-sm" id="btn-refresh"><i class="hi hi-refresh"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <select id="news-chosen" name="news-chosen" class="select-chosen" data-placeholder="Tùy chọn...">
+                            <option value="false">Tất cả</option>
+                            <option value="true">Items mới</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="pull-right">
+                <form action="./" method="post" class="form-horizontal" id="frm-quick-search" onsubmit="return false;">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <input type="text" id="quick-search" name="key" class="form-control" placeholder="Tìm kiếm...">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table Styles Content -->   
+    <div class="table-responsive" id="xml-content" style="min-height:570px">
+        <div class="text-center text-warning">
+            <p>@Html.Raw(StaticFunction.GetTranslation("Views.WaitLoading"))</p>
+        </div>
+    </div>
+    <!-- END Table Styles Content -->
+
+</div>
+<!-- END HTML -->
+<!-- END Blank Alternative Content -->
+
+@section Scripts{
+    <script>
+        $(function() {
+
+            loadXmlData();
+
+            $('#btn-refresh').bind("click", function (e) {
+                var xml = $("#xmls-chosen").val();
+                loadXmlData(xml);
+            });
+
+            //Select Url
+            $("#urls-chosen").change(function(e) {
+                var xml = $("#xmls-chosen").val();
+                loadXmlData(xml);
+            });
+
+            //Select XML
+            $("#xmls-chosen").change(function(e) {
+                var xml = $(this).val();
+                loadXmlData(xml);
+            });
+
+            //Select News
+            $("#news-chosen").change(function(e) {
+                var xml = $("#xmls-chosen").val();
+                loadXmlData(xml);
+            });
+
+            //live search
+            $("#quick-search").keyup(function(e) {
+                e.preventDefault();
+                var source = $("#urls-chosen").val();
+                var xml = $("#xmls-chosen").val();
+                var loadurl = '@Url.Action("LoadData", "XML")?xml=' + xml + '&url=' + source + '&getNew=false';
+                $.ajax({
+                    url: loadurl,
+                    type: 'POST',
+                    data: $('#frm-quick-search').serialize(),
+                    success: function(data) {
+                        $('#xml-content').html(data);
+                        $("#loading-bgr").hide();
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        var text = "Error: " + xhr.status + " " + xhr.statusText;
+                        showGrowl(text, 'danger');
+                    }
+                });
+            });
+
+        });
+
+        function loadXmlData(xml) {
+            var source = $("#urls-chosen").val();
+            var isnew = $("#news-chosen").val();
+            if (xml == undefined) {
+                xml = 'templatealllist';
+                $('#xmls-chosen').val(xml);
+                $('#xmls-chosen').trigger("chosen:updated");
+            }
+            var loadurl = '@Url.Action("LoadData", "XML")?getNew=' + isnew + '&xml=' + xml + '&url=' + source;
+            $("#loading-bgr").show();
+            $.get(loadurl, function(data) {
+                    $("#xml-content").html(data);
+                    $("#xml-name").html(xml + '.xml');
+                    $("#loading-bgr").hide();
+                })
+                .fail(function(data) {
+                    $("#xml-content").html(getError(data.status, data.statusText));
+                    $("#loading-bgr").hide();
+                });
+        }
+
+        //selecet Category
+        function loadCategory(cid) {
+            var isnew = $("#news-chosen").val();
+            var source = $("#urls-chosen").val();
+            var loadurl = '@Url.Action("LoadData", "XML")?getNew=' + isnew + '&xml=templatealllist&cid=' + cid + '&url=' + source;
+            $("#loading-bgr").show();
+            $.get(loadurl, function(data) {
+                    $("#xml-content").html(data);
+                    $("#loading-bgr").hide();
+                })
+                .fail(function(data) {
+                    $("#xml-content").html(getError(data.status, data.statusText));
+                    $("#loading-bgr").hide();
+                });
+            return false;
+        }
+
+        function callService(link) {
+            $("#loading-bgr").show();
+            $.get(link, function(data) {
+                    showGrowl(data.Html, null, null, null, -1);
+                    $("#loading-bgr").hide();
+                })
+                .fail(function(data) {
+                    showGrowl('Error: ' + xhr.status + ' ' + xhr.statusText, 'danger');
+                    $("#loading-bgr").hide();
+                });
+            return false;
+        }
+
+        //reload current file
+        function reload() {
+            var xml = $("#xmls-chosen").val();
+            loadXmlData(xml);
+        };
+    </script>
+}

@@ -1,0 +1,115 @@
+2022-01-27 11:01:10,931 - [11] - ERROR - Tank.Request.Login - login != nulltrue
+2022-01-27 11:01:10,944 - [11] - ERROR - Tank.Request.Login - flag2false!
+2022-01-27 11:04:53,997 - [16] - ERROR - Tank.Request.Login - login != nulltrue
+2022-01-27 11:04:53,998 - [16] - ERROR - Tank.Request.Login - flag2false!
+2022-01-27 11:04:59,785 - [5] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context) in C:\NEWGUN\Source\Tank.Request\IMListLoad.ashx.cs:line 33
+2022-01-27 11:04:59,869 - [16] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context) in C:\NEWGUN\Source\Tank.Request\AdvanceQuestTime.ashx.cs:line 33
+2022-01-27 11:14:10,105 - [18] - ERROR - Tank.Request.Login - login != nulltrue
+2022-01-27 11:14:10,105 - [18] - ERROR - Tank.Request.Login - flag2false!
+2022-01-27 11:14:31,486 - [20] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context) in C:\NEWGUN\Source\Tank.Request\IMListLoad.ashx.cs:line 33
+2022-01-27 11:14:31,537 - [10] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context) in C:\NEWGUN\Source\Tank.Request\AdvanceQuestTime.ashx.cs:line 33
+2022-01-27 11:23:37,829 - [22] - ERROR - Tank.Request.Login - login != nulltrue
+2022-01-27 11:23:37,830 - [22] - ERROR - Tank.Request.Login - flag2false!
+2022-01-27 11:23:54,552 - [21] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context) in C:\NEWGUN\Source\Tank.Request\IMListLoad.ashx.cs:line 33
+2022-01-27 11:23:54,588 - [18] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context) in C:\NEWGUN\Source\Tank.Request\AdvanceQuestTime.ashx.cs:line 33
+2022-01-27 11:43:39,835 - [19] - ERROR - Tank.Request.Login - login != nullfalse
+2022-01-27 11:43:39,835 - [19] - ERROR - Tank.Request.Login - flag2false!
+2022-01-27 11:43:39,835 - [19] - ERROR - Tank.Request.Login - PlayerManager.Remove(name)
+2022-01-27 11:44:10,493 - [22] - ERROR - Tank.Request.Login - login != nullfalse
+2022-01-27 11:44:10,493 - [22] - ERROR - Tank.Request.Login - flag2false!
+2022-01-27 11:44:10,493 - [22] - ERROR - Tank.Request.Login - PlayerManager.Remove(name)
+2022-01-27 11:45:14,904 - [19] - ERROR - Tank.Request.Login - login != nullfalse
+2022-01-27 11:45:14,904 - [19] - ERROR - Tank.Request.Login - flag2false!
+2022-01-27 11:45:14,904 - [19] - ERROR - Tank.Request.Login - PlayerManager.Remove(name)
+2022-01-27 11:46:58,762 - [5] - ERROR - Tank.Request.Login - login != nullfalse
+2022-01-27 11:46:58,762 - [5] - ERROR - Tank.Request.Login - flag2false!
+2022-01-27 11:46:58,762 - [5] - ERROR - Tank.Request.Login - PlayerManager.Remove(name)
+2022-01-27 11:48:56,098 - [22] - ERROR - Tank.Request.Login - User Login error: (--1024--)System.Security.Cryptography.CryptographicException: Bad Data.
+
+   at System.Security.Cryptography.CryptographicException.ThrowCryptographicException(Int32 hr)
+   at System.Security.Cryptography.RSACryptoServiceProvider.DecryptKey(SafeKeyHandle pKeyContext, Byte[] pbEncryptedKey, Int32 cbEncryptedKey, Boolean fOAEP, ObjectHandleOnStack ohRetDecryptedKey)
+   at System.Security.Cryptography.RSACryptoServiceProvider.Decrypt(Byte[] rgb, Boolean fOAEP)
+   at Road.Flash.CryptoHelper.RsaDecryt2(RSACryptoServiceProvider rsa, String src) in C:\NEWGUN\Source\Road.Flash\Road.Flash\CryptoHelper.cs:line 63
+   at Tank.Request.Login.ProcessRequest(HttpContext context) in C:\NEWGUN\Source\Tank.Request\Login.ashx.cs:line 42
+2022-01-27 11:48:56,100 - [22] - ERROR - Tank.Request.Login - --dataarray: fuckingbitch 127
+0000: E4 5F D9 83 21 97 03 80 C9 E6 5A BA 04 64 20 0D   ._..!.....Z..d .
+0010: 5B 89 87 ED B7 1F AA 6D 22 00 EE D1 1E 04 81 BD   [......m".......
+0020: 60 BF 7F EB 04 8B B3 F7 C7 ED 6C A6 3A 09 25 AE   `........l.:.%.
+0030: 66 9E F5 86 1F C8 6F 15 18 FA 0D EE E4 0B 97 8E   f.....o.........
+0040: A4 92 5D AA 89 63 12 BC 7F 3F A0 71 B1 97 27 15   ..]..c..?.q..'.
+0050: 0E 14 88 B1 B3 3A F8 49 B9 D7 A8 A8 25 60 D3 C2   .....:.I....%`..
+0060: 60 4B B0 4F 3E 48 26 A1 5E DE 52 7D 78 61 DB 6B   `K.O>H&.^.R}xa.k
+0070: 42 E8 61 21 BB 14 13 9A AE 8C B2 FD F5 F6 E9      B.a!........... 
+
+2022-01-27 11:50:26,814 - [16] - ERROR - Tank.Request.Login - login != nulltrue
+2022-01-27 11:50:26,815 - [16] - ERROR - Tank.Request.Login - flag2false!
+2022-01-27 11:50:33,539 - [21] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context) in C:\NEWGUN\Source\Tank.Request\IMListLoad.ashx.cs:line 33
+2022-01-27 11:50:33,623 - [17] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context) in C:\NEWGUN\Source\Tank.Request\AdvanceQuestTime.ashx.cs:line 33
+2022-01-27 11:52:59,825 - [21] - ERROR - Tank.Request.Login - login != nulltrue
+2022-01-27 11:52:59,825 - [21] - ERROR - Tank.Request.Login - flag2false!
+2022-01-27 11:53:07,124 - [16] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context) in C:\NEWGUN\Source\Tank.Request\IMListLoad.ashx.cs:line 33
+2022-01-27 11:53:07,211 - [17] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context) in C:\NEWGUN\Source\Tank.Request\AdvanceQuestTime.ashx.cs:line 33
+2022-01-27 12:04:07,997 - [18] - ERROR - Tank.Request.Login - login != nulltrue
+2022-01-27 12:04:07,997 - [18] - ERROR - Tank.Request.Login - flag2false!
+2022-01-27 12:04:12,796 - [22] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context) in C:\NEWGUN\Source\Tank.Request\IMListLoad.ashx.cs:line 33
+2022-01-27 12:04:12,865 - [21] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context) in C:\NEWGUN\Source\Tank.Request\AdvanceQuestTime.ashx.cs:line 33

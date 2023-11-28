@@ -1,0 +1,87 @@
+﻿@using SqlDataProvider.Data;
+@using System.Text;
+@model GM.Service.Models.TableModel
+
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    TableInfo item = Model.Info;
+    List<TableDesignInfo> designs = Model.Designs;
+    string name = item.Class.Replace("Info", "");
+    StringBuilder sb = new StringBuilder();
+    string usingStr = "Web";
+    if (item.Type == 1)
+    {
+        usingStr = "Player";
+    }
+    if (item.Type == 2)
+    {
+        usingStr = "Produce";
+    }
+    sb.AppendLine(" ");
+    sb.AppendLine("        // GET: ../Create" + name + "");
+    sb.AppendLine("        [RolesModelAuthorize(Roles = \"Develop, Admin, Moderator\")]");
+    sb.AppendLine("        public ActionResult Create" + name + "()");
+    sb.AppendLine("        {");
+    sb.AppendLine("            using (" + usingStr + "Bussiness wb = new " + usingStr + "Bussiness())");
+    sb.AppendLine("            {");
+    sb.AppendLine("                IEnumerable<" + name + "Info> models = wb.Get" + name + "Template();");
+    sb.AppendLine("                return View(models);");
+    sb.AppendLine("            }");
+    sb.AppendLine("        }");
+
+    sb.AppendLine("        // POST: ../Create" + name + "");
+    sb.AppendLine("        [HttpPost]");
+    sb.AppendLine("        [RolesModelAuthorize(Roles = \"Develop, Admin, Moderator\")]");
+    sb.AppendLine("        public ActionResult Create" + name + "(FormCollection collect)");
+    sb.AppendLine("        {");
+    sb.AppendLine("            RequestResultModel _model = new RequestResultModel();");
+    sb.AppendLine("            int id = Convert.ToInt32(collect[\"ID\"]);");
+    sb.AppendLine("            _model.Message = StaticFunction.GetTranslation(\"Controllers.AddRecord.Fail\", id);");
+    sb.AppendLine("            _model.NotiteType = NotifyType.Growl;");
+    sb.AppendLine("            _model.InfoType = InfoType.Danger;");
+    sb.AppendLine("            using (" + usingStr + "Bussiness wb = new " + usingStr + "Bussiness())");
+    sb.AppendLine("            {");
+    sb.AppendLine("                " + name + "Info info = wb.GetSingle" + name + "(id);");
+    sb.AppendLine("                if (info == null)");
+    sb.AppendLine("                {");
+    sb.AppendLine("                    info = new " + name + "Info();");
+    sb.AppendLine("                    info.ID = id;");
+    sb.AppendLine("                    info = DeserializeForm.Init" + name + "(info, collect);");
+    sb.AppendLine("                    if (wb.Add" + name + "(info))");
+    sb.AppendLine("                    {");
+    sb.AppendLine("                        _model.Message = StaticFunction.GetTranslation(\"Controllers.AddRecord.OK\", info.ID, info.Name);");
+    //sb.AppendLine("                        _model.NotiteType = NotifyType.Dialog;");
+    sb.AppendLine("                        _model.InfoType = InfoType.Success;");
+    sb.AppendLine("                        " + name + "Mgr.Init();");
+    sb.AppendLine("                    }");
+    sb.AppendLine("                    else");
+    sb.AppendLine("                    {");
+    sb.AppendLine("                        _model.Message = StaticFunction.GetTranslation(\"Controllers.RunSqlQuery.Fail\");");
+    sb.AppendLine("                    }");
+    sb.AppendLine("                }");
+    sb.AppendLine("            }");
+    sb.AppendLine("            return PartialView(\"_RequestResultModel\", _model);");
+    sb.AppendLine("        }");
+
+}
+<h4>@item.Name <i class="fa fa-angle-right"></i><span class="text-danger"> MVC Control Create</span></h4>
+<div style="overflow-y:auto; height:450px">
+<pre class="line-numbers">
+    <code class="language-csharp" id="highlight-code">
+        @sb.ToString()
+    </code>
+</pre>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+
+            navActive('MVC');
+
+            var code = $('#highlight-code')[0];
+            Prism.highlightElement(code);
+
+            ZeroCopy.init();
+        });
+    </script>
+}

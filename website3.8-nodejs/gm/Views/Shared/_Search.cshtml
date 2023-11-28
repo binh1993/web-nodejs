@@ -1,0 +1,17 @@
+﻿@{
+    Layout = null;
+}
+@using (Ajax.BeginForm("SearchResults", "Home",
+                                    new { id = 2 },
+                                    new AjaxOptions
+                                    {
+                                        UpdateTargetId = "page-content",
+                                        HttpMethod = "GET",
+                                        LoadingElementId = "loading-bgr"
+                                    },
+                                    new { id = "frm-search", @class="navbar-form-custom", @role="search" }))
+{
+    <div class="form-group">
+        <input type="text" id="top-search" name="topSearch" class="form-control" placeholder="Search..">
+    </div>
+}

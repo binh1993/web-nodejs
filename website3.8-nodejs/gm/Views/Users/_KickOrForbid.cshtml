@@ -1,0 +1,133 @@
+﻿@model List<string>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "Kick hoặc Khóa tài khoản";
+    List<string> nicks = new List<string>();
+    string list = "";
+    foreach (string nick in Model)
+    {
+        nicks.Add(nick);
+        list += nick + ",";
+    }
+    list = list.Substring(0, list.Length - 1);
+    int count = 0;
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+<div class="modal-body" id="form-kick-or-forbid">   
+@using (Html.BeginForm("KickOrForbid", "Users", new { userIds = Request.QueryString["userIds"] }, FormMethod.Post, 
+        new { @class = "form-horizontal", role = "form", id = "form-kick" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        <label class="col-md-3 control-label">Danh sách Nick</label>
+        <div class="col-md-9">
+                <ul class="col-md-6 text-success">
+                    @foreach (string nick in Model)
+                    {
+                        if (count <= 4)
+                        {
+                            <li>@nick</li>
+                            count++;
+                            nicks.Remove(nick);
+                        }
+
+                    }
+                </ul>
+                <ul class="col-md-6 text-success">
+                    @foreach (string nick in nicks)
+                    {
+                        <li>@nick</li>
+                    }
+                </ul>
+            <input type="hidden" id="hidden-notifications" name="list" value="@list">
+        </div>
+    </div>
+    <div class="form-group">       
+        <label class="col-md-3 control-label" for="kick-select">Hình thức</label>
+        <div class="col-md-9">
+            <select id="kick-select" name="type" class="form-control select-select2" style="width:100%" data-placeholder="Chọn hình thức..." size="1">
+                <option></option>
+                <option value="1">Kick khỏi game</option>
+                <option value="2">Khóa/Mở tài khoản</option>
+            </select>
+        </div>
+    </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="day-text-input">Số ngày khóa</label>
+            <div class="col-md-9">
+                <input type="text" id="day-text-input" name="days" class="form-control" placeholder="Khóa tài khoản thì nhập...">
+                <span class="help-block"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="blok-select">Khóa/Mỡ khóa</label>
+            <div class="col-md-9">
+                <select id="blok-select" name="isExist" class="form-control select-select2" style="width:100%" data-placeholder="Khóa/Mỡ tài khoản thì chọn..." size="1">
+                    <option></option>
+                    <option value="false">Khóa</option>
+                    <option value="true">Mở khóa</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="msg-textarea-input">Thông điệp</label>
+            <div class="col-md-9">
+                <textarea id="msg-textarea-input" name="msg" rows="9" class="form-control" placeholder="Nội dung..."></textarea>
+            </div>
+        </div>
+        <div class="form-group form-actions">
+            <div class="text-right">
+                <input class="btn btn-sm btn-danger" type="submit" value="Xác nhận" />
+                <button type="button" class="btn btn-sm btn-success" data-dismiss="modal">Huỷ</button>
+            </div>
+        </div>
+}
+</div>
+@section Scripts {
+    <script>
+        $.validator.setDefaults({
+            submitHandler: function (e) {
+                $('#loading-bgr').show();
+                $.ajax({
+                    url: e.action,
+                    type: e.method,
+                    data: $(e).serialize(),
+                    success: function (result) {
+                        $('#loading-bgr').hide();
+                        $('#response-hodler').html(result);
+                    }
+                });
+                return false;
+            }
+        });
+        /*Initialize Validation */
+        $('#form-kick').validate({
+            errorClass: 'help-block animation-slideDown',
+            errorElement: 'div',
+            errorPlacement: function (error, e) {
+                e.parents('.form-group > div').append(error);
+            },
+            highlight: function (e) {
+                $(e).closest('.form-group').removeClass('has-success has-error').addClass('has-error');
+                $(e).closest('.help-block').remove();
+            },
+            success: function (e) {
+                e.closest('.form-group').removeClass('has-success has-error');
+                e.closest('.help-block').remove();
+            },
+            rules: {
+                'type': {
+                    required: true,
+                    range: [0, 3]
+                }
+            },
+            messages: {
+                'type': 'Vui lòng chọn hình thức!'
+            }
+        });
+    </script>
+}

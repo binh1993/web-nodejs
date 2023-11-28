@@ -1,0 +1,115 @@
+﻿@model SqlDataProvider.Data.ItemInfo
+@{
+    Layout = null;
+    var item = Model;
+    string prop = string.Empty;
+    string addBlood = string.Empty;
+    if (item.Template != null)
+    {
+        switch (item.Template.CategoryID)
+        {
+            case 1:
+            case 5:
+                prop = "Hộ Giáp";
+                break;
+            case 27:
+            case 7:
+                prop = "Sát thương";
+                break;
+            case 17:
+            case 31:
+                if (item.Template.TemplateID == 17003 || item.Template.TemplateID == 17004)
+                {
+                    prop = "Hộ Giáp";
+                }
+                else
+                {
+                    prop = "Hồi phục";
+                }
+                break;
+        }
+        if (item.Template.CategoryID == 14)
+        {
+            addBlood = item.Template.Property1 + "%";
+        }
+    }
+}
+
+   @if (item == null)
+   {
+    <div class="text-center">
+        @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+    </div>
+   }
+   else
+   {
+    <table class="table table-borderless table-striped table-vcenter">
+        <tbody> 
+             @if (item.StrengthenLevel > 0)
+             {
+                <tr>
+                    <td class="text-right"><strong>Cường hóa</strong></td>
+                    <td style="width:155px">
+                        <span class="text-danger"><strong>@item.StrengthenLevel</strong></span>
+                    </td>
+                </tr>
+             }
+            @if (item.Template != null && !string.IsNullOrEmpty(prop))
+            {
+                <tr>
+                    <td class="text-right"><strong>@prop</strong></td>
+                    <td class="text-success">@item.Template.Property7 (+@StaticFunction.getHertAddition(item.Template.Property7, item.StrengthenLevel))</td>
+                </tr>
+            }
+            @if (item.IsGold)
+            {
+                <tr>
+                    <td class="text-right"><strong>Khảm Gold</strong></td>
+                    <td class="text-success">@Html.TValidateGold(item)</td>
+                </tr>
+            }
+             @if (item.Template != null && item.Template.NeedSex > 0)
+             {
+                <tr>
+                    <td class="text-right"><strong>Giới tính</strong></td>
+                    <td class="text-success">@Html.TSex(item.Template)</td>
+                </tr>
+             }
+            <tr>
+                <td class="text-right"><strong>Phẩm chất</strong></td>
+                <td class="text-success">@Html.TQuality(item.Template)</td>
+            </tr>
+            @if (!string.IsNullOrEmpty(addBlood))
+            {
+                <tr>
+                    <td class="text-right"><strong>Tăng máu</strong></td>
+                    <td class="text-success">@addBlood</td>
+                </tr>
+            }
+            <tr>
+                <td class="text-right"><strong>Tấn công</strong></td>
+                <td>@item.Attack</td>
+            </tr>
+            <tr>
+                <td class="text-right"><strong>Phòng thủ</strong></td>
+                <td>@item.Defence</td>
+            </tr>
+            <tr>
+                <td class="text-right"><strong>Nhanh nhẹ</strong></td>
+                <td>@item.Agility</td>
+            </tr>
+            <tr>
+                <td class="text-right"><strong>may mắn</strong></td>
+                <td>@item.Luck</td>
+            </tr>
+            <tr>
+                <td class="text-right"><strong>Ma công</strong></td>
+                <td>@item.MagicAttack</td>
+            </tr>
+            <tr>
+                <td class="text-right"><strong>Ma phòng</strong></td>
+                <td>@item.MagicDefence</td>
+            </tr>            
+        </tbody>
+    </table>
+   }

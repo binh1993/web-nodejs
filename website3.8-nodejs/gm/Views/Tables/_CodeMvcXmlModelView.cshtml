@@ -1,0 +1,282 @@
+﻿@using SqlDataProvider.Data;
+@using System.Text;
+@model GM.Service.Models.TableModel
+
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    TableInfo item = Model.Info;
+    StringBuilder sb = new StringBuilder();
+    string name = item.Class.Replace("Info", "");
+    sb.AppendLine(" ");
+
+    sb.AppendLine("using System;");
+    sb.AppendLine("using System.Collections.Generic;");
+    sb.AppendLine("using System.Linq;");
+    sb.AppendLine("using System.Web;");
+    sb.AppendLine("using System.Xml;");
+    sb.AppendLine("using System.Xml.Linq;");
+    sb.AppendLine("using SqlDataProvider.Data;");
+    sb.AppendLine("using Tank.Data;");
+    sb.AppendLine("using Helpers;");
+    sb.AppendLine("using System.IO;");
+    sb.AppendLine("using MvcPaging;");
+    sb.AppendLine("using System.Threading;");
+    sb.AppendLine("using System.Text;");
+
+    sb.AppendLine("namespace GM.Service.Models");
+    sb.AppendLine("{");
+    sb.AppendLine("    public class " + name + "ModelView");
+    sb.AppendLine("    {");
+    sb.AppendLine("        private XmlDocument m_xmlDocument;");
+    sb.AppendLine("        public XmlDocument XmlDocument");
+    sb.AppendLine("        {");
+    sb.AppendLine("            set { m_xmlDocument = value; }");
+    sb.AppendLine("            get { return m_xmlDocument; }");
+    sb.AppendLine("        }");
+
+    sb.AppendLine("        #region " + name + "");
+    sb.AppendLine("        private Dictionary<int, " + name + "Info> m_" + TableTool.LowerFirstChar(name) + "s = new Dictionary<int, " + name + "Info>();");
+    sb.AppendLine("        public List<" + name + "Info> " + name + "");
+    sb.AppendLine("        {");
+    sb.AppendLine("            get { return m_" + TableTool.LowerFirstChar(name) + "s.Values.ToList(); }");
+    sb.AppendLine("        }");
+    sb.AppendLine("        private Dictionary<int, " + name + "Info> m_new" + name + "s = new Dictionary<int, " + name + "Info>();");
+    sb.AppendLine("        public List<" + name + "Info> New" + name + "");
+    sb.AppendLine("        {");
+    sb.AppendLine("            get { return m_new" + name + "s.Values.ToList(); }");
+    sb.AppendLine("        }");
+    sb.AppendLine("        public void Reset" + name + "(string url)");
+    sb.AppendLine("        {");
+    sb.AppendLine("            XmlManager.CurrentUrl = url;");
+    sb.AppendLine("            m_" + TableTool.LowerFirstChar(name) + "s.Clear();");
+    sb.AppendLine("            m_new" + name + "s.Clear();");
+    sb.AppendLine("        }");
+    sb.AppendLine("        public bool Load" + name + "(List<" + name + "Info> infos)");
+    sb.AppendLine("        {");
+    sb.AppendLine("            try");
+    sb.AppendLine("            {");
+    sb.AppendLine("                Dictionary<int, " + name + "Info> newList = new Dictionary<int, " + name + "Info>();");
+    sb.AppendLine("                Dictionary<int, " + name + "Info> temp" + name + "s = Load" + name + "FromXml(infos, ref newList);");
+    sb.AppendLine("                if (temp" + name + "s.Count > 0)");
+    sb.AppendLine("                {");
+    sb.AppendLine("                    Interlocked.Exchange(ref m_" + TableTool.LowerFirstChar(name) + "s, temp" + name + "s);");
+    sb.AppendLine("                    Interlocked.Exchange(ref m_new" + name + "s, newList);");
+    sb.AppendLine("                    return true;");
+    sb.AppendLine("                }");
+    sb.AppendLine("            }");
+    sb.AppendLine("            catch (Exception ex)");
+    sb.AppendLine("            {");
+    sb.AppendLine("                Helpers.Logger.Error(\"LoaderMgr  reLoad template error:\" + ex.ToString());");
+    sb.AppendLine("            }");
+    sb.AppendLine("            return false;");
+    sb.AppendLine("        }");
+    sb.AppendLine("        private Dictionary<int, " + name + "Info> Load" + name + "FromXml(List<" + name + "Info> infos, ref Dictionary<int, " + name + "Info> newList)");
+    sb.AppendLine("        {");
+    sb.AppendLine("            Dictionary<int, " + name + "Info> list = new Dictionary<int, " + name + "Info>();");
+    sb.AppendLine("            using (ProduceBussiness db = new ProduceBussiness())");
+    sb.AppendLine("            {");
+    sb.AppendLine("                foreach (" + name + "Info info in infos)");
+    sb.AppendLine("                {");
+    sb.AppendLine("                    if (!list.ContainsKey(info.TemplateID))");
+    sb.AppendLine("                    {");
+    sb.AppendLine("                        if (" + name + "Mgr.Find" + name + "(info.TemplateID) == null)");
+    sb.AppendLine("                        {");
+    sb.AppendLine("                            newList.Add(info.TemplateID, info);");
+    sb.AppendLine("                        }");
+    sb.AppendLine("                        list.Add(info.TemplateID, info);");
+    sb.AppendLine("                    }");
+    sb.AppendLine("                }");
+    sb.AppendLine("            }");
+    sb.AppendLine("            return list;");
+    sb.AppendLine("        }");
+    sb.AppendLine("        public " + name + "Info[] Get" + name + "s(bool newItem)");
+    sb.AppendLine("        {");
+    sb.AppendLine("            if (newItem)");
+    sb.AppendLine("                return m_new" + name + "s.Values.ToArray();");
+
+    sb.AppendLine("            return m_" + TableTool.LowerFirstChar(name) + "s.Values.ToArray();");
+    sb.AppendLine("        }");
+    sb.AppendLine("        public " + name + "Info Find" + name + "(int id)");
+    sb.AppendLine("        {");
+    sb.AppendLine("            if (m_" + TableTool.LowerFirstChar(name) + "s.ContainsKey(id))");
+    sb.AppendLine("                return m_" + TableTool.LowerFirstChar(name) + "s[id];");
+
+    sb.AppendLine("            return null;");
+    sb.AppendLine("        }");
+    sb.AppendLine("        #endregion");
+
+    sb.AppendLine("        public void Setup(string url, string xml, ref string msg)");
+    sb.AppendLine("        {");
+    sb.AppendLine("            if (XmlManager.CurrentUrl != url || " + name + ".Count == 0)");
+    sb.AppendLine("            {");
+    sb.AppendLine("                Reset" + name + "(url);");
+    sb.AppendLine("                if (xml.IndexOf(\"ashx\") > 0)");
+    sb.AppendLine("                {");
+    sb.AppendLine("                    url += xml;");
+    sb.AppendLine("                }");
+    sb.AppendLine("                else");
+    sb.AppendLine("                {");
+    sb.AppendLine("                    url += xml + \".xml\";");
+    sb.AppendLine("                }");
+    sb.AppendLine("                if (Functions.IsUrlAvailable(url))");
+    sb.AppendLine("                {");
+    sb.AppendLine("                    try");
+    sb.AppendLine("                    {");
+    sb.AppendLine("                        byte[] FileViaHttp = XMLHepler.UncompressByUrl(url);");
+    sb.AppendLine("                        Stream xmlBuffer = new MemoryStream(FileViaHttp);");
+    sb.AppendLine("                        m_xmlDocument = new XmlDocument();");
+    sb.AppendLine("                        m_xmlDocument.Load(xmlBuffer);");
+    sb.AppendLine("                        Load();");
+    sb.AppendLine("                    }");
+    sb.AppendLine("                    catch");
+    sb.AppendLine("                    {");
+    sb.AppendLine("                        msg = StaticFunction.GetTranslation(\"TemplateAllListModelView.LoadFail\", url);");
+    sb.AppendLine("                    }");
+    sb.AppendLine("                }");
+    sb.AppendLine("                else");
+    sb.AppendLine("                {");
+    sb.AppendLine("                    msg = StaticFunction.GetTranslation(\"TemplateAllListModelView.NotFound\", url);");
+    sb.AppendLine("                }                ");
+    sb.AppendLine("            } ");
+    sb.AppendLine("        }");
+
+    sb.AppendLine("        public void Load()");
+    sb.AppendLine("        {");
+    sb.AppendLine("            if (XmlDocument != null)");
+    sb.AppendLine("            {");
+    sb.AppendLine("               " + name + "Mgr.Init();");
+
+    sb.AppendLine("                XmlNodeList xNodeList = m_xmlDocument.SelectNodes(\"Result/child::node()\");");
+
+    sb.AppendLine("                List<" + name + "Info> infos = new List<" + name + "Info>();");
+
+    sb.AppendLine("                foreach (XmlNode xNode in xNodeList)");
+    sb.AppendLine("                {");
+    sb.AppendLine("                    " + name + "Info info = Init" + name + "(xNode);");
+    sb.AppendLine("                    if (info != null)");
+    sb.AppendLine("                        infos.Add(info);");
+    sb.AppendLine("                }");
+    sb.AppendLine("                Load" + name + "(infos);");
+    sb.AppendLine("            }");
+    sb.AppendLine("        }");
+
+    sb.AppendLine("        public " + name + "Info Init" + name + "(XmlNode xNode)");
+    sb.AppendLine("        {");
+    sb.AppendLine("            string jsonNodeStr = XmlLinqConversion.XmlNodeToString(xNode);");
+    sb.AppendLine("            " + name + "Info info = XmlLinqConversion.Deserialize<" + name + "Info>(jsonNodeStr);");
+    sb.AppendLine("            return info;");
+    sb.AppendLine("        }        ");
+
+    sb.AppendLine("        public " + name + "Info[] Get(bool getNew)");
+    sb.AppendLine("        {            ");
+    sb.AppendLine("            if (getNew)");
+    sb.AppendLine("                return New" + name + ".ToArray();");
+
+    sb.AppendLine("            return " + name + ".ToArray();");
+    sb.AppendLine("        }");
+
+    sb.AppendLine("        public bool Import(bool isNew, ref StringBuilder sb)");
+    sb.AppendLine("        {");
+    sb.AppendLine("            " + name + "Info[] infos = Get" + name + "s(isNew);");
+    sb.AppendLine("            foreach (" + name + "Info info in infos)");
+    sb.AppendLine("            {");
+    sb.AppendLine("                using (ProduceBussiness pb = new ProduceBussiness())");
+    sb.AppendLine("                {");
+    sb.AppendLine("                    if (" + name + "Mgr.Find" + name + "(info.TemplateID) == null)");
+    sb.AppendLine("                    {");
+    sb.AppendLine("                        pb.Add" + name + "(info);");
+    sb.AppendLine("                    }");
+    sb.AppendLine("                    else");
+    sb.AppendLine("                    {");
+    sb.AppendLine("                        pb.Update" + name + "(info);");
+    sb.AppendLine("                    }");
+    sb.AppendLine("                }");
+    sb.AppendLine("            }");
+    sb.AppendLine("            if (infos.Length == 0)");
+    sb.AppendLine("            {");
+    sb.AppendLine("                sb.Append(StaticFunction.GetTranslation(\"XMLController.Import.Empty\"));");
+    sb.AppendLine("            }");
+    sb.AppendLine("            else");
+    sb.AppendLine("            {");
+    sb.AppendLine("                sb.Append(StaticFunction.GetTranslation(\"XMLController.Import.Success1\", infos.Length));");
+    sb.AppendLine("            }");
+    sb.AppendLine("            Load();");
+    sb.AppendLine("            return true;");
+    sb.AppendLine("        }");
+
+    sb.AppendLine("        public bool ImportSelected(string ids, ref StringBuilder sb)");
+    sb.AppendLine("        {");
+    sb.AppendLine("            using (ProduceBussiness pb = new ProduceBussiness())");
+    sb.AppendLine("            {");
+    sb.AppendLine("                foreach (string id in ids.Split(','))");
+    sb.AppendLine("                {");
+    sb.AppendLine("                    try");
+    sb.AppendLine("                    {");
+    sb.AppendLine("                        " + name + "Info info = Find" + name + "(int.Parse(id));");
+    sb.AppendLine("                        if (info != null)");
+    sb.AppendLine("                        {");
+    sb.AppendLine("                            if (" + name + "Mgr.Find" + name + "(info.TemplateID) == null)");
+    sb.AppendLine("                            {");
+    sb.AppendLine("                                pb.Add" + name + "(info);");
+    sb.AppendLine("                            }");
+    sb.AppendLine("                            else");
+    sb.AppendLine("                            {");
+    sb.AppendLine("                                pb.Update" + name + "(info);");
+    sb.AppendLine("                            }");
+    sb.AppendLine("                            sb.Append(StaticFunction.GetTranslation(\"XMLController.Import.Success2\", info.Name));");
+    sb.AppendLine("                        }");
+    sb.AppendLine("                        else");
+    sb.AppendLine("                        {");
+    sb.AppendLine("                            sb.Append(StaticFunction.GetTranslation(\"XMLController.Import.Fail\", info.Name));");
+    sb.AppendLine("                        }");
+    sb.AppendLine("                    }");
+    sb.AppendLine("                    catch (Exception e)");
+    sb.AppendLine("                    {");
+    sb.AppendLine("                        sb.Append(e.ToString());");
+    sb.AppendLine("                        continue;");
+    sb.AppendLine("                    }");
+    sb.AppendLine("                }            ");
+    sb.AppendLine("                Load();");
+    sb.AppendLine("            }");
+    sb.AppendLine("            return true;");
+    sb.AppendLine("        }");
+
+    sb.AppendLine("        public bool SaveToXml(string name, ref StringBuilder sb)");
+    sb.AppendLine("        {");
+    sb.AppendLine("            if (XmlDocument != null)");
+    sb.AppendLine("            {");
+    sb.AppendLine("                string result1 = Functions.CreateCompressXml(XmlDocument, name, true);");
+    sb.AppendLine("                string result2 = Functions.CreateCompressXml(XmlDocument, name + \"_out\", false);");
+    sb.AppendLine("                sb.Append(StaticFunction.GetTranslation(\"XMLController.SaveToXml.Success\",result1 ,result2 ,AppSettings.SaveFilePatch));");
+    sb.AppendLine("                return true;");
+    sb.AppendLine("            }");
+    sb.AppendLine("            else");
+    sb.AppendLine("            {");
+    sb.AppendLine("                sb.Append(StaticFunction.GetTranslation(\"XMLController.SaveToXml.Fail\", name));");
+    sb.AppendLine("            }");
+    sb.AppendLine("            return false;");
+    sb.AppendLine("        } ");
+    sb.AppendLine("    }");
+    sb.AppendLine("}");
+}
+<h4>@item.Name <i class="fa fa-angle-right"></i><span class="text-danger">MVC Xml Model</span></h4>
+<div style="overflow-y:auto; height:450px">
+<pre class="line-numbers">
+    <code class="language-csharp" id="highlight-code">
+        @sb.ToString()
+    </code>
+</pre>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+
+            navActive('MVC');
+
+            var code = $('#highlight-code')[0];
+            Prism.highlightElement(code);
+
+            ZeroCopy.init();
+        });
+    </script>
+}

@@ -1,0 +1,84 @@
+﻿@using SqlDataProvider.Data;
+@using System.Text;
+@model GM.Service.Models.TableModel
+
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    TableInfo item = Model.Info;
+    var designs = Model.Designs;
+
+    StringBuilder sb = new StringBuilder();
+
+}
+<h4>@item.Name <i class="fa fa-angle-right"></i><span class="text-danger"> Validate</span></h4>
+<div style="overflow-y:auto; height:450px">
+<pre class="line-numbers">
+    <code class="language-javascript" id="highlight-code">
+        @sb.ToString()
+            var startBtn = $('.btn-submit');
+            // On start button click start loading again
+            startBtn.on('click', function () {
+                $(this).button('loading');
+            });
+
+            /* Validate required: true*/
+            
+            $('form').each(function () {
+                $(this).validate({       
+                    errorClass: 'help-block animation-slideDown',
+                    errorElement: 'div',
+                    errorPlacement: function (error, e) {
+                        e.parents('.form-group > div').append(error);
+                    },
+                    highlight: function (e) {
+                        $(e).closest('.form-group').removeClass('has-success has-error').addClass('has-error');
+                        $(e).closest('.help-block').remove();
+                        startBtn.button('reset');
+                    },
+                    success: function (e) {
+                        e.closest('.form-group').removeClass('has-success has-error');
+                        e.closest('.help-block').remove();
+                    },
+                    submitHandler: function (e) {
+                        $('#loading-bgr').show();
+                        $.ajax({
+                            url: e.action,
+                            type: e.method,
+                            data: $(e).serialize(),
+                            success: function (data) {
+                                if (data.Result) {
+                                    $('#response-hodler').html(data.Html);
+                                }
+                                else {
+                                    showGrowl(data.Html, 'danger');
+                                }
+                                $('#loading-bgr').hide();
+                                startBtn.button('reset');
+                            },
+                            error: function (xhr) {
+                                showGrowl('Error: ' + xhr.status + ' ' + xhr.statusText, 'danger');
+                                $('#loading-bgr').hide();
+                                startBtn.button('reset');
+                            }
+                        });
+                        return false;
+                    }
+                });
+            });
+
+    </code>
+</pre>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+
+            navActive('Validate');
+
+            var code = $('#highlight-code')[0];
+            Prism.highlightElement(code);
+
+            ZeroCopy.init();
+        });
+    </script>
+}

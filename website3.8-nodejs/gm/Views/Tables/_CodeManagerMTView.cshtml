@@ -1,0 +1,177 @@
+﻿@using SqlDataProvider.Data;
+@using System.Text;
+@model GM.Service.Models.TableModel
+
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    TableInfo item = Model.Info;
+    string name = item.Class.Replace("Info", "");
+
+    StringBuilder sb = new StringBuilder();
+    sb.AppendLine(" ");
+    sb.AppendLine("using System;");
+    sb.AppendLine("using System.Collections.Generic;");
+    sb.AppendLine("using log4net;");
+    sb.AppendLine("using System.Reflection;");
+    sb.AppendLine("using System.Threading;");
+    sb.AppendLine("using Bussiness;");
+    sb.AppendLine("using SqlDataProvider.Data;");
+    sb.AppendLine("using System.Linq;");
+    sb.AppendLine("namespace Bussiness.Managers");
+    sb.AppendLine("{");
+    sb.AppendLine("    public class " + name + "Mgr");
+    sb.AppendLine("    {");
+    sb.AppendLine("        private static readonly ILog log = LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);");
+    sb.AppendLine("        private static ThreadSafeRandom random = new ThreadSafeRandom();");
+    sb.AppendLine("        private static Dictionary<int, " + name + "Info> m_" + TableTool.LowerFirstChar(name) + "s = new Dictionary<int, " + name + "Info>();");
+    sb.AppendLine("        private static Dictionary<int, List<" + name + "CondictionInfo>> m_" + TableTool.LowerFirstChar(name) + "Condictions = new Dictionary<int, List<" + name + "CondictionInfo>>();");
+    sb.AppendLine("        private static Dictionary<int, List<" + name + "AwardInfo>> m_" + TableTool.LowerFirstChar(name) + "Goods = new Dictionary<int, List<" + name + "AwardInfo>>();");
+    sb.AppendLine("        public static bool Init()");
+    sb.AppendLine("        {");
+    sb.AppendLine("            return ReLoad();");
+    sb.AppendLine("        }");
+    sb.AppendLine("        public static bool ReLoad()");
+    sb.AppendLine("        {");
+    sb.AppendLine("            try");
+    sb.AppendLine("            {");
+    sb.AppendLine("                Dictionary<int, " + name + "Info> temp" + name + "s = Load" + name + "Db();");
+    sb.AppendLine("                Dictionary<int, List<" + name + "CondictionInfo>> temp" + name + "Condictions = Load" + name + "CondictionDb(temp" + name + "s);");
+    sb.AppendLine("                Dictionary<int, List<" + name + "AwardInfo>> temp" + name + "Goods = Load" + name + "GoodDb(temp" + name + "s);");
+    sb.AppendLine("                if (temp" + name + "s.Count > 0)");
+    sb.AppendLine("                {");
+    sb.AppendLine("                    Interlocked.Exchange(ref m_" + TableTool.LowerFirstChar(name) + "Info, temp" + name + "s);");
+    sb.AppendLine("                    Interlocked.Exchange(ref m_" + TableTool.LowerFirstChar(name) + "Condictions, temp" + name + "Condictions);");
+    sb.AppendLine("                    Interlocked.Exchange(ref m_" + TableTool.LowerFirstChar(name) + "Goods, temp" + name + "Goods);");
+    sb.AppendLine("                }");
+    sb.AppendLine("                return true;");
+    sb.AppendLine("            }");
+    sb.AppendLine("            catch (Exception e)");
+    sb.AppendLine("            {");
+    sb.AppendLine("                log.Error(\"ReLoad " + name + "Mgr \", e);");
+    sb.AppendLine("            }");
+    sb.AppendLine("            return false;");
+    sb.AppendLine("        }");
+    sb.AppendLine("        public static Dictionary<int, " + name + "Info> Load" + name + "Db()");
+    sb.AppendLine("        {");
+    sb.AppendLine("            Dictionary<int, " + name + "Info> list = new Dictionary<int, " + name + "Info>();");
+    if (item.Type == 1)
+    {
+        sb.AppendLine("            using (PlayerBussiness pb = new PlayerBussiness())");
+    }
+    else
+    {
+        sb.AppendLine("            using (ProduceBussiness pb = new ProduceBussiness())");
+    }
+    sb.AppendLine("            {");
+    sb.AppendLine("                " + name + "Info[] infos = pb.GetAll" + name + "();");
+    sb.AppendLine("                foreach (" + name + "Info info in infos)");
+    sb.AppendLine("                {");
+    sb.AppendLine("                    if (!list.ContainsKey(info.ID))");
+    sb.AppendLine("                    {");
+    sb.AppendLine("                        list.Add(info.ID, info);");
+    sb.AppendLine("                    }");
+    sb.AppendLine("                }");
+    sb.AppendLine("            }");
+    sb.AppendLine("            return list;");
+    sb.AppendLine("        }");
+    sb.AppendLine("        public static Dictionary<int, List<" + name + "CondictionInfo>> Load" + name + "CondictionDb(Dictionary<int, " + name + "Info> " + TableTool.LowerFirstChar(name) + "s)");
+    sb.AppendLine("        {");
+    sb.AppendLine("            Dictionary<int, List<" + name + "CondictionInfo>> list = new Dictionary<int, List<" + name + "CondictionInfo>>();");
+    if (item.Type == 1)
+    {
+        sb.AppendLine("            using (PlayerBussiness pb = new PlayerBussiness())");
+    }
+    else
+    {
+        sb.AppendLine("            using (ProduceBussiness pb = new ProduceBussiness())");
+    }
+    sb.AppendLine("            {");
+    sb.AppendLine("                " + name + "CondictionInfo[] infos = pb.GetAll" + name + "Condiction();");
+    sb.AppendLine("                foreach (" + name + "Info " + TableTool.LowerFirstChar(name) + " in " + TableTool.LowerFirstChar(name) + "s.Values)");
+    sb.AppendLine("                {");
+    sb.AppendLine("                    IEnumerable<" + name + "CondictionInfo> temp = infos.Where(s => s.ID == " + TableTool.LowerFirstChar(name) + ".ID);");
+    sb.AppendLine("                    list.Add(" + TableTool.LowerFirstChar(name) + ".ID, temp.ToList());");
+    sb.AppendLine("                }");
+    sb.AppendLine("            }");
+    sb.AppendLine("            return list;");
+    sb.AppendLine("        }");
+    sb.AppendLine("        public static Dictionary<int, List<" + name + "AwardInfo>> Load" + name + "GoodDb(Dictionary<int, " + name + "Info> " + TableTool.LowerFirstChar(name) + "s)");
+    sb.AppendLine("        {");
+    sb.AppendLine("            Dictionary<int, List<" + name + "AwardInfo>> list = new Dictionary<int, List<" + name + "AwardInfo>>();");
+
+    if (item.Type == 1)
+    {
+        sb.AppendLine("            using (PlayerBussiness pb = new PlayerBussiness())");
+    }
+    else
+    {
+        sb.AppendLine("            using (ProduceBussiness pb = new ProduceBussiness())");
+    }
+    sb.AppendLine("            {");
+    sb.AppendLine("                " + name + "AwardInfo[] infos = pb.GetAll" + name + "Award();");
+    sb.AppendLine("                foreach (" + name + "Info " + TableTool.LowerFirstChar(name) + " in " + TableTool.LowerFirstChar(name) + "s.Values)");
+    sb.AppendLine("                {");
+    sb.AppendLine("                    IEnumerable<" + name + "AwardInfo> temp = infos.Where(s => s.ID == " + TableTool.LowerFirstChar(name) + ".ID);");
+    sb.AppendLine("                    list.Add(" + TableTool.LowerFirstChar(name) + ".ID, temp.ToList());");
+    sb.AppendLine("                }");
+    sb.AppendLine("            }");
+    sb.AppendLine("            return list;");
+    sb.AppendLine("        }");
+
+    sb.AppendLine("        public static " + name + "Info GetSingle" + name + "(int id)");
+    sb.AppendLine("        {");
+    sb.AppendLine("            if (m_" + TableTool.LowerFirstChar(name) + "s.Count == 0)");
+    sb.AppendLine("                Init();");
+    sb.AppendLine("            if (m_" + TableTool.LowerFirstChar(name) + "s.ContainsKey(id))");
+    sb.AppendLine("            {");
+    sb.AppendLine("                return m_" + TableTool.LowerFirstChar(name) + "s[id];");
+    sb.AppendLine("            }");
+    sb.AppendLine("            return null;");
+    sb.AppendLine("        }");
+
+    sb.AppendLine("        public static List<" + name + "CondictionInfo> Get" + name + "Conditions(int id)");
+    sb.AppendLine("        {");
+    sb.AppendLine("            if (m_" + TableTool.LowerFirstChar(name) + "Conditions.Count == 0)");
+    sb.AppendLine("                Init();");
+    sb.AppendLine("            if (m_" + TableTool.LowerFirstChar(name) + "Conditions.ContainsKey(id))");
+    sb.AppendLine("            {");
+    sb.AppendLine("                return m_" + TableTool.LowerFirstChar(name) + "Conditions[id];");
+    sb.AppendLine("            }");
+    sb.AppendLine("            return null;");
+    sb.AppendLine("        }");
+
+    sb.AppendLine("        public static List<" + name + "AwardInfo> Get" + name + "Goods(int id)");
+    sb.AppendLine("        {");
+    sb.AppendLine("            if (m_" + TableTool.LowerFirstChar(name) + "Goods.Count == 0)");
+    sb.AppendLine("                Init();");
+    sb.AppendLine("            if (m_" + TableTool.LowerFirstChar(name) + "Goods.ContainsKey(id))");
+    sb.AppendLine("            {");
+    sb.AppendLine("                return m_" + TableTool.LowerFirstChar(name) + "Goods[id];");
+    sb.AppendLine("            }");
+    sb.AppendLine("            return null;");
+    sb.AppendLine("        }");
+
+    sb.AppendLine("    }");
+    sb.AppendLine("}");
+}
+<h4>@item.Name <i class="fa fa-angle-right"></i><span class="text-danger"> Manager Multi Table</span></h4>
+<div style="overflow-y:auto; height:450px">
+<pre class="line-numbers">
+    <code class="language-csharp" id="highlight-code">
+        @sb.ToString()
+    </code>
+</pre>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+
+            navActive('Manager');
+
+            var code = $('#highlight-code')[0];
+            Prism.highlightElement(code);
+
+            ZeroCopy.init();
+        });
+    </script>
+}

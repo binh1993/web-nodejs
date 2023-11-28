@@ -1,0 +1,98 @@
+﻿@using SqlDataProvider.Data;
+@using System.Text;
+@model GM.Service.Models.TableModel
+
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    TableInfo item = Model.Info;
+    string name = item.Class.Replace("Info", "");
+    StringBuilder sb = new StringBuilder();
+    string usingStr = "Web";
+    if (item.Type == 1)
+    {
+        usingStr = "Player";
+    }
+    if (item.Type == 2)
+    {
+        usingStr = "Produce";
+    }
+
+    sb.AppendLine(" ");
+    sb.AppendLine("        #region " + name + "");
+    sb.AppendLine("        public List<" + name + "Info> " + name + "s = new List<" + name + "Info>();");
+    sb.AppendLine("        public void Add" + name + "s(List<" + name + "Info> items)");
+    sb.AppendLine("        {");
+    sb.AppendLine("            foreach (" + name + "Info info in items)");
+    sb.AppendLine("            {");
+    sb.AppendLine("                if (!info.IsExits)");
+    sb.AppendLine("                {");
+    sb.AppendLine("                    " + name + "s.Add(info);");
+    sb.AppendLine("                }");
+    sb.AppendLine("            }");
+    sb.AppendLine("        }");
+    sb.AppendLine("        public " + name + "Info Get" + name + "(int id)");
+    sb.AppendLine("        {");
+    sb.AppendLine("            foreach (" + name + "Info info in " + name + "s)");
+    sb.AppendLine("            {");
+    sb.AppendLine("                if (info.ID == id)");
+    sb.AppendLine("                    return info;");
+    sb.AppendLine("            }");
+    sb.AppendLine("            return null;");
+    sb.AppendLine("        }");
+    sb.AppendLine("        public void Remove" + name + "(int id)");
+    sb.AppendLine("        {");
+    sb.AppendLine("            List<" + name + "Info> temps = new List<" + name + "Info>();");
+    sb.AppendLine("            foreach (" + name + "Info info in " + name + "s)");
+    sb.AppendLine("            {");
+    sb.AppendLine("                temps.Add(info);");
+    sb.AppendLine("            }");
+    sb.AppendLine("            foreach (" + name + "Info info in temps)");
+    sb.AppendLine("            {");
+    sb.AppendLine("                if (info.ID == id)");
+    sb.AppendLine("                    " + name + "s.Remove(info);");
+    sb.AppendLine("            }");
+    sb.AppendLine("        }");
+    sb.AppendLine("        public void Update" + name + "(" + name + "Info item)");
+    sb.AppendLine("        {");
+    sb.AppendLine("                " + name + "Info temp = Get" + name + "(item.ID);");
+    sb.AppendLine("                if (temp != null)");
+    sb.AppendLine("                    temp = item;");
+    sb.AppendLine("        }");
+    sb.AppendLine("        public void Save" + name + "()");
+    sb.AppendLine("        {");
+    sb.AppendLine("            using ("+ usingStr + "Bussiness wb = new " + usingStr + "Bussiness())");
+    sb.AppendLine("            {");
+    sb.AppendLine("                foreach (" + name + "Info info in " + name + "s)");
+    sb.AppendLine("                {");
+    sb.AppendLine("                    wb.Add" + name + "(info);");
+    sb.AppendLine("                }");
+    sb.AppendLine("                " + name + "s.Clear();");
+    sb.AppendLine("            }");
+    sb.AppendLine("        }");
+    sb.AppendLine("        public void Deserialize" + name + "(" + name + "Info info, FormCollection collect)");
+    sb.AppendLine("        {");
+    sb.AppendLine("            Update" + name + "(DeserializeForm.Init" + name + "(info, collect));");
+    sb.AppendLine("        }");
+    sb.AppendLine("        #endregion");
+}
+<h4>@item.Name <i class="fa fa-angle-right"></i><span class="text-danger"> MVC Client</span></h4>
+<div style="overflow-y:auto; height:450px">
+<pre class="line-numbers">
+    <code class="language-csharp" id="highlight-code">
+        @sb.ToString()
+    </code>
+</pre>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+
+            navActive('MVC');
+
+            var code = $('#highlight-code')[0];
+            Prism.highlightElement(code);
+
+            ZeroCopy.init();
+        });
+    </script>
+}

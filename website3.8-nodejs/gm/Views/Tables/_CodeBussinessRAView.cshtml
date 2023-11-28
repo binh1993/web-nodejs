@@ -1,0 +1,76 @@
+﻿@using SqlDataProvider.Data;
+@using System.Text;
+@model GM.Service.Models.TableModel
+
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    TableInfo item = Model.Info;
+    List<TableDesignInfo> designs = Model.Designs;
+    string name = item.Class.Replace("Info", "");
+
+    StringBuilder sb = new StringBuilder();
+    sb.AppendLine(" ");
+    sb.AppendLine("public " + name + "Info[] GetAll" + name + "()");
+    sb.AppendLine("{");
+    sb.AppendLine("    List<" + name + "Info> infos = new List<" + name + "Info>();");
+    sb.AppendLine("    SqlDataReader reader = null;");
+    sb.AppendLine("    try");
+    sb.AppendLine("    {");
+    sb.AppendLine("        db.GetReader(ref reader, \"SP_" + item.Name + "_All\");");
+    sb.AppendLine("        while (reader.Read())");
+    sb.AppendLine("        {");
+    sb.AppendLine("            infos.Add(Init" + name + "(reader));");
+    sb.AppendLine("        }");
+    sb.AppendLine("    }");
+    sb.AppendLine("    catch (Exception e)");
+    sb.AppendLine("    {");
+    sb.AppendLine("        if (log.IsErrorEnabled)");
+    sb.AppendLine("            log.Error(\"GetAll" + name + "\", e);");
+    sb.AppendLine("    }");
+    sb.AppendLine("    finally");
+    sb.AppendLine("    {");
+    sb.AppendLine("        if (reader != null && !reader.IsClosed)");
+    sb.AppendLine("            reader.Close();");
+    sb.AppendLine("    }");
+    sb.AppendLine("    return infos.ToArray();");
+    sb.AppendLine("}");
+
+    sb.AppendLine("public " + name + "Info Init" + name + "(SqlDataReader reader)");
+    sb.AppendLine("{");
+    sb.AppendLine("   " + name + "Info info = new " + name + "Info();");
+    foreach (var d in designs)
+    {
+        if (d.Type.Contains("nvarchar"))
+        {
+            sb.AppendLine("   info." + d.Name + " = reader[\"" + d.Name + "\"] == null ? \"\" : reader[\"" + d.Name + "\"].ToString();");
+        }
+        else
+        {
+            sb.AppendLine("   info." + d.Name + " = (" + TableTool.GetDataType(d.Type) + ")reader[\"" + d.Name + "\"];");
+        }
+    }
+    sb.AppendLine("   return info;");
+    sb.Append("}");
+
+}
+<h4>@item.Name <i class="fa fa-angle-right"></i><span class="text-danger"> Bussiness Read All</span></h4>
+<div style="overflow-y:auto; height:450px">
+<pre class="line-numbers">
+    <code class="language-csharp" id="highlight-code">
+        @sb.ToString()
+    </code>
+</pre>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+
+            navActive('BussinessCRUD');
+
+            var code = $('#highlight-code')[0];
+            Prism.highlightElement(code);
+
+            ZeroCopy.init();
+        });
+    </script>
+}

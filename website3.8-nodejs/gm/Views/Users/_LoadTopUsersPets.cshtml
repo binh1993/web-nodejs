@@ -1,0 +1,63 @@
+﻿@using MvcPaging;
+@model List<SqlDataProvider.Data.UsersPetInfo>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "LoadData";
+    int count = 1;
+}
+
+    <table id="general-table" class="table table-striped table-vcenter">
+        <thead>
+            <tr>
+                <th>STT</th>               
+                <th>ID</th>
+                <th>Name</th>
+                <th>NickName</th>
+                <th>Level</th>
+                <th>GP</th>               
+            </tr>
+        </thead>
+
+                  
+            @if (Model.Count() > 0)
+            {
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@count</td>                            
+                            <td>@item.ID</td>
+                            <td>
+                                <a href="javascript:void(0)">
+                                    <strong>@item.Name</strong>
+                                </a>
+                            </td>          
+                            <td><span class="text-warning"><strong>@item.NickName</strong></span></td>                   
+                            <td>@item.Level</td>
+                            <td>@item.GP</td>
+                        </tr>
+                        count++;
+                    }
+                </tbody>
+            }
+            else
+            {
+                <tbody>
+                    <tr>
+                        <td colspan="8" class="text-center" id="insert-avatar">
+                            @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+                        </td>
+                    </tr>
+                </tbody>
+            }          
+    </table>
+
+@section Scripts{
+    <script>
+        /* Initialize app when page loads */
+        $(function () {
+            $('.popover:visible').popover('destroy');
+            GMApp.GetJson('#insert-avatar', '@Url.Action("Avatar","Users")');
+        });
+    </script>
+}

@@ -1,0 +1,228 @@
+﻿@model SqlDataProvider.Data.QuestAwardInfo
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = StaticFunction.GetTranslation("Model.Edit.Title");
+    var item = Model;
+    string chek = string.Empty;
+
+    string callBackStr = "'" + Request.QueryString["table"] + "', ";
+    callBackStr += "'" + Request.QueryString["key"] + "', ";
+    callBackStr += Request.QueryString["cid"] == null ? "-1," : Request.QueryString["cid"] + ", ";
+    callBackStr += Request.QueryString["Page"] == null ? "-1," : Request.QueryString["Page"] + ", ";
+    callBackStr += Model.QuestID + ", ";
+    callBackStr += "'" + Request.QueryString["tagName"] + "'";
+}
+<div class="modal-header themed-background-default">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">
+        @ViewBag.Title
+        <i class="gi gi-chevron-right" style="font-size:10px"></i>
+        <span style="color:white"><strong> @Html.TItemName(item.RewardItemID)</strong></span>
+    </h4>
+</div>
+<div class="modal-body">
+    <form action="@Html.Raw(Url.Action("EditData", "Games", routeValues: new {@id1 = item.QuestID, id2 = item.RewardItemID, table = Request.QueryString["table"] }))"
+          method="post" class="form-horizontal form-bordered" id="frm-edit-questaward">
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="QuestID">QuestID</label>
+            <div class="col-md-9">
+                <input type="text" class="form-control input-sm"  disabled="disabled" value="@item.QuestID">
+                <input type="hidden" id="QuestID" name="QuestID" value="@item.QuestID">
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="RewardItemID">RewardItemID</label>
+            <div class="col-md-9">
+                <input type="text"  class="form-control input-sm must-number" disabled="disabled" value="@item.RewardItemID">
+                <input type="hidden" id="RewardItemID" name="RewardItemID" value="@item.RewardItemID">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="IsSelect">IsSelect</label>
+            <div class="col-md-9">
+                <label class="switch switch-primary">
+                    @{
+                        chek = string.Empty;
+                        if (item.IsSelect) { chek = "checked"; }
+                    }
+                    <input type="checkbox" id="IsSelect" name="IsSelect" value="true" @chek>
+                    <span></span>
+                    <input type="hidden" id="IsSelect" name="IsSelect" value="false">
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="RewardItemValid">RewardItemValid</label>
+            <div class="col-md-9">
+                <input type="text" id="RewardItemValid" name="RewardItemValid" class="form-control input-sm must-number" value="@item.RewardItemValid">
+            </div>
+        </div>
+		 <div class="form-group">
+            <label class="col-md-3 control-label" for="RewardItemCount1">RewardItemCount</label>
+            <div class="col-md-9">
+                <input type="text" id="RewardItemCount1" name="RewardItemCount1" class="form-control input-sm must-number" value="@item.RewardItemCount">
+            </div>
+        </div>
+        <div class="form-group" style = "display:none">
+            <label class="col-md-3 control-label" for="RewardItemCount">RewardItemCount1</label>
+            <div class="col-md-9">
+                <input type="text" id="RewardItemCount" name="RewardItemCount" class="form-control input-sm must-number" value="@item.RewardItemCount1">
+            </div>
+        </div>
+        <div class="form-group" style = "display:none">
+            <label class="col-md-3 control-label" for="RewardItemCount2">RewardItemCount2</label>
+            <div class="col-md-9">
+                <input type="text" id="RewardItemCount2" name="RewardItemCount2" class="form-control input-sm must-number" value="@item.RewardItemCount2">
+            </div>
+        </div>
+        <div class="form-group" style = "display:none">
+            <label class="col-md-3 control-label" for="RewardItemCount3">RewardItemCount3</label>
+            <div class="col-md-9">
+                <input type="text" id="RewardItemCount3" name="RewardItemCount3" class="form-control input-sm must-number" value="@item.RewardItemCount3">
+            </div>
+        </div>
+        <div class="form-group" style = "display:none">
+            <label class="col-md-3 control-label" for="RewardItemCount4">RewardItemCount4</label>
+            <div class="col-md-9">
+                <input type="text" id="RewardItemCount4" name="RewardItemCount4" class="form-control input-sm must-number" value="@item.RewardItemCount4">
+            </div>
+        </div>
+        <div class="form-group" style = "display:none">
+            <label class="col-md-3 control-label" for="RewardItemCount5">RewardItemCount5</label>
+            <div class="col-md-9">
+                <input type="text" id="RewardItemCount5" name="RewardItemCount5" class="form-control input-sm must-number" value="@item.RewardItemCount5">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="StrengthenLevel">StrengthenLevel</label>
+            <div class="col-md-9">
+                <input type="text" id="StrengthenLevel" name="StrengthenLevel" class="form-control input-sm must-number" value="@item.StrengthenLevel">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="AttackCompose">AttackCompose</label>
+            <div class="col-md-9">
+                <input type="text" id="AttackCompose" name="AttackCompose" class="form-control input-sm must-number" value="@item.AttackCompose">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="DefendCompose">DefendCompose</label>
+            <div class="col-md-9">
+                <input type="text" id="DefendCompose" name="DefendCompose" class="form-control input-sm must-number" value="@item.DefendCompose">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="AgilityCompose">AgilityCompose</label>
+            <div class="col-md-9">
+                <input type="text" id="AgilityCompose" name="AgilityCompose" class="form-control input-sm must-number" value="@item.AgilityCompose">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="LuckCompose">LuckCompose</label>
+            <div class="col-md-9">
+                <input type="text" id="LuckCompose" name="LuckCompose" class="form-control input-sm must-number" value="@item.LuckCompose">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="IsCount">IsCount</label>
+            <div class="col-md-9">
+                <label class="switch switch-primary">
+                    @{
+                        chek = string.Empty;
+                        if (item.IsCount) { chek = "checked"; }
+                    }
+                    <input type="checkbox" id="IsCount" name="IsCount" value="true" @chek>
+                    <span></span>
+                    <input type="hidden" id="IsCount" name="IsCount" value="false">
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="IsBind">IsBind</label>
+            <div class="col-md-9">
+                <label class="switch switch-primary">
+                    @{
+                        chek = string.Empty;
+                        if (item.IsBind) { chek = "checked"; }
+                    }
+                    <input type="checkbox" id="IsBind" name="IsBind" value="true" @chek>
+                    <span></span>
+                    <input type="hidden" id="IsBind" name="IsBind" value="false">
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="MagicAttack">MagicAttack</label>
+            <div class="col-md-9">
+                <input type="text" id="MagicAttack" name="MagicAttack" class="form-control input-sm must-number" value="@item.MagicAttack">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="MagicDefence">MagicDefence</label>
+            <div class="col-md-9">
+                <input type="text" id="MagicDefence" name="MagicDefence" class="form-control input-sm must-number" value="@item.MagicDefence">
+            </div>
+        </div>
+        <div class="form-group form-actions">
+            <div class="col-md-12 text-right">
+                <button type="submit" class="btn btn-sm btn-warning btn-submit2"> @StaticFunction.GetTranslation("Model.Update")</button>
+                <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal"> @StaticFunction.GetTranslation("Model.CLose")</button>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts{
+    <script>
+
+          $(function () {
+            var startBtn = $('.btn-submit2');
+            // On start button click start loading again
+            startBtn.on('click', function () {
+                $(this).button('loading');
+            });
+
+            /* Validate */
+
+            $('form#frm-edit-questaward').each(function () {
+                $(this).validate({
+                    errorClass: 'help-block animation-slideDown',
+                    errorElement: 'div',
+                    errorPlacement: function (error, e) {
+                        e.parents('.form-group > div').append(error);
+                    },
+                    highlight: function (e) {
+                        $(e).closest('.form-group').removeClass('has-success has-error').addClass('has-error');
+                        $(e).closest('.help-block').remove();
+                        startBtn.button('reset');
+                    },
+                    success: function (e) {
+                        e.closest('.form-group').removeClass('has-success has-error');
+                        e.closest('.help-block').remove();
+                    },
+                    submitHandler: function (e) {
+                        $('#loading-bgr').show();
+                        $.ajax({
+                            url: e.action,
+                            type: e.method,
+                            data: $(e).serialize(),
+                            success: function (result) {
+                                $('#loading-bgr').hide();
+                                $('#response-hodler').html(result);
+                                startBtn.button('reset');
+                                reloadData(@Html.Raw(callBackStr));
+                            },
+                            error: function (xhr) {
+                                $('#loading-bgr').hide();
+                                showGrowl('Error: ' + xhr.status + ' ' + xhr.statusText, 'danger');
+                                startBtn.button('reset');
+                            }
+                        });
+                        return false;
+                    }
+                });
+            });
+        });
+
+    </script>
+}

@@ -1,0 +1,39 @@
+2022-08-22 15:17:19 Error: Version 3.6
+2022-08-22 15:17:19 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-22 15:17:19 Error: zoneId1001
+2022-08-22 15:17:19 Error: Version 3.6
+2022-08-22 15:17:19 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-22 15:17:19 Error: zoneId1001
+2022-08-22 15:18:38 Error: Version 3.6
+2022-08-22 15:18:38 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-22 15:18:38 Error: zoneId1001
+2022-08-22 15:18:39 Error: Version 3.6
+2022-08-22 15:18:39 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-22 15:18:39 Error: zoneId1001
+2022-08-22 15:18:39 Error: Version 3.6
+2022-08-22 15:18:39 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-22 15:18:39 Error: zoneId1001
+2022-08-22 15:18:40 Error: Version 3.6
+2022-08-22 15:18:40 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-22 15:18:40 Error: zoneId1001
+2022-08-22 15:19:51 Error: Version 3.6
+2022-08-22 15:19:51 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-22 15:19:51 Error: zoneId1001
+2022-08-22 15:21:24 Error: Version 3.6
+2022-08-22 15:21:24 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-22 15:21:24 Error: zoneId1001
+2022-08-22 15:21:24 Error: Version 3.6
+2022-08-22 15:21:24 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-22 15:21:24 Error: zoneId1001
+2022-08-22 15:21:24 Error: Version 3.6
+2022-08-22 15:21:24 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-22 15:21:24 Error: zoneId1001
+2022-08-22 15:21:24 Error: Version 3.6
+2022-08-22 15:21:24 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-22 15:21:24 Error: zoneId1001
+2022-08-22 15:21:24 Error: Version 3.6
+2022-08-22 15:21:24 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-22 15:21:24 Error: zoneId1001
+2022-08-22 15:21:24 Error: Version 3.6
+2022-08-22 15:21:24 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-22 15:21:24 Error: zoneId1001

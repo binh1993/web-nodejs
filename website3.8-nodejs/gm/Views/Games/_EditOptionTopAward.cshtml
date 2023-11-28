@@ -1,0 +1,501 @@
+﻿@model List<SqlDataProvider.Data.TopAwardInfo>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "Cập nhật thông số";
+    string cssActive = "active";
+    int counterList = 0;
+    int counterExits = 0;
+
+    string chek = string.Empty;
+    string cssRowA = string.Empty;
+    string cssRowB = string.Empty;
+    int countGold = 0;
+    int countCompose = 0;
+}
+<div class="modal-header themed-background-default">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">
+        @ViewBag.Title <i class="gi gi-chevron-right" style="font-size:10px"></i>
+        <span style="color:white"> Phần thưởng<strong> @Request.QueryString["name"]</strong></span>
+    </h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-4">
+            <!-- Navigation Block -->
+            <div class="block full">
+                <!-- Navigation Title -->
+                <div class="block-title">
+                    <h2><i class="fa fa-compass"></i><strong> Danh sách</strong></h2>
+                </div>
+                <!-- END Navigation Title -->
+                <!-- Filter by Type links -->
+                <ul class="nav nav-pills nav-stacked nav-icons media-filter media-filter-aw" style="max-height:418px; overflow-y:auto">
+                    @foreach (var item in Model)
+                    {
+                        if (!item.IsExits)
+                        {
+                            <li class="@cssActive">
+                                <a href="javascript:void(0)" data-category="id-@item.TemplateID">
+                                    @Html.ItemImage(item.TemplateID) @item.Name
+                                </a>
+                            </li>
+                            cssActive = string.Empty;
+                            counterList++;
+                        }
+                    }
+                    @if (counterList == 0)
+                    {
+                        <li class="text-center">
+                            @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+                        </li>
+                    }
+                </ul>
+                <!-- END Filter by Type links -->
+            </div>
+            <div class="block full">
+                <!-- Navigation Title -->
+                <div class="block-title">
+                    <h2><i class="fa fa-compass"></i><strong> Danh sách bị trùng</strong></h2>
+                </div>
+                <!-- END Navigation Title -->
+                <!-- Filter by Type links -->
+                <ul class="nav nav-pills nav-stacked nav-icons"  style="max-height:418px; overflow-y:auto">
+                    @foreach (var item in Model)
+                    {
+                        if (item.IsExits)
+                        {
+                            <li>
+                                <a href="javascript:void(0)">
+                                    @Html.ItemImage(item.TemplateID) @item.Name
+                                </a>
+                            </li>
+                            counterExits++;
+                        }
+                    }
+                    @if (counterExits == 0)
+                    {
+                        <li class="text-center">@Html.Raw(StaticFunction.GetTranslation("Views.Empty"))</li>
+                    }
+                </ul>
+                <!-- END Filter by Type links -->
+            </div>
+            <!-- END Navigation Block -->
+            <span class="text-warning" id="error-response"></span>
+        </div>
+        <div class="col-md-8">
+            <!-- Awards Block -->
+            <div class="block">
+                <!-- Awards Content  style="height:535px; overflow-y:auto"-->
+                <!-- Add the category value for each item in its data-category attribute (for the filter functionality to work) -->
+                <div class="row media-filter-items-aw">
+                    @if (counterList == 0)
+                    {
+                        <div class="col-md-12 text-center">
+                            <span>@Html.Raw(StaticFunction.GetTranslation("Views.Empty"))</span>
+                        </div>
+                        <div class="col-md-12 text-center" style="padding-left:188px">
+                            @Html.Partial("_Empty")
+                        </div>
+                    }
+                    @foreach (var item in Model)
+                    {
+                        cssRowA = "col-md-6";
+                        cssRowB = "col-md-6";
+                        if (item.Type == 0)
+                        {
+                            cssRowA = "col-md-12";
+                            cssRowB = string.Empty;
+                        }
+                        <div class="col-md-12">
+                            <h4>
+                                Phần thưởng <i class="gi gi-chevron-right" style="font-size:10px"></i>
+                                <span class="text-warning"><strong> @item.Name</strong></span>
+                            </h4>
+                            <div class="media-items animation-fadeInRight" data-category="id-@item.TemplateID">
+                                <!-- From Block -->
+                                <form action="@Html.Raw(Url.Action("UpdateItemInBag", "Games", routeValues: new { id = item.TemplateID, type = Request.QueryString["type"]}))"
+                                      method="post" class="form-horizontal multi-post" id="frm-update-@item.TemplateID" data-title="@item.Name" onsubmit="return false;">
+
+                                    <div class="row">
+                                        <div class="@cssRowA">
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label" for="TopID">TopID</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" id="TopID" name="TopID" class="form-control input-sm" value="@item.TopID" disabled>
+                                                </div>
+                                                <input type="hidden" id="TopID" name="TopID" value="@item.TopID">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label" for="Rank">Rank</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" id="Rank" name="Rank" class="form-control input-sm must-digits" value="@item.Rank">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label" for="TemplateID">TemplateID</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" id="TemplateID" name="TemplateID" class="form-control input-sm" value="@item.TemplateID" disabled>
+                                                </div>
+                                                <input type="hidden" id="TemplateID" name="TemplateID" value="@item.TemplateID">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label" for="Count">Count</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" id="Count" name="Count" class="form-control input-sm must-digits" value="@item.Count">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label" for="ValidDate">ValidDate</label>
+                                                <div class="col-md-8">
+                                                    <input type="text" id="ValidDate" name="ValidDate" class="form-control input-sm must-digits" value="@item.ValidDate">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label" for="IsBinds">IsBinds</label>
+                                                <div class="col-md-8 text-left">
+                                                    <label class="switch switch-primary">
+                                                        @{
+                                                            if (item.IsBinds) { chek = "checked"; }
+                                                        }
+                                                        <input type="checkbox" id="IsBinds" name="IsBinds" value="true" @chek>
+                                                        <span></span>
+                                                        <input type="hidden" id="IsBinds" name="IsBinds" value="false">
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            @if (item.Type == 2)
+                                            {
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="IsGold">item.IsGold</label>
+                                                    <div class="col-md-8 text-left">
+                                                        <label class="switch switch-primary">
+                                                            @{
+                                                                chek = string.Empty;
+                                                                if (item.IsGold) { chek = "checked"; }
+                                                            }
+                                                            <input type="checkbox" id="IsGold" name="IsGold" value="true" @chek>
+                                                            <span></span>
+                                                            <input type="hidden" id="IsGold" name="IsGold" value="false">
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="GoldValidate">GoldValidate</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" id="GoldValidate" name="GoldValidate" class="form-control input-sm must-digits" value="@item.GoldValidate">
+                                                    </div>
+                                                </div>
+                                                                }
+                                        </div>
+                                        <div class="@cssRowB">
+                                            @if (item.Type != 0)
+                                            {
+                                                countCompose++;
+                                                if (item.Type == 2)
+                                                {
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 control-label" for="StrengthenLevel">StrengthenLevel</label>
+                                                        <div class="col-md-8">
+                                                            <input type="text" id="StrengthenLevel" name="StrengthenLevel" class="form-control input-sm must-digits" value="@item.StrengthenLevel">
+                                                        </div>
+                                                    </div>
+                                                    countGold++;
+                                                }
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="AttackCompose">AttackCompose</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" id="AttackCompose" name="AttackCompose" class="form-control input-sm must-digits" value="@item.AttackCompose">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="DefendCompose">DefendCompose</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" id="DefendCompose" name="DefendCompose" class="form-control input-sm must-digits" value="@item.DefendCompose">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="AgilityCompose">AgilityCompose</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" id="AgilityCompose" name="AgilityCompose" class="form-control input-sm must-digits" value="@item.AgilityCompose">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="LuckCompose">LuckCompose</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" id="LuckCompose" name="LuckCompose" class="form-control input-sm must-digits" value="@item.LuckCompose">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="MagicAttack">MagicAttack</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" id="MagicAttack" name="MagicAttack" class="form-control input-sm must-digits" value="@item.MagicAttack">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-md-4 control-label" for="MagicDefend">MagicDefend</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" id="MagicDefend" name="MagicDefend" class="form-control input-sm must-digits" value="@item.MagicDefend">
+                                                    </div>
+                                                </div>
+
+                                            }
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group form-actions">
+                                        <div class="col-md-12 text-right">
+                                            <button type="submit" class="btn btn-sm btn-primary btn-submit"> Cập nhật</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <!-- END From Block -->
+                            </div>
+                        </div>
+                                                                }
+                </div>
+                <!-- END Awards Content -->
+            </div>
+            @if (counterList > 0)
+            {
+                <div class="block full">
+                    <!-- Navigation Title -->
+                    <div class="block-title">
+                        <h2><i class="fa fa-compass"></i><strong> Thần tốc</strong></h2>
+                        <span class="text-info">
+                            <span class="text-warning"><em>Thiết lập</em></span> và
+                            <span class="text-warning"><em>Cập nhật</em></span> nhanh tất cả item có trong danh sách
+                        </span>
+                    </div>
+                    <!-- END Navigation Title -->
+                    <div class="form-actions">
+                        <div class="text-right">
+                            <div class="btn-group btn-group-sm quick-set">
+                                <div class="btn-group btn-group-sm dropup">
+                                    <a href="javascript:void(0)" class="btn btn-success pull-right dropdown-toggle" data-toggle="dropdown"><span class="caret"></span> Thời hạn nhanh</a>
+                                    <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
+                                        <li class="dropdown-header"><i class="fa fa-share pull-right"></i> Item(s) trong danh dách</li>
+                                        <li>
+                                            <a href="javascript:SetValidate(0)">Tất cả vĩnh viễn</a>
+                                            <a href="javascript:SetValidate(3)">Tất cả 3 ngày</a>
+                                            <a href="javascript:SetValidate(7)">Tất cả 7 ngày</a>
+                                            <a href="javascript:SetValidate(15)">Tất cả 15 ngày</a>
+                                            <a href="javascript:SetValidate(30)">Tất cả 30 ngày</a>
+                                            <a href="javascript:SetValidate(365)">Tất cả 360 ngày</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="btn-group btn-group-sm quick-set">
+                                <div class="btn-group btn-group-sm dropup">
+                                    <a href="javascript:void(0)" class="btn btn-primary pull-right dropdown-toggle" data-toggle="dropdown"><span class="caret"></span> Xếp hạng nhanh</a>
+                                    <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
+                                        <li class="dropdown-header"><i class="fa fa-share pull-right"></i> Item(s) trong danh dách</li>
+                                        <li>
+                                            <a href="javascript:SetRank(1)">Tất cả hạng 1</a>
+                                            <a href="javascript:SetRank(2)">Tất cả hạng 2</a>
+                                            <a href="javascript:SetRank(3)">Tất cả hạng 3</a>
+                                            <a href="javascript:SetRank(4)">Tất cả hạng 4</a>
+                                            <a href="javascript:SetRank(5)">Tất cả hạng 5</a>
+                                            <a href="javascript:SetRank(6)">Tất cả hạng 6</a>
+                                            <a href="javascript:SetRank(7)">Tất cả hạng 7</a>
+                                            <a href="javascript:SetRank(8)">Tất cả hạng 8</a>
+                                            <a href="javascript:SetRank(9)">Tất cả hạng 9</a>
+                                            <a href="javascript:SetRank(10)">Tất cả hạng 10</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            @if (countGold > 0)
+                            {
+                                <div class="btn-group btn-group-sm quick-set">
+                                    <div class="btn-group btn-group-sm dropup">
+                                        <a href="javascript:void(0)" class="btn btn-danger pull-right dropdown-toggle" data-toggle="dropdown"><span class="caret"></span> Khảm Gold nhanh</a>
+                                        <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
+                                            <li class="dropdown-header"><i class="fa fa-share pull-right"></i> Item(s) trong danh dách</li>
+                                            <li>
+                                                <a href="javascript:SetGold(0)">Tất cả bỏ khảm gold</a>
+                                                <a href="javascript:SetGold(7)">Tất cả khảm 7 ngày</a>
+                                                <a href="javascript:SetGold(30)">Tất cả khảm 30 ngày</a>
+                                                <a href="javascript:SetGold(60)">Tất cả khảm 60 ngày</a>
+                                                <a href="javascript:SetGold(120)">Tất cả khảm 120 ngày</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            }
+                            @if (countCompose > 0)
+                            {
+                                <div class="btn-group btn-group-sm quick-set">
+                                    <div class="btn-group btn-group-sm dropup">
+                                        <a href="javascript:void(0)" class="btn btn-info pull-right dropdown-toggle" data-toggle="dropdown"><span class="caret"></span> Hợp thành nhanh</a>
+                                        <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
+                                            <li class="dropdown-header"><i class="fa fa-share pull-right"></i> Item(s) trong danh dách</li>
+                                            <li>
+                                                <a href="javascript:Compose(0)">Tất cả hợp thành 0</a>
+                                                <a href="javascript:Compose(20)">Tất cả hợp thành 20</a>
+                                                <a href="javascript:Compose(20)">Tất cả hợp thành 20</a>
+                                                <a href="javascript:Compose(50)">Tất cả hợp thành 50</a>
+                                                <a href="javascript:Compose(100)">Tất cả hợp thành 100</a>
+                                                <a href="javascript:Compose(150)">Tất cả hợp thành 150</a>
+                                                <a href="javascript:Compose(200)">Tất cả hợp thành 200</a>
+                                                <a href="javascript:Compose(250)">Tất cả hợp thành 250</a>
+                                                <a href="javascript:Compose(500)">Tất cả hợp thành 500</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            }
+                            <button type="button" class="btn btn-sm btn-warning btn-submit-all">Cập nhật tất cả Item(s)</button>
+                        </div>
+                    </div>
+                </div>
+            }
+            <!-- END Awards Block -->
+        </div>
+        <!-- END Main Row -->
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="form-actions">
+        <div class="text-left">
+            <button type="button" class="btn btn-sm btn-primary pull-right btn-close" data-dismiss="modal">Đóng</button>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+
+            ReadyFiles.init2('aw');
+            LoadStoreBag();
+            var startBtn = $('.btn-submit');
+            // On start button click start loading again
+            startBtn.on('click', function () {
+                $(this).button('loading');
+            });
+
+            /* Validate */
+            
+            $('form.multi-post').each(function () {   // <- selects every <form> on page
+                $(this).validate({        // <- initialize validate() on each form
+                    errorClass: 'help-block animation-slideDown', // You can change the animation class for a different entrance animation - check animations page
+                    errorElement: 'div',
+                    errorPlacement: function (error, e) {
+                        e.parents('.form-group > div').append(error);
+                    },
+                    highlight: function (e) {
+                        $(e).closest('.form-group').removeClass('has-success has-error').addClass('has-error');
+                        $(e).closest('.help-block').remove();
+                    },
+                    success: function (e) {
+                        e.closest('.form-group').removeClass('has-success has-error');
+                        e.closest('.help-block').remove();
+                    },
+                    submitHandler: function (e) {
+                        $('#loading-bgr').show();
+                        $.ajax({
+                            url: e.action,
+                            type: e.method,
+                            data: $(e).serialize(),
+                            success: function (result) {
+                                $('#loading-bgr').hide();
+                                startBtn.button('reset');
+                                $('#response-hodler').html(result);
+                                LoadStoreBag();
+                            },
+                            error: function (result) {
+                                $('#loading-bgr').hide();
+                                showGrowl(getError2(result.status, result.statusText), 'danger');
+                                startBtn.button('reset');
+                            }
+                        });
+                        return false;
+                    }
+                });
+            });
+        });
+        function Compose(value) {
+            $('input[name="AttackCompose"]').val(value);
+            $('input[name="AgilityCompose"]').val(value);
+            $('input[name="DefendCompose"]').val(value);
+            $('input[name="LuckCompose"]').val(value);
+        }
+        function SetGold(value) {
+            if (value > 0) {
+                $('input[name="IsGold"]').prop("checked", true);//$( "input" ).prop( "disabled", false );
+            }
+            else
+            {
+                $('input[name="IsGold"]').prop("checked", false);
+            }
+            $('input[name="GoldValidate"]').val(value);
+        }
+        function SetRank(value) {
+            $('input[name="Rank"]').val(value);
+        }
+        function SetValidate(value) {
+            $('input[name="ValidDate"]').val(value);
+        }
+        var btnSubmitAll = $('.btn-submit-all');
+        // On start button click start loading again
+        btnSubmitAll.on('click', function () {
+            btnSubmitAll.button('loading');
+            var errorCount = 0;
+            var mediaItems = $('.media-filter-items-aw');
+            var mediaFilter = $('.media-filter-aw');
+            mediaFilter.find('a').parent().removeClass('active');
+            var realId = "";
+            $('form.multi-post').each(function () {
+                var form = $(this);
+                realId = form.attr("id").replace('frm-update-', '');
+                //console.log('realId =>' + realId);
+                mediaItems.find('.media-items')
+                            .parent()
+                            .hide(0, function () {
+                                mediaItems
+                                    .find('[data-category="id-' + realId + '"]')
+                                    .parent('div')
+                                    .show(0, function () {
+                                        if (!form.valid()) {
+                                            mediaFilter.find('[data-category="id-' + realId + '"]').parent().addClass('active');
+                                            errorCount++;
+                                        }
+                                    });
+                            });
+                if (errorCount > 0) {
+                    btnSubmitAll.button('reset');
+                    return false;
+                }
+            });
+            if (errorCount === 0) {
+                //$('.media-filter-aw li:first a').parent().addClass('active');
+                if (realId !== "")
+                    mediaFilter.find('[data-category="id-' + realId + '"]').parent().addClass('active');
+
+                var collection = $('.multi-post');
+                //btnSubmitAll.button('loading');
+                $('.quick-set').hide();
+                $('.btn-close').prop( "disabled", true );
+                if (collection.length > 0) {
+                    var i = 0;
+                    var fn = function () {
+                        var element = $(collection[i]);
+                        //console.log(i + ' (' + element.attr("id") + ')');
+                        element.submit();
+                        // Do whatever
+                        if (++i < collection.length) {
+                            setTimeout(fn, 1000);
+                        }
+                        else {
+                            btnSubmitAll.button('reset');
+                            $('.quick-set').show();
+                            $('.btn-close').prop("disabled", false);
+                        }
+                    };
+                    fn();
+                }
+            }
+        });
+    </script>
+}

@@ -1,0 +1,142 @@
+﻿@using MvcPaging;
+@model IPagedList<SqlDataProvider.Data.ConsortiaInfo>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "LoadData";
+    int zoneId = -1;
+}
+@if (Model.TotalItemCount > 0)
+{
+    if (ViewData["key"] == null || string.IsNullOrWhiteSpace((string)ViewData["key"]))
+    {
+        <p class="text-info"> Có tổng cộng <strong class="text-danger">@Model.TotalItemCount</strong> Guild được tạo</p>
+    }
+    else
+    {
+        <p class="text-info"> Có tổng cộng <strong class="text-danger">@Model.TotalItemCount</strong> Guild thỏa điều kiện</p>
+    }
+}
+    <!--
+            Available Table Classes:
+                'table'             - basic table
+                'table-bordered'    - table with full borders
+                'table-borderless'  - table with no borders
+                'table-striped'     - striped table
+                'table-condensed'   - table with smaller top and bottom cell padding
+                'table-hover'       - rows highlighted on mouse hover
+                'table-vcenter'     - middle align content vertically
+            -->
+    <table id="general-table" class="table table-striped table-vcenter">
+        <thead>
+            <tr>
+                <th style="width: 80px;" class="text-center">
+                    <label class="switch switch-primary" data-toggle="tooltip" title="Chọn tất cả">
+                        <input type="checkbox">
+                        <span></span>
+                    </label>
+                </th>
+
+                <th>ID</th>
+                <th>ConsortiaName</th>
+                <th>ChairmanName</th>
+                <th>Level</th>
+                <th>FightPower</th> 
+                <th>Riches</th>
+                <th style="width: 80px;" class="text-center">Actions</th>
+            </tr>
+        </thead>
+
+                  
+            @if (Model.Count() > 0)
+            {
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        zoneId = item.ZoneID;
+                        <tr>
+                            <td class="text-center">
+                                <label class="switch switch-primary">
+                                    <input type="checkbox" id="@item.ConsortiaID" name="@item.ConsortiaID" value="@item.ConsortiaID">
+                                    <span></span>
+                                </label>
+                            </td>                            
+                            <td>@Html.THighlight(item.ConsortiaID.ToString(), ViewData["key"])</td>
+                            <td>
+                                <a href="@Url.Action("ConsortiaDetail", "Users", routeValues: new { id = item.ConsortiaID})" data-modal="consortiaDetail">
+                                    <strong>@Html.THighlight(item.ConsortiaName, ViewData["key"])</strong>
+                                </a>
+                            </td>
+                            <td>@Html.THighlight(item.ChairmanName.ToString(), ViewData["key"])</td>
+                            <td>@item.Level</td>
+                            <td>@item.FightPower</td>
+                            <td>@item.Riches</td>
+                            <td class="text-center">
+                                <div class="btn-group btn-group-xs">
+                                    <a href="@Url.Action("ConsortiaEdit", "Users", routeValues: new { id = item.ConsortiaID })" data-toggle="tooltip" data-modal="consortiaEdit"
+                                       title="Chỉnh sữa" class="btn btn-default"><i class="fa fa-pencil"></i></a>
+                                    <a href="@Url.Action("ConsortiaDelete", "Users", routeValues: new { id = item.ConsortiaID })" data-toggle="tooltip" data-modal="consortiaDelete"
+                                       title="Xóa" class="btn btn-danger"><i class="fa fa-times"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td colspan="8">
+                            <div class="btn-group btn-group-sm pull-right">                                
+                                <div class="btn-group btn-group-sm dropup">
+                                    <a href="javascript:void(0)" class="btn btn-primary pull-right dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+                                    <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
+                                        <li class="dropdown-header"><i class="fa fa-share pull-right"></i> Export As</li>
+                                        <li>
+                                            <a href="javascript:void(0)">.xml</a>
+                                            <a href="@Url.Action("ExportCSV","Users", routeValues: new { id = zoneId, @table = ViewData["table"] })">.cvs</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="btn-group btn-group-sm">                               
+                                <a href="javascript:void(0)" class="btn btn-primary" data-toggle="tooltip" style="margin-left:15px" title="Xóa các guild được chọn"><i class="fa fa-times"></i></a>
+                            </div>
+
+                            <div class="text-center" style="margin-top:-35px">
+                                @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount, new AjaxOptions { UpdateTargetId = "table-content", LoadingElementId = "loading-bgr" }).Options(o => o
+                                .DisplayTemplate("_Pagination")
+                                .Action("LoadData")
+                                .AddRouteValue("key", ViewData["key"])
+                                .AddRouteValue("type", ViewData["type"])
+                                .AddRouteValue("id", zoneId)
+                                .MaxNrOfPages(3))
+                            </div>
+
+                        </td>
+                    </tr>
+                </tfoot>
+            }
+            else
+            {
+                <tbody>
+                    <tr>
+                        <td colspan="8">
+                            <div class="text-center">
+                                @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            }          
+    </table>
+
+@section Scripts{
+    <script>
+        /* Initialize app when page loads */
+        $(function () {
+            ModelGeneral.init('data-modal="consortiaDetail"', 'large');
+            ModelGeneral.init('data-modal="consortiaEdit"');
+            ModelGeneral.init('data-modal="consortiaDelete"');
+        });
+    </script>
+}

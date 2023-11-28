@@ -1,0 +1,43 @@
+﻿@model SqlDataProvider.Data.ActiveAwardInfo
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = StaticFunction.GetTranslation("Model.Confirm");
+    string name = StaticFunction.ItemName(Model.ItemID);
+}
+<div class="modal-header themed-background-fire" style="color:white;">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+<div class="modal-body">
+    <!-- Danger Alert Content -->
+    <div class="alert alert-danger">
+        @Html.Raw(StaticFunction.GetTranslation("Controllers.DeleteConfirm", name))
+    </div>
+    <!-- END Danger Alert Content -->
+    <form action="@Html.Raw(Url.Action("DeleteActiveAward", "Games",  new { id = Model.ID, func = "loadEventAwardList()"}))"
+          class="form-horizontal" id="form-confirm" method="post" role="form">
+        <input type="hidden" value="@name" id="Name" name="Name" />
+        <input type="hidden" value="@Model.ID" id="ID" name="ID" />
+        <div class="form-actions text-right">
+            <input class="btn btn-sm btn-danger" type="submit" value="@StaticFunction.GetTranslation("Model.Confirm")" />
+            <input class="btn btn-sm btn-success" type="button" value="@StaticFunction.GetTranslation("Model.Cancel")" data-dismiss="modal" />
+        </div>
+    </form>
+</div>
+@section Scripts{
+    <script>
+        $('#form-confirm').on('submit', function (e) {
+            $('#loading-bgr').show();
+            $.ajax({
+                url: this.action,
+                type: this.method,
+                data: $(this).serialize(),
+                success: function (result) {
+                    $('#loading-bgr').hide();
+                    $('#modal-content').html(result);
+                }
+            });
+            return false;
+        });
+    </script>
+}

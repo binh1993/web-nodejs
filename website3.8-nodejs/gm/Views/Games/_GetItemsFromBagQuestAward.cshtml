@@ -1,0 +1,64 @@
+﻿@using MvcPaging;
+@model IPagedList<SqlDataProvider.Data.QuestAwardInfo>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "LoadTopAwardInBag";
+}
+
+@if (Model.Count() > 0)
+{
+    <ul class="media-list" style="min-height:485px">
+        @foreach (var item in Model)
+        {
+            <li class="media" style="margin-bottom:-10px">
+                <a href="javascript:void(0)" class="pull-left">
+                    @Html.ItemImage(item.RewardItemID, "thumbnail", "", "64")
+                </a>
+                <div class="media-body">
+                    <span class="text-warning pull-right"><small><em>QuestID <i class="gi gi-chevron-right" style="font-size:8px"></i>@item.QuestID</em></small></span>
+                    <a href="javascript:void(0)"><strong>@Html.TItemName(item.RewardItemID)</strong></a>
+                    <div><em>TemplateID:</em> @item.RewardItemID | <em>Số lượng:</em> @item.RewardItemCount1</div>
+                    <span class="btn-group">
+                        <a href="@Html.Raw(Url.Action("EditItemInBag","Games", new { id = item.RewardItemID, type = Request.QueryString["type"]}))" class="btn btn-xs btn-success"
+                           data-modal="editTopAwardInBag"><i class="fa fa-pencil"></i></a>
+                        <a href="@Html.Raw(Url.Action("DeleteItemInBag","Games", new { id = item.RewardItemID, type = Request.QueryString["type"] }))" class="btn btn-xs btn-warning"
+                           data-growl="deletetopaward"><i class="fa fa-times"></i></a>
+                    </span>
+                </div>
+            </li>
+        }
+    </ul>
+        <div class="text-center" style="margin-top:-5px">
+            @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount, new AjaxOptions { UpdateTargetId = "bag-content", LoadingElementId = "loading-bgr" }).Options(o => o
+                                .DisplayTemplate("_Pagination")
+                                .Action("GetItemsFromBag")
+                                .AddRouteValue("type", Request.QueryString["type"])
+                                .MaxNrOfPages(3))
+        </div>
+}
+else
+{
+    <div class="text-center">
+        @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+    </div>
+}
+
+@section Scripts{
+    <script>
+        $(function () {
+            ModelGeneral.init('data-modal="editTopAwardInBag"', 'large3', 9019);
+            $('a[data-growl="deletetopaward"]').on('click', function () {
+                loadurl = $(this).attr("href");
+                $.get(loadurl, function (data) {
+                    $('#response-hodler').html(data);
+                    LoadStoreBag();
+                })
+                .fail(function (data) {
+                    showGrowl(data);
+                });
+                return false;
+            });
+        });
+    </script>
+}
+

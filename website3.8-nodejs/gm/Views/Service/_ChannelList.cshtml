@@ -1,0 +1,96 @@
+﻿@using MvcPaging;
+@model IPagedList<SqlDataProvider.Data.ServerInfo>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "LoadServer";
+    var zoneId = ViewContext.RouteData.Values["id"];
+}
+@if (Model.Count() > 0)
+{
+    <div style="min-height:412px">
+        <table id="general-table" class="table table-striped table-vcenter">
+            <thead>
+                <tr>                   
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>IP</th>
+                    <th>Port</th>
+                    <th>State</th>
+                    <th>Online</th>
+                    <th style="width: 80px;" class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>                        
+                        <td>@item.ID</td>
+                        <td>@item.Name</td>
+                        <td>@item.IP</td>
+                        <td>@item.Port</td>
+                        <td>@item.State</td>
+                        <td>@item.Online</td>
+                        <td class="text-center">
+                            <div class="btn-group btn-group-xs">
+                                <a href="@Url.Action("EditChannel", "Service", routeValues: new { @id = item.ID , zid = zoneId})" data-toggle="tooltip" data-modal="showEdit"
+                                   title="Chỉnh sửa" class="btn btn-default"><i class="fa fa-pencil"></i></a>
+                                <a href="@Url.Action("DeleteChannel", "Service", routeValues: new { @id = item.ID, zid = zoneId })" data-toggle="tooltip" data-modal="showDelete"
+                                   title="Xóa" class="btn btn-danger"><i class="fa fa-times"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>    
+    <div class="row">
+        <div class="col-md-3"> 
+        </div>
+        <div class="col-md-7">
+            <div class="text-center">
+                @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount, new AjaxOptions { LoadingElementId = "loading-bgr", OnSuccess = "AjaxServerSuccess", OnFailure = "AjaxServerFailure" }).Options(o => o
+                                .DisplayTemplate("_Pagination")
+                                .Action("ChannelList")
+                                .AddRouteValue("key", ViewData["key"])
+                                .AddRouteValue("id", zoneId)
+                                .MaxNrOfPages(3))
+            </div>
+        </div>
+        <div class="col-md-2">
+            <a href="javascript:reloadChannel()" class="btn btn-sm btn-success"><i class="gi gi-refresh"></i>  Refresh</a>
+        </div>
+    </div>
+}
+else
+{
+    <div class="text-center">
+        @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+    </div>
+}
+@section Scripts{
+    <script>
+        $(function () {
+            /*add some code here!*/
+            ModelGeneral.init('data-modal="showDelete"');
+            ModelGeneral.init('data-modal="showEdit"','large');
+        });
+
+        function reloadChannel() {
+            GMApp.GetJson('#channel-list', '@Html.Raw(Url.Action("ChannelList", "Service", new { id = zoneId, page = Model.PageNumber }))');
+        }
+
+        function AjaxServerSuccess(data) {
+            if (data.Result) {
+                $('#channel-list').html(data.Html);
+            }
+            else {
+                showGrowl(data.Html, 'danger');
+            }
+        }
+
+        function AjaxServerFailure(xhr) {
+            var text = "Error: " + xhr.status + " " + xhr.statusText;
+            showGrowl(text, 'danger');
+        }
+    </script>
+}

@@ -1,0 +1,41 @@
+﻿@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "Send Systerm Notice";
+}
+<div class="modal-header themed-background" style="color:white;">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+<div class="modal-body">    
+    <form action="@Html.Raw(Url.Action("SendSystermNotice", "Service"))" class="form-horizontal form-bordered" id="form-confirm" method="post" role="form">
+        <div class="form-group">
+            <label class="col-md-2 control-label" for="IP">Nội dung</label>
+            <div class="col-md-10">
+                <textarea id="MSG" name="MSG" rows="12" class="form-control" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Text")"></textarea>
+            </div>
+        </div>
+        <div class="form-group form-actions">
+            <div class="col-md-12 text-right">
+                <button type="submit" class="btn btn-sm btn-warning btn-submit2"> @StaticFunction.GetTranslation("Model.SendSystermNotice")</button>
+                <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal"> @StaticFunction.GetTranslation("Model.CLose")</button>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts{
+    <script>
+        $('#form-confirm').on('submit', function (e) {
+            $('#loading-bgr').show();
+            $.ajax({
+                url: this.action,
+                type: this.method,
+                data: $(this).serialize(),
+                success: function (result) {
+                    $('#loading-bgr').hide();
+                    $('#response-hodler').html(result);
+                }
+            });
+            return false;
+        });
+    </script>
+}

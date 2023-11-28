@@ -1,0 +1,167 @@
+﻿@model SqlDataProvider.Data.ActiveAwardInfo
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = StaticFunction.GetTranslation("Model.Edit.Title");
+    var item = Model;
+    string chek = string.Empty;
+}
+<div class="modal-header themed-background-default">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">
+        @ViewBag.Title
+        <i class="gi gi-chevron-right" style="font-size:10px"></i>
+        <span style="color:white"><strong> @Html.TItemName(item.ItemID)</strong></span>
+    </h4>
+</div>
+<div class="modal-body">
+    <form action="@Html.Raw(Url.Action("EditActiveAward", "Games", routeValues: new {@id = item.ID}))"
+          method="post" class="form-horizontal form-bordered" id="frm-edit-activeaward">
+        <input type="hidden" id="ID" name="ID" value="@item.ID">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="ActiveID">ActiveID</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control input-sm must-number" value="@item.ActiveID" disabled>
+                    </div>
+                    <input type="hidden" id="ActiveID" name="ActiveID" value="@item.ActiveID">
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="ItemID">ItemID</label>
+                    <div class="col-md-9">
+                        <input type="text" class="form-control input-sm must-number" value="@item.ItemID" disabled>
+                    </div>
+                    <input type="hidden" id="ItemID" name="ItemID" value="@item.ItemID">
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="Count">Count</label>
+                    <div class="col-md-9">
+                        <input type="text" id="Count" name="Count" class="form-control input-sm must-number" value="@item.Count">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="ValidDate">ValidDate</label>
+                    <div class="col-md-9">
+                        <input type="text" id="ValidDate" name="ValidDate" class="form-control input-sm must-number" value="@item.ValidDate">
+                    </div>
+                </div>                
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="Gold">Gold</label>
+                    <div class="col-md-9">
+                        <input type="text" id="Gold" name="Gold" class="form-control input-sm must-number" value="@item.Gold">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="Money">Money</label>
+                    <div class="col-md-9">
+                        <input type="text" id="Money" name="Money" class="form-control input-sm must-number" value="@item.Money">
+                    </div>
+                </div>     
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="Sex">Sex</label>
+                    <div class="col-md-9">
+                        <input type="text" id="Sex" name="Sex" class="form-control input-sm must-number" value="@item.Sex">
+                    </div>
+                </div>           
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="StrengthenLevel">StrengthenLevel</label>
+                    <div class="col-md-9">
+                        <input type="text" id="StrengthenLevel" name="StrengthenLevel" class="form-control input-sm must-number" value="@item.StrengthenLevel">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="AttackCompose">AttackCompose</label>
+                    <div class="col-md-9">
+                        <input type="text" id="AttackCompose" name="AttackCompose" class="form-control input-sm must-number" value="@item.AttackCompose">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="DefendCompose">DefendCompose</label>
+                    <div class="col-md-9">
+                        <input type="text" id="DefendCompose" name="DefendCompose" class="form-control input-sm must-number" value="@item.DefendCompose">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="LuckCompose">LuckCompose</label>
+                    <div class="col-md-9">
+                        <input type="text" id="LuckCompose" name="LuckCompose" class="form-control input-sm must-number" value="@item.LuckCompose">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="AgilityCompose">AgilityCompose</label>
+                    <div class="col-md-9">
+                        <input type="text" id="AgilityCompose" name="AgilityCompose" class="form-control input-sm must-number" value="@item.AgilityCompose">
+                    </div>
+                </div>  
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="Mark">Mark</label>
+                    <div class="col-md-9">
+                        <input type="text" id="Mark" name="Mark" class="form-control input-sm must-number" value="@item.Mark">
+                    </div>
+                </div>              
+            </div>
+        </div>     
+       
+        <div class="form-group form-actions">
+            <div class="col-md-12 text-right">
+                <button type="submit" class="btn btn-sm btn-warning btn-submit2"> @StaticFunction.GetTranslation("Model.Update")</button>
+                <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal"> @StaticFunction.GetTranslation("Model.CLose")</button>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts{
+    <script>
+
+          $(function () {
+            var startBtn = $('.btn-submit2');
+            // On start button click start loading again
+            startBtn.on('click', function () {
+                $(this).button('loading');
+            });
+
+            /* Validate */
+
+            $('form#frm-edit-activeaward').each(function () {
+                $(this).validate({
+                    errorClass: 'help-block animation-slideDown',
+                    errorElement: 'div',
+                    errorPlacement: function (error, e) {
+                        e.parents('.form-group > div').append(error);
+                    },
+                    highlight: function (e) {
+                        $(e).closest('.form-group').removeClass('has-success has-error').addClass('has-error');
+                        $(e).closest('.help-block').remove();
+                    },
+                    success: function (e) {
+                        e.closest('.form-group').removeClass('has-success has-error');
+                        e.closest('.help-block').remove();
+                    },
+                    submitHandler: function (e) {
+                        $('#loading-bgr').show();
+                        $.ajax({
+                            url: e.action,
+                            type: e.method,
+                            data: $(e).serialize(),
+                            success: function (result) {
+                                $('#loading-bgr').hide();
+                                $('#response-hodler').html(result);
+                                startBtn.button('reset');
+                                loadEventAwardList();
+                            },
+                            error: function (xhr) {
+                                $('#loading-bgr').hide();
+                                showGrowl('Error: ' + xhr.status + ' ' + xhr.statusText, 'danger');
+                                startBtn.button('reset');
+                            }
+                        });
+                        return false;
+                    }
+                });
+            });
+        });
+
+    </script>
+}

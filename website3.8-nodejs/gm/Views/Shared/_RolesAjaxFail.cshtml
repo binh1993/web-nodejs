@@ -1,0 +1,13 @@
+﻿@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "Giới hạn quyền truy cập";
+}
+
+<div class="block">
+    <!-- Warning Alert -->
+    <div class="alert alert-warning">
+        <p>Bạn không thể truy cập vào trang này do giới hạn quyền truy cập! Liên hệ Quản lý site để biết thêm chi tiêt.</p>
+        <p>@Html.ActionLink("Đăng xuất", "LogOff", "Account", routeValues: null, htmlAttributes: new { id = "login-link", @class = "btn btn-sm btn-success" })</p>
+    </div>
+    <!-- END Warning Alert -->
+</div>

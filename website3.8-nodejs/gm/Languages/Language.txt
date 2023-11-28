@@ -1,0 +1,321 @@
+﻿#other
+Service.Close:--- Center chưa mở hoặc chưa tạo kênh ---
+Views.Empty:<span class="text-warning">--- Chưa có dữ liệu ---</span>
+Views.NoHaveUserOnline:<span class="text-warning">--- Chưa có người chơi online ---</span>
+Views.Select.Server:<span class="text-warning">--- Chọn server để hiển thị dữ liệu ---</span>
+Views.ErrorRequest:--- Dữ liệu lổi không thể thực hiện lệnh này ---
+Views.LoadArea.Fail: Mã dữ liệu {0} bạn yêu cầu không có thực
+Views.LoadTable.Fail: {0} bạn yêu cầu không có dữ liệu
+Model.Notice:Thông báo
+Model.Ok:Đồng ý
+Model.CLose:Đóng
+Model.Cancel:Huỷ bỏ
+Model.Confirm:Xác nhận
+Model.Update:Cập nhật
+Model.Edit.Title:Chỉnh sửa thông số
+Model.Add:Thêm mới
+Model.Add.Title.Active:Thêm Hoạt động mới
+Model.PlaceHolder.Text:Vui lòng nhập dữ liệu vào
+Model.PlaceHolder.Date:Vui lòng nhập ngày tháng vào, vd: 8/17/2015 12:00:00 AM 
+Model.PlaceHolder.Int:Vui lòng nhập vào một số
+ViewImports.PetName: {0} {1}*
+BIGBUGGLE.TYPE.STRING:Loa lớn,Mối tình đầu,Chúc mừng sinh nhật,Lá lành đùm lá rách,Vua thách đấu,Đời không đối thủ,Noen vui vẻ
+
+Views.WaitLoading:<i class="fa fa-spinner fa-2x fa-spin"></i> Đang tải vui lòng đợi...
+
+Controllers.DeleteConfirm:<p>Bạn có chắc muốn xóa <span class="text-info">{0}</span> không?</p>
+Controllers.DeleteConfirm2:<p>Bạn có chắc muốn xóa các items này không?</p>
+Controllers.DeleteConfirm.OK:<p>Xóa mã <span class="text-info">{0} <i class="gi gi-chevron-right" style="font-size:8px"></i> {1}</span> thành công!</p>
+Controllers.DeleteConfirm.Fail:<p>Xóa <span class="text-info">{0}</span> thất bại!</p>
+Controllers.DeleteActiveNumber.OK:<p>Xóa Giftcode <span class="text-info"><i class="gi gi-chevron-right" style="font-size:8px"></i> {0}</span> thành công!</p>
+
+Function.NotOpen:<span class="text-danger">Chức năng này chưa mở.</span>
+Controllers.Update.OK2:<p>Cập nhật vật phẩm <span class="text-info">{0} cho box <i class="gi gi-chevron-right" style="font-size:8px"></i> {1}</span> thành công!</p>
+Controllers.Save.OK:<p>Lưu <span class="text-info">{0}</span> thành công!</p>
+Controllers.Save.Empty:Giỏ hàng không có item nào!
+
+Controllers.AddRecord.Fail:<p><span class="text-info">{0}</span> đã tồn tại, thao tác thất bại!</p>
+Controllers.AddRecord.OK:<p>Thêm mã <span class="text-info">{0} <i class="gi gi-chevron-right" style="font-size:8px"></i> {1}</span> thành công!</p>
+
+Controllers.RunSqlQuery.Fail:Thực thi lệnh SQL lổi
+
+Controllers.Update.Fail:<p><span class="text-info">{0}</span> không tồn tại, thao tác thất bại!</p>
+Controllers.Update.OK:<p>Cập nhật mã <span class="text-info">{0} <i class="gi gi-chevron-right" style="font-size:8px"></i> {1}</span> thành công!</p>
+
+Controllers.Array.Error:Không xác định
+Controllers.Array.Detail:Khi kết thúc trận chiến và chiến thắng người chơi có cơ hội nhận được vật phẩm có giá trị
+
+SystermSender.Msg:Hệ thống
+Game.Server.GameUtils.CommonBag.AnnexRemark:Đính kèm
+Controllers.Session.TimeOut.Msg1:<span class="text-info">Thời gian hết hiệu lực.</span>
+Controllers.Session.TimeOut.Msg2:<span class="text-info">Thời gian hết hiệu lực. Nguyên nhân:</span><span class="text-danger"> {0}</span>
+LoadData.Null:Chưa định danh
+
+ViewImports.Unset:Chưa Th.lập
+
+#Home
+ReloadData.Success: Tải lại<span class="text-danger"><strong> {0} </strong></span>thành công!
+
+#Layout
+
+#Login
+Account.Login.Header:Đăng nhập
+Account.Login.RegisterLink:Đăng ký ngay
+Account.Login.ForgetPassword:Quên mật khẩu?
+Account.Login.Text:Hi! Vui lòng đăng nhập.
+Account.Login.Passworld:Mật khẩu
+Account.Login.Login:Đăng nhập
+Account.Login.Remember:Duy trì đăng nhập?
+Account.Login.Social:Đăng nhập sữ dụng tài khoản {0} của bạn
+
+#Account
+AccountController.Login.Invaid:Email hoặc mật khẩu không chính xác
+Account.Register.Exit:Email {0} đã được sử dụng.
+Account.Register.PasswordFail:Mật khẩu không hợp lệ, phải có ít nhất 1 ký tự hoa, đặt biệt, số và ký tự thường.
+Account.Register.Capcha.Fail:Mã xác nhận không chính xác.
+Account.Register.Capcha.TimeOut:Thời gian hiệu lực của mã xác nhận đã hết.
+
+#Manage
+Manage.ChangePassworld.WrongPass:Mật khẩu hiện tại không chính xác
+Manage.ChangePassworld.Error:Mật khẩu mới không hợp lệ, phải có ít nhất 1 ký tự hoa, đặt biệt, số và ký tự thường.
+Manage.ChangePassworld.Success:Đổi mật khẩu thành công!
+
+#Games
+Controllers.SendAwardToGame.Top.OK:<p>Đã gửi toàn bộ phần thưởng <span class="text-info"><strong>{0}</strong></span> vào game cho các người chơi thuộc <span class="text-danger">ZoneID <strong>{1}</strong></span>.</p><p>Danh sách nhận gồm:</p><p>{2}</p>
+Controllers.SendAwardToGame.Top.Title:Trao thưởng {0}
+ViewImports.TBuyType.Day1:{0} <em>ngày</em>
+ViewImports.TBuyType.Day2:<em>vĩnh viễn</em>
+ViewImports.TBuyType.Valid: <em>số lượng: </em> {0}
+ViewImports.TPayment4:<em class="text-muted" data-toggle="tooltip" title="Công trạng">Tích lũy</em>
+ViewImports.TPayment6:<em class="text-muted" data-toggle="tooltip" title="Hút gà">Tích lũy</em>
+ViewImports.TPayment7:<em class="text-muted" data-toggle="tooltip" title="World boss">Tích lũy</em>
+ViewImports.TPayment8:<em class="text-muted" data-toggle="tooltip" title="Làm mới pet">Tích lũy</em>
+SendSeletedItems.LeftPanel:<legend><i class="fa fa-angle-right"></i> Chọn Server và Nickname</legend>
+SendSeletedItems.RightPanel:<legend><i class="fa fa-angle-right"></i> Thay đổi thông số <strong class="text-warning">{0}</strong></legend>
+SendSeletedItems.Select.Item:Chọn item bên trái để hiện form thay đổi thông số
+SendSeletedItems.ListItems:<legend><i class="fa fa-angle-right"></i> Danh sách vật phẩm <span style="font-size:11px"> Click vào vật phẩm để thay đổi thông số</span></legend>
+GameController.SendSeletedItem.Completed:<p class="text-success">Gửi vật phẩm cho nhân vật <strong class="text-warning">{0}</strong>, thành công!<p>
+GameController.SendSeletedItem.Fail:<p class="text-danger">Không tìm thấy mã tài khoản {0}, gửi item thất bại!</p>
+GameController.SendSeletedItem.SendFail:Gửi item thất bại!
+#Users
+Users.KickOrForbid.Msg:Bạn chưa chọn hình thức, thao tác thất bại!
+Users.KickOrForbid.Fail:Bạn chưa chọn player, vui lòng chọn player và thử lại!
+Users.KickOrForbid.Msg1:<p>Kick tài khoản <span class="text-info">{0}</span>  thành công!</p>
+Users.KickOrForbid.Msg2:<p>Tài hhoản <span class="text-info">{0}</span><span class="text-warning">  offline.</span> Không thể kick!</p>
+Users.KickOrForbid.Msg3:<p>Khóa tài khoản <span class="text-warning">{0}</span>  thành công!</p>
+Users.KickOrForbid.Msg4:<p>Mở khóa tài khoản <span class="text-warning">{0}</span>  thành công!</p>
+
+Users.UpdateEditable.Fail:Cập nhật giá trị mới {0} cho {1} <span class="text-warning">thất bại!</span>
+Users.UpdateEditable.Old:<span class="text-muted">{0} cũ <strong>{1}</span>
+Users.UpdateEditable.Old.Fail:<span class="text-muted">Cập nhật {0} <strong>{1}</strong>, thất bại!</span>
+Users.UpdateEditable.Success:<p>Cập nhật <span class="text-info">{0}</span> mới <span class="text-warning">{1}</span> cho <span class="text-danger">{2}</span> thành công!</p>
+User.UpdateUsersData.Success1:Cập nhật mã <span class="text-danger">{0}</span>, thành công!
+User.UpdateUsersData.Success2:Cập nhật <span class="text-danger">{0}-{1}</span>, thành công!
+
+Controllers.UsersPopover.Title:{0} <i class="gi gi-chevron-right" style="font-size:8px"></i> <span class="text-warning">{1}</span>
+Controllers.SendAwardToGame.Email.Title:Trao thưởng {0} - Hạng {1}
+Controllers.SendAwardToGame.Email.Sender:Hệ thống
+Controllers.SendAwardToGame.Fail:Hoạt động này chưa mở
+Controllers.SendAwardToGame.Email.Online:{0} player online.
+GameController.SendSeletedItem.Title:Phần thưởng từ G.M
+
+Controllers.Active.AwardContent:Xem tại giao diện đổi thưởng
+Controllers.Active.Male:(Nam)
+Controllers.Active.Female:(Nữ)
+#Add Items
+Request.topaward:Phần thưởng 
+Request.dropitems:Drop Condition
+Request.shopsale:Cửa hàng
+Request.shopsale.Name:Giá rẻ
+Request.shopshow: Shop Game
+Request.active:Sự kiện
+
+#TemplateAllList Model
+TemplateAllListModelView.LoadFail:Tải<span class="text-danger"><strong> {0}</strong></span>, thất bại!
+TemplateAllListModelView.NotFound:Không tìm thấy<span class="text-danger"><strong> {0}</strong></span>, tải thất bại!
+
+#Drop
+Controllers.CreateDropCondiction.Ok:<li class="text-success"><i class="fa fa-check fa-fw"></i> {0}</li>
+Controllers.CreateDropCondiction.Fail:<li class="text-danger"><i class="fa fa-times fa-fw"></i> {0}</li>
+Controllers.CreateDropCondiction.Para2.Exist:<li class="text-danger"><i class="fa fa-times fa-fw"></i> Trùng Para1: <em class="text-success">{1}</em> và Para2: <em class="text-success">{2}</em> đã có trong DropId: <em class="text-success">{0}</em></li>
+Controllers.CreateDropCondiction.CheckFail1:<p><span class="text-info">Sau khi kiểm tra phát hiện có dropId bị trùng, chi tiết:</span></p><ul class="fa-ul list-li-push">{0}</ul><p class="text-success">Gợi ý: Điền vào<span class="text-warning"><strong> DropId: <em>{1}</em></strong></span> để bỏ qua Id trùng</p>
+Controllers.CreateDropCondiction.CheckFail2:<p><span class="text-info">Sau khi kiển tra phát hiện có Para1, Para2 bị trùng, chi tiết:</span></p><ul class="fa-ul list-li-push">{0}</ul>
+Controllers.CreateDropCondiction.Success:<p><span class="text-info">Kết quả thêm DropConditon vào Database:</span></p><ul class="fa-ul list-li-push">{0}</ul>
+Controllers.CreateDropCondiction.Name2:Items hiển thị ải {0} có tỉ lệ rơi vừa
+Controllers.CreateDropCondiction.Name3:Items hiển thị ải {0} có tỉ lệ rơi thấp
+Controllers.CreateDropCondiction.Name4:Items hiển thị ải {0} có tỉ lệ rơi rất thấp
+Controllers.CreateDropCondiction.Detail1:Vượt ải {0} thành công người chơi có 2 cơ hội nhận được vật phẩm có giá trị, bao gồm vừa, thấp và rất thấp
+Controllers.CreateDropCondiction.Detail2:Khi người chơi đã lật thẻ xong hệ thống ngẫu nhiên lấy item từ "{0}" hiện ra màn hình
+#Shop show list
+Controllers.ShopGame.NoticeBegin:<p class="text-info"><strong>Kết quả thêm hàng vào giỏ:</strong></p><ul class="fa-ul list-li-push">
+Controllers.ShopGame.NoticeEnd:</ul><div class="text-warning text-right"><strong>Ghi chú:</strong> <span class="text-success"><i class="fa fa-check fa-fw"></i></span><em> thêm thành công</em>; <span class="text-danger"><i class="fa fa-times fa-fw"></i></span> <em>item bị trùng</em>.</div>
+Controllers.ShopGame.Ok:<li class="text-success"><i class="fa fa-check fa-fw"></i> {0}</li>
+Controllers.ShopGame.Fail:<li class="text-danger"><i class="fa fa-times fa-fw"></i> {0}</li>
+ShopGame.ShopType.MONEY_M_HOTSALE:Hàng Hot
+ShopGame.ShopType.MONEY_F_HOTSALE:Hàng Hot
+ShopGame.ShopType.MONEY_M_RECOMMEND:Nên mua
+ShopGame.ShopType.MONEY_F_RECOMMEND:Nên mua
+ShopGame.ShopType.MONEY_M_CONCESSIONS:Ưu đãi lớn
+ShopGame.ShopType.MONEY_F_CONCESSIONS:Ưu đãi lớn
+ShopGame.ShopType.MONEY_M_WEAPON:Vũ khí
+ShopGame.ShopType.MONEY_F_WEAPON:Vũ khí
+ShopGame.ShopType.MONEY_M_CLOTH:Quần Áo
+ShopGame.ShopType.MONEY_F_CLOTH:Quần Áo
+ShopGame.ShopType.MONEY_M_HAT:Nón
+ShopGame.ShopType.MONEY_F_HAT:Nón
+ShopGame.ShopType.MONEY_M_GLASS:Kính
+ShopGame.ShopType.MONEY_F_GLASS:Kính
+ShopGame.ShopType.MONEY_M_SHIPIN:Trang sức
+ShopGame.ShopType.MONEY_F_SHIPIN:Trang sức
+ShopGame.ShopType.MONEY_M_HAIR:Tóc
+ShopGame.ShopType.MONEY_F_HAIR:Tóc
+ShopGame.ShopType.MONEY_M_EYES:Mắt
+ShopGame.ShopType.MONEY_F_EYES:Mắt
+ShopGame.ShopType.MONEY_M_LIANSHI:Mặt
+ShopGame.ShopType.MONEY_F_LIANSHI:Mặt
+ShopGame.ShopType.MONEY_M_SUIT:Set
+ShopGame.ShopType.MONEY_F_SUIT:Set
+ShopGame.ShopType.MONEY_M_WING:Cánh
+ShopGame.ShopType.MONEY_F_WING:Cánh
+ShopGame.ShopType.MONEY_M_FUNCTIONPROP:Chức năng
+ShopGame.ShopType.MONEY_F_FUNCTIONPROP:Chức năng
+ShopGame.ShopType.MONEY_M_PAOPAO:Bong bóng
+ShopGame.ShopType.MONEY_F_PAOPAO:Bong bóng
+ShopGame.ShopType.MONEY_HOT_GOODS:Hàng mới
+ShopGame.ShopType.MONEY_FLOWER:Hoa
+ShopGame.ShopType.MONEY_DESSERT:Tráng miệng
+ShopGame.ShopType.MONEY_TOYS:Đồ chơi
+ShopGame.ShopType.MONEY_RARE:Hiếm
+ShopGame.ShopType.MONEY_FESTIVAL:Lễ hội
+ShopGame.ShopType.MONEY_WEDDING:Cưới hỏi
+ShopGame.ShopType.DDTMONEY_M_HOTSALE:Hàng Hot
+ShopGame.ShopType.DDTMONEY_F_HOTSALE:Hàng Hot
+ShopGame.ShopType.DDTMONEY_M_WEAPON:Vũ khí
+ShopGame.ShopType.DDTMONEY_F_WEAPON:Vũ khí
+ShopGame.ShopType.DDTMONEY_M_CLOTH:Áo
+ShopGame.ShopType.DDTMONEY_F_CLOTH:Áo
+ShopGame.ShopType.DDTMONEY_M_HAT:Nón
+ShopGame.ShopType.DDTMONEY_F_HAT:Nón
+ShopGame.ShopType.DDTMONEY_M_GLASS:Kính
+ShopGame.ShopType.DDTMONEY_F_GLASS:Kính
+ShopGame.ShopType.DDTMONEY_M_SHIPIN:Trang sức
+ShopGame.ShopType.DDTMONEY_F_SHIPIN:Trang sức
+ShopGame.ShopType.DDTMONEY_M_HAIR:Tóc
+ShopGame.ShopType.DDTMONEY_F_HAIR:Tóc
+ShopGame.ShopType.DDTMONEY_M_EYES:Mắt
+ShopGame.ShopType.DDTMONEY_F_EYES:Mắt
+ShopGame.ShopType.DDTMONEY_M_LIANSHI:Mặt
+ShopGame.ShopType.DDTMONEY_F_LIANSHI:Mặt
+ShopGame.ShopType.DDTMONEY_M_SUIT:Set
+ShopGame.ShopType.DDTMONEY_F_SUIT:Set
+ShopGame.ShopType.DDTMONEY_M_WING:Cánh
+ShopGame.ShopType.DDTMONEY_F_WING:Cánh
+ShopGame.ShopType.DDTMONEY_M_FUNCTIONPROP:Chức năng
+ShopGame.ShopType.DDTMONEY_F_FUNCTIONPROP:Chức năng
+ShopGame.ShopType.DDTMONEY_M_PAOPAO:Bong bóng
+ShopGame.ShopType.DDTMONEY_F_PAOPAO:Bong bóng
+ShopGame.ShopType.GUILD_SHOP_1:Guid cấp 1
+ShopGame.ShopType.GUILD_SHOP_2:Guid cấp 2
+ShopGame.ShopType.GUILD_SHOP_3:Guid cấp 3
+ShopGame.ShopType.GUILD_SHOP_4:Guid cấp 4
+ShopGame.ShopType.GUILD_SHOP_5:Guid cấp 5
+ShopGame.ShopType.M_POPULARITY_RANKING:Popularity Ranking
+ShopGame.ShopType.F_POPULARITY_RANKING:Popularity Ranking
+ShopGame.ShopType.LITTLEGAME_AWARD_TYPE:Mini game
+ShopGame.ShopType.FARM_SEED_TYPE:Hạt giống
+ShopGame.ShopType.FARM_MANURE_TYPE:Phân bón
+ShopGame.ShopType.ROOM_PROP:Đạo cụ
+ShopGame.ShopType.WORLDBOSS_AWARD_TYPE:Boss thế giới
+ShopGame.ShopType.TRANSNATIONAL_AWARD_TYPE:Xuyên quốc gia
+ShopGame.ShopType.FARM_PETEGG_TYPE:Trứng thú cưng
+ShopGame.ShopType.LEAGUE_SHOP_TYPE:League
+ShopGame.ShopType.94:Mê cung
+ShopGame.ShopType.DRAGON_BOAT_TYPE:Thuyền rồng
+ShopGame.ShopType.96:Shop Type 96
+ShopGame.ShopType.97:Shop Type 97
+ShopGame.ShopType.98:Kim tự tháp
+ShopGame.ShopType.99:Kho Báu
+ShopGame.ShopType.KING_STATUE_SHOP:King Statue Shop
+ShopGame.ShopType.101:Ma Thạch
+ShopGame.ShopType.102:Shop Type 102
+ShopGame.ShopType.HOME_ADORN_SHOP: Nội thất
+ShopGame.ShopType.FISH_SHOP:Câu cá
+ShopGame.ShopType.SALE_SHOP:Giá rẻ
+ShopGame.ShopType.REGRESS_SHOP:Người cũ trở lại
+ShopGame.ShopType.SHOP_PAST_PRICE:Shop Past Price
+ShopGame.ShopType.TREASURELOST_SHOP:Thám hiểm kho báu
+ShopGame.ShopType.1000:Shop Type 1000
+ShopGame.ShopType.111:Mê cung vực sâu
+
+#Service Controller
+ServiceController.SendReloadToService.Fail:Center chưa mở lệnh, chạy <em class="text-info">reload&{0}</em> thất bại.
+ServiceController.SendReloadToService.Ok:Chạy lệnh <em class="text-info">reload&{0}</em> thành công.
+Model.Add.Title.AreaConfig:Thêm server mới
+Model.Add.Title.Server:Thêm kênh mới
+Model.SendSystermNotice:Gửi thông báo
+Controllers.AddChannel.Fail:Trùng ID: <em class="text-info">{0}</em> hoặc Port: <em class="text-info">{1}</em>, vui lòng kiểm tra và thử lại.
+ServiceController.SendShutdown.Ok:<p class="text-success">Gửi lệnh shutdown đến server có zoneId <em class="text-info">{0}</em> thành công.</p>
+ServiceController.SendShutdown.Fail:<p class="text-warning">Gửi lệnh shutdown đến server có zoneId <em class="text-danger">{0}</em> thất bại.</p>
+Controllers.SendSystermNotice.Fail:<p class="text-warning">Center chưa bật. Gửi thông báo đến toàn server thất bại.</p>
+Controllers.SendSystermNotice.OK:<p class="text-success">Gửi thông báo <em class="text-info">"{0}"</em> đến toàn máy chủ thành công! </p>
+
+#XMl
+XMLController.Import.Empty:<p class="text-warning">Không có item nào thảo điều kiện.</p>
+XMLController.Import.Fail:<p class="text-danger">Không tìm thấy mã <em class="text-info">{0}</em></p>
+XMLController.Import.Success1:<p class="text-success">Import <em class="text-info">{0}</em> items vào Database, thành công!</p>
+XMLController.Import.Success2:<p class="text-success">Import <em class="text-info">{0}</em> vào Database, thành công!</p>
+XMLController.RipResource.Success1:<p class="text-success">Kiễm tra và tải xuống {0} file! <br/>Được lưu tại <em class="text-info">{1}<em></p>
+XMLController.RipResource.Success2:<p class="text-success">Tải xuống file <em class="text-info">{0}</em>, thành công!</p>
+XMLController.RipResource.Fail:<p class="text-danger">Không tìm thấy file tại link <em class="text-info">{0}</em>!</p>
+Model.RipResource:Bắt đầu
+Model.RipResource.OtherUrl:Chọn ngồn khác
+XMLController.UnSupport:<p class="text-danger">File <em class="text-info">{0}</em> chưa hổ trợ</p>
+XMLController.BuildResource.Success:<p class="text-success">Hoàn thành tạo link hình ảnh cho {0} items! Bắt đâù rip..
+XmlManager.Rip.Msg:<p class="text-danger">không tìm thấy file tại liên kết <em class="text-info">{0}</em> </p>
+XmlManager.Rip.Exit:<p class="text-info">File <em class="text-info">{0}</em> đã có rồi!</p>
+Model.RipResource.Progress:<p class="text-warning"><i class="fa fa-spinner fa-spin"></i> Đang sử lý, vui lòng đợi..</p>
+XMLController.SaveToXml.Fail:<p class="text-danger">Lưu file <em class="text-info">{0}</em>, thất bại!</p>
+XMLController.SaveToXml.Success:{0}</br>{1}</br>Được lưu tại: {2}
+
+#2015.12.26
+CartControl.AddToCart.Fail:Thêm item vào Cart thất bại!
+CartControl.AddToCart.Success:Thêm item vào Cart thành công!
+Controllers.DeleteAllConfirm.Cart:Bạn có chắc muốn xóa toàn bộ Cart không?
+Controllers.DeleteAllConfirm.OK:Xóa toàn bộ item thành công!
+ViewBag.Title.ItemTemplate: Chi tiết
+Request.boxitem:Box
+Controllers.DeleteConfirm3:Bạn có chắc muốn xóa các vật phẩm của box <strong><em class="text-info">{0}</em></strong> không?
+Controllers.DeleteConfirm4:Bạn có chắc muốn xóa các vật phẩm bên dưới không?
+Controllers.DeleteConfirmDetail:<span class="text-info">Danh sách vật phẩm trong box</span>.
+Controllers.DeleteConfirmNote:<span class="text-success">Thao tác xóa này không làm mất dữ liệu trên ShopGoods (ItemTemplate).</span>
+DeleteData.ShopGoodsBox.Fail:Box có mã <strong><em class="text-info">{0}</em></strong> không tồn tại hoặc đã bị xóa khỏi Shop_Goods_Box.
+
+validate.isNumber:Vui lòng nhập vào 1 số
+View.StringEmpty:Thông tin chưa cập nhật
+View.StringEmpty2:<em class="text-muted">null</em>
+Views.LoadTable.Fail2:Vật phẩm đặt biệt không thể chỉnh sửa
+Server.Combine.Title1:Danh sách table sẽ gộp
+Server.Combine.Buttom.Title:Thêm table mới
+Server.Combine.Buttom.Multi.Delete.Title:Xóa table được chọn
+Server.Combine.Buttom.Process:Bắt đầu combine
+CombineTableMgr.Step1:<p class="text-success">Step1: Lấy max identity cho các table của <strong><em class="text-info">{0}</em></strong></p>
+CombineTableMgr.Step2:<p class="text-success">Step2: Lấy max identity cho các table của <strong><em class="text-info">{0}</em></strong></p>
+CombineTableMgr.Step3:<p class="text-success">Step3: Đọc, tạo sql query cho <strong><em class="text-info">{0}</em></strong> và insert vào <strong><em class="text-primary">{1}</em></strong></p>
+CombineTableMgr.Step4:<p class="text-success">Step4: Chạy sql query ở step 3 vào  <strong><em class="text-info">{0}</em></strong></p>
+
+Model.Add.Title.BattleBonus:Thêm BattleBonus mới
+Model.Add.Required:Vui lòng nhập ID
+Model.Add.Remote:ID bạn bạn vừa nhập đã được dùng
+Controllers.DeleteConfirm5:Bạn có muốn xóa các nhiệm vụ bên dưới không?
+Views.BaseDetail:Thông tin cơ bản
+Views.Quest.Conditions:Điều kiện hoàn thành
+Views.Quest.Goods:Phần thưởng nhiệm vụ
+Views.Edit.Record:Sửa
+Views.Delete.Record:Xóa
+Views.Quest.Award.Empty: <p class="text-center alert alert-warning">Nhiệm vụ này không có phần thưởng.</p>
+Request.questitems:Quest 
+Controllers.DeleteConfirm6:Bạn có muốn xóa các condition thuộc nhiệm vụ <strong><em class="text-info">{0}</em></strong> bên dưới không?
+Controllers.DeleteConfirm7:Bạn có muốn xóa các vật phẩm thuộc nhiệm vụ <strong><em class="text-info">{0}</em></strong> bên dưới không?
+Model.Add.Title.QuestCondition:Thêm condition mới cho <strong><em class="text-danger">{0}</em></strong>.
+Controllers.Update.QuestAward.OK:<p>Cập nhật vật phẩm <span class="text-info">{0} cho <i class="gi gi-chevron-right" style="font-size:8px"></i> {1}</span> thành công!</p>
+Controllers.Update.QuestCondition.OK:<p>Cập nhật điều kiện <span class="text-info">{0} cho <i class="gi gi-chevron-right" style="font-size:8px"></i> {1}</span> thành công!</p>

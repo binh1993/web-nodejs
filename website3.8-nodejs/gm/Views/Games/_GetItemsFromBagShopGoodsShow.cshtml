@@ -1,0 +1,64 @@
+﻿@using MvcPaging;
+@model IPagedList<SqlDataProvider.Data.ShopItemInfo>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "LoadShopShowInBag";
+}
+
+@if (Model.Count() > 0)
+{
+    <ul class="media-list" style="min-height:485px">
+        @foreach (var item in Model)
+        {
+            <li class="media" style="margin-bottom:-10px">
+                <a href="javascript:void(0)" class="pull-left">
+                    @Html.ItemImage(item.TemplateID, "thumbnail", "", "64")
+                </a>
+                <div class="media-body">
+                    <span class="text-warning pull-right"><small><em>Id <i class="gi gi-chevron-right" style="font-size:8px"></i>@item.ID</em></small></span>
+                    <a href="javascript:void(0)"><strong>@StaticFunction.ItemName(item.TemplateID);</strong></a>
+                    <div><em>TemplateID:</em> @item.TemplateID |<em>Loại: </em>@Html.TPayment(item.APrice1) | @Html.TBuyType(item.AUnit, item.BuyType)</div>
+                    <span class="btn-group">
+                        <a href="@Html.Raw(Url.Action("DetailShopItem","Games", new { id = item.ID, type = Request.QueryString["type"]}))" class="btn btn-xs btn-warning"
+                           data-modal="seemoreinfo"><i class="hi hi-eye-open"></i></a>
+                        <a href="@Html.Raw(Url.Action("DeleteItemInBag","Games", new { id = item.ID, type = Request.QueryString["type"] }))" class="btn btn-xs btn-danger"
+                           data-growl="deleteShopShow"><i class="fa fa-times"></i></a>
+                    </span>
+                </div>
+            </li>
+        }
+    </ul>
+        <div class="text-center" style="margin-top:-5px">
+            @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount, new AjaxOptions { UpdateTargetId = "bag-content", LoadingElementId = "loading-bgr" }).Options(o => o
+                                .DisplayTemplate("_Pagination")
+                                .Action("GetItemsFromBag")
+                                .AddRouteValue("type", Request.QueryString["type"])
+                                .MaxNrOfPages(3))
+        </div>
+}
+else
+{
+    <div class="text-center">
+        @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+    </div>
+}
+
+@section Scripts{
+    <script>
+        $(function () {
+            ModelGeneral.init('data-modal="seemoreinfo"', null, 9019);
+            $('a[data-growl="deleteShopShow"]').on('click', function () {
+                loadurl = $(this).attr("href");
+                $.get(loadurl, function (data) {
+                    $('#response-hodler').html(data);
+                    LoadStoreBag();
+                })
+                .fail(function (data) {
+                    showGrowl(data);
+                });
+                return false;
+            });
+        });
+    </script>
+}
+

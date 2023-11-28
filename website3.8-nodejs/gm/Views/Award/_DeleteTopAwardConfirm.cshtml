@@ -1,0 +1,42 @@
+﻿@model SqlDataProvider.Data.TopAwardInfo
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "Xác nhận";
+}
+<div class="modal-header themed-background-fire" style="color:white;">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+<div class="modal-body">
+    <!-- Danger Alert Content -->
+    <div class="alert alert-danger">
+        @Html.Raw(StaticFunction.GetTranslation("Controllers.DeleteConfirm", Model.Name))
+    </div>
+    <!-- END Danger Alert Content -->
+    <form action="@Html.Raw(Url.Action("DeleteTopAward", "Award",  new { id = Model.TemplateID, tid = Model.TopID, rank = Model.Rank, func = Request.QueryString["func"]}))" 
+          class="form-horizontal" id="form-confirm" method="post" role="form">
+        <input type="hidden" value="@Model.Name" id="Name" name="Name" />
+        <input type="hidden" value="@Model.TemplateID" id="TemplateID" name="TemplateID" />
+        <div class="form-actions text-right">      
+            <input class="btn btn-sm btn-danger " type="submit" value="Xác nhận" />
+            <input class="btn btn-sm btn-success " type="button" value="Huỷ bỏ" data-dismiss="modal" />
+        </div>
+    </form>
+</div>
+@section Scripts{
+    <script>
+        $('#form-confirm').on('submit', function (e) {
+            $('#loading-bgr').show();
+            $.ajax({
+                url: this.action,
+                type: this.method,
+                data: $(this).serialize(),
+                success: function (result) {
+                    $('#loading-bgr').hide();
+                    $('#modal-content').html(result);
+                }
+            });
+            return false;
+        });
+    </script>
+}

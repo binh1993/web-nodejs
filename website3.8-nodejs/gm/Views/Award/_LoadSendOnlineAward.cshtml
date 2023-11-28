@@ -1,0 +1,90 @@
+﻿@using MvcPaging;
+@model IPagedList<SqlDataProvider.Data.TopInfo>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "LoadSendAward";
+}
+
+    @if (Model.Any())
+    {
+        <ul class="media-list" style="min-height:532px">           
+            @foreach (var item in Model)
+            {
+                    <li class="media">
+                        <div class="media-body">
+                            <span class="text-danger pull-right"><small><em>area id <i class="gi gi-chevron-right" style="font-size:8px"></i>@item.ZoneID</em></small></span>
+                            <a href="@Html.Raw(Url.Action("LoadOnlinePlayer", "Users", new { zid = item.ZoneID, cond1 = item.Condition1, cond2 = item.Condition2, table = item.GetTable }))"
+                               id="@item.ID">
+                                <strong>@item.Name</strong>
+                            </a>
+                            <div>@item.Detail</div>
+                            <span class="btn-group">
+                                <a href="@Html.Raw(Url.Action("ViewOnlineAward", "Award", new { id = item.ID, zid = item.ZoneID, name = item.Name }))" class="btn btn-xs btn-success"
+                                   data-toggle="tooltip" title="Xem phần thưởng" data-modal="viewAward">
+                                    <i class="fa fa-info-circle"> Phần thưởng</i>
+                                </a>
+                            </span>
+                        </div>
+                    </li>
+            }
+        </ul>
+        <div class="text-center" style="margin-top:-5px">
+            @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount, new AjaxOptions { UpdateTargetId = "top-content", LoadingElementId = "loading-bgr" }).Options(o => o
+                                .DisplayTemplate("_Pagination")
+                                .Action("LoadSendOnlineAward")
+                                .AddRouteValue("zid", ViewData["zid"])
+                                .MaxNrOfPages(3))
+        </div>
+    }
+    else
+    {
+        <div class="text-center">
+            @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+        </div>
+    }
+
+@section Scripts{
+    <script>     
+        $(function () {
+            //call Award/LoadTopAward
+            var firstA = $(".media-list li:first a");
+            firstA.removeClass('active text-danger');
+            firstA.addClass('active text-danger');
+            var id = firstA.attr("id");
+            var name = firstA.html();
+            var link = firstA.attr("href");
+           
+            loadTopPlayer(name, link, id);
+
+            ModelGeneral.init('data-modal="viewAward"', 'large3');
+
+            $(".media-list").on("click", "li a", function () {
+                $(".media-list li a").removeClass('active text-danger');
+                $(this).addClass('active text-danger');
+                var _id = $(this).attr("id");
+                var _name = $(this).html();
+                var _link = $(this).attr("href");
+                loadTopPlayer(_name, _link, _id);
+                return false;
+            });
+        });
+
+        function loadTopPlayer(name, link, id) {
+            if (name == undefined || link == undefined)
+                return false;
+            $("#loading-bgr").show();
+            $.get(link, function (data) {
+                $("#top-player-content").html(data);
+                $("#award-header").html(name);
+                $("#btn-send-award-to-game").attr("data-dialog", id);
+
+                $("#loading-bgr").hide();
+            })
+            .fail(function (data) {
+                $("#top-player-content").html(getError(data.status, data.statusText));
+                $("#loading-bgr").hide();
+            });
+        }
+    </script>
+}
+

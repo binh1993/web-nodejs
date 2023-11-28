@@ -1,0 +1,33 @@
+﻿  
+@RenderBody() 
+<script>
+   /* Initialize app when page loads */
+    $(function () {
+        App.init(false);
+        TablesGeneral.init();
+
+        /* Validate */
+        jQuery.validator.messages.required = 'Vui lòng nhập dữ liệu vào!';
+        jQuery.validator.messages.digits = "Vui lòng nhập dữ liệu đúng định dạng!";
+        jQuery.validator.messages.date = "Vui lòng nhập ngày tháng đúng định dạng! vd: 1/1/2000 12:00:00 AM";
+        jQuery.validator.messages.number = "Vui lòng nhập dữ liệu đúng định dạng!";
+        jQuery.validator.addClassRules({
+            'must-digits': {
+                digits: true,
+                required: true
+            },
+            'must-number': {
+                number: true,
+                required: true
+            },
+            'must-date': {
+                required: true,
+                date: true
+            },
+            'must-required': {
+                required: true
+            }
+        });
+    });
+</script>
+@RenderSection("scripts", required: false)

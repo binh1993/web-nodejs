@@ -1,0 +1,211 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - GM.Service</title>
+
+    <meta name="description" content="GM.Service For DDT">
+    <meta name="author" content="pixelcave">
+    <meta name="robots" content="noindex, nofollow">
+
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
+
+    <!-- Icons -->
+    <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
+    <link rel="shortcut icon" href="@StaticFunction.Host("gm/Backend/img/favicon.png")">
+    <link rel="apple-touch-icon" href="@StaticFunction.Host("gm/Backend/img/icon57.png")" sizes="57x57">
+    <link rel="apple-touch-icon" href="@StaticFunction.Host("gm/Backend/img/icon72.png")" sizes="72x72">
+    <link rel="apple-touch-icon" href="@StaticFunction.Host("gm/Backend/img/icon76.png")" sizes="76x76">
+    <link rel="apple-touch-icon" href="@StaticFunction.Host("gm/Backend/img/icon114.png")" sizes="114x114">
+    <link rel="apple-touch-icon" href="@StaticFunction.Host("gm/Backend/img/icon120.png")" sizes="120x120">
+    <link rel="apple-touch-icon" href="@StaticFunction.Host("gm/Backend/img/icon144.png")" sizes="144x144">
+    <link rel="apple-touch-icon" href="@StaticFunction.Host("gm/Backend/img/icon152.png")" sizes="152x152">
+    <link rel="apple-touch-icon" href="@StaticFunction.Host("gm/Backend/img/icon180.png")" sizes="180x180">
+    <!-- END Icons -->
+    <style>
+        #loading {
+            z-index: 99999;
+            height: 50px;
+            width: 50px;
+            text-align: center;
+        }
+
+        #loading-bgr {
+            position: fixed;
+            z-index: 99990;
+            top: 0px;
+            left: 0px;
+            height: 100%;
+            width: 100%;
+            background-color: #000;
+            filter: alpha(opacity=25);
+            -moz-opacity: 0.35;
+            opacity: 0.35;
+        }
+    </style>
+
+    <link rel="stylesheet" href="@StaticFunction.Host("gm/Backend/css/bootstrap.min.css")">
+    <link rel="stylesheet" href="@StaticFunction.Host("gm/Backend/css/plugins.css")">
+    <link rel="stylesheet" href="@StaticFunction.Host("gm/Backend/css/main.css")">
+    <link rel="stylesheet" href="@StaticFunction.Host("gm/Backend/css/themes.css")">
+</head>
+<body>
+   
+    <!-- Page Wrapper --> 
+    <div id="page-wrapper" class="page-loading">
+        <!-- Preloader -->
+        <!-- Preloader functionality (initialized in js/app.js) - pageLoading() -->
+        <div class="preloader themed-background">
+            <h1 class="push-top-bottom text-light text-center"><strong>GM</strong> Service</h1>
+            <div class="inner">
+                <h3 class="text-light visible-lt-ie9 visible-lt-ie10"><strong>Loading..</strong></h3>
+                <div class="preloader-spinner hidden-lt-ie9 hidden-lt-ie10"></div>
+            </div>
+        </div>
+        <!-- END Preloader -->
+
+        <!-- Page Container -->       
+        <div id="page-container">            
+            <!-- Main Sidebar -->           
+            <!-- END Main Sidebar -->
+
+            <!-- Main Container -->
+            <div id="main-container">
+                <!-- Header -->              
+                <!-- END Header -->
+
+                <!-- Page content -->
+                <div id="page-content">                   
+                    @RenderBody()
+                </div>
+                <!-- END Page Content -->
+                <!-- Footer -->
+                <footer class="clearfix">
+                    <div class="pull-right">
+                        Crafted with <i class="fa fa-heart text-danger"></i> by <a href="javascript:void(0)" target="_blank">pixelcave</a>
+                    </div>
+                    <div class="pull-left">
+                        <span id="year-copy"></span> &copy; <a href="javascript:void(0)" target="_blank">GM.Service 3.3</a>
+                    </div>
+                </footer>
+                <!-- END Footer -->
+            </div>
+            <!-- END Main Container -->
+        </div>
+        <!-- END Page Container -->
+    </div>
+    <!-- END Page Wrapper -->
+
+    <a href="#" id="to-top"><i class="fa fa-angle-double-up"></i></a>
+    <div id="modal-user-settings" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header text-center">
+                    <h2 class="modal-title"><i class="fa fa-pencil"></i> Settings</h2>
+                </div>
+                <!-- END Modal Header -->
+                <!-- Modal Body -->
+                <div class="modal-body" id="setting-content">
+                   
+                </div>
+                <!-- END Modal Body -->
+            </div>
+        </div>
+    </div>
+    <!-- END User Settings -->
+    <!-- loader holder-->
+    <div id="loading-bgr" style="display:none;">
+        <div id="loading">
+            <i class="fa fa-spinner fa-4x fa-spin"></i>
+        </div>
+    </div>
+    <!-- END loader holder-->
+
+    <!-- Normal Modal -->
+    <div id='modal' class='modal fade in' tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" id='modal-content'>
+                <!-- modal content here-->
+            </div>
+        </div>
+    </div>
+    <!-- END Normal Modal -->
+
+    <!-- Small Modal -->
+    <div class="modal fade in" id="modal-small" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm" style="width:480px">
+            <div class="modal-content" id='modal-content-small'>
+            </div>
+        </div>
+    </div>
+    <!-- END Small Modal -->
+
+    <!-- Response Modal -->
+    <div class="modal fade in" id="modal-response" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm" style="width:480px">
+            <div class="modal-content" id='modal-content-response'>
+            </div>
+        </div>
+    </div>
+    <!-- END Response Modal -->
+
+    <!-- Large Modal -->
+    <div class="modal fade in" id="modal-large" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" style="width:1366px">
+            <div class="modal-content" id='modal-content-large'>
+                <!-- modal content here-->
+            </div>
+        </div>
+    </div>
+    <!-- END Large Modal -->
+
+    <!-- Large2 Modal -->
+    <div class="modal fade in" id="modal-large2" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" style="width:1366px">
+            <div class="modal-content" id='modal-content-large2'>
+                <!-- modal content here-->
+            </div>
+        </div>
+    </div>
+    <!-- END Large2 Modal -->
+
+    <!-- Large2 Modal -->
+    <div class="modal fade in" id="modal-large3" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" style="width:1151px">
+            <div class="modal-content" id='modal-content-large3'>
+                <!-- modal content here-->
+            </div>
+        </div>
+    </div>
+    <!-- END Large2 Modal -->
+
+    <!-- Response Hodler -->
+    <div id="response-hodler"></div>
+    <!-- END Response Hodler -->
+
+    <!-- Remember to include excanvas for IE8 chart support -->
+    <!--[if IE 8]><script src="js/helpers/excanvas.min.js"></script><![endif]-->
+
+    <script src="@StaticFunction.Host("gm/Backend/js/vendor/jquery-1.11.3.min.js")"></script>
+    <script src="@StaticFunction.Host("gm/Backend/js/vendor/modernizr-respond.min.js")"></script>
+    <script src="@StaticFunction.Host("gm/Backend/js/vendor/bootstrap.min.js")"></script>
+    
+    <script src="@StaticFunction.Host("gm/Backend/js/plugins.js")"></script>
+    <script src="@StaticFunction.Host("gm/Backend/js/app.js")"></script>
+    <script src="@StaticFunction.Host("Scripts/jquery.unobtrusive-ajax.min.js")"></script>
+    <script src="@StaticFunction.Host("Scripts/app.gm.service.js")"></script>
+    <script src="@StaticFunction.Host("Scripts/zerocopy/ZeroClipboard.min.js")"></script>
+    <script>
+        //run when load
+        $(function () {
+            //set loading center
+            $("#loading").center("absolute");
+            ModelGeneral.init('data-modal = "reload"', 'small');
+        });               
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

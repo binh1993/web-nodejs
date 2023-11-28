@@ -1,0 +1,109 @@
+﻿@using MvcPaging;
+@model List<SqlDataProvider.Data.PlayerInfo>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "LoadData";
+    int count = 1;
+}
+
+    <table id="general-table" class="table table-striped table-vcenter">
+        <thead>
+            <tr>               
+                <th>STT</th>
+                <th class="text-center"><i class="gi gi-user"></i></th>
+                <th>NickName</th>
+                <th>UserID</th>
+                @if (ViewData["cond"].ToString() == "Grade")
+                {
+                    <th>Grade</th>
+                    <th>GP</th>
+                }
+                @if (ViewData["cond"].ToString() == "FightPower")
+                {
+                    <th>FightPower</th>
+                }     
+                @if (ViewData["cond"].ToString() == "curLevel")
+                {
+                    <th>MountLv</th>
+                    <th>MountExp</th>
+                }            
+                @if (ViewData["cond"].ToString() == "evolutionGrade")
+                {
+                    <th>Ev.Grade</th>
+                    <th>Ev.Exp</th>
+                }    
+                <th>LastDate</th>
+                <th>Status</th>
+            </tr>
+        </thead>                  
+            @if (Model.Count() > 0)
+            {
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@count</td>
+                            <td class="text-center">
+                                @if (item.Sex)
+                                {
+                                    <i class="fa fa-venus text-success"></i>
+                                }
+                                else
+                                {
+                                    <i class="fa fa-mars text-danger"></i>
+                                }
+                            </td>
+                            <td>
+                                <a href="javascript:void(0)" class="over-popup" data-link="@Url.Action("UsersPopover","Users", new { id = item.ID, zid = item.ZoneID })">
+                                <strong>@item.NickName</strong>
+                                </a>
+                            </td>
+                            <td>@item.ID.ToString()</td>
+                            @if (ViewData["cond"].ToString() == "Grade")
+                            {
+                                <td>@item.Grade</td>
+                                <td>@item.GP</td>
+                            }
+                            @if (ViewData["cond"].ToString() == "FightPower")
+                            {
+                                <td>@item.FightPower</td>
+                            }        
+                            @if (ViewData["cond"].ToString() == "curLevel")
+                            {
+                                <td>@item.MountLv</td>
+                                <td>@item.MountExp</td>
+                            }      
+                            @if (ViewData["cond"].ToString() == "evolutionGrade")
+                            {
+                                <td>@item.evolutionGrade</td>
+                                <td>@item.evolutionExp</td>
+                            }                        
+                            <td>@Html.TOnline(item.LastDate)</td>
+                            <td>@Html.TGetPlayerStatus(item.State)</td>
+                        </tr>
+                        count++;
+                    }
+                </tbody>
+            }
+            else
+            {
+                <tbody>
+                    <tr>
+                        <td colspan="11" class="text-center" id="insert-avatar">
+                            @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+                        </td>
+                    </tr>
+                </tbody>
+            }          
+    </table>
+@section Scripts{
+    <script>
+        $(function () {
+
+            $('.popover:visible').popover('destroy');
+            GMApp.GetJson('#insert-avatar', '@Url.Action("Avatar","Users")');
+            PopOver.initJson('#page-content');
+            
+        });
+    </script>
+}

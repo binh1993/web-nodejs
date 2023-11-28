@@ -1,0 +1,53 @@
+﻿@model GM.Service.Models.ExternalLoginListViewModel
+@using Microsoft.Owin.Security
+
+<!-- Block Title -->
+<div class="block-title text-primary">
+    <h2>Đăng nhập sử dụng<strong> mạng xã hội</strong>.</h2>
+</div>
+<!-- END Block Title -->
+
+@{
+    var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
+    if (loginProviders.Count() == 0)
+    {
+        <p>
+            There are no external authentication services configured. See <a href="http://go.microsoft.com/fwlink/?LinkId=403804">this article</a>
+            for details on setting up this ASP.NET application to support logging in via external services.
+        </p>
+    }
+    else
+    {
+        using (Html.BeginForm("ExternalLogin", "Account", new { ReturnUrl = Model.ReturnUrl }))
+        {
+            @Html.AntiForgeryToken()
+            <p class="text-center">
+                @foreach (AuthenticationDescription p in loginProviders)
+                {
+                    if (p.Caption.Contains("Goo"))
+                    {
+                        <button type="submit" class="btn" style="color:coral" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" 
+                                title="@StaticFunction.GetTranslation("Account.Login.Social", p.Caption)"><i class="si si-google_plus"></i> @p.AuthenticationType</button>
+                    }
+                    if (p.Caption.Contains("Face"))
+                    {
+                        <button type="submit" class="btn" style="color:cornflowerblue" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" 
+                                title="@StaticFunction.GetTranslation("Account.Login.Social", p.Caption)"><i class="si si-facebook"></i> @p.AuthenticationType</button>
+                    }
+                    if (p.Caption.Contains("Twit"))
+                    {
+                        <button type="submit" class="btn" style="color:cyan" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType" 
+                                title="@StaticFunction.GetTranslation("Account.Login.Social", p.Caption)"><i class="si si-twitter"></i> @p.AuthenticationType</button>
+                    }
+                    if (p.Caption.Contains("Ya"))
+                    {
+                        <button type="submit" class="btn" style="color:blueviolet" id="@p.AuthenticationType" name="provider" value="@p.AuthenticationType"
+                                title="@StaticFunction.GetTranslation("Account.Login.Social", p.Caption)">
+                            <i class="si si-yahoo"></i> @p.AuthenticationType
+                        </button>
+                    }
+                }
+            </p>
+        }
+    }
+}

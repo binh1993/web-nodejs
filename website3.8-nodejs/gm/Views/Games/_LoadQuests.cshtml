@@ -1,0 +1,408 @@
+﻿@using MvcPaging;
+@using GM.Service.Models.GroupModels;
+@model IPagedList<QuestGroupModel>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "LoadBattleBonus";
+    string activeStr = "active";
+    string tabActiveStr1 = "";
+    string tabActiveStr2 = "";
+    string tabActiveStr3 = "";
+    string displayStr = "display:block";
+    string defaultName = "...";
+
+    if (Request.QueryString["tagId"] != null)
+    {
+        displayStr = "display:none";
+        activeStr = "";
+    }
+}
+@if (Model.TotalItemCount > 0)
+{
+    <div style="display: none" id="total-items">
+        @if (string.IsNullOrWhiteSpace((string)ViewData["key"]))
+        {
+            <p class="text-info" style="font-size:14px"> Có tổng cộng <strong class="text-danger">@Model.TotalItemCount</strong> item(s)</p>
+        }
+        else
+        {
+            <p class="text-info" style="font-size:14px"> Có tổng cộng <strong class="text-danger">@Model.TotalItemCount</strong> item(s) thỏa điều kiện</p>
+        }
+    </div>
+}
+<div class="block">
+    @if (Model.Any())
+    {
+        <div class="row">
+            <div class="col-md-4" style="border-right: 1px dotted gray">
+                <p class="text-warning" style="font-size: 18px;">
+                    <i class="gi gi-log_in"></i><small> Danh sách</small>
+                    <a href="@Html.Raw(Url.Action("CreateQuest", "Games"))" class="btn btn-alt btn-sm btn-default pull-right" data-dialog="-1"
+                       id="btn-add-battle-bonus" data-modal="addbattlebonus">
+                        <i class="gi gi-circle_plus text-primary"></i> Thêm nhiệm vụ mới
+                    </a>
+                </p>
+                <div id="box-list" style="min-height: 452px">
+                    <table id="general-table-quest" class="table table-hover table-vcenter">
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                if (Request.QueryString["tagId"] != null && Request.QueryString["tagId"] == item.Quest.ID.ToString())
+                                {
+                                    activeStr = "active";
+                                    defaultName = item.Quest.Title;
+                                }
+                                <tr class="@activeStr menu-tr" id="tr-@item.Quest.ID">
+                                    <td>
+                                        <label class="col-xs-2">
+                                            <span class="text-success" style="font-size: 12px">@item.Quest.ID.ToString()</span>
+                                        </label>
+                                        <div class="col-xs-10" style="margin-bottom: 2px">
+                                            <a href="javascript:void(0)" data-show="@item.Quest.ID" class="menu-a"><strong>@item.Quest.Title</strong></a>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="btn-group btn-group-xs">
+                                            <a href="@Html.Raw(Url.Action("EditData", "Games", new { id1 = item.Quest.ID, @id2 = -1, @table = "Quest", @tagName = "quest", cid = ViewData["cid"], key = ViewData["key"], page = Model.PageNumber}))" class="btn btn-xs btn-success"
+                                               data-toggle="tooltip" title="@Html.Raw(StaticFunction.GetTranslation("Views.Edit.Record"))" data-modal="editquest"><i class="fa fa-pencil"></i></a>
+                                            <a href="@Url.Action("DeleteData", "Games", routeValues: new {@id = -1, @ids = item.Quest.ID,
+                                            table = ViewData["table"], @Page = Model.PageNumber, cid = ViewData["cid"], @key = ViewData["key"]})" data-toggle="tooltip" data-modal="deletequest"
+                                               title="@Html.Raw(StaticFunction.GetTranslation("Views.Delete.Record"))" class="btn btn-danger"><i class="fa fa-times"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                activeStr = "";
+                                if (defaultName == "...")
+                                {
+                                    defaultName = item.Quest.Title;
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="text-center">
+                            @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount, new AjaxOptions { LoadingElementId = "loading-bgr", OnSuccess = "AjaxBattleBonusSuccess", OnFailure = "AjaxBattleBonusFailure" }).Options(o => o
+                                .DisplayTemplate("_Pagination")
+                                .Action("LoadData")
+                                .AddRouteValue("key", ViewData["key"])
+                                .AddRouteValue("cid", ViewData["cid"])
+                                .AddRouteValue("table", ViewData["table"])
+                                .MaxNrOfPages(3))
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8" id="list-box-items">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="text-warning" style="font-size: 18px">
+                            <i class="gi gi-log_out"></i><small> Chi tiết </small> <strong><span id="quest-header" class="text-danger">@defaultName</span></strong>
+                        </p>
+                    </div>
+                </div>
+                <div id="quest-detail">
+                    @if (Model.Any())
+                    {
+                        foreach (var item in Model)
+                        {
+                            string eleId = item.Quest.ID.ToString();
+                            tabActiveStr1 = "active";
+                            if (Request.QueryString["tagId"] != null && Request.QueryString["tagId"] == eleId)
+                            {
+                                displayStr = "display:block";
+                                if (Request.QueryString["tagName"] != null)
+                                {
+                                    bool onchangeTab = false;
+                                    switch (Request.QueryString["tagName"])
+                                    {
+                                        case "conditions":
+                                            tabActiveStr2 = "active";
+                                            onchangeTab = true;
+                                            break;
+                                        case "goods":
+                                            tabActiveStr3 = "active";
+                                            onchangeTab = true;
+                                            break;
+                                    }
+                                    if(onchangeTab)
+                                    {
+                                        tabActiveStr1 = "";
+                                    }
+                                }
+                            }
+
+                            <div id="right-panel-@eleId" style="@displayStr">
+                                <!-- Default Tabs -->
+                                <ul class="nav nav-tabs push" data-toggle="tabs">
+                                    <li class="@tabActiveStr1"><a href="#tabs-quest-@eleId">@Html.Raw(StaticFunction.GetTranslation("Views.BaseDetail"))</a></li>
+                                    <li class="@tabActiveStr2"><a href="#tabs-conditions-@eleId">@Html.Raw(StaticFunction.GetTranslation("Views.Quest.Conditions"))</a></li>
+                                    <li class="@tabActiveStr3"><a href="#tabs-goods-@eleId">@Html.Raw(StaticFunction.GetTranslation("Views.Quest.Goods"))</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane @tabActiveStr1" id="tabs-quest-@eleId">
+                                        <table class="table table-borderless table-striped table-vcenter">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-left" style="width: 20%;"><strong>Quest ID: </strong></td>
+                                                    <td class="text-left"><span>@Html.Raw(item.Quest.ID)</span></td>
+                                                    <td class="text-left" style="width: 20%;"></td>
+                                                    <td class="text-left"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-left" style="width: 20%;"><strong>Exp:</strong></td>
+                                                    <td class="text-left">
+                                                        <span>@Html.Raw(item.Quest.RewardGP)</span>
+                                                    </td>
+                                                    <td class="text-left" style="width: 20%;"><strong>Gold:</strong></td>
+                                                    <td class="text-left">@item.Quest.RewardGold</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-left" style="width: 20%;"><strong>Money:</strong></td>
+                                                    <td class="text-left">@item.Quest.RewardMoney</td>
+                                                    <td class="text-left" style="width: 20%;"><strong>DDT Money:</strong></td>
+                                                    <td class="text-left">
+                                                        <span>@Html.Raw(item.Quest.RewardBindMoney)</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-left" style="width: 20%;"><strong>Riches:</strong></td>
+                                                    <td class="text-left">@item.Quest.RewardRiches</td>
+                                                    <td class="text-left" style="width: 20%;"><strong>Offer:</strong></td>
+                                                    <td class="text-left">
+                                                        <span>@Html.Raw(item.Quest.RewardOffer)</span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-left" style="width: 20%;"><strong>Buff:</strong></td>
+                                                    <td class="text-left">
+                                                        <span>@Html.Raw(item.Quest.RewardBuffID)</span>
+                                                    </td>
+                                                    <td class="text-left" style="width: 20%;"><strong>Buff Validate:</strong></td>
+                                                    <td class="text-left">@item.Quest.RewardBuffDate</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-left" style="width: 20%;"><strong>Description: </strong></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="4">
+                                                        <span class="text-success">
+                                                            @if (string.IsNullOrEmpty(item.Quest.Detail))
+                                                            {
+                                                                <span>@Html.Raw(StaticFunction.GetTranslation("View.StringEmpty"))</span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span>@Html.Raw(item.Quest.Detail)</span>
+                                                            }
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+
+                                        <!-- Description List Horizontal Content -->
+                                        <dl class="dl-horizontal">
+                                            @{
+                                                List<string> preQuests = StaticFunction.QuestTitles(item.Quest.PreQuestID);
+                                                List<string> nextQuests = StaticFunction.QuestTitles(item.Quest.NextQuestID);
+                                            }
+                                            @if (preQuests.Any())
+                                            {
+                                                <dt>Nhiệm vụ trước</dt>
+                                                foreach (string q in preQuests)
+                                                {
+                                                    <dd>@q</dd>
+                                                }
+                                            }
+                                            @if (nextQuests.Any())
+                                            {
+                                                <dt>Nhiệm vụ tiếp theo</dt>
+                                                foreach (string q in nextQuests)
+                                                {
+                                                    <dd>@q</dd>
+                                                }
+                                            }
+                                        </dl>
+                                        <!-- END Description List Horizontal Content -->
+
+                                    </div>
+                                    <div class="tab-pane @tabActiveStr2" id="tabs-conditions-@eleId">
+                                        <table id="general-table" class="table table-striped table-vcenter">
+                                            <thead>
+                                                <tr>                                                   
+                                                    <th>QuestID</th>
+                                                    <th>ID</th>
+                                                    <th>Type</th>
+                                                    <th>Title</th>
+                                                    <th>Para1</th>
+                                                    <th>Para2</th>
+                                                    <th>isOpitional</th>
+                                                    <th style="width: 80px;" class="text-center">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var cond in item.Conditions)
+                                                {
+                                                    <tr>                                                        
+                                                        <td>@cond.QuestID</td>
+                                                        <td>@cond.CondictionID</td>
+                                                        <td>@cond.CondictionType</td>
+                                                        <td>@cond.CondictionTitle</td>
+                                                        <td>@cond.Para1</td>
+                                                        <td>@cond.Para2</td>
+                                                        <td>@cond.isOpitional</td>
+                                                        <td class="text-center">
+                                                            <div class="btn-group btn-group-xs">
+                                                                <a href="@Url.Action("EditData", "Games", routeValues: new { @id1 = cond.QuestID,  @id2 = cond.CondictionID, @tagName = "conditions", @table = "Quest_Condiction",cid = ViewData["cid"], key = ViewData["key"], page = Model.PageNumber })" 
+                                                                   data-toggle="tooltip" data-modal="editcondition" title="Chỉnh sửa" class="btn btn-default"><i class="fa fa-pencil"></i></a>
+                                                                <a href="@Url.Action("DeleteData", "Games", routeValues: new { @id = cond.QuestID, @ids = cond.CondictionID, @tagName = "conditions", @table = "Quest_Condiction", cid = ViewData["cid"],key = ViewData["key"], page = Model.PageNumber})" 
+                                                                   data-toggle="tooltip" data-modal="deletecondition"  title="Xóa" class="btn btn-danger"><i class="fa fa-times"></i></a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                        <a href="@Html.Raw(Url.Action("CreateQuestCondition", "Games", new { @id = item.Quest.ID, @tagName = "conditions", @table = "Quest_Condiction", cid = ViewData["cid"], key = ViewData["key"], page = Model.PageNumber }))" 
+                                        class="btn btn-alt btn-sm btn-default pull-right" data-dialog="@item.Quest.ID" data-modal="addquestcondition"> <i class="gi gi-circle_plus text-primary"></i> Thêm điều kiện
+                                        </a>
+                                    </div>
+                                    <div class="tab-pane @tabActiveStr3" id="tabs-goods-@eleId">
+                                        @if (item.Awards.Any())
+                                        {
+                                            <table id="general-table" class="table table-striped table-vcenter">
+                                                <thead>
+                                                    <tr>                                                       
+                                                        <th>Name</th>                                                        
+                                                        <th>Valid</th>
+                                                        <th>Count</th>
+                                                        <th>IsSelect</th>    
+                                                        <th>IsBind</th>  
+                                                        <th style="width: 80px;" class="text-center">Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var award in item.Awards)
+                                                    {
+                                                        <tr>                                                           
+                                                            <td>
+                                                                <label class="col-xs-2">
+                                                                    @Html.ItemImage(award.RewardItemID, "img-" + award.RewardItemID, "", "37")
+                                                                </label>
+                                                                <div class="col-xs-10" style="margin-bottom:-15px">                                                                  
+                                                                    <span><strong>@Html.TItemName(award.RewardItemID)</strong></span>
+                                                                    <p>
+                                                                        <span class="text-success">@award.RewardItemID.ToString()</span>
+                                                                        <span class="pull-right text-warning" style="font-size:12px"><em>questID: </em>@award.QuestID</span>
+                                                                    </p>
+                                                                </div>
+                                                            </td>
+                                                            <td>@award.RewardItemValid</td>
+                                                            <td>@award.RewardItemCount</td>
+                                                            <td>@award.IsSelect</td>   
+                                                            <td>@award.IsBind</td>  
+                                                            <td class="text-center">
+                                                                <div class="btn-group btn-group-xs">
+                                                                    <a href="@Url.Action("EditData", "Games", routeValues: new { @id1 = award.QuestID, @id2 = award.RewardItemID, @tagName = "goods", @table = "Quest_Goods",cid = ViewData["cid"], key = ViewData["key"], page = Model.PageNumber })" 
+                                                                       data-toggle="tooltip" data-modal="editquestaward" title="Chỉnh sửa" class="btn btn-default"><i class="fa fa-pencil"></i></a>
+                                                                    <a href="@Url.Action("DeleteData", "Games", routeValues: new { @id = award.QuestID, @ids = award.RewardItemID, @tagName = "goods", @table = "Quest_Goods",cid = ViewData["cid"], key = ViewData["key"], page = Model.PageNumber })" 
+                                                                       data-toggle="tooltip" data-modal="deletequestaward" title="Xóa" class="btn btn-danger"><i class="fa fa-times"></i></a>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        }
+                                        else
+                                        {
+                                            @Html.Raw(StaticFunction.GetTranslation("Views.Quest.Award.Empty"))
+                                        }
+                                        <a href="@Html.Raw(Url.Action("AddItemsModel", "Games", new { type = "questitems", table="Quest", cid = ViewData["cid"], key = ViewData["key"], page = Model.PageNumber, tagName = "goods" }))" 
+                                        class="btn btn-alt btn-sm btn-default pull-right" data-dialog="@item.Quest.ID" data-modal="btnaddawarditems">
+                                            <i class="gi gi-circle_plus text-primary"></i> Thêm phần thưởng
+                                        </a>
+                                    </div>
+                                </div>
+                                <!-- END Default Tabs -->
+                            </div>
+                                                        displayStr = "display:none";                                                        
+                                                        tabActiveStr2 = "";
+                                                        tabActiveStr3 = "";
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    @Html.Raw(StaticFunction.GetTranslation("Views.WaitLoading"))
+                                                }
+                </div>
+            </div>
+        </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="text-center">
+                                                        @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+                                                    </div>
+                                                }
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+            /*add some code here!*/
+            var total = $("#total-items").html();
+            $("#total-items-content").html(total);
+            ModelGeneral.init('data-modal="addquest"', 'large2');
+            ModelGeneral.init('data-modal="deletequest"');
+            ModelGeneral.init('data-modal="editquest"');
+
+            ModelGeneral.init('data-modal="deletequestaward"');
+            ModelGeneral.init('data-modal="editquestaward"');
+
+            ModelGeneral.init('data-modal="deletecondition"');
+            ModelGeneral.init('data-modal="editcondition"');
+            
+            $('a[data-modal="addquestcondition"]').bind('click', function (e) {
+                var _id = $(this).attr("data-dialog");
+                var _url = $(this).attr("href") + '&name=' + encodeURIComponent($("#quest-header").text());
+                GMApp.Dialog(_url, e);
+                return false;
+            });
+
+            $('a[data-modal="btnaddawarditems"]').bind('click', function (e) {
+                var _id = $(this).attr("data-dialog");
+                var _url = $(this).attr("href") + '&name=' + $("#quest-header").text();
+                GMApp.Dialog(_url, e, 'tid=' + _id, 'large');
+                return false;
+            });
+
+            /*menu*/
+            $('#general-table-quest').find('a.menu-a').on('click', function () {
+                var idEl = $(this).attr("data-show");
+                $('.menu-tr').removeClass('active');
+                $('#tr-' + idEl).addClass('active');
+                //console.log(idEl);
+                $("#quest-detail").children().hide();
+                $('#right-panel-' + idEl).show();
+                $("#quest-header").text($(this).text());
+                return false;
+            });
+            /*end menu*/
+        });
+
+        function AjaxBattleBonusSuccess(data) {
+            $('#table-content').html(data);
+        }
+        function AjaxBattleBonusFailure(xhr) {
+            var text = "Error: " + xhr.status + " " + xhr.statusText;
+            showGrowl(text, 'danger');
+        }
+    </script>
+}

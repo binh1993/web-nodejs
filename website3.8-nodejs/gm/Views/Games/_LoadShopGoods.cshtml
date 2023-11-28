@@ -1,0 +1,254 @@
+﻿@using MvcPaging;
+@using SqlDataProvider.Data;
+@model IPagedList<ItemTemplateInfo>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "List Item";
+    CategoryInfo[] categorys = StaticFunction.GetCategory();
+}
+@if (Model.TotalItemCount > 0)
+{
+    <div style="display:none" id="total-items">
+        @if (string.IsNullOrWhiteSpace((string) ViewData["key"]))
+        {
+            <p class="text-info"> Có tổng cộng <strong class="text-danger">@Model.TotalItemCount</strong> item(s)</p>
+        }
+        else
+        {
+            <p class="text-info"> Có tổng cộng <strong class="text-danger">@Model.TotalItemCount</strong> item(s) thỏa điều kiện</p>
+        }
+    </div>
+}
+<div class="block">
+    <div style="min-height:572px">
+        <table class="table table-hover" id="list-items">
+            <thead>
+                <tr>
+                    <th class="text-center" style="width: 20px;">
+                        <label class="switch switch-primary">
+                            <input type="checkbox" id="check-all" name="check-all"><span></span>
+                        </label>
+                    </th>
+                    <th style="width: 386px;" class="text-center">Name</th>
+                    <th>
+                        Attack
+                    </th>
+                    <th>
+                        Defence
+                    </th>
+                    <th>
+                        Luck
+                    </th>
+                    <th>
+                        Agility
+                    </th>
+                    <th>
+                        AddTime
+                    </th>
+                    <th>
+                        Pic
+                    </th>
+                    <th style="width: 115px;" class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+            {
+                    <tr>
+                        <td class="text-center">
+                            <label class="switch switch-primary">
+                                <input type="checkbox" id="@item.TemplateID" name="@item.TemplateID" value="@item.TemplateID"><span></span>
+                            </label>
+                        </td>
+                        <td>
+                            <label class="col-xs-2">
+                                @Html.ItemImage(item.TemplateID, "img-" + item.TemplateID, "", "37")
+                            </label>
+                            <div class="col-xs-10" style="margin-bottom:-15px">
+                                <a href="@Html.Raw(Url.Action("ReadDetail", "Games", new { table = ViewData["table"], id = item.TemplateID }))" data-dialog="detailItems"><strong>@Html.TItemName(item.TemplateID)</strong></a>
+                                <p>
+                                    <span class="text-success">@item.TemplateID.ToString()</span>
+                                    <span class="pull-right text-warning" style="font-size:12px"><em>category: </em>@item.CategoryID</span>
+                                </p>                                
+                            </div>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Attack)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Defence)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Luck)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Agility)
+                        </td>
+                        <td>
+                            @Html.TOnline(DateTime.Parse(item.AddTime))
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Pic)
+                        </td>
+                        <td class="text-center">
+                            <div class="btn-group btn-group-xs">      
+                                <a href="javascript:void(0)" data-action="@Html.Raw(Url.Action("AddToCart", "Cart", new { id = item.TemplateID }))" data-cart="@item.TemplateID.ToString()" title="Thêm vào giỏ hàng" class="btn btn-success add-to-cart"><i class="hi hi-shopping-cart"></i></a>                          
+                                <a href="@Html.Raw(Url.Action("SendSeletedItem", "Games", new { table = ViewData["table"], ids = item.TemplateID }))" data-modal="sendshopgood"
+                                   title="Xóa" class="btn btn-warning"><i class="gi gi-envelope"></i></a>
+                                <a href="@Html.Raw(Url.Action("RipResource", "XML", routeValues: new { ids = item.TemplateID, xml = "templatealllist" , url = "null", isNew = false, isDb = true }))" data-modal="rip"
+                                   data-toggle="tooltip" title="Rip hình item này" class="btn btn-info"><i class="hi hi-cloud_download"></i></a>
+                                <a href="@Html.Raw(Url.Action("DeleteData", "Games", new { id = -1, table = ViewData["table"], ids = item.TemplateID, 
+                                     @Page = Model.PageNumber, @key = ViewData["key"], @cid = ViewData["cid"]}))" data-modal="deleteshopgood"
+                                   title="Xóa" class="btn btn-danger"><i class="fa fa-times"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="btn-group btn-group-sm">
+                <a href="@Html.Raw(Url.Action("DeleteData", "Games", new { id = -1, table = ViewData["table"],@Page = Model.PageNumber, @key = ViewData["key"], @cid = ViewData["cid"] }))" 
+                   class="btn btn-danger" data-toggle="tooltip" title="Xóa item(s) được chọn" id="delete-select-items"><i class="fa fa-times"></i></a>
+                <a href="@Html.Raw(Url.Action("SendSeletedItem", "Games"))" class="btn btn-warning" data-toggle="tooltip" title="Gửi item được chọn vào game" id="send-select-items"><i class="gi gi-envelope"></i> Send Selected Item(s)</a>               
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="text-center">
+                @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount, new AjaxOptions { UpdateTargetId = "table-content", LoadingElementId = "loading-bgr" }).Options(o => o
+                    .DisplayTemplate("_Pagination")
+                    .MaxNrOfPages(3)
+                    .Action("LoadData")
+                    .AddRouteValue("key", ViewData["key"])
+                    .AddRouteValue("table", ViewData["table"])
+                    .AddRouteValue("cid", ViewData["cid"]))
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="btn-group btn-group-sm pull-right">
+                <div class="btn-group btn-group-sm dropup">
+                    <a href="javascript:void(0)" class="btn btn-primary pull-right dropdown-toggle" data-toggle="dropdown">Thêm Item Mới</a>
+                    <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
+                        <li class="dropdown-header"><i class="fa fa-share pull-right"></i> Chọn Nguồn</li>
+                        <li>
+                            <a href="javascript:void(0)">Tự Tạo</a>
+                            <a href="javascript:void(0)">Nguồn XML</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="btn-group btn-group-sm dropup">
+                    <a href="javascript:void(0)" class="btn btn-info pull-right dropdown-toggle" data-toggle="dropdown">Category</a>
+                    <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
+                        <li class="dropdown-header"><i class="fa fa-share pull-right"></i> Chọn Category</li>
+                        <li style="overflow-y:auto; height:442px" id="">
+                            @foreach (CategoryInfo cat in categorys)
+                            {
+                                <a href="javascript:void(0)" onclick="loadCategory(@cat.CategoryID)">@cat.CategoryID - @cat.Name</a>
+                            }
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+            ModelGeneral.init('data-modal="sendshopgood"', 'large3');
+            ModelGeneral.init('data-modal="deleteshopgood"');
+            ModelGeneral.init('data-modal="showcart"', 'large3');
+            ModelGeneral.init('data-modal="rip"');
+            //call add dailog
+            $('a[data-dialog="detailItems"]').bind("click", function (e) {               
+                var url = $(this).attr("href");
+                var params = {};
+                GMApp.DialogJson(url, e, params, 'large3');
+                return false;
+            });            
+
+            $('.add-to-cart').on('click', function () {
+                        
+                var thisUrl = $(this);
+                var url = thisUrl.attr("data-action");
+                $("#loading-bgr").show();
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    dataType: "json",
+                    contentType: 'application/json; charset=utf-8',
+                    cache: false,
+                    success: function (data) {
+                        $("#loading-bgr").hide();
+
+                        if (data.Result) {
+                            $("#items-in-cart").text(data.CartCount);
+
+                            var tempId = "img-" + thisUrl.attr("data-cart");
+
+                            //Scroll to top if cart icon is hidden on top
+                            $('html, body').animate({
+                                'scrollTop': $(".cart-anchor").position().top
+                            });
+
+                            //Select item image and pass to the function
+                            var itemImg = $('.' + tempId).eq(0);
+                            flyToElement($(itemImg), $('.cart-anchor'));
+                            
+                        }
+                        else {
+                            showGrowl(data.Html, 'danger');
+                        }
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        showGrowl('Error: ' + xhr.status + ' ' + xhr.statusText, 'danger');
+                        $("#loading-bgr").hide();
+                    }
+                });
+
+                return false;
+            });
+
+            var total = $("#total-items").html();
+            $("#total-items-content").html(total);
+
+            $('#delete-select-items').bind("click", function (e) {
+                var url = $(this).attr("href");
+                var _checked = [];
+
+                _checked = $("tbody input:checkbox:checked").map(function () {
+                    return this.value;
+                }).toArray();
+
+                if (_checked.length == 0) {
+                    showGrowl('Bạn chưa chọn item. Vui lòng chọn và thử lại', 'danger');
+                    return false;
+                }
+                var params = 'ids=' + _checked;
+                GMApp.Dialog(url, e, params, null, 9009);
+                return false;
+            });
+
+            $('#send-select-items').bind("click", function (e) {
+                var url = $(this).attr("href");
+                var _checked = [];
+
+                _checked = $("tbody input:checkbox:checked").map(function () {
+                    return this.value;
+                }).toArray();
+
+                if (_checked.length == 0) {
+                    showGrowl('Bạn chưa chọn item. Vui lòng chọn và thử lại', 'danger');
+                    return false;
+                }
+                var params = 'ids=' + _checked;
+                GMApp.Dialog(url, e, params, 'large3', 9009);
+                return false;
+            });
+        });
+       
+    </script>
+}
+ 

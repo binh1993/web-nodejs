@@ -1,0 +1,202 @@
+﻿@using Tank.Data;
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    string currentDomain = Request.Url.Scheme + Uri.SchemeDelimiter + Request.Url.Host + (Request.Url.IsDefaultPort ? "" : ":" + Request.Url.Port);
+    var Face = AppSettings.Resource + "image/equip/f/face/face3/1/show.png";
+    var Eff = AppSettings.Resource + "image/equip/f/eff/eff161/1/show.png";
+    var Glass = AppSettings.Resource + "image/equip/f/glass/glass155/1/show.png";
+    var Hair = AppSettings.Resource + "image/equip/f/hair/hair136/1/a/show.png";
+    var Head = AppSettings.Resource + "image/equip/f/head/head304/1/show.png";
+    var Cloth = AppSettings.Resource + "image/equip/f/cloth/cloth297/1/show.png";
+    var Suits = AppSettings.Resource + "image/equip/f/suits/default/1/show.png";
+    var Arm = AppSettings.Resource + "image/arm/Slollipop5/1/0/show.png";
+    var cWing = currentDomain + "/Backend/demo/container_w.swf";
+    var cCircleLight = currentDomain + "/Backend/demo/container_c.swf";
+    var cSinplelight = currentDomain + "/Backend/demo/container_s.swf";
+
+    var Wing = "Wing=" + currentDomain + "/Backend/demo/wing/wing79&WingId=15079";
+    var CircleLight = "CircleLight=" + currentDomain + "/Backend/demo/circlelight&CLightNum=5";
+    var Sinplelight = "SircleLight=" + currentDomain + "/Backend/demo/sinplelight&SLightNum=5";
+}
+<style>
+    .ajcol-e {
+        width: 400px;
+        height: 425px;
+        overflow: hidden;
+        float: left;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        border: dotted;
+    }
+
+        .ajcol-e img {
+            width: auto;
+            height: auto;
+        }
+
+    @@media all and (max-width:30em) {
+        .ajcol-e {
+            width: 100%;
+            float: none;
+        }
+    }
+
+    .avatar-e-holder {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    .equip-e-suits {
+        position: absolute;
+        top: 40px;
+        left: 95px;
+        width: 250px;
+        height: 312px;
+        overflow: hidden;
+    }
+
+    .equip-e-head {
+        position: absolute;
+        top: 40px;
+        left: 95px;
+    }
+
+    .equip-e-eff {
+        position: absolute;
+        top: 40px;
+        left: 95px;
+    }
+
+    .equip-e-glass {
+        position: absolute;
+        top: 40px;
+        left: 95px;
+    }
+
+    .equip-e-hair {
+        position: absolute;
+        top: 40px;
+        left: 95px;
+    }
+
+    .equip-e-cloth {
+        position: absolute;
+        top: 40px;
+        left: 95px;
+    }
+
+    .equip-e-face {
+        position: absolute;
+        top: 40px;
+        left: 95px;
+        width: 250px;
+        height: 312px;
+        overflow: hidden;
+    }
+
+    .equip-e-arm {
+        position: absolute;
+        top: 45px;
+        left: 115px;
+    }
+
+    .avatar-e-wings {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        overflow: hidden;
+    }
+
+    .avatar-e-circlelight {
+        position: absolute;
+        top: 0px;
+        left: 25px;
+        overflow: hidden;
+    }
+
+    .avatar-e-sinplelight {
+        position: absolute;
+        top: 40px;
+        left: 95px;
+        overflow: hidden;
+    }
+
+    .avatar-e-option {
+        position: absolute;
+        bottom: 10px;
+        left: 115px;
+        height: 20px;
+    }
+</style>
+<div class="ajcol-e">
+    <div class="avatar-e-holder">
+        <div class="avatar-e-circlelight">
+            <embed src="@cCircleLight" quality="high" wmode="transparent" bgcolor="#cccccc"
+                   width="615" height="400" name="container_c" align="middle"
+                   allowScriptAccess="always" allowFullScreen="false"
+                   flashvars="@CircleLight"
+                   type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />
+        </div>
+
+        <div class="avatar-e-wings">
+            <embed src="@cWing" quality="high" wmode="transparent" bgcolor="#cccccc"
+                   width="615" height="400" name="container_w" align="middle"
+                   allowScriptAccess="always" allowFullScreen="false"
+                   flashvars="@Wing"
+                   type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />
+        </div>
+
+        <div class="avatar-e-body">
+            <div class="equip-e-face">
+                <img alt="" src="@Face" />
+            </div>
+            <img class="equip-e-eff" alt="" src="@Eff" />            
+            <img class="equip-e-hair" alt="" src="@Hair" />            
+            <img class="equip-e-head" alt="" src="@Head" />
+            <img class="equip-e-glass" alt="" src="@Glass" />
+            <img class="equip-e-cloth" alt="" src="@Cloth" />
+        </div>
+
+        <img class="equip-e-arm" alt="" src="@Arm" />
+
+        <div class="avatar-e-sinplelight">
+            <embed src="@cSinplelight" quality="high" wmode="transparent" bgcolor="#cccccc"
+                   width="580" height="400" name="container_s" align="middle"
+                   flashvars="@Sinplelight"
+                   allowScriptAccess="always" allowFullScreen="false"
+                   type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" />
+        </div>
+
+        <div class="avatar-e-option">
+            <input type="checkbox" id="cb-suits" value="suits"> Ẩn Set
+            <input type="checkbox" id="cb-head" value="head"> Ẩn Nón
+            <input type="checkbox" id="cb-glass" value="glass"> Ẩn Kính
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(function () {                    
+            /* avatar-e */
+            if ($('.equip-e-suits').length > 0) {
+                $('.equip-e-suits').toggle(!this.checked);
+                $('.avatar-e-body').toggle(this.checked);
+            }
+            $('input[type="checkbox"]').click(function () {
+                if ($(this).attr('value') == 'suits') {
+                    if ($('.equip-e-suits').length > 0) {
+                        $('.equip-e-suits').toggle(!this.checked);
+                        $('.avatar-e-body').toggle(this.checked);
+                    }
+                }
+                if ($(this).attr('value') == 'head') {
+                    $(".equip-e-head").toggle();
+                }
+                if ($(this).attr('value') == 'glass') {
+                    $('.equip-e-glass').toggle();
+                }
+            });
+        });       
+    </script>
+}

@@ -1,0 +1,227 @@
+﻿@model GM.Service.Models.TableModel
+@{
+    ViewBag.Title = "Chi tiết";
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    var item = Model.Info;
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">
+        @ViewBag.Title <i class="gi gi-chevron-right" style="font-size:10px"></i>
+    <span class="text-warning"><strong>@item.Name</strong></span> 
+</h4>
+</div>
+<div class="modal-body">
+    <div id="table-design-container">
+        @Html.Partial("_TableDesignPages", Model)
+    </div>
+    <div id="add-table-design-content" style="display:none;">
+            <form action="@Html.Raw(Url.Action("CreateTableDesign", "Tables"))" method="post" class="form-horizontal form-bordered" id="frm-add-table-design">
+
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="ZoneID">TableID</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control input-sm" value="@item.ID" disabled>
+                            </div>
+                            <input type="hidden" id="TableID" name="TableID" value="@item.ID">
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="Name">Name</label>
+                            <div class="col-md-8">
+                                <input type="text" id="Name" name="Name" class="form-control input-sm must-required" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="Type">Type</label>
+                            <div class="col-md-8">
+                                <select id="Type" name="Type" class="form-control" style="width: 100%;">
+                                    <option value="int">int</option>                                    
+                                    <option value="bit">bit</option>
+                                    <option value="float">float</option>
+                                    <option value="datetime">datetime</option>
+                                    <option value="nvarchar(50)">nvarchar(50)</option>
+                                    <option value="nvarchar(150)">nvarchar(150)</option>
+                                    <option value="nvarchar(250)">nvarchar(250)</option>
+                                    <option value="nvarchar(1500)">nvarchar(1500)</option>
+                                    <option value="nvarchar(2500)">nvarchar(2500)</option>
+                                    <option value="nvarchar(MAX)">nvarchar(MAX)</option>
+                                    <option value="varbinary(200)">varbinary(200)</option>
+                                    <option value="numeric(18, 2)">numeric(18, 2)</option>
+                                </select>
+                            </div>
+                        </div>                        
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="IdEntity">IdEntity</label>
+                            <div class="col-md-8">
+                                <label class="switch switch-primary">
+                                    <input type="checkbox" id="IdEntity" name="IdEntity" value="true">
+                                    <span></span>
+                                    <input type="hidden" id="IdEntity" name="IdEntity" value="false">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="IsPrimary">IsPrimary</label>
+                            <div class="col-md-8">
+                                <label class="switch switch-primary">
+                                    <input type="checkbox" id="IsPrimary" name="IsPrimary" value="true">
+                                    <span></span>
+                                    <input type="hidden" id="IsPrimary" name="IsPrimary" value="false">
+                                </label>
+                            </div>
+                        </div>   
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="IsNotNull">IsNotNull</label>
+                            <div class="col-md-8">
+                                <label class="switch switch-primary">
+                                    <input type="checkbox" id="IsNotNull" name="IsNotNull" value="true" checked>
+                                    <span></span>
+                                    <input type="hidden" id="IsNotNull" name="IsNotNull" value="false">
+                                </label>
+                            </div>
+                        </div>                     
+                    </div>
+                    <div class="col-lg-6">                       
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="TableGetMax">TableGetMax</label>
+                            <div class="col-md-8">
+                                <input type="text" id="TableGetMax" name="TableGetMax" class="form-control input-sm" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="ColGetMax">ColGetMax</label>
+                            <div class="col-md-8">
+                                <input type="text" id="ColGetMax" name="ColGetMax" class="form-control input-sm" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="Conditon">Conditon</label>
+                            <div class="col-md-8">
+                                <input type="text" id="Conditon" name="Conditon" class="form-control input-sm" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="IsShowHide">IsShowHide</label>
+                            <div class="col-md-8">
+                                <label class="switch switch-primary">
+                                    <input type="checkbox" id="IsShowHide" name="IsShowHide" value="true">
+                                    <span></span>
+                                    <input type="hidden" id="IsShowHide" name="IsShowHide" value="false">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="IntParse">IntParse</label>
+                            <div class="col-md-8">
+                                <label class="switch switch-primary">                                   
+                                    <input type="checkbox" id="IntParse" name="IntParse" value="true">
+                                    <span></span>
+                                    <input type="hidden" id="IntParse" name="IntParse" value="false">
+                                </label>
+                            </div>
+                        </div>                       
+                    </div>
+                </div>
+
+                <div class="form-group form-actions">
+                    <div class="col-md-12 text-center">
+                        <button type="submit" class="btn btn-sm btn-success" id="add-new-column"> Thêm mới</button>
+                    </div>
+                </div>
+            </form>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="form-actions">
+        <div class="text-right">     
+            <button type="button" class="btn btn-sm btn-info pull-left" id="show-form-add-new">Thêm column mới</button>  
+            <button type="submit" class="btn btn-sm btn-primary pull-left" id="back-to-page" style="display:none"> Trở lại</button>    
+            <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal">Đóng</button>
+        </div>
+    </div>
+</div>
+@section Scripts{
+  <script>
+      $(function () {
+          var addColumn = '#add-table-design-content';
+          var container = '#table-design-container';
+
+          var btnFormAdd = '#show-form-add-new';
+          var btnBack = '#back-to-page';
+
+          var clasaAni = 'animation-fadeInQuick';
+          $('#show-form-add-new').on('click', function (e) {
+              //GMApp.GetJson(addColumn, '@Html.Raw(Url.Action("AddTableDesign", "Tables"))');
+              $(container).hide();
+              $(addColumn).show();
+              $(addColumn).addClass(clasaAni);
+              $(btnFormAdd).hide();
+              $(btnBack).show();
+              $(btnBack).addClass(clasaAni);
+              
+          });
+          $('#back-to-page').on('click', function (e) {
+              $(addColumn).hide();
+              $(container).show();
+              $(container).addClass(clasaAni);
+              $(btnBack).hide();
+              $(btnFormAdd).show();
+              $(btnFormAdd).addClass(clasaAni);
+
+          });
+
+          var startBtn = $('#add-new-column');
+          // On start button click start loading again
+          startBtn.on('click', function () {
+              $(this).button('loading');
+          });
+
+          /* Validate required: true*/
+          
+          $('form#frm-add-table-design').each(function () {   // <- selects every <form> on page
+              $(this).validate({        // <- initialize validate() on each form
+                  errorClass: 'help-block animation-slideDown', // You can change the animation class for a different entrance animation - check animations page
+                  errorElement: 'div',
+                  errorPlacement: function (error, e) {
+                      e.parents('.form-group > div').append(error);
+                  },
+                  highlight: function (e) {
+                      $(e).closest('.form-group').removeClass('has-success has-error').addClass('has-error');
+                      $(e).closest('.help-block').remove();
+                      startBtn.button('reset');
+                  },
+                  success: function (e) {
+                      e.closest('.form-group').removeClass('has-success has-error');
+                      e.closest('.help-block').remove();
+                  },
+                  submitHandler: function (e) {
+                      $.ajax({
+                          url: e.action,
+                          type: e.method,
+                          data: $(e).serialize(),
+                          success: function (data) {
+                              if (data.Result) {
+                                  $('#response-hodler').html(data.Html);
+                                  reloadTableDesignList();
+                              }
+                              else {
+                                  showGrowl(data.Html, 'danger');
+                              }
+                              startBtn.button('reset');
+                          },
+                          error: function (xhr) {
+                              showGrowl('Error: ' + xhr.status + ' ' + xhr.statusText, 'danger');
+                              startBtn.button('reset');
+                          }
+                      });
+                      return false;
+                  }
+              });
+          });
+
+      });      
+</script>
+}

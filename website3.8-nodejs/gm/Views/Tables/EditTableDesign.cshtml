@@ -1,0 +1,236 @@
+﻿@model SqlDataProvider.Data.TableDesignInfo
+@{
+    ViewBag.Title = "Chỉnh sửa";
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    SqlDataProvider.Data.TableDesignInfo item = Model;
+}
+@if (item == null)
+{
+    <div class="text-center">
+        <p class="text-warning">
+            @Html.Raw(StaticFunction.GetTranslation("Views.LoadArea.Fail", string.Format("<span class=\"text-danger\"><strong>{0}</strong></span>", ViewContext.RouteData.Values["id"])))
+        </p>
+        <p>
+            <button type="button" class="btn btn-sm btn-primary btn-back-list"> Trở lại</button>
+        </p>
+    </div>    
+}
+else{
+   
+        <div class="block-title">
+            <h4>
+                <strong>
+                    @ViewBag.Title <i class="gi gi-chevron-right" style="font-size:10px"></i>
+                    <span class="text-info"> @item.ID</span>
+                        <i class="gi gi-chevron-right" style="font-size:10px"></i>
+                    <span class="text-warning"> @item.Name</span>
+            </strong> 
+            </h4>   
+        </div>
+        <form action="@Html.Raw(Url.Action("EditTableDesign", "Tables"))" method="post" class="form-horizontal form-bordered" id="frm-update-table-design">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="ZoneID">TableID</label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control input-sm" value="@item.TableID" disabled>
+                        </div>
+                        <input type="hidden" id="TableID" name="TableID" value="@item.TableID">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="Name">Name</label>
+                        <div class="col-md-8">
+                            <input type="text" id="Name" name="Name" class="form-control input-sm must-required" value="@item.Name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="Type">Type</label>
+                        <div class="col-md-8">
+                            <select id="Type" name="Type" class="form-control" style="width: 100%;">
+                                <option value="int">int</option>
+                                <option value="bit">bit</option>
+                                <option value="float">float</option>
+                                <option value="datetime">datetime</option>
+                                <option value="nvarchar(50)">nvarchar(50)</option>
+                                <option value="nvarchar(150)">nvarchar(150)</option>
+                                <option value="nvarchar(250)">nvarchar(250)</option>
+                                <option value="nvarchar(1500)">nvarchar(1500)</option>
+                                <option value="nvarchar(2500)">nvarchar(2500)</option>
+                                <option value="nvarchar(MAX)">nvarchar(MAX)</option>
+                                <option value="varbinary(200)">varbinary(200)</option>
+                                <option value="numeric(18, 2)">numeric(18, 2)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="IdEntity">IdEntity</label>
+                        <div class="col-md-8">
+                            @{
+                                string chek = string.Empty;
+                                if (item.IdEntity) { chek = "checked"; }
+                            }
+                            <label class="switch switch-primary">
+                                <input type="checkbox" id="IdEntity" name="IdEntity" value="true" @chek>
+                                <span></span>
+                                <input type="hidden" id="IdEntity" name="IdEntity" value="false">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="IsPrimary">IsPrimary</label>
+                        <div class="col-md-8">
+                            @{
+                                chek = string.Empty;
+                                if (item.IsPrimary) { chek = "checked"; }
+                            }
+                            <label class="switch switch-primary">
+                                <input type="checkbox" id="IsPrimary" name="IsPrimary" value="true" @chek>
+                                <span></span>
+                                <input type="hidden" id="IsPrimary" name="IsPrimary" value="false">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="IsNotNull">IsNotNull</label>
+                        <div class="col-md-8">
+                            @{
+                                chek = string.Empty;
+                                if (item.IsNotNull) { chek = "checked"; }
+                            }
+                            <label class="switch switch-primary">
+                                <input type="checkbox" id="IsNotNull" name="IsNotNull" value="true" @chek>
+                                <span></span>
+                                <input type="hidden" id="IsNotNull" name="IsNotNull" value="false">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="TableGetMax">TableGetMax</label>
+                        <div class="col-md-8">
+                            <input type="text" id="TableGetMax" name="TableGetMax" class="form-control input-sm" value="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="ColGetMax">ColGetMax</label>
+                        <div class="col-md-8">
+                            <input type="text" id="ColGetMax" name="ColGetMax" class="form-control input-sm" value="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="Conditon">Conditon</label>
+                        <div class="col-md-8">
+                            <input type="text" id="Conditon" name="Conditon" class="form-control input-sm" value="">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="IsShowHide">IsShowHide</label>
+                        <div class="col-md-8">
+                            @{
+                                chek = string.Empty;
+                                if (item.IsShowHide) { chek = "checked"; }
+                            }
+                            <label class="switch switch-primary">
+                                <input type="checkbox" id="IsShowHide" name="IsShowHide" value="true" @chek>
+                                <span></span>
+                                <input type="hidden" id="IsShowHide" name="IsShowHide" value="false">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="IntParse">IntParse</label>
+                        <div class="col-md-8">
+                            @{
+                                chek = string.Empty;
+                                if (item.IntParse) { chek = "checked"; }
+                            }
+                            <label class="switch switch-primary">
+                                <input type="checkbox" id="IntParse" name="IntParse" value="true" @chek>
+                                <span></span>
+                                <input type="hidden" id="IntParse" name="IntParse" value="false">
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group form-actions">
+                <div class="col-md-12 text-center">
+                    <button type="button" class="btn btn-sm btn-primary btn-back-list"> Trở lại</button>
+                    <button type="submit" class="btn btn-sm btn-success btn-submit"> Cập nhật</button>
+                </div>
+            </div>
+        </form>
+}
+@section Scripts{
+    <script>
+        $(function () {
+
+            $('#Type option').prop('selected', false)
+                       .filter('[value="@item.Type"]')
+                       .prop('selected', true);
+
+            var listContent = $('#table-design-page-content');
+            var editContent = $('#edit-table-design-content');
+            var clasaAni = 'animation-fadeInQuick';
+
+            var backListBtn = $('.btn-back-list');
+            backListBtn.on('click', function () {
+                editContent.hide();
+                listContent.show();
+                listContent.addClass(clasaAni);
+                editContent.html('');
+            });
+
+            var startBtn = $('.btn-submit');
+            // On start button click start loading again
+            startBtn.on('click', function () {
+                $(this).button('loading');
+            });
+
+            /* Validate required: true*/           
+
+            $('form#frm-update-table-design').each(function () {   // <- selects every <form> on page
+                $(this).validate({        // <- initialize validate() on each form
+                    errorClass: 'help-block animation-slideDown', // You can change the animation class for a different entrance animation - check animations page
+                    errorElement: 'div',
+                    errorPlacement: function (error, e) {
+                        e.parents('.form-group > div').append(error);
+                    },
+                    highlight: function (e) {
+                        $(e).closest('.form-group').removeClass('has-success has-error').addClass('has-error');
+                        $(e).closest('.help-block').remove();
+                        startBtn.button('reset');
+                    },
+                    success: function (e) {
+                        e.closest('.form-group').removeClass('has-success has-error');
+                        e.closest('.help-block').remove();
+                    },
+                    submitHandler: function (e) {
+                        $.ajax({
+                            url: e.action,
+                            type: e.method,
+                            data: $(e).serialize(),
+                            success: function (data) {
+                                if (data.Result) {
+                                    $('#response-hodler').html(data.Html);
+                                    reloadTableDesignList();
+                                }
+                                else {
+                                    showGrowl(data.Html, 'danger');
+                                }
+                                startBtn.button('reset');
+                            },
+                            error: function (xhr) {
+                                showGrowl('Error: ' + xhr.status + ' ' + xhr.statusText, 'danger');
+                                startBtn.button('reset');
+                            }
+                        });
+                        return false;
+                    }
+                });
+            });
+        });
+    </script>
+}

@@ -1,0 +1,90 @@
+﻿@using MvcPaging;
+@model IPagedList<SqlDataProvider.Data.ItemTemplateInfo>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "List Item";
+}
+@if (Model.Count() > 0)
+{
+    <div style="min-height:482px">
+        <table class="table table-hover" id="list-items">
+            <thead>
+                <tr>
+                    <th class="text-center" style="width: 20px;">
+                        <label>
+                            <input type="checkbox" id="check-all" name="check-all"><span></span>
+                        </label>
+                    </th>
+                    <th style="width: 386px;" class="text-center">Name</th>
+                    <th>
+                        Attack
+                    </th>
+                    <th>
+                        Defence
+                    </th>
+                    <th>
+                        Luck
+                    </th>
+                    <th>
+                        Agility
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                    <tr>
+                        <td class="text-center">
+                            <label>
+                                <input type="checkbox" id="@item.TemplateID" name="@item.TemplateID" value="@item.TemplateID"><span></span>
+                            </label>
+                        </td>
+                        <td>
+                            <label class="col-xs-2">
+                                @Html.ItemImage(item.TemplateID, "", "", "37")
+                            </label>
+                            <div class="col-xs-10" style="margin-bottom:-15px">
+                                <a href="javascript:void(0);">
+                                    <strong>@Html.TItemName(item.TemplateID)</strong>
+                                </a>
+                                <p>
+                                    <span class="text-success">@item.TemplateID.ToString()</span>
+                                    <span class="pull-right text-warning" style="font-size:11px"><em>category: </em> @item.CategoryID</span>
+                                </p>
+
+                            </div>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Attack)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Defence)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Luck)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Agility)
+                        </td>
+                    </tr>
+            }
+                </tbody>
+        </table>
+    </div>
+    <div class="text-center" style="margin-top:-15px">
+        @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount, new AjaxOptions { UpdateTargetId = "items-content", LoadingElementId = "loading-bgr" }).Options(o => o
+                    .DisplayTemplate("_Pagination")
+                    .MaxNrOfPages(3)
+                    .Action("ListItemsModel")
+                    .AddRouteValue("type", ViewData["type"])
+                    .AddRouteValue("key", ViewData["key"])
+                    .AddRouteValue("cid", ViewData["cid"])
+                    .AlwaysAddFirstPageNumber())
+    </div>
+}
+else
+{
+    <div class="text-center">
+        @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+    </div>
+}

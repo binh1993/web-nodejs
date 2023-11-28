@@ -1,0 +1,77 @@
+﻿
+@model GM.Service.Models.XmlViewModel
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    var count = 0;
+    if (Model.XmlDoc != null)
+    {
+        count = Model.XmlDoc.Descendants().Count();
+        if (count < 3000)
+        {
+            count = 0;
+        }
+    }
+}
+@if (Model.Result)
+{
+    <!-- Dialog defenition -->
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Xml View <i class="fa fa-angle-right"></i><span class="text-danger"> @Model.XmlName</span></h4>
+    </div>
+    <div class="modal-body">
+        <div style="overflow-y:auto; height:450px">
+            <pre class="line-numbers">
+            <code class="language-php" id="highlight-code-@count">
+                @Model.XmlDoc
+            </code>
+        </pre>
+        </div>
+        <br />
+        <div class="form-group form-actions">
+            <div class="col-md-12 text-right">
+                <a href="@Html.Raw(Url.Action("SaveToXml", "XML", routeValues: new {xml = Request.QueryString["xml"], url = Request.QueryString["url"]}))"
+                   class="btn btn-sm btn-warning" data-toggle="tooltip" data-modal="saveviewtoxml">Lưu thành file xml</a>
+                <button type="button" class="btn btn-sm btn-primary btn-close" data-dismiss="modal"> @StaticFunction.GetTranslation("Model.CLose")</button>
+            </div>
+        </div>
+        <br />
+    </div>
+}
+else
+{
+    <div class="modal-header">
+        <h4>Chưa hỗ trợ file <span class="text-danger"> @Model.XmlName</span>. Hiển thị định dạng gốc.</h4>
+    </div>
+    <div class="modal-body">
+        <div style="overflow-y:auto; height:450px">
+            <pre class="line-numbers">
+            <code class="language-php" id="highlight-code-@count">
+                @Model.XmlDoc
+            </code>
+        </pre>           
+        </div>      
+    </div>
+    <br />
+    <div class="form-group form-actions">
+        <div class="col-md-12 text-right">
+            <a href="@Html.Raw(Url.Action("SaveToXml", "XML", routeValues: new {xml = ViewData["xml"], url = ViewData["url"]}))"
+               class="btn btn-sm btn-warning" data-toggle="tooltip" data-modal="saveviewtoxml">Lưu thành file xml</a>
+        </div>
+    </div>
+            <br />
+}
+
+@section Scripts{
+    <script>
+        $(function () {
+            $('a[data-modal="saveviewtoxml"]').bind('click', function (e) {
+                var link = $(this).attr("href");
+                return callService(link);
+            });
+
+            var code = $('#highlight-code-0')[0];
+            Prism.highlightElement(code);
+        });
+    </script>
+}

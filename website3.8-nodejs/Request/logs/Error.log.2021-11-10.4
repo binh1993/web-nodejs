@@ -1,0 +1,183 @@
+2021-11-10 10:45:37,941 - [10] - ERROR - Tank.Request.Login - login != nulltrue
+2021-11-10 10:45:37,975 - [10] - ERROR - Tank.Request.Login - flag2false!
+2021-11-10 10:45:43,510 - [9] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context) in C:\Source\Tank.Request\IMListLoad.ashx.cs:line 33
+2021-11-10 10:45:43,660 - [7] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context) in C:\Source\Tank.Request\AdvanceQuestTime.ashx.cs:line 33
+2021-11-10 10:49:20,499 - [19] - ERROR - Tank.Request.ServerList - Load server list error:
+System.ServiceModel.CommunicationObjectFaultedException: The communication object, System.ServiceModel.Channels.ServiceChannel, cannot be used for communication because it is in the Faulted state.
+
+Server stack trace: 
+   at System.ServiceModel.Channels.CommunicationObject.Close(TimeSpan timeout)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at System.ServiceModel.ClientBase`1.System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at Tank.Request.ServerList.ProcessRequest(HttpContext context) in C:\Source\Tank.Request\ServerList.ashx.cs:line 49
+2021-11-10 10:52:47,478 - [10] - ERROR - Tank.Request.ServerList - Load server list error:
+System.ServiceModel.CommunicationObjectFaultedException: The communication object, System.ServiceModel.Channels.ServiceChannel, cannot be used for communication because it is in the Faulted state.
+
+Server stack trace: 
+   at System.ServiceModel.Channels.CommunicationObject.Close(TimeSpan timeout)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at System.ServiceModel.ClientBase`1.System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at Tank.Request.ServerList.ProcessRequest(HttpContext context) in C:\Source\Tank.Request\ServerList.ashx.cs:line 49
+2021-11-10 11:00:36,372 - [7] - ERROR - Tank.Request.ServerList - Load server list error:
+System.ServiceModel.CommunicationObjectFaultedException: The communication object, System.ServiceModel.Channels.ServiceChannel, cannot be used for communication because it is in the Faulted state.
+
+Server stack trace: 
+   at System.ServiceModel.Channels.CommunicationObject.Close(TimeSpan timeout)
+
+Exception rethrown at [0]: 
+   at System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   at System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   at System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at System.ServiceModel.ClientBase`1.System.ServiceModel.ICommunicationObject.Close(TimeSpan timeout)
+   at Tank.Request.ServerList.ProcessRequest(HttpContext context) in C:\Source\Tank.Request\ServerList.ashx.cs:line 49
+2021-11-10 11:03:48,199 - [14] - ERROR - Tank.Request.csFunction - CreateCompressXml ActiveList.xml is fail!
+System.UnauthorizedAccessException: Access to the path 'C:\Source\Tank.Request\ActiveList.xml' is denied.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy)
+   at System.IO.FileStream..ctor(String path, FileMode mode)
+   at Tank.Request.csFunction.CreateCompressXml(String path, XElement result, String file, Boolean isCompress) in C:\Source\Tank.Request\csFunction.cs:line 103
+2021-11-10 11:03:48,339 - [14] - ERROR - Tank.Request.csFunction - CreateCompressXml BallList.xml is fail!
+System.UnauthorizedAccessException: Access to the path 'C:\Source\Tank.Request\BallList.xml' is denied.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy)
+   at System.IO.FileStream..ctor(String path, FileMode mode)
+   at Tank.Request.csFunction.CreateCompressXml(String path, XElement result, String file, Boolean isCompress) in C:\Source\Tank.Request\csFunction.cs:line 103
+2021-11-10 11:03:48,379 - [14] - ERROR - Tank.Request.csFunction - CreateCompressXml LoadMapsItems.xml is fail!
+System.UnauthorizedAccessException: Access to the path 'C:\Source\Tank.Request\LoadMapsItems.xml' is denied.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy)
+   at System.IO.FileStream..ctor(String path, FileMode mode)
+   at Tank.Request.csFunction.CreateCompressXml(String path, XElement result, String file, Boolean isCompress) in C:\Source\Tank.Request\csFunction.cs:line 103
+2021-11-10 11:03:48,401 - [14] - ERROR - Tank.Request.csFunction - CreateCompressXml LoadPVEItems.xml is fail!
+System.UnauthorizedAccessException: Access to the path 'C:\Source\Tank.Request\LoadPVEItems.xml' is denied.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy)
+   at System.IO.FileStream..ctor(String path, FileMode mode)
+   at Tank.Request.csFunction.CreateCompressXml(String path, XElement result, String file, Boolean isCompress) in C:\Source\Tank.Request\csFunction.cs:line 103
+2021-11-10 11:03:48,551 - [14] - ERROR - Tank.Request.csFunction - CreateCompressXml QuestList.xml is fail!
+System.UnauthorizedAccessException: Access to the path 'C:\Source\Tank.Request\QuestList.xml' is denied.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy)
+   at System.IO.FileStream..ctor(String path, FileMode mode)
+   at Tank.Request.csFunction.CreateCompressXml(String path, XElement result, String file, Boolean isCompress) in C:\Source\Tank.Request\csFunction.cs:line 103
+2021-11-10 11:03:49,474 - [14] - ERROR - Tank.Request.csFunction - CreateCompressXml TemplateAlllist.xml is fail!
+System.UnauthorizedAccessException: Access to the path 'C:\Source\Tank.Request\TemplateAlllist.xml' is denied.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy)
+   at System.IO.FileStream..ctor(String path, FileMode mode)
+   at Tank.Request.csFunction.CreateCompressXml(String path, XElement result, String file, Boolean isCompress) in C:\Source\Tank.Request\csFunction.cs:line 103
+2021-11-10 11:03:50,082 - [14] - ERROR - Tank.Request.csFunction - CreateCompressXml ShopItemList.xml is fail!
+System.UnauthorizedAccessException: Access to the path 'C:\Source\Tank.Request\ShopItemList.xml' is denied.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy)
+   at System.IO.FileStream..ctor(String path, FileMode mode)
+   at Tank.Request.csFunction.CreateCompressXml(String path, XElement result, String file, Boolean isCompress) in C:\Source\Tank.Request\csFunction.cs:line 103
+2021-11-10 11:03:50,098 - [14] - ERROR - Tank.Request.csFunction - CreateCompressXml LoadItemsCategory.xml is fail!
+System.UnauthorizedAccessException: Access to the path 'C:\Source\Tank.Request\LoadItemsCategory.xml' is denied.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy)
+   at System.IO.FileStream..ctor(String path, FileMode mode)
+   at Tank.Request.csFunction.CreateCompressXml(String path, XElement result, String file, Boolean isCompress) in C:\Source\Tank.Request\csFunction.cs:line 103
+2021-11-10 11:03:50,107 - [14] - ERROR - Tank.Request.csFunction - CreateCompressXml ItemStrengthenList.xml is fail!
+System.UnauthorizedAccessException: Access to the path 'C:\Source\Tank.Request\ItemStrengthenList.xml' is denied.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy)
+   at System.IO.FileStream..ctor(String path, FileMode mode)
+   at Tank.Request.csFunction.CreateCompressXml(String path, XElement result, String file, Boolean isCompress) in C:\Source\Tank.Request\csFunction.cs:line 103
+2021-11-10 11:03:50,114 - [14] - ERROR - Tank.Request.csFunction - CreateCompressXml MapServerList.xml is fail!
+System.UnauthorizedAccessException: Access to the path 'C:\Source\Tank.Request\MapServerList.xml' is denied.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy)
+   at System.IO.FileStream..ctor(String path, FileMode mode)
+   at Tank.Request.csFunction.CreateCompressXml(String path, XElement result, String file, Boolean isCompress) in C:\Source\Tank.Request\csFunction.cs:line 103
+2021-11-10 11:03:50,124 - [14] - ERROR - Tank.Request.csFunction - CreateCompressXml ConsortiaLevelList.xml is fail!
+System.UnauthorizedAccessException: Access to the path 'C:\Source\Tank.Request\ConsortiaLevelList.xml' is denied.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy)
+   at System.IO.FileStream..ctor(String path, FileMode mode)
+   at Tank.Request.csFunction.CreateCompressXml(String path, XElement result, String file, Boolean isCompress) in C:\Source\Tank.Request\csFunction.cs:line 103
+2021-11-10 11:03:50,133 - [14] - ERROR - Tank.Request.csFunction - CreateCompressXml DailyAwardList.xml is fail!
+System.UnauthorizedAccessException: Access to the path 'C:\Source\Tank.Request\DailyAwardList.xml' is denied.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy)
+   at System.IO.FileStream..ctor(String path, FileMode mode)
+   at Tank.Request.csFunction.CreateCompressXml(String path, XElement result, String file, Boolean isCompress) in C:\Source\Tank.Request\csFunction.cs:line 103
+2021-11-10 11:03:50,182 - [14] - ERROR - Tank.Request.csFunction - CreateCompressXml NPCInfoList.xml is fail!
+System.UnauthorizedAccessException: Access to the path 'C:\Source\Tank.Request\NPCInfoList.xml' is denied.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy)
+   at System.IO.FileStream..ctor(String path, FileMode mode)
+   at Tank.Request.csFunction.CreateCompressXml(String path, XElement result, String file, Boolean isCompress) in C:\Source\Tank.Request\csFunction.cs:line 103
+2021-11-10 11:03:50,191 - [14] - ERROR - Tank.Request.csFunction - CreateCompressXml loginawarditemtemplate.xml is fail!
+System.UnauthorizedAccessException: Access to the path 'C:\Source\Tank.Request\loginawarditemtemplate.xml' is denied.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy)
+   at System.IO.FileStream..ctor(String path, FileMode mode)
+   at Tank.Request.csFunction.CreateCompressXml(String path, XElement result, String file, Boolean isCompress) in C:\Source\Tank.Request\csFunction.cs:line 103
+2021-11-10 11:03:50,227 - [14] - ERROR - Tank.Request.csFunction - CreateCompressXml eventrewarditemlist_out.xml is fail!
+System.UnauthorizedAccessException: Access to the path 'C:\Source\Tank.Request\eventrewarditemlist_out.xml' is denied.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy)
+   at System.IO.FileStream..ctor(String path, FileMode mode)
+   at Tank.Request.csFunction.CreateCompressXml(String path, XElement result, String file, Boolean isCompress) in C:\Source\Tank.Request\csFunction.cs:line 103
+2021-11-10 11:03:50,228 - [14] - ERROR - Tank.Request.csFunction - CreateCompressXml eventrewarditemlist.xml is fail!
+System.UnauthorizedAccessException: Access to the path 'C:\Source\Tank.Request\eventrewarditemlist.xml' is denied.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy)
+   at System.IO.FileStream..ctor(String path, FileMode mode)
+   at Tank.Request.csFunction.CreateCompressXml(String path, XElement result, String file, Boolean isCompress) in C:\Source\Tank.Request\csFunction.cs:line 103
+2021-11-10 11:03:50,241 - [14] - ERROR - Tank.Request.csFunction - CreateCompressXml ServerConfig.xml is fail!
+System.UnauthorizedAccessException: Access to the path 'C:\Source\Tank.Request\ServerConfig.xml' is denied.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy)
+   at System.IO.FileStream..ctor(String path, FileMode mode)
+   at Tank.Request.csFunction.CreateCompressXml(String path, XElement result, String file, Boolean isCompress) in C:\Source\Tank.Request\csFunction.cs:line 103
+2021-11-10 11:03:50,275 - [14] - ERROR - Tank.Request.csFunction - CreateCompressXml ShopGoodsShowList.xml is fail!
+System.UnauthorizedAccessException: Access to the path 'C:\Source\Tank.Request\ShopGoodsShowList.xml' is denied.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy)
+   at System.IO.FileStream..ctor(String path, FileMode mode)
+   at Tank.Request.csFunction.CreateCompressXml(String path, XElement result, String file, Boolean isCompress) in C:\Source\Tank.Request\csFunction.cs:line 103
+2021-11-10 11:03:50,291 - [14] - ERROR - Tank.Request.csFunction - CreateCompressXml newtitleinfo.xml is fail!
+System.UnauthorizedAccessException: Access to the path 'C:\Source\Tank.Request\newtitleinfo.xml' is denied.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy)
+   at System.IO.FileStream..ctor(String path, FileMode mode)
+   at Tank.Request.csFunction.CreateCompressXml(String path, XElement result, String file, Boolean isCompress) in C:\Source\Tank.Request\csFunction.cs:line 103

@@ -1,0 +1,184 @@
+﻿@model List<SqlDataProvider.Data.AreaConfigInfo>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "Service Area";
+}
+<div class="row">
+    <div class="col-md-4" style="border-right:1px dotted gray">
+        <p class="text-warning" style="font-size:18px;">
+            <i class="gi gi-log_in"></i><small> Danh sách Server</small>
+            <a href="@Html.Raw(Url.Action("Create","Service"))" class="btn btn-alt btn-sm btn-default pull-right" data-dialog="-1"
+               id="btn-add-server">
+                <i class="gi gi-circle_plus text-primary"></i> Thêm server mới
+            </a>
+        </p>
+        <div id="area-list">           
+
+            <table class="table table-hover" id="media-list">
+                @if (Model.Count() > 0)
+                {
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="text-center">
+                                    <label>
+                                        <input type="checkbox" id="cb-@item.AreaID" name="@item.AreaID" value="@item.AreaID"><span></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <div>
+                                        <a href="@Url.Action("ChannelList", "Service", new { id = item.AreaID, title = item.AreaName})" id="@item.AreaID"><strong>@item.AreaName</strong></a>
+                                        <span class="pull-right text-warning" style="font-size:11px"><em></em> @item.AreaID</span>
+                                    </div>
+                                    <div>
+                                        <span class="text-info" style="font-size:11px">Database <em>@item.Catalog</em></span>
+                                        <div class="btn-group btn-group-xs pull-right">
+                                            <a href="@Html.Raw(Url.Action("Edit","Service", new { id = item.AreaID}))" class="btn btn-xs btn-warning"
+                                               data-toggle="tooltip" title="Chỉnh sửa" data-modal="edit"><i class="gi gi-edit"></i></a>
+                                            <a href="@Url.Action("Delete", "Service", routeValues: new { id = item.AreaID })" data-modal="delete"
+                                               data-toggle="tooltip" title="Xóa" class="btn btn-danger"><i class="fa fa-times"></i></a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                }
+                else
+                {
+                    <tbody>
+                        <tr>
+                            <td colspan="2" class="text-center" id="insert-avatar">
+                                @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+                            </td>
+                        </tr>
+                    </tbody>
+                }
+            </table>
+
+        </div><br />
+        <div class="btn-group btn-group-sm">
+            <a href="@Html.Raw(Url.Action("SendShutdown","Service"))" class="btn btn-warning" id="maintenance-selected">Bảo trì Server được chọn</a>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <p class="text-warning" style="font-size:18px">
+            <i class="gi gi-log_out"></i><small> Danh sách kênh</small> <strong><span id="channel-header" class="text-danger">..</span></strong>
+            <a href="@Html.Raw(Url.Action("CreateChannel","Service"))" class="btn btn-alt btn-sm btn-default pull-right" data-dialog="-1"
+               id="btn-add-channel">
+                <i class="gi gi-circle_plus text-primary"></i> Thêm kênh mới
+            </a>
+        </p>
+        <div id="channel-list">
+            <div class="text-center text-warning">
+                <p>@Html.Raw(StaticFunction.GetTranslation("Views.WaitLoading"))</p>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+            /*add some code here!*/
+
+            ModelGeneral.init('data-modal="delete"');
+            ModelGeneral.init('data-modal="edit"');
+
+            $('#maintenance-selected').bind('click', function (e) {
+                var loadurl = $(this).attr("href");
+                var _checked = [];
+
+                _checked = $("tbody input:checkbox:checked").map(function () {
+                    return this.value;
+                }).toArray();
+
+                if (_checked.length == 0) {
+                    showGrowl('Bạn chưa chọn server. Vui lòng chọn và thử lại', 'danger');
+                    return false;
+                }
+                var params = 'ids=' + _checked;
+                $("#loading-bgr").show();
+                $.ajax({
+                    url: loadurl,
+                    type: 'POST',
+                    data: params,
+                    success: function (data) {
+                        if (data.Result) {
+                            showGrowl(data.Html);
+                        }
+                        else {
+                            showGrowl(data.Html, 'danger');
+                        }
+                        $("#loading-bgr").hide();
+                        return false;
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        showGrowl(getError(xhr.status, xhr.statusText), 'danger');
+                        $("#loading-bgr").hide();
+                    }
+                });
+                return false;
+            });
+
+            $('#btn-add-server').bind('click', function (e) {
+                var _url = $(this).attr("href");
+                GMApp.Dialog(_url, e);
+                return false;
+            });
+
+            $('#btn-add-channel').bind('click', function (e) {
+                var _url = $(this).attr("href");
+                var _id = 'id=' + $(this).attr("data-dialog");
+                GMApp.Dialog(_url, e, _id, 'large');
+                return false;
+            });
+
+            $('#area-list').slimScroll({ height: 415, color: '#000', size: '5px', position: 'left', touchScrollStep: 100 });
+
+            loadChannelList();
+
+            $("#media-list").on("click", "tbody>tr>td>div a", function () {
+                $("#media-list>tbody>tr>td>div a").removeClass('active text-danger');
+                $(this).addClass('active text-danger');
+                loadChannelList();
+                return false;
+            });
+
+            stopReresh();
+        });
+
+        function loadChannelList() {
+            var curentAvtive = $("#media-list>tbody").find('.active');
+            if (curentAvtive.length == 0) {
+                curentAvtive = $("#media-list>tbody>tr>td>div:first a");
+                curentAvtive.addClass('active text-danger');
+            }
+            if (curentAvtive.length > 0) {
+                var name = curentAvtive.text();
+                var link = curentAvtive.attr("href");
+                var id = curentAvtive.attr("id");
+                $("#loading-bgr").show();
+                $.get(link, function (data) {
+                    $("#channel-list").html(data.Html);
+                    $("#channel-header").html(name);
+                    $("#btn-add-channel").attr("data-dialog", id);
+                    $("#loading-bgr").hide();
+                })
+                .fail(function (data) {
+                    $("#event-award-list").html(getError(data.status, data.statusText));
+                    $("#loading-bgr").hide();
+                });
+            }
+            else {
+                $("#event-award-list").html('<div class="text-center">@Html.Raw(StaticFunction.GetTranslation("Views.Empty"))</div>');
+                $("#event-header").html('..');
+            }
+        }
+
+        function reloadServer() {
+            GMApp.GetJson('#tabs-server-manager', '@Url.Action("ServerManager", "Service")');
+        }
+    </script>
+}
+

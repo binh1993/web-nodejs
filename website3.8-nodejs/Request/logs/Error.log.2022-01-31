@@ -1,0 +1,6 @@
+2022-01-31 20:54:55,786 - [13] - ERROR - Tank.Request.PlayerManager - NOHAVE khanhlam
+2022-01-31 20:54:55,799 - [13] - ERROR - Tank.Request.Login - khanhlam: 2768589a-4fe5-4da4-ade2-3e47cda5f885
+2022-01-31 20:55:27,240 - [12] - ERROR - Tank.Request.PlayerManager - NOHAVE khanhlam
+2022-01-31 20:55:27,240 - [12] - ERROR - Tank.Request.Login - khanhlam: 2768589a-4fe5-4da4-ade2-3e47cda5f885
+2022-01-31 20:55:58,404 - [7] - ERROR - Tank.Request.PlayerManager - khanhlam|da378616-193d-4aea-94fb-b32296f10085
+2022-01-31 20:55:58,404 - [7] - ERROR - Tank.Request.Login - khanhlam: da378616-193d-4aea-94fb-b32296f10085

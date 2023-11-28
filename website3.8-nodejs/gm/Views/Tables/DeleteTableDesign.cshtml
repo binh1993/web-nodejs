@@ -1,0 +1,46 @@
+﻿@model GM.Service.Models.RequestResultModel
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "Xác nhận";
+}
+<div class="modal-header @Model.GetThemed()">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+<div class="modal-body">
+    <!-- Danger Alert Content -->
+    <div class="@Model.GetCss()">
+        @Html.Raw(Model.Message)
+    </div>
+    <!-- END Danger Alert Content -->
+    <form action="@Html.Raw(Url.Action("DeleteTableDesign", "Tables", new { id = Model.ID}))"
+          class="form-horizontal" id="form-confirm" method="post" role="form">
+        @Html.AntiForgeryToken()
+        <input type="hidden" value="@Model.Name" id="Name" name="Name" />
+        <div class="form-actions text-right">
+            @if (!string.IsNullOrEmpty(Model.Name))
+            {
+                <input class="btn btn-sm btn-danger" type="submit" value="Xác nhận" />
+            }
+            <input class="btn btn-sm btn-success" type="button" value="Huỷ bỏ" data-dismiss="modal" />
+        </div>
+    </form>
+</div>
+@section Scripts{
+    <script>
+        $('#form-confirm').on('submit', function (e) {
+            $('#loading-bgr').show();
+            $.ajax({
+                url: this.action,
+                type: this.method,
+                data: $(this).serialize(),
+                success: function (result) {
+                    $('#loading-bgr').hide();
+                    $('#modal-content').html(result);
+                    reloadTableDesignList();
+                }
+            });
+            return false;
+        });
+    </script>
+}

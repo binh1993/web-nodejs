@@ -1,0 +1,199 @@
+﻿@model GM.Service.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Đăng ký";
+}
+<!-- Header -->
+<div class="content-header">
+    <div class="header-section">
+        <h1>
+            <i class="fa fa-list-alt"></i>@ViewBag.Title<br><small>Hãy đăng ký dịch vụ GM ngay bây giờ @ViewBag.Message</small>
+        </h1>
+    </div>
+</div>
+
+<!-- END Header -->
+
+    <!-- Login Container -->
+    <div id="login-container" class="animation-fadeIn">
+        <!-- Login Title -->
+        <div class="login-title text-center">
+            <h1><i class="gi gi-flash"></i> <strong>GM Service</strong>
+            <br>
+            <small><strong>Đăng ký</strong></small></h1>
+        </div>
+        <!-- END Login Title -->
+        <!-- Login Block -->
+        <div class="block push-bit">        
+            <!-- Register Form -->
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal form-borderless form-control-bordered", role = "form",  @id = "form-register" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.Partial("_Alerts")
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="gi gi-envelope"></i></span>
+                            <input type="text" id="register-email" name="Email" class="form-control input-lg" placeholder="Email">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
+                            <input type="password" id="register-password" name="Password" class="form-control input-lg" placeholder="Mật khẩu">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
+                            <input type="password" id="register-password-verify" name="ConfirmPassword" class="form-control input-lg" placeholder="Xác nhận mật khẩu">
+                        </div>
+                    </div>
+                </div>              
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="gi gi-picture"></i></span>
+                            <input type="text" maxlength="8" name="Captcha" id="Captcha" class="form-control input-lg" placeholder="Nhập mã xác nhận bên dưới">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12 text-center">
+                      <a href="javascript:loadCaptcha()"><img id="img-captcha" />   <i class="hi hi-refresh" style="margin-left:15px; font-size:25px"></i></a>  
+                    </div>
+                </div>
+                <div class="form-group form-actions">
+                    <div class="col-xs-9">
+                        <a href="#modal-terms" data-toggle="modal" class="register-terms">Tôi đồng ý với thỏa thuận sử dụng</a>
+                        <label class="switch switch-primary">
+                            <input type="checkbox" id="register-terms" name="RegisterTerms">
+                            <span></span>
+                        </label>
+                    </div>
+                    <div class="col-xs-3 text-right">
+                        <button type="submit" class="btn btn-sm btn-success"><i class="fa fa-plus"></i> Đăng ký</button>
+                    </div>
+                </div>   
+}
+            <!-- END Register Form -->
+        </div>
+        <!-- END Login Block -->        
+    </div>
+    <!-- END Login Container -->
+
+ <!-- Modal Terms -->
+<div id="modal-terms" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Điều khoản sử dụng dịch vụ</h4>
+            </div>
+            <div class="modal-body">
+                <h4>Các hành vi cấm</h4>
+                <p>
+                    <ol>
+                        <li>Lợi dụng việc cung cấp, sử dụng dịch vụ Internet và thông tin trên mạng nhằm mục đích:</li>
+                        <li>Tiết lộ bí mật nhà nước, bí mật quân sự, an ninh, kinh tế, đối ngoại và những bí mật khác do pháp luật quy định.</li>
+                        <li>Đưa thông tin xuyên tạc, vu khống, xúc phạm uy tín của tổ chức, danh dự và nhân phẩm của cá nhân.</li>
+                        <li>Quảng cáo, tuyên truyền, mua bán hàng hoá, dịch vụ bị cấm; truyền bá tác phẩm báo chí, văn học, nghệ thuật, xuất bản phẩm bị cấm.</li>
+                        <li>Cản trở trái pháp luật, gây rối, phá hoại hệ thống máy chủ tên miền quốc gia, hệ thống thiết bị cung cấp dịch vụ Internet và thông tin trên mạng; cản trở việc truy cập thông tin và sử dụng các dịch vụ hợp pháp trên Interrnet của tổ chức, cá nhân.</li>
+                        <li>Sử dụng trái phép mật khẩu, khoá mật mã của các tổ chức, cá nhân, thông tin riêng, thông tin cá nhân và tài nguyên Internet.</li>
+                        <li>Giả mạo tổ chức, cá nhân và phát tán thông tin giả mạo, thông tin sai sự thật trên mạng xâm hại đến quyền và lợi ích hợp pháp của tổ chức, cá nhân.</li>
+                        <li>Tạo đường dẫn trái phép đối với tên miền của tổ chức, cá nhân. Tạo, cài đặt, phát tán các phần mềm độc hại, vi rút máy tính; xâm nhập trái phép, chiếm quyền điều khiển hệ thống thông tin, tạo lập công cụ tấn công trên Internet.</li>
+                        <li>Nghiêm cấm việc phát tán, truyền bá hay cổ vũ cho bất kỳ hoạt động nào nhằm can thiệp, phá hoại hay xâm nhập vào dữ liệu của sản phẩm cung cấp hoặc hệ thống máy chủ.</li>
+                        <li>Không được có bất kỳ hành vi nào nhằm đăng nhập trái phép hoặc tìm cách đăng nhập trái phép hoặc gây thiệt hại cho hệ thống máy chủ.</li>
+                        <li>Khi giao tiếp với người chơi khác, bạn không được quấy rối, chửi bới, làm phiền hay có bất kỳ hành vi thiếu văn hoá nào đối với người chơi khác.</li>
+                        <li>Tuyệt đối nghiêm cấm việc xúc phạm, nhạo báng người khác dưới bất kỳ hình thức nào (nhạo báng, chê bai, kỳ thị tôn giáo, giới tính, sắc tộc….).</li>
+                        <li>Nghiêm cấm tổ chức các hình thức cá cược, cờ bạc hoặc các thỏa thuận liên quan đến tiền, hiện kim, hiện vật.</li>
+                    </ol>
+                </p>
+                <div class="form-actions">
+                    <div class="text-right">
+                        <button type="button" class="btn btn-sm btn-success" data-dismiss="modal">Đồng ý</button>
+                    </div>
+                </div>
+            </div>            
+        </div>        
+    </div>
+</div>
+<!-- END Modal Terms -->
+
+@section Scripts {
+    <script>
+        $(function () {
+            /* Register form - Initialize Validation */
+            $('#form-register').validate({
+                errorClass: 'help-block animation-slideDown', // You can change the animation class for a different entrance animation - check animations page
+                errorElement: 'div',
+                errorPlacement: function (error, e) {
+                    e.parents('.form-group > div').append(error);
+                },
+                highlight: function (e) {
+                    $(e).closest('.form-group').removeClass('has-success has-error').addClass('has-error');
+                    $(e).closest('.help-block').remove();
+                },
+                success: function (e) {
+                    if (e.closest('.form-group').find('.help-block').length === 2) {
+                        e.closest('.help-block').remove();
+                    } else {
+                        e.closest('.form-group').removeClass('has-success has-error');
+                        e.closest('.help-block').remove();
+                    }
+                },
+                rules: {
+                    'Email': {
+                        required: true,
+                        email: true
+                    },
+                    'Password': {
+                        required: true,
+                        minlength: 5
+                    },
+                    'ConfirmPassword': {
+                        required: true,
+                        equalTo: '#register-password'
+                    },
+                    'RegisterTerms': {
+                        required: true
+                    },
+                    'Captcha': {
+                        required: true,
+                        remote: "@Url.Action("CaptchaValid", "Account")"
+                    }
+                },
+                messages: {
+                    'Email': 'Vui lòng nhập Email',
+                    'Password': {
+                        required: 'Vui lòng nhập mật khẩu',
+                        minlength: 'Mật khẩu phải có ít nhất 5 ký tự'
+                    },
+                    'ConfirmPassword': {
+                        required: 'Vui lòng nhập lại mật khẩu',
+                        minlength: 'Mật khẩu phải có ít nhất 5 ký tự',
+                        equalTo: 'Mật khẩu nhập lại không trùng với mật khẩu ở trên'
+                    },
+                    'RegisterTerms': {
+                        required: 'Bạn phải đồng ý với các điều khoản sử dụng của chúng tôi!'
+                    },
+                    'Captcha': "Mã xác nhận không chính xác"
+                }
+            });
+            loadCaptcha();
+        });
+        function loadCaptcha() {
+            $.ajax({
+                type: 'GET', url: '@Url.Action("GenerateCaptcha", "Account")',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                cache: false,
+                success: function (data) { $("#img-captcha").attr('src', data); }
+            });
+        }
+        
+    </script>
+}

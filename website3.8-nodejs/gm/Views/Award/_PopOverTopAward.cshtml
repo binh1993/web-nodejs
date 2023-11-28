@@ -1,0 +1,100 @@
+﻿@using GM.Service.Models;
+@model TopAwardModel
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    var item = Model.Award;
+}
+
+   <div class="ajax-text-and-image white-popup-block">
+    <style>
+	.ajax-text-and-image {
+		max-width:800px; margin: 20px auto; background: #FFF; padding: 0; line-height: 0;
+	}	
+    </style>
+    <!--Avatar -->
+       @Html.Partial("Avatar", Model.Avatar)
+    <!--END Avatar-->
+    <div class="ajcol" style="line-height: 1.231;">
+        <div class="block" style="margin-top:15px; width:384px; position:relative;">
+            <div class="block-title clearfix">
+                <div class="block-options">
+                    Chỉ số <i class="gi gi-chevron-right" style="font-size:8px"></i><span class="text-warning"><strong> @item.Name</strong></span>
+                </div>
+            </div>
+            <div class="block-content-full">
+                <table class="table table-borderless table-striped table-vcenter">
+                    <tbody>
+                        <tr>
+                            <td class="text-right" style="width:150px"><strong>Hiệu lực</strong></td>
+                            <td>
+                            @if (item.ValidDate == 0)
+                            { <span class="text-success"> Vĩnh viễn </span> }
+                            else
+                            { <span class="text-info">@item.ValidDate ngày </span> }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right" style="width:150px"><strong>Trạng thái</strong></td>
+                            <td>
+                                @if(!item.IsBinds)
+                                { <span class="text-success"> Không khóa </span> }
+                                else
+                                { <span class="text-danger"> Khóa</span> }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right" style="width:150px"><strong>Cường hóa</strong></td>
+                            <td>
+                            @if (item.StrengthenLevel == 0)
+                            { <span class="text-muted"> chưa cường hóa </span> }
+                            else
+                            { <span class="text-info">Cấp @item.StrengthenLevel </span> }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right"><strong>Tấn công</strong></td>
+                            <td>@item.AttackCompose</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right"><strong>Phòng thủ</strong></td>
+                            <td>@item.DefendCompose</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right"><strong>Nhanh nhẹ</strong></td>
+                            <td>@item.AgilityCompose</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right"><strong>May mắn</strong></td>
+                            <td>@item.LuckCompose</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right"><strong>Ma công</strong></td>
+                            <td>@item.MagicAttack</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right"><strong>Ma phòng</strong></td>
+                            <td>@item.MagicDefend</td>
+                        </tr>
+                        <tr>
+                            <td class="text-right"><strong>Khảm Gold</strong></td>
+                            <td>@if (item.IsGold) { <span class="text-success">Có</span><span> - </span><span>@item.GoldValidate <em>ngày</em></span>  }
+                            else
+                            { <span class="text-muted" >Không</span>} </td>
+                        </tr>
+                    </tbody>
+                </table>               
+            </div>          
+            <div class="pull-right" style="position:absolute; bottom:0px; right:20px">@Html.ItemImage(item.TemplateID, "thumbnail", "thumbnail", "auto")</div>
+        </div>
+        <span class="text-warning">*Đây là các chỉ số hợp thành thiết lập khi thêm phần thưởng</span>
+    </div>
+    <div style="clear:both; line-height: 0;"></div>
+</div>
+@section Scripts{
+    <script>       
+        $(function () {
+            /**/
+        });
+    </script>
+}
+

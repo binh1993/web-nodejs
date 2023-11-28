@@ -1,0 +1,158 @@
+﻿@using MvcPaging;
+@model IPagedList<GM.Service.Models.ItemBoxModel>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "LoadItemBox";
+    int id = 0;
+}
+
+
+<div style="min-height: 532px">
+    @if (Model.Any())
+    {
+        <table id="general-table" class="table table-striped table-vcenter">
+            <thead>
+                <tr>
+                    <th style="width: 80px;" class="text-center">
+                        <label data-toggle="tooltip" title="Chọn tất cả">
+                            <input type="checkbox">
+                            <span></span>
+                        </label>
+                    </th>
+                    <th>Name</th>
+                    <th>IsSelect</th>
+                    <th>IsBind</th>
+                    <th>Valid</th>
+                    <th>Count</th>
+                    <th>Random</th>
+                    <th style="width: 80px;" class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    id = item.ID;
+                    <tr>
+                        <td class="text-center">
+                            <label>
+                                <input type="checkbox" id="@item.TemplateID" name="@item.TemplateID" value="@item.TemplateID">
+                                <span></span>
+                            </label>
+                        </td>
+                        <td>
+                            <label class="col-xs-2">
+                                @Html.ItemImage(item.TemplateID, "img-" + item.TemplateID, "", "37")
+                            </label>
+                            <div class="col-xs-10" style="margin-bottom: -15px">
+                                <a href="javascript:void(0)"><strong>@item.Name</strong></a>
+                                <span class="pull-right text-info" style="font-size: 12px"><em>id: </em>@item.ID</span>
+                                <p>
+                                    <span class="text-success" style="font-size: 12px">@item.TemplateID</span>
+                                    <span class="pull-right text-warning" style="font-size: 12px"><em>category: </em>@item.CategoryID</span>
+                                </p>
+                            </div>
+                        </td>
+                        <td>@item.Box.IsSelect</td>
+                        <td>@item.Box.IsBind</td>
+                        <td>@item.Box.ItemValid</td>
+                        <td>@item.Box.ItemCount</td>
+                        <td>@item.Box.Random</td>
+                        <td class="text-center">
+                            <div class="btn-group btn-group-xs">
+                                <a href="@Url.Action("EditData", "Games", routeValues: new {@id1 = item.ID, @id2 = item.TemplateID, @table = "Shop_Goods_Box"})" data-toggle="tooltip" data-modal="editBoxItem"
+                                   title="Chỉnh sửa" class="btn btn-default"><i class="fa fa-pencil"></i></a>
+                                <a href="@Url.Action("DeleteData", "Games", routeValues: new {@id = item.ID, @ids = item.TemplateID, @table = "Shop_Goods_Box"})" data-toggle="tooltip" data-modal="deleteBoxItem"
+                                   title="Xóa" class="btn btn-danger"><i class="fa fa-times"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <div class="text-center">
+            @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+        </div>
+    }
+</div>
+<div class="row">
+    <div class="col-md-2">
+        <div class="btn-group btn-group-sm">
+            <a href="@Url.Action("DeleteData", "Games", routeValues: new {@id = id, @table = "Shop_Goods_Box"})" 
+               class="btn btn-primary" data-toggle="tooltip" style="margin-left:15px" title="Xóa Items được chọn" id="delete-select-boxitems"><i class="fa fa-times"></i></a>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <div class="text-center">
+            @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount, new AjaxOptions { LoadingElementId = "loading-bgr", OnSuccess = "AjaxItemBoxSuccess", OnFailure = "AjaxItemBoxFailure" }).Options(o => o
+                                .DisplayTemplate("_Pagination")
+                                .Action("ItemsBox")
+                                .AddRouteValue("searchKey", ViewData["searchKey"])
+                                .AddRouteValue("id", id)
+                                .MaxNrOfPages(3))
+        </div>
+    </div>
+    <div class="col-md-2">
+       
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(function () {
+
+            ModelGeneral.init('data-modal="editBoxItem"');
+            ModelGeneral.init('data-modal="deleteBoxItem"');
+            
+            /*add some code here!*/           
+
+            ModelGeneral.init('data-modal="viewXml"', 'large');
+            var total = $('#total-items').html();
+            $('#total-items-content').html(total);
+            $('a[data-modal="import"]').bind('click', function (e) {
+                var link = $(this).attr("href");
+                return callService(link);
+            });
+            $('a[data-modal="savetoxml"]').bind('click', function (e) {
+                var link = $(this).attr("href");
+                return callService(link);
+            });
+            $('#delete-select-boxitems').bind('click', function (e) {
+                var url = $(this).attr("href");
+                var _checked = [];
+                _checked = $("tbody input:checkbox:checked").map(function () {
+                    return this.value;
+                }).toArray();
+                if (_checked.length === 0) {
+                    showGrowl('Bạn chưa chọn item. Vui lòng chọn và thử lại', 'danger');
+                    return false;
+                }
+                var params = 'ids=' + _checked;
+                GMApp.Dialog(url, e, params, null, 9009);
+                return false;
+            });
+        });
+        function AjaxItemBoxSuccess(data) {
+            $('#box-award-list').html(data);
+        }
+        function AjaxItemBoxFailure(xhr) {
+            var text = "Error: " + xhr.status + " " + xhr.statusText;
+            showGrowl(text, 'danger');
+        }
+        function reloadBoxAward() {
+            /*TO DO*/
+            $("#loading-bgr").show();
+            var loadurl = '@Url.Action("ItemsBox", "GetSingleData", new { @id = id })?page=@Model.PageNumber';
+            $.get(loadurl, function (data) {
+                $("#box-award-list").html(data);
+                $("#loading-bgr").hide();
+            })
+            .fail(function (data) {
+                $("#box-award-list").html(getError(data.status, data.statusText));
+                $("#loading-bgr").hide();
+            });
+        }
+    </script>
+}

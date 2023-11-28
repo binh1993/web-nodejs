@@ -1,0 +1,96 @@
+﻿@using MvcPaging;
+@model IPagedList<SqlDataProvider.Data.ItemInfo>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "LoadData";
+    int zoneId = -1;
+}
+<table id="general-table" class="table table-striped table-vcenter">
+    <thead>
+        <tr>            
+            <th style="width: 366px;" class="text-center">Name</th>
+            <th>ItemID</th>     
+            <th>Place</th>
+            <th>Count</th>
+            <th>ValidDate</th>
+            <th style="width: 80px;"></th>
+        </tr>
+    </thead>
+    @if (Model.Count() > 0)
+            {
+        <tbody>
+            @foreach (var item in Model)
+            {
+                zoneId = item.ZoneID;
+                <tr>                    
+                    <td>
+                        <label class="col-xs-2"> @Html.ItemImage(item.TemplateID, "", "", "37")</label>
+                        <div class="col-xs-10" style="margin-bottom:-15px">
+                            <a href="javascript:void(0);" class="over-popup" data-link="@Url.Action("ItemsPopover","Users", new { id = item.ItemID, zid = zoneId })">
+                                <strong>@Html.TItemName(item.TemplateID)</strong>
+                            </a>
+                            <p>@item.TemplateID.ToString()</p>
+                        </div>
+                    </td>
+                    <td>@item.ItemID.ToString()</td>               
+                    <td>@item.Place.ToString()</td>
+                    <td>@item.Count</td>
+                    <td>@Html.TValidateFor(item)</td>
+                    <td class="text-center">
+                        <div class="btn-group btn-group-xs">                           
+                            <a href="@Html.Raw(Url.Action("DeleteUsersData", "Users", routeValues: new { ids = item.ItemID, zid = zoneId, type = "ItemInfo", func = "loadData()" }))" 
+                               data-toggle="tooltip" data-modal="deleteUsersData"  title="Xóa" class="btn btn-danger"><i class="fa fa-times"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="6">     
+                            <div class="text-center" style="margin-top:-5px">
+                                @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount, new AjaxOptions { UpdateTargetId = "equip-content", LoadingElementId = "loading-bgr" }).Options(o => o
+                                .DisplayTemplate("_Pagination")
+                                .Action("LoadDetailUserData")
+                                .AddRouteValue("zid", ViewData["zid"])
+                                .AddRouteValue("type", ViewData["type"])
+                                .MaxNrOfPages(3))
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+    }
+    else
+    {
+        <tbody>
+            <tr>
+                <td colspan="6">
+                    <div class="text-center">
+                        @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    }
+</table>
+@section Scripts{
+    <script>          
+        function loadData() {
+            loadurl = '@Html.Raw(Url.Action("LoadDetailUserData", "Users", routeValues: new { zid = zoneId, type = ViewData["type"], @page = Model.PageNumber }))';
+            $("#loading-bgr").show();
+            $.get(loadurl, function (data) {
+                $("#equip-content").html(data);
+                $("#loading-bgr").hide();
+            })
+            .fail(function (data) {
+                $("#equip-content").html(getError(data.status, data.statusText));
+                $("#loading-bgr").hide();
+            });
+        }
+        $(function () {
+            ModelGeneral.init('data-modal="deleteUsersData"', null, 9999);
+            PopOver.init('.navbar-collapse');
+        });
+    </script>
+}
+

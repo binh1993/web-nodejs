@@ -1,0 +1,394 @@
+﻿@model SqlDataProvider.Data.ItemTemplateInfo
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = StaticFunction.GetTranslation("Model.Edit.Title");
+    var item = Model;
+    string chek = string.Empty;
+}
+<div class="modal-header themed-background-default">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">
+        @ViewBag.Title
+        <i class="gi gi-chevron-right" style="font-size:10px"></i>
+        <span style="color:white"><strong> @item.Name</strong></span>
+    </h4>
+</div>
+<div class="modal-body">
+    <form action="@Html.Raw(Url.Action("EditShopGood", "Games", routeValues: new {@id = item.TemplateID}))"
+          method="post" class="form-horizontal form-bordered" id="frm-edit-itemtemplate">
+        <input type="hidden" id="TemplateID" name="TemplateID" value="@item.TemplateID">
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Name">Name</label>
+            <div class="col-md-9">
+                    <input type="text" id="Name" name="Name" class="form-control input-sm must-required" value="@item.Name">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="CategoryID">CategoryID</label>
+            <div class="col-md-9">
+                <input type="text" id="CategoryID" name="CategoryID" class="form-control input-sm must-number" value="@item.CategoryID">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Description">Description</label>
+            <div class="col-md-9">
+                    <textarea id="Description" name="Description" rows="4" class="form-control must-required">@item.Description</textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Attack">Attack</label>
+            <div class="col-md-9">
+                <input type="text" id="Attack" name="Attack" class="form-control input-sm must-number" value="@item.Attack">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Defence">Defence</label>
+            <div class="col-md-9">
+                <input type="text" id="Defence" name="Defence" class="form-control input-sm must-number" value="@item.Defence">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Agility">Agility</label>
+            <div class="col-md-9">
+                <input type="text" id="Agility" name="Agility" class="form-control input-sm must-number" value="@item.Agility">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Luck">Luck</label>
+            <div class="col-md-9">
+                <input type="text" id="Luck" name="Luck" class="form-control input-sm must-number" value="@item.Luck">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Level">Level</label>
+            <div class="col-md-9">
+                <input type="text" id="Level" name="Level" class="form-control input-sm must-number" value="@item.Level">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Quality">Quality</label>
+            <div class="col-md-9">
+                <input type="text" id="Quality" name="Quality" class="form-control input-sm must-number" value="@item.Quality">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Pic">Pic</label>
+            <div class="col-md-9">
+                @if (item.Pic.Length > 20)
+                {
+                    <textarea id="Pic" name="Pic" rows="4" class="form-control must-required">@item.Pic</textarea>
+                }
+                else
+                {
+                    <input type="text" id="Pic" name="Pic" class="form-control input-sm must-required" value="@item.Pic">
+                }
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="MaxCount">MaxCount</label>
+            <div class="col-md-9">
+                <input type="text" id="MaxCount" name="MaxCount" class="form-control input-sm must-number" value="@item.MaxCount">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="NeedSex">NeedSex</label>
+            <div class="col-md-9">
+                <input type="text" id="NeedSex" name="NeedSex" class="form-control input-sm must-number" value="@item.NeedSex">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="NeedLevel">NeedLevel</label>
+            <div class="col-md-9">
+                <input type="text" id="NeedLevel" name="NeedLevel" class="form-control input-sm must-number" value="@item.NeedLevel">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="CanStrengthen">CanStrengthen</label>
+            <div class="col-md-9">
+                <label class="switch switch-primary">
+                    @{
+                        chek = string.Empty;
+                        if (item.CanStrengthen) { chek = "checked"; }
+                    }
+                    <input type="checkbox" id="CanStrengthen" name="CanStrengthen" value="true" @chek>
+                    <span></span>
+                    <input type="hidden" id="CanStrengthen" name="CanStrengthen" value="false">
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="CanCompose">CanCompose</label>
+            <div class="col-md-9">
+                <label class="switch switch-primary">
+                    @{
+                        chek = string.Empty;
+                        if (item.CanCompose) { chek = "checked"; }
+                    }
+                    <input type="checkbox" id="CanCompose" name="CanCompose" value="true" @chek>
+                    <span></span>
+                    <input type="hidden" id="CanCompose" name="CanCompose" value="false">
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="CanDrop">CanDrop</label>
+            <div class="col-md-9">
+                <label class="switch switch-primary">
+                    @{
+                        chek = string.Empty;
+                        if (item.CanDrop) { chek = "checked"; }
+                    }
+                    <input type="checkbox" id="CanDrop" name="CanDrop" value="true" @chek>
+                    <span></span>
+                    <input type="hidden" id="CanDrop" name="CanDrop" value="false">
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="CanEquip">CanEquip</label>
+            <div class="col-md-9">
+                <label class="switch switch-primary">
+                    @{
+                        chek = string.Empty;
+                        if (item.CanEquip) { chek = "checked"; }
+                    }
+                    <input type="checkbox" id="CanEquip" name="CanEquip" value="true" @chek>
+                    <span></span>
+                    <input type="hidden" id="CanEquip" name="CanEquip" value="false">
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="CanUse">CanUse</label>
+            <div class="col-md-9">
+                <label class="switch switch-primary">
+                    @{
+                        chek = string.Empty;
+                        if (item.CanUse) { chek = "checked"; }
+                    }
+                    <input type="checkbox" id="CanUse" name="CanUse" value="true" @chek>
+                    <span></span>
+                    <input type="hidden" id="CanUse" name="CanUse" value="false">
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="CanDelete">CanDelete</label>
+            <div class="col-md-9">
+                <label class="switch switch-primary">
+                    @{
+                        chek = string.Empty;
+                        if (item.CanDelete) { chek = "checked"; }
+                    }
+                    <input type="checkbox" id="CanDelete" name="CanDelete" value="true" @chek>
+                    <span></span>
+                    <input type="hidden" id="CanDelete" name="CanDelete" value="false">
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Script">Script</label>
+            <div class="col-md-9">
+                    <input type="text" id="Script" name="Script" class="form-control input-sm must-required" value="@item.Script">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Data">Data</label>
+            <div class="col-md-9">
+                    <input type="text" id="Data" name="Data" class="form-control input-sm must-required" value="@item.Data">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Colors">Colors</label>
+            <div class="col-md-9">
+                    <input type="text" id="Colors" name="Colors" class="form-control input-sm must-required" value="@item.Colors">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Property1">Property1</label>
+            <div class="col-md-9">
+                <input type="text" id="Property1" name="Property1" class="form-control input-sm must-number" value="@item.Property1">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Property2">Property2</label>
+            <div class="col-md-9">
+                <input type="text" id="Property2" name="Property2" class="form-control input-sm must-number" value="@item.Property2">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Property3">Property3</label>
+            <div class="col-md-9">
+                <input type="text" id="Property3" name="Property3" class="form-control input-sm must-number" value="@item.Property3">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Property4">Property4</label>
+            <div class="col-md-9">
+                <input type="text" id="Property4" name="Property4" class="form-control input-sm must-number" value="@item.Property4">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Property5">Property5</label>
+            <div class="col-md-9">
+                <input type="text" id="Property5" name="Property5" class="form-control input-sm must-number" value="@item.Property5">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Property6">Property6</label>
+            <div class="col-md-9">
+                <input type="text" id="Property6" name="Property6" class="form-control input-sm must-number" value="@item.Property6">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Property7">Property7</label>
+            <div class="col-md-9">
+                <input type="text" id="Property7" name="Property7" class="form-control input-sm must-number" value="@item.Property7">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Property8">Property8</label>
+            <div class="col-md-9">
+                <input type="text" id="Property8" name="Property8" class="form-control input-sm must-number" value="@item.Property8">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="AddTime">AddTime</label>
+            <div class="col-md-9">
+                <input type="text" id="AddTime" name="AddTime" class="form-control input-sm must-date" value="@item.AddTime">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="BindType">BindType</label>
+            <div class="col-md-9">
+                <input type="text" id="BindType" name="BindType" class="form-control input-sm must-number" value="@item.BindType">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="FusionType">FusionType</label>
+            <div class="col-md-9">
+                <input type="text" id="FusionType" name="FusionType" class="form-control input-sm must-number" value="@item.FusionType">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="FusionRate">FusionRate</label>
+            <div class="col-md-9">
+                <input type="text" id="FusionRate" name="FusionRate" class="form-control input-sm must-number" value="@item.FusionRate">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="FusionNeedRate">FusionNeedRate</label>
+            <div class="col-md-9">
+                <input type="text" id="FusionNeedRate" name="FusionNeedRate" class="form-control input-sm must-number" value="@item.FusionNeedRate">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="Hole">Hole</label>
+            <div class="col-md-9">
+                    <input type="text" id="Hole" name="Hole" class="form-control input-sm must-required" value="@item.Hole">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="RefineryLevel">RefineryLevel</label>
+            <div class="col-md-9">
+                <input type="text" id="RefineryLevel" name="RefineryLevel" class="form-control input-sm must-number" value="@item.RefineryLevel">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="ReclaimValue">ReclaimValue</label>
+            <div class="col-md-9">
+                <input type="text" id="ReclaimValue" name="ReclaimValue" class="form-control input-sm must-number" value="@item.ReclaimValue">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="ReclaimType">ReclaimType</label>
+            <div class="col-md-9">
+                <input type="text" id="ReclaimType" name="ReclaimType" class="form-control input-sm must-number" value="@item.ReclaimType">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="CanRecycle">CanRecycle</label>
+            <div class="col-md-9">
+                <input type="text" id="CanRecycle" name="CanRecycle" class="form-control input-sm must-number" value="@item.CanRecycle">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="FloorPrice">FloorPrice</label>
+            <div class="col-md-9">
+                <input type="text" id="FloorPrice" name="FloorPrice" class="form-control input-sm must-number" value="@item.FloorPrice">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="SuitId">SuitId</label>
+            <div class="col-md-9">
+                <input type="text" id="SuitId" name="SuitId" class="form-control input-sm must-number" value="@item.SuitId">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label" for="CanTransfer">CanTransfer</label>
+            <div class="col-md-9">
+                <input type="text" id="CanTransfer" name="CanTransfer" class="form-control input-sm must-number" value="@item.CanTransfer">
+            </div>
+        </div>
+        <div class="form-group form-actions">
+            <div class="col-md-12 text-right">
+                <button type="submit" class="btn btn-sm btn-warning btn-submit2"> @StaticFunction.GetTranslation("Model.Update")</button>
+                <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal"> @StaticFunction.GetTranslation("Model.CLose")</button>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts{
+    <script>
+
+          $(function () {
+            var startBtn = $('.btn-submit2');
+            // On start button click start loading again
+            startBtn.on('click', function () {
+                $(this).button('loading');
+            });
+
+            /* Validate */
+
+            $('form#frm-edit-itemtemplate').each(function () {
+                $(this).validate({
+                    errorClass: 'help-block animation-slideDown',
+                    errorElement: 'div',
+                    errorPlacement: function (error, e) {
+                        e.parents('.form-group > div').append(error);
+                    },
+                    highlight: function (e) {
+                        $(e).closest('.form-group').removeClass('has-success has-error').addClass('has-error');
+                        $(e).closest('.help-block').remove();
+                        startBtn.button('reset');
+                    },
+                    success: function (e) {
+                        e.closest('.form-group').removeClass('has-success has-error');
+                        e.closest('.help-block').remove();
+                    },
+                    submitHandler: function (e) {
+                        $('#loading-bgr').show();
+                        $.ajax({
+                            url: e.action,
+                            type: e.method,
+                            data: $(e).serialize(),
+                            success: function (result) {
+                                $('#loading-bgr').hide();
+                                $('#response-hodler').html(result);
+                                startBtn.button('reset');
+                                //loadDropItems();
+                            },
+                            error: function (xhr) {
+                                $('#loading-bgr').hide();
+                                showGrowl('Error: ' + xhr.status + ' ' + xhr.statusText, 'danger');
+                                startBtn.button('reset');
+                            }
+                        });
+                        return false;
+                    }
+                });
+            });
+        });
+
+    </script>
+}

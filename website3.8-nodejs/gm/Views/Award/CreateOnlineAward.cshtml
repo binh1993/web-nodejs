@@ -1,0 +1,146 @@
+﻿@model IEnumerable<SqlDataProvider.Data.TopInfo>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "Thêm mục đua Top mới";
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title </h4>
+</div>
+<div class="modal-body">
+    <!-- Form add -->   
+    <form action="@Html.Raw(Url.Action("CreateTop", "Award"))"  method="post" class="form-horizontal form-bordered" id="frm-create-top">
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="ZoneID">ZoneID</label>
+                <div class="col-md-8">
+                    <input type="text" id="ZoneID" name="ZoneID" class="form-control input-sm must-digits" value="" placeholder="Nhập vào một số, vd: 1001">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="Type">Type</label>
+                <div class="col-md-8">
+                    <input type="text" id="Type" name="Type" class="form-control input-sm must-digits" value="" placeholder="Nhập vào một số, vd: 1,2,3..">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="Name">Name</label>
+                <div class="col-md-8">
+                    <input type="text" id="Name" name="Name" class="form-control input-sm must-required" value="" placeholder="Nhập vào tên, vd: Top Level">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="Detail">Detail</label>
+                <div class="col-md-8">
+                    <textarea id="Detail" name="Detail" rows="4" class="form-control must-required" placeholder="Nhập vào mô tả, vd: Phần thưởng dành cho top 10 level trong 10 ngày mở server"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="GetTable">GetTable</label>
+                <div class="col-md-8">
+                    <input type="text" id="GetTable" name="GetTable" class="form-control input-sm must-required" value="" placeholder="Nhập vào table lấy top, vd: V_Sys_Users_Detail">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="Condition1">Condition1</label>
+                <div class="col-md-8">
+                    <input type="text" id="Condition1" name="Condition1" class="form-control input-sm must-required" value="" placeholder="Nhập vào điều kiện lấy top, vd: Grade ">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="Condition2">Condition2</label>
+                <div class="col-md-8">
+                    <input type="text" id="Condition2" name="Condition2" class="form-control input-sm must-required" value="" placeholder="Nhập vào điều kiện lấy top, vd: GP">
+                </div>
+            </div>
+        <div class="form-group form-actions">           
+            <div class="col-md-12 text-right">               
+                <button type="submit" class="btn btn-sm btn-primary btn-submit"> Thêm mới</button>
+                <button type="button" class="btn btn-sm btn-success" data-dismiss="modal"> Đóng</button>
+            </div>
+        </div>
+    </form>
+
+    <!-- END Form add -->    
+</div>
+
+@section Scripts{
+    <script>
+        $(function () {
+            /*select template*/
+            $.ajax({
+                type: "GET",
+                url: '@Html.Raw(Url.Action("GetTopTemplate", "Award"))',
+                dataType: "json",
+                contentType: 'application/json; charset=utf-8',
+                data: { 'type': 99 },
+                cache: false,
+                success: function (data) {
+                    if (data.Result) {
+                        $.each(data.Template, function (key, val) {
+                            if (key == 'ZoneID') {
+                                $('input[name="' + key + '"]').val('100x');
+                            }
+                            else if (key == 'Detail') {
+                                $('textarea[name="' + key + '"]').val(val);
+                            }
+                            else {
+                                $('input[name="' + key + '"]').val(val);
+                            }
+                        });
+                    }
+                    else {
+                        showGrowl(data.Error, 'danger');
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    showGrowl('Error: ' + xhr.status + ' ' + xhr.statusText, 'danger');
+                }
+            });
+
+            var startBtn = $('.btn-submit');
+            // On start button click start loading again
+            startBtn.on('click', function () {
+                $(this).button('loading');
+            });
+
+            /* Validate required: true*/
+            $('form#frm-create-top').each(function () {   // <- selects every <form> on page
+                $(this).validate({        // <- initialize validate() on each form
+                    errorClass: 'help-block animation-slideDown', // You can change the animation class for a different entrance animation - check animations page
+                    errorElement: 'div',
+                    errorPlacement: function (error, e) {
+                        e.parents('.form-group > div').append(error);
+                    },
+                    highlight: function (e) {
+                        $(e).closest('.form-group').removeClass('has-success has-error').addClass('has-error');
+                        $(e).closest('.help-block').remove();
+                        startBtn.button('reset');
+                    },
+                    success: function (e) {
+                        e.closest('.form-group').removeClass('has-success has-error');
+                        e.closest('.help-block').remove();
+                    },
+                    submitHandler: function (e) {
+                        $('#loading-bgr').show();
+                        $.ajax({
+                            url: e.action,
+                            type: e.method,
+                            data: $(e).serialize(),
+                            success: function (result) {
+                                $('#loading-bgr').hide();
+                                $('#response-hodler').html(result);
+                                startBtn.button('reset');
+                            },
+                            error: function (result) {
+                                $('#loading-bgr').hide();
+                                startBtn.button('reset');
+                            }
+                        });
+                        return false;
+                    }
+                });
+            });
+
+        });
+    </script>
+}

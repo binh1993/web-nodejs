@@ -1,0 +1,117 @@
+﻿@using GM.Service.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Đăng nhập";
+}
+
+<!-- Header -->
+<div class="content-header">
+    <div class="header-section">
+        <h1>
+            <i class="fa fa-list-alt"></i>@ViewBag.Title<br><small>Đăng nhập vào địch vụ GM @ViewBag.Message</small>
+        </h1>
+    </div>
+</div>
+
+<!-- END Header -->
+ <!-- Login Background ->
+<div id="login-background">
+    <!-- For best results use an image with a resolution of 2560x400 pixels (prefer a blurred image for smaller file size) ->
+    <img src="~/Backend/img/placeholders/headers/login_header.jpg" alt="Login Background" class="animation-pulseSlow">
+</div>
+<!-- END Login Background -->
+
+   <!-- Login Container -->
+<div id="login-container" class="animation-fadeIn">
+    <!-- Login Title -->
+    <div class="login-title text-center">
+        <h1><i class="gi gi-flash"></i> <strong>GM Service</strong><br>
+        <small><strong>Đăng nhập</strong></small></h1>
+    </div>
+    <!-- END Login Title -->
+    <!-- Login Block -->
+    <div class="block push-bit">
+ <!-- Login Form -->
+@using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form", id = "form-login" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.Partial("_Alerts")
+    <div class="form-group">
+        <div class="col-xs-12">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="gi gi-envelope"></i></span>
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control input-lg", @placeholder = "Email" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-12">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="gi gi-asterisk"></i></span>
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control input-lg", @placeholder = "Password" })
+            </div>
+        </div>
+    </div>
+            <div class="form-group form-actions">
+                <div class="col-xs-8">
+                    <label class="switch switch-primary" data-toggle="tooltip" title="Remember Me?">
+                        <input type="checkbox" id="login-remember-me" name="RememberMe">
+                        <span></span>
+                    </label>
+                </div>
+                <div class="col-xs-4 text-right">
+                    <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-angle-right"></i> Login</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-xs-12 text-center">
+                    <a href="@Url.Action("ForgotPassword","Account")" id="link-reminder-login"><small>Quên mật khẩu?</small></a>
+                </div>
+            </div>
+            
+}
+        <!-- END Login Form -->       
+    </div>
+    <!-- END Login Block -->  
+    <div class="block">
+            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+    </div>  
+</div>
+<!-- END Login Container -->
+@section Scripts {
+<script>
+    /* Login form - Initialize Validation */
+    $('#form-login').validate({
+        errorClass: 'help-block animation-slideDown', // You can change the animation class for a different entrance animation - check animations page
+        errorElement: 'div',
+        errorPlacement: function (error, e) {
+            e.parents('.form-group > div').append(error);
+        },
+        highlight: function (e) {
+            $(e).closest('.form-group').removeClass('has-success has-error').addClass('has-error');
+            $(e).closest('.help-block').remove();
+        },
+        success: function (e) {
+            e.closest('.form-group').removeClass('has-success has-error');
+            e.closest('.help-block').remove();
+        },
+        rules: {
+            'Email': {
+                required: true,
+                email: true
+            },
+            'Password': {
+                required: true,
+                minlength: 5
+            }
+        },
+        messages: {
+            'Email': 'Vui lòng nhập Email của bạn!',
+            'Password': {
+                required: 'Vui lòng nhập mật khẩu của bạn',
+                minlength: 'Mật khẩu ít nhất phải có 5 ký tự trở lên'
+            }
+        }
+    });
+</script>
+}

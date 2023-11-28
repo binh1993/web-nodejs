@@ -1,0 +1,24 @@
+2022-08-22 20:35:53 Error: GetSingleUsersExtra System.IndexOutOfRangeException: ID
+   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at Tank.Data.PlayerBussiness.InitUsersExtraInfo(SqlDataReader reader)
+   at Tank.Data.PlayerBussiness.GetSigleUsersExtra(String swhere)
+2022-08-22 20:35:53 Error: GetSingleActiveSystem System.IndexOutOfRangeException: useableScore
+   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at Tank.Data.PlayerBussiness.InitActiveSystemInfo(SqlDataReader reader)
+   at Tank.Data.PlayerBussiness.GetSigleActiveSystem(String where)
+2022-08-22 20:36:32 Error: GetSingleUsersExtra System.IndexOutOfRangeException: ID
+   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at Tank.Data.PlayerBussiness.InitUsersExtraInfo(SqlDataReader reader)
+   at Tank.Data.PlayerBussiness.GetSigleUsersExtra(String swhere)
+2022-08-22 20:36:32 Error: GetSingleActiveSystem System.IndexOutOfRangeException: useableScore
+   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at Tank.Data.PlayerBussiness.InitActiveSystemInfo(SqlDataReader reader)
+   at Tank.Data.PlayerBussiness.GetSigleActiveSystem(String where)

@@ -1,0 +1,157 @@
+﻿@using MvcPaging;
+@model IPagedList<SqlDataProvider.Data.ActiveNumberInfo>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "LoadData";
+    int zoneId = -1;
+    int id = 0;
+}
+@if (Model.Count() > 0)
+{
+    <div style="min-height:532px">
+        <table id="general-table" class="table table-striped table-vcenter">
+            <thead>
+                <tr>
+                    <th style="width: 80px;" class="text-center">
+                        <label class="switch switch-primary" data-toggle="tooltip" title="Chọn tất cả">
+                            <input type="checkbox">
+                            <span></span>
+                        </label>
+                    </th>
+                    <th>AwardID</th>
+                    <th>ActiveID</th>
+                    <th>PullDown</th>
+                    <th>GetDate</th>
+                    <th>UserID</th>
+                    <th>Mark</th>
+                    <th style="width: 80px;" class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    zoneId = item.ZoneID;
+                    id = item.ActiveID;
+                    <tr>
+                        <td class="text-center">
+                            <label class="switch switch-primary">
+                                <input type="checkbox" value="@item.AwardID">
+                                <span></span>
+                            </label>
+                        </td>
+                        <td>@Html.THighlight(item.AwardID, ViewData["key"])</td>
+                        <td>@id</td>                        
+                        <td>
+                            @if (item.PullDown)
+                            {
+                                <span class="text-danger">Đã sử dụng</span>
+                            }
+                            else
+                            {
+                                <span class="text-success">Chưa sử dụng</span>
+                            }
+                        </td>
+                        <td>@item.GetDate</td>
+                        <td>@Html.THighlight(item.UserID.ToString(), ViewData["key"])</td>
+                        <td>@item.Mark</td>
+                        <td class="text-center">
+                            <div class="btn-group btn-group-xs">                              
+                                <a href="@Html.Raw(Url.Action("DeleteActiveNumber", "Games", routeValues: new { @ids = item.AwardID, @aid = id, @zid = Request.QueryString["zid"] }))" 
+                                   class="btn btn-danger" data-growl="delete-active-number"><i class="fa fa-times"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="btn-group btn-group-sm">
+                <a href="javascript:void(0)" class="btn btn-warning" id="delete-select-items" style="margin-left:15px">Xóa Items được chọn</a>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="text-center">
+                @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount, new AjaxOptions { LoadingElementId = "loading-bgr", OnSuccess = "AjaxActiveNumberSuccess", OnFailure = "AjaxActiveNumberFailure" }).Options(o => o
+                                .DisplayTemplate("_Pagination")
+                                .Action("LoadActiveNumber")
+                                .AddRouteValue("key", ViewData["key"])
+                                .AddRouteValue("zid", Request.QueryString["zid"])
+                                .MaxNrOfPages(3))
+            </div>
+        </div>
+        <div class="col-md-2">
+            <p class="text-info">Tổng cộng có: <span class="text-success">@Model.TotalItemCount giftcode</span> </p>
+        </div>
+    </div>
+}
+else
+{
+    <div class="text-center">
+        @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+    </div>
+}
+
+@section Scripts{
+    <script>
+        $(function () {
+            /*add some code here!*/           
+            $('a[data-growl="delete-active-number"').on('click', function () {
+                loadurl = $(this).attr("href");
+                $.get(loadurl, function (data) {
+                    $('#response-hodler').html(data);
+                    reloadActiveNumber();
+                })
+                .fail(function (data) {
+                    showGrowl(data);                    
+                });
+                return false;
+            });
+
+            $('#delete-select-items').bind("click", function (e) {
+                var url = '@Html.Raw(Url.Action("DeleteActiveNumber", "Games", routeValues: new { @aid = id, @zid = Request.QueryString["zid"] }))';
+                var _checked = [];
+
+                _checked = $("tbody input:checkbox:checked").map(function () {
+                    return this.value;
+                }).toArray();
+
+                if (_checked.length == 0) {
+                    showGrowl('Bạn chưa chọn code. Vui lòng chọn và thử lại', 'danger');
+                    return false;
+                }
+                url += '&ids=' + _checked;
+                $.get(url, function (data) {
+                    $('#response-hodler').html(data);
+                    reloadActiveNumber();
+                })
+               .fail(function (data) {
+                   showGrowl(data);                    
+               });
+                return false;
+            });
+
+        });
+
+        function reloadActiveNumber() {
+            var zoneID = $("#server-chosen").val();
+            var url = '@Url.Action("LoadActiveNumber", "Games", new { @id = id })?zid=' + zoneID + '&page=@Model.PageNumber';
+            GMApp.GetJson('#activenumber-list', url);
+        }
+
+        function AjaxActiveNumberSuccess(data) {
+            if (data.Result) {
+                $('#activenumber-list').html(data.Html);
+            }
+            else {
+                showGrowl(data.Html, 'danger');
+            }
+        }
+
+        function AjaxActiveNumberFailure(xhr) {
+            var text = "Error: " + xhr.status + " " + xhr.statusText;
+            showGrowl(text, 'danger');
+        }
+    </script>
+}

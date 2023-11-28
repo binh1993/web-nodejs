@@ -1,0 +1,138 @@
+﻿@model List<SqlDataProvider.Data.LanguageInfo>
+@{
+    ViewBag.Title = "Rip Flash";
+    string activeStr = "active";
+}
+<!-- Header -->
+<div class="content-header">
+    <div class="header-section">
+        <h1>
+            <i class="gi gi-circle_info"></i>@ViewBag.Title<br><small>@ViewBag.Message</small>
+        </h1>
+    </div>
+</div>
+<ul class="breadcrumb breadcrumb-top">
+    <li>Trang</li>
+    <li><a href="javascript:void(0)">@ViewBag.Title</a></li>
+</ul>
+<!-- END Header -->
+<div class="block">
+    @if (Model.Any())
+    {
+        <div style="min-height: 532px">
+            <div class="row">
+                <div class="col-md-4" style="border-right:1px dotted gray">
+                    <p class="text-warning" style="font-size:18px;">
+                        <i class="gi gi-log_in"></i><small> Danh sách ngôn ngữ</small>
+                        <a href="@Html.Raw(Url.Action("CreateActive","Games"))" class="btn btn-alt btn-sm btn-default pull-right" data-dialog="-1"
+                           id="btn-add-box">
+                            <i class="gi gi-circle_plus text-primary"></i> Thêm ngôn ngữ mới
+                        </a>
+                    </p>
+                    <div id="box-list">
+                        <table id="general-table" class="table table-hover table-vcenter">
+
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr class="@activeStr menu-tr" id="tr-@item.ID">
+                                        <td class="text-center">
+                                            <label>
+                                                <input type="checkbox" id="@item.ID" name="@item.ID" value="@item.ID">
+                                                <span></span>
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <div class="col-xs-12" style="margin-bottom: -15px">
+                                                <a href="javascript:void(0)" data-show ="@item.ID" class="menu-a"><strong>@item.Name</strong></a>
+                                                <p>
+                                                    <span class="text-success">id: @item.ID.ToString()</span>
+                                                    <span class="pull-right text-warning" style="font-size: 12px"><em>shortname: </em>@item.ShortName</span>
+                                                </p>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="btn-group btn-group-xs">
+                                                <a href="@Url.Action("ReadDetail", "Games", routeValues: new {table = ViewData["table"], id = item.ID})" data-toggle="tooltip" data-dialog="detailItems"
+                                                   title="Chỉnh sửa" class="btn btn-default"><i class="fa fa-pencil"></i></a>
+                                                <a href="@Url.Action("DeleteBox", "Games", routeValues: new {@id = item.ID})" data-toggle="tooltip" data-modal="show"
+                                                   title="Xóa" class="btn btn-danger"><i class="fa fa-times"></i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    activeStr = "";
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-8" id="list-box-items">
+                    <p class="text-warning" style="font-size:18px">
+                        <i class="gi gi-log_out"></i><small> Flash link</small> <strong><span id="flash-link-header" class="text-danger">..</span></strong>
+                        <a href="@Html.Raw(Url.Action("AddItemsModel","Games", new { type = "boxitem" }))" class="btn btn-alt btn-sm btn-default pull-right" data-dialog="-1" id="btn-add-flash">
+                            <i class="gi gi-circle_plus text-primary"></i> Kiểm tra và thêm flash mới
+                        </a>
+                    </p>
+                    <div id="flash-link-list" style="overflow-y: auto; max-height: 532px;">
+                        <!--add something-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="text-center">
+            @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+        </div>
+    }
+</div>
+@section Scripts{
+    <script>
+        $(function() {
+
+            ModelGeneral.init('data-modal="editBoxItem"');
+            ModelGeneral.init('data-modal="deleteBoxItem"');
+
+            /* select first menu*/
+            var curentAvtive = $("#general-table").find('.menu-a');
+            if (curentAvtive.length > 0) {
+                var boxid =  curentAvtive.attr("data-show");
+                $("#table-items-" + boxid).show();
+                $('#btn-add-flash').attr("data-dialog", boxid);
+                $("#flash-link-header").text($('a[data-show="' + boxid + '"]').text());
+            }
+
+            /*thêm item mới vào box hiện tại*/
+            $('#btn-add-box-award').bind('click', function (e) {
+                var _id = $(this).attr("data-dialog");
+                var _url = $(this).attr("href") + '&name=' + $("#box-items-header").text();
+                GMApp.Dialog(_url, e, 'tid=' + _id, 'large');
+                return false;
+            });
+
+            /*add some code here!*/
+            $('a[data-dialog="detailItems"]').bind("click", function(e) {
+                var url = $(this).attr("href");
+                var params = {};
+                GMApp.DialogJson(url, e, params);
+                return false;
+            });
+
+            /* sử lý hiện item với box tương ứng*/
+            $('a[data-show]').bind("click", function (e) {
+                var boxid = $(this).attr("data-show");
+
+                $(".menu-tr").removeClass("active");
+                var trName = "#tr-" + boxid;
+                $(trName).addClass("active");
+
+                $('#btn-add-flash').attr("data-dialog", boxid);
+                $("#flash-link-header").text($('a[data-show="' + boxid + '"]').text());
+                return false;
+            });
+        });
+       
+    </script>
+}

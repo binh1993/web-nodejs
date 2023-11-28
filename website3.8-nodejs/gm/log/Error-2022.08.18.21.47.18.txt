@@ -1,0 +1,104 @@
+2022-08-18 21:47:18 Error: Version 3.6
+2022-08-18 21:47:18 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-18 21:47:18 Error: zoneId1001
+2022-08-18 21:49:25 Error: Version 3.6
+2022-08-18 21:49:25 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-18 21:49:25 Error: zoneId1001
+2022-08-18 21:56:01 Error: Version 3.6
+2022-08-18 21:56:01 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-18 21:56:01 Error: zoneId1001
+2022-08-18 22:14:02 Error: Version 3.6
+2022-08-18 22:14:02 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-18 22:14:02 Error: zoneId1001
+2022-08-18 22:14:21 Error: Version 3.6
+2022-08-18 22:14:21 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-18 22:14:21 Error: zoneId1001
+2022-08-18 22:32:04 Error: Version 3.6
+2022-08-18 22:32:04 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-18 22:32:04 Error: zoneId1001
+2022-08-18 22:32:05 Error: Version 3.6
+2022-08-18 22:32:05 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-18 22:32:05 Error: zoneId1001
+2022-08-18 22:32:05 Error: Version 3.6
+2022-08-18 22:32:05 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-18 22:32:05 Error: zoneId1001
+2022-08-18 22:32:06 Error: Version 3.6
+2022-08-18 22:32:06 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-18 22:32:06 Error: zoneId1001
+2022-08-18 23:05:47 Error: Newtonsoft.Json.JsonReaderException: Unexpected character encountered while parsing value: C. Path '', line 0, position 0.
+   at Newtonsoft.Json.JsonTextReader.ParseValue()
+   at Newtonsoft.Json.JsonTextReader.Read()
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.ReadForType(JsonReader reader, JsonContract contract, Boolean hasConverter)
+   at Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   at Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   at Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   at GM.Service.CacheMgr.LoadItemsFromFile(String clientId)
+2022-08-18 23:06:30 Error: Version 3.6
+2022-08-18 23:06:30 Error: Version 3.6
+2022-08-18 23:06:30 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-18 23:06:30 Error: zoneId1001
+2022-08-18 23:08:08 Error: Version 3.6
+2022-08-18 23:08:08 Error: Version 3.6
+2022-08-18 23:08:08 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-18 23:08:08 Error: zoneId1001
+2022-08-18 23:08:08 Error: Version 3.6
+2022-08-18 23:08:08 Error: Version 3.6
+2022-08-18 23:08:08 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-18 23:08:08 Error: zoneId1001
+2022-08-18 23:11:18 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-18 23:11:18 Error: zoneId1001
+2022-08-18 23:54:51 Error: GetSingleActiveSystem System.IndexOutOfRangeException: useableScore
+   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at Tank.Data.PlayerBussiness.InitActiveSystemInfo(SqlDataReader reader)
+   at Tank.Data.PlayerBussiness.GetSigleActiveSystem(String where)
+2022-08-18 23:54:51 Error: GetSingleUsersExtra System.IndexOutOfRangeException: ID
+   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at Tank.Data.PlayerBussiness.InitUsersExtraInfo(SqlDataReader reader)
+   at Tank.Data.PlayerBussiness.GetSigleUsersExtra(String swhere)
+2022-08-18 23:55:31 Error: GetSingleUsersExtra System.IndexOutOfRangeException: ID
+   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at Tank.Data.PlayerBussiness.InitUsersExtraInfo(SqlDataReader reader)
+   at Tank.Data.PlayerBussiness.GetSigleUsersExtra(String swhere)
+2022-08-18 23:55:31 Error: GetSingleActiveSystem System.IndexOutOfRangeException: useableScore
+   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at Tank.Data.PlayerBussiness.InitActiveSystemInfo(SqlDataReader reader)
+   at Tank.Data.PlayerBussiness.GetSigleActiveSystem(String where)
+2022-08-18 23:56:00 Error: GetSingleUsersExtra System.IndexOutOfRangeException: ID
+   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at Tank.Data.PlayerBussiness.InitUsersExtraInfo(SqlDataReader reader)
+   at Tank.Data.PlayerBussiness.GetSigleUsersExtra(String swhere)
+2022-08-18 23:56:00 Error: GetSingleActiveSystem System.IndexOutOfRangeException: useableScore
+   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at Tank.Data.PlayerBussiness.InitActiveSystemInfo(SqlDataReader reader)
+   at Tank.Data.PlayerBussiness.GetSigleActiveSystem(String where)
+2022-08-18 23:57:30 Error: GetSingleUsersExtra System.IndexOutOfRangeException: ID
+   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at Tank.Data.PlayerBussiness.InitUsersExtraInfo(SqlDataReader reader)
+   at Tank.Data.PlayerBussiness.GetSigleUsersExtra(String swhere)
+2022-08-18 23:57:30 Error: GetSingleActiveSystem System.IndexOutOfRangeException: useableScore
+   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at Tank.Data.PlayerBussiness.InitActiveSystemInfo(SqlDataReader reader)
+   at Tank.Data.PlayerBussiness.GetSigleActiveSystem(String where)
+2022-08-18 23:58:52 Error: GetSingleActiveSystem System.IndexOutOfRangeException: useableScore
+   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at Tank.Data.PlayerBussiness.InitActiveSystemInfo(SqlDataReader reader)
+   at Tank.Data.PlayerBussiness.GetSigleActiveSystem(String where)

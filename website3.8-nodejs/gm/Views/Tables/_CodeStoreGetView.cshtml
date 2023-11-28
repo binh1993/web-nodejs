@@ -1,0 +1,155 @@
+﻿@using SqlDataProvider.Data;
+@using System.Text;
+@model GM.Service.Models.TableModel
+
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    TableInfo item = Model.Info;
+    List<TableDesignInfo> designs = Model.Designs;
+    int count = designs.Count;
+
+    StringBuilder sb = new StringBuilder();
+    StringBuilder sbget = new StringBuilder();
+    StringBuilder sbgeta = new StringBuilder();
+    sb.AppendLine(" ");
+    if (item.Type == 1)
+    {
+        sb.AppendLine("USE [Db_Tank]");
+    }
+    else
+    {
+        sb.AppendLine("USE [Db_Tank_All]");
+    }
+    sb.AppendLine("GO");
+
+    sb.AppendLine("DROP TABLE [dbo].[" + item.Name + "]");
+    sb.AppendLine("GO");
+    sb.AppendLine("SET ANSI_NULLS ON");
+    sb.AppendLine("GO");
+    sb.AppendLine("SET QUOTED_IDENTIFIER ON");
+    sb.AppendLine("GO");
+
+    sbget.AppendLine(" ");
+    sbget.AppendLine("DROP PROCEDURE [dbo].[SP_" + item.Name + "_All]");
+    sbget.AppendLine("GO");
+    sbget.AppendLine("SET ANSI_NULLS ON");
+    sbget.AppendLine("GO");
+    sbget.AppendLine("SET QUOTED_IDENTIFIER ON");
+    sbget.AppendLine("GO");
+    sbget.AppendLine("CREATE  PROCEDURE [dbo].[SP_" + item.Name + "_All]");
+    sbget.AppendLine("AS");
+    sbget.AppendLine("  SELECT * FROM " + item.Name);
+    sbget.AppendLine("GO");
+
+    if (count > 0)
+    {
+        TableDesignInfo tb = designs.Where(t => t.Name.Contains("UserID")).FirstOrDefault();
+        if (tb == null)
+        {
+            tb = designs.Where(t => t.IsPrimary || t.IdEntity || t.Name.Contains("ID")).FirstOrDefault();
+        }
+        sbgeta.AppendLine(" ");
+        sbgeta.AppendLine("DROP PROCEDURE [dbo].[SP_" + item.Name + "_Single]");
+        sbgeta.AppendLine("GO");
+        sbgeta.AppendLine("SET ANSI_NULLS ON");
+        sbgeta.AppendLine("GO");
+        sbgeta.AppendLine("SET QUOTED_IDENTIFIER ON");
+        sbgeta.AppendLine("GO");
+        sbgeta.AppendLine("CREATE  PROCEDURE [dbo].[SP_" + item.Name + "_Single]");
+        if (tb != null)
+        {
+            sbgeta.AppendLine("  @" + tb.Name + " " + tb.Type);
+            sbgeta.AppendLine("AS");
+            sbgeta.AppendLine("  SELECT * FROM " + item.Name + "  WHERE " + tb.Name + " = @" + tb.Name);
+        }
+        else
+        {
+            sbgeta.AppendLine("  @Unknow int");
+            sbgeta.AppendLine("AS");
+            sbgeta.AppendLine("  SELECT * FROM " + item.Name + "  WHERE Unknow = @Unknow");
+        }
+        sbgeta.AppendLine("GO");
+    }
+    List<string> pks = new List<string>();
+    sb.AppendLine("CREATE TABLE [dbo].[" + item.Name + "](");
+    foreach (TableDesignInfo d in designs)
+    {
+        if (d.IsPrimary)// || d.Name.Contains("ID"))
+        {
+            pks.Add(d.Name);
+        }
+        string tail = ",";
+        if (count == 1 && pks.Count == 0)
+        {
+            tail = ")";
+        }
+        string type = d.Type;
+        string endType = "";
+        string idEntry = "";
+        if (d.IdEntity)
+        {
+            idEntry = "IDENTITY(1,1)";
+        }
+        if (type.Contains("nvarchar"))
+        {
+            type = "nvarchar";
+            endType = d.Type.Substring(type.Length);
+        }
+        if (type.Contains("numeric"))
+        {
+            type = "numeric";
+        }
+
+        if (d.IsPrimary || d.IdEntity)
+        {
+            sb.AppendLine("	[" + d.Name + "] [" + type + "]" + endType + " " + idEntry + " NOT NULL" + tail);
+        }
+        else
+        {
+            sb.AppendLine("	[" + d.Name + "] [" + type + "]" + endType + " " + idEntry + " NOT NULL CONSTRAINT [DF_" + item.Name + "_" + d.Name + "]  DEFAULT (" + TableTool.GetDefaultValue(d.Type) + ")" + tail);
+        }
+        count--;
+    }
+    count = pks.Count;
+    if (count > 0)
+    {
+        sb.AppendLine(" CONSTRAINT [PK_" + item.Name + "] PRIMARY KEY CLUSTERED ");
+        sb.AppendLine("(");
+        foreach (string pk in pks)
+        {
+            string tail = ",";
+            if (count == 1)
+            {
+                tail = "";
+            }
+            sb.AppendLine("	[" + pk + "] ASC" + tail);
+            count--;
+        }
+        sb.AppendLine(")WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]");
+        sb.AppendLine(") ON [PRIMARY]");
+    }
+    sb.AppendLine("GO");
+}
+<h4>@item.Name <i class="fa fa-angle-right"></i><span class="text-danger"> Store Create/Get</span></h4>
+<div style="overflow-y:auto; height:450px">
+<pre class="line-numbers">
+    <code class="language-sql" id="highlight-code">
+        @sb.ToString()
+        @sbget.ToString()
+        @sbgeta.ToString()
+    </code>
+</pre>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+
+            navActive('SQLCRUD');
+
+            var code = $('#highlight-code')[0];
+            Prism.highlightElement(code);
+
+            ZeroCopy.init();
+        });
+    </script>
+}

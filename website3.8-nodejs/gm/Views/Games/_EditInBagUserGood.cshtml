@@ -1,0 +1,174 @@
+﻿@model SqlDataProvider.Data.ItemInfo
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "Cập nhật thông số";
+    var item = Model;
+    string chek = string.Empty;
+}
+<!-- From Block -->
+<form action="@Html.Raw(Url.Action("UpdateItemInBag", "Games", routeValues: new { id = item.TemplateID, type = "usergood"}))"
+      method="post" class="form-horizontal form-bordered" id="frm-update-item-inbag" onsubmit="return false;">
+
+    <fieldset>
+        @Html.Raw(StaticFunction.GetTranslation("SendSeletedItems.RightPanel", item.Template.Name))
+        <div style="height:519px; overflow-y:auto;">
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="Count">TemplateID</label>
+                <div class="col-md-9">
+                    <input type="text" class="form-control input-sm must-number" value="@item.TemplateID" disabled>
+                </div>
+                <input type="hidden" id="TemplateID" name="TemplateID" value="@item.TemplateID" />
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="Count">Count</label>
+                <div class="col-md-9">
+                    <input type="text" id="Count" name="Count" class="form-control input-sm must-number" value="@item.Count">
+                </div>
+            </div>
+            @if (item.Template.CanStrengthen)
+            {
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="StrengthenLevel">StrengthenLevel</label>
+                    <div class="col-md-9">
+                        <input type="text" id="StrengthenLevel" name="StrengthenLevel" class="form-control input-sm must-number" value="@item.StrengthenLevel">
+                    </div>
+                </div>
+            }
+            @if (item.Template.CanCompose)
+            {
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="AttackCompose">AttackCompose</label>
+                    <div class="col-md-9">
+                        <input type="text" id="AttackCompose" name="AttackCompose" class="form-control input-sm must-number" value="@item.AttackCompose">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="DefendCompose">DefendCompose</label>
+                    <div class="col-md-9">
+                        <input type="text" id="DefendCompose" name="DefendCompose" class="form-control input-sm must-number" value="@item.DefendCompose">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="LuckCompose">LuckCompose</label>
+                    <div class="col-md-9">
+                        <input type="text" id="LuckCompose" name="LuckCompose" class="form-control input-sm must-number" value="@item.LuckCompose">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="AgilityCompose">AgilityCompose</label>
+                    <div class="col-md-9">
+                        <input type="text" id="AgilityCompose" name="AgilityCompose" class="form-control input-sm must-number" value="@item.AgilityCompose">
+                    </div>
+                </div>
+            }
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="IsBinds">IsBinds</label>
+                <div class="col-md-9">
+                    <label class="switch switch-primary">
+                        @{
+                            chek = string.Empty;
+                            if (item.IsBinds) { chek = "checked"; }
+                        }
+                        <input type="checkbox" id="IsBinds" name="IsBinds" value="true" @chek>
+                        <span></span>
+                        <input type="hidden" id="IsBinds" name="IsBinds" value="false">
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-3 control-label" for="ValidDate">ValidDate</label>
+                <div class="col-md-9">
+                    <input type="text" id="ValidDate" name="ValidDate" class="form-control input-sm must-number" value="@item.ValidDate">
+                </div>
+            </div>
+            @if (item.Template.CanStrengthen)
+            {
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="goldBeginTime">goldBeginTime</label>
+                    <div class="col-md-9">
+                        <input type="text" id="goldBeginTime" name="goldBeginTime" class="form-control input-sm must-date" value="@item.goldBeginTime">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="goldValidDate">goldValidDate</label>
+                    <div class="col-md-9">
+                        <input type="text" id="goldValidDate" name="goldValidDate" class="form-control input-sm must-number" value="@item.goldValidDate">
+                    </div>
+                </div>
+            }
+            @if (item.IsEnchant())
+            {
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="MagicLevel">Cấp phụ ma</label>
+                    <div class="col-md-9">
+                        <input type="text" id="MagicLevel" name="MagicLevel" class="form-control input-sm must-number" value="@item.MagicLevel">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="MagicExp">Exp phụ ma</label>
+                    <div class="col-md-9">
+                        <input type="text" id="MagicExp" name="MagicExp" class="form-control input-sm must-number" value="@item.MagicExp">
+                    </div>
+                </div>
+            }
+        </div>
+    </fieldset>
+    <div class="form-group form-actions">
+        <div class="col-md-12 text-right">
+            <button type="submit" class="btn btn-sm btn-warning btn-submit2"> Cập nhật</button>
+        </div>
+    </div>
+</form>
+<!-- END From Block -->
+
+@section Scripts{
+    <script>
+        $(function () {
+
+            var startBtn = $('.btn-submit2');
+            // On start button click start loading again
+            startBtn.on('click', function () {
+                $(this).button('loading');
+            });
+
+            /* Validate */
+
+            $('form#frm-update-item-inbag').each(function () {   // <- selects every <form> on page
+                $(this).validate({        // <- initialize validate() on each form
+                    errorClass: 'help-block animation-slideDown', // You can change the animation class for a different entrance animation - check animations page
+                    errorElement: 'div',
+                    errorPlacement: function (error, e) {
+                        e.parents('.form-group > div').append(error);
+                    },
+                    highlight: function (e) {
+                        $(e).closest('.form-group').removeClass('has-success has-error').addClass('has-error');
+                        $(e).closest('.help-block').remove();
+                    },
+                    success: function (e) {
+                        e.closest('.form-group').removeClass('has-success has-error');
+                        e.closest('.help-block').remove();
+                    },
+                    submitHandler: function (e) {
+                        $('#loading-bgr').show();
+                        $.ajax({
+                            url: e.action,
+                            type: e.method,
+                            data: $(e).serialize(),
+                            success: function (result) {
+                                $('#loading-bgr').hide();
+                                $('#response-hodler').html(result);
+                                startBtn.button('reset');
+                            },
+                            error: function (xhr) {
+                                $('#loading-bgr').hide();
+                                showGrowl('Error: ' + xhr.status + ' ' + xhr.statusText, 'danger');
+                                startBtn.button('reset');
+                            }
+                        });
+                        return false;
+                    }
+                });
+            });
+        });
+    </script>
+}

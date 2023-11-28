@@ -1,0 +1,118 @@
+﻿@using MvcPaging;
+@model IPagedList<SqlDataProvider.Data.TableInfo>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+}
+<table class="table table-striped table-vcenter" id="table-list">
+    <thead>
+        <tr>            
+            <th>
+                ID
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Type
+            </th>
+            <th>
+                Class
+            </th>
+            <th>
+                Key
+            </th>
+
+            <th>
+                XmlName
+            </th>
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Count() > 0)
+        {
+            foreach (var item in Model)
+            {
+                <tr>                    
+                    <td>
+                        @Html.TDisplayFor(modelItem => item.ID)
+                    </td>
+                    <td>
+                        <a href="@Html.Raw(Url.Action("Details", "Tables", new { id = item.ID}))" data-modal="showDetails">
+                            <strong>
+                                @Html.TDisplayFor(modelItem => item.Name)
+                            </strong>
+                        </a>
+                    </td>
+                    <td>
+                        @Html.TDisplayFor(modelItem => item.Type)
+                    </td>
+                    <td>
+                        @Html.TDisplayFor(modelItem => item.Class)
+                    </td>
+                    <td>
+                        @Html.TDisplayFor(modelItem => item.Keys)
+                    </td>
+                    <td>
+                        @Html.TDisplayFor(modelItem => item.XmlName)
+                    </td>
+                    <td>
+                        <button class="btn btn-xs btn-primary open-model" type="button" data-toggle="tooltip" title="Sửa" data-link="@Url.Action("Edit", "Tables", new { id = item.ID })">
+                            <i class="fa fa-pencil"></i>
+                        </button>
+                        <button class="btn btn-xs btn-warning open-model" type="button" data-toggle="tooltip" title="Xóa" data-link="@Url.Action("Delete", "Tables", new { id = item.ID })">
+                            <i class="fa fa-times"></i>
+                        </button>
+                        <button class="btn btn-xs btn-info open-model-large" type="button" data-toggle="tooltip" title="Code" data-link="@Url.Action("CodeBuilder", "Tables", new { id = item.ID })">
+                            <i class="fa fa-code"></i>
+                        </button>
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td colspan="7">
+                    <div class="text-center">
+                        @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount, new AjaxOptions { UpdateTargetId = "table-list-content", LoadingElementId = "loading-bgr" }).Options(o => o
+                    .DisplayTemplate("_Pagination")
+                    .MaxNrOfPages(3)
+                    .Action("TableList")
+                    .AddRouteValue("key", ViewData["key"])
+                    .AddRouteValue("type", ViewData["type"]))
+                    </div>
+                </td>
+            </tr>
+        }
+        else
+        {
+            <tr>
+                <td colspan="8">
+                    <div class="text-center">
+                        @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts{
+    <script>
+    $(function () {
+        ModelGeneral.init('data-modal="showDetails"', 'large');
+        ModelGeneral.initBtn('large');
+        ModelGeneral.initBtn();
+    });
+    function reloadTableList(addNew)
+    {
+         @{ int curentPage = (Model.TotalItemCount - ((Model.PageNumber - 1) * Model.PageSize)) == 1? Model.PageNumber - 1: Model.PageNumber;
+             curentPage = Model.PageNumber == 1 ? Model.PageNumber : curentPage; }
+        var getUrl = '@Html.Raw(Url.Action("TableList", "Tables", new { type = -1, page = curentPage, key = @ViewData["key"] }))';
+        if (addNew) {
+            @{ int lastPage = Model.TotalItemCount / Model.PageSize + 1; }
+            getUrl =  '@Html.Raw(Url.Action("TableList", "Tables", new { type = -1, page = lastPage, key = @ViewData["key"] }))';
+        }
+        GMApp.GetAjax('#table-list-content', getUrl);
+    }
+    </script>
+}

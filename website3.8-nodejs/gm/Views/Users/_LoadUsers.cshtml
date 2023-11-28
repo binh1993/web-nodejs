@@ -1,0 +1,173 @@
+﻿@using MvcPaging;
+@model IPagedList<SqlDataProvider.Data.PlayerInfo>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "LoadData";
+    int zoneId = -1;
+}
+@if (Model.TotalItemCount > 0)
+{
+    if(ViewData["key"] == null || string.IsNullOrWhiteSpace((string)ViewData["key"]))
+    {
+        <p class="text-info"> Có tổng cộng <strong class="text-danger">@Model.TotalItemCount</strong> tài khoản tham gia chơi game</p>
+    }
+    else
+    {
+        <p class="text-info"> Có tổng cộng <strong class="text-danger">@Model.TotalItemCount</strong> tài khoản thỏa điều kiện</p>
+    }
+}
+    <!--
+            Available Table Classes:
+                'table'             - basic table
+                'table-bordered'    - table with full borders
+                'table-borderless'  - table with no borders
+                'table-striped'     - striped table
+                'table-condensed'   - table with smaller top and bottom cell padding
+                'table-hover'       - rows highlighted on mouse hover
+                'table-vcenter'     - middle align content vertically
+            -->
+    <table id="general-table" class="table table-striped table-vcenter">
+        <thead>
+            <tr>
+                <th style="width: 80px;" class="text-center">
+                    <label class="switch switch-primary" data-toggle="tooltip" title="Chọn tất cả">
+                        <input type="checkbox">
+                        <span></span>
+                    </label>
+                </th>
+                <th class="text-center"><i class="gi gi-user"></i></th>
+                <th>NickName</th>
+                <th>UserID</th>
+                <th>UserName</th>               
+                <th>Grade</th>
+                <th>FightPower</th> 
+                <th>Money</th>
+                <th>LastDate</th>
+                <th>Status</th>
+                <th style="width: 80px;" class="text-center">Actions</th>
+            </tr>
+        </thead>                  
+            @if (Model.Count() > 0)
+            {
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        zoneId = item.ZoneID;
+                        <tr>
+                            <td class="text-center">
+                                <label class="switch switch-primary">
+                                    <input type="checkbox" id="@item.ID" name="@item.ID" value="@item.ID">
+                                    <span></span>
+                                </label>
+                            </td>
+                            <td class="text-center">
+                                @if (item.Sex)
+                                {
+                                    <i class="fa fa-venus text-success"></i>
+                                }
+                                else
+                                {
+                                    <i class="fa fa-mars text-danger"></i>
+                                }
+                            </td>
+                            <td><a href="@Url.Action("Details", "Users", routeValues: new { id = item.ID, zId = zoneId })" data-modal="showDetails"><strong>@Html.THighlight(item.NickName, ViewData["key"])</strong></a></td>
+                            <td>@Html.THighlight(item.ID.ToString(), ViewData["key"])</td>
+                            <td>@Html.THighlight(item.UserName, ViewData["key"])</td>                            
+                            <td class="text-center">@item.Grade</td>
+                            <td>@item.FightPower</td>
+                            <td>@item.Money</td>
+                            <td>@Html.TOnline(item.LastDate)</td>
+                            <td>@Html.TGetPlayerStatus(item.State)</td>
+                            <td class="text-center">
+                                <div class="btn-group btn-group-xs">
+                                    <a href="@Url.Action("Edit", "Users", routeValues: new { id = item.ID })" data-toggle="tooltip" data-modal="showEdit"
+                                       title="Chỉnh sữa" class="btn btn-default"><i class="fa fa-pencil"></i></a>
+                                    <a href="@Url.Action("Delete", "Users", routeValues: new { id = item.ID })" data-toggle="tooltip" data-modal="showDelete"
+                                       title="Xóa" class="btn btn-danger"><i class="fa fa-times"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="11">
+                            <div class="btn-group btn-group-sm pull-right">
+                                <a href="javascript:void(0)" class="btn btn-primary" data-toggle="tooltip" title="Tối ưu dữ liệu"><i class="fa fa-cog"></i></a>
+                                <div class="btn-group btn-group-sm dropup">
+                                    <a href="javascript:void(0)" class="btn btn-primary pull-right dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+                                    <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
+                                        <li class="dropdown-header"><i class="fa fa-share pull-right"></i> Export As</li>
+                                        <li>
+                                            <a href="javascript:void(0)">.xml</a>
+                                            <a href="@Url.Action("ExportCSV", "Users", routeValues: new { id = zoneId, @table = ViewData["table"] })">.cvs</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="btn-group btn-group-sm">                               
+                                <a href="@Url.Action("KickOrForbid", "Users", routeValues: new { id = zoneId})" id="kick-forbid-player" class="btn btn-primary" 
+                                   data-toggle="tooltip" style="margin-left:15px" title="Khóa hoặc kick tài khoản được chọn">
+                                    <i class="fa fa-lock"></i>
+                                </a>
+                            </div>
+                            <div class="text-center" style="margin-top:-35px">
+                                @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount, new AjaxOptions { UpdateTargetId = "table-content", LoadingElementId = "loading-bgr" }).Options(o => o
+                                .DisplayTemplate("_Pagination")
+                                .Action("LoadData")
+                                .AddRouteValue("key", ViewData["key"])
+                                .AddRouteValue("table", ViewData["table"])
+                                .AddRouteValue("id", zoneId)
+                                .MaxNrOfPages(3))
+                            </div>
+                        </td>
+                    </tr>
+                </tfoot>
+            }
+            else
+            {
+                <tbody>
+                    <tr>
+                        <td colspan="11" class="text-center insert-avatar" id="insert-avatar">
+                            @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+                        </td>
+                    </tr>
+                </tbody>
+            }          
+    </table>
+@section Scripts{
+    <script>
+        //call bacth kick forbid player
+        $("#kick-forbid-player").on("click", function (e) {
+            var searchIds = $("tbody input:checkbox:checked").map(function () {
+                return this.value;
+            }).toArray();
+            $("#loading-bgr").show();
+
+            $.ajax({
+                type: "GET",
+                url: this.href,
+                data: "userIds=" + searchIds,
+                success: function (response) {
+                    $('#modal-content').html(response);
+                    $('#modal').modal({
+                        backdrop: 'static',
+                        keyboard: true
+                    }, 'show');
+                    $("#loading-bgr").hide();
+                }
+            });
+            return false;
+        });
+
+        /* Initialize app when page loads */
+        $(function () {
+            ModelGeneral.init('data-modal="showDetails"', 'large');
+            ModelGeneral.init('data-modal="showEdit"');
+            ModelGeneral.init('data-modal="showDelete"');
+            if ($('.insert-avatar').length > 0) {
+                GMApp.GetJson('#insert-avatar', '@Url.Action("Avatar","Users")');
+            }
+        });
+    </script>
+}

@@ -1,0 +1,9 @@
+2022-10-09 03:04:53,316 - [60] - ERROR - Bussiness.BaseBussiness - Init
+System.InvalidCastException: Specified cast is not valid.
+   at Bussiness.PlayerBussiness.GetPlayerPage(Int32 page, Int32 size, Int32& total, Int32 order, Int32 where, Int32 userID, Boolean& resultValue)
+2022-10-09 03:04:54,020 - [60] - ERROR - Bussiness.BaseBussiness - Init
+System.InvalidCastException: Specified cast is not valid.
+   at Bussiness.PlayerBussiness.GetPlayerPage(Int32 page, Int32 size, Int32& total, Int32 order, Int32 where, Int32 userID, Boolean& resultValue)
+2022-10-09 03:04:54,629 - [60] - ERROR - Bussiness.BaseBussiness - Init
+System.InvalidCastException: Specified cast is not valid.
+   at Bussiness.PlayerBussiness.GetPlayerPage(Int32 page, Int32 size, Int32& total, Int32 order, Int32 where, Int32 userID, Boolean& resultValue)

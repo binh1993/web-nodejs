@@ -1,0 +1,173 @@
+﻿@model SqlDataProvider.Data.ServerInfo
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = StaticFunction.GetTranslation("Model.Add.Title.Server");
+    var item = Model;
+    string chek = string.Empty;
+}
+<div class="modal-header themed-background-default">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">
+        @ViewBag.Title
+    </h4>
+</div>
+<div class="modal-body">
+    <form action="@Html.Raw(Url.Action("CreateChannel", "Service"))" method="post" class="form-horizontal form-bordered" id="frm-add-server">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="ZoneId">ZoneId</label>
+                    <div class="col-md-9">
+                        <input type="text"  class="form-control input-sm must-number" value="@Request.QueryString["id"]" disabled>
+                    </div>
+                    <input type="hidden" id="ZoneId" name="ZoneId" value="@Request.QueryString["id"]" />
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="ID">ID</label>
+                    <div class="col-md-9">
+                        <input type="text" id="ID" name="ID" class="form-control input-sm must-digits" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Int")">
+                    </div>
+                </div>                
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="Name">Name</label>
+                    <div class="col-md-9">
+                        <input type="text" id="Name" name="Name" class="form-control input-sm must-required" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Text")">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="IP">IP</label>
+                    <div class="col-md-9">
+                        <input type="text" id="IP" name="IP" class="form-control input-sm must-required" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Text")" value="gunviet.vn">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="Port">Port</label>
+                    <div class="col-md-9">
+                        <input type="text" id="Port" name="Port" class="form-control input-sm must-number" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Int")" value="9200">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="State">State</label>
+                    <div class="col-md-9">
+                        <input type="text" id="State" name="State" class="form-control input-sm must-number" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Int")" value="1">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="Online">Online</label>
+                    <div class="col-md-9">
+                        <input type="text" id="Online" name="Online" class="form-control input-sm must-number" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Int")" value="0">
+                    </div>
+                </div> 
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="Total">Total</label>
+                    <div class="col-md-9">
+                        <input type="text" id="Total" name="Total" class="form-control input-sm must-number" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Int")" value="1200">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="Room">Room</label>
+                    <div class="col-md-9">
+                        <input type="text" id="Room" name="Room" class="form-control input-sm must-number" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Int")" value="1000">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="Remark">Remark</label>
+                    <div class="col-md-9">
+                        <input type="text" id="Remark" name="Remark" class="form-control input-sm must-required" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Text")" value="11">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="RSA">RSA</label>
+                    <div class="col-md-9">
+                        <input type="text" id="RSA" name="RSA" class="form-control input-sm" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Text")">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="MustLevel">MustLevel</label>
+                    <div class="col-md-9">
+                        <input type="text" id="MustLevel" name="MustLevel" class="form-control input-sm must-number" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Int")" value="100">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="LowestLevel">LowestLevel</label>
+                    <div class="col-md-9">
+                        <input type="text" id="LowestLevel" name="LowestLevel" class="form-control input-sm must-number" placeholder="@StaticFunction.GetTranslation("Model.PlaceHolder.Int")" value="0">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="NewerServer">NewerServer</label>
+                    <div class="col-md-9">
+                        <label class="switch switch-primary">
+                            <input type="checkbox" id="NewerServer" name="NewerServer" value="true" checked>
+                            <span></span>
+                            <input type="hidden" id="NewerServer" name="NewerServer" value="false">
+                        </label>
+                    </div>
+                </div>
+            </div>                
+        </div>       
+        
+        <div class="form-group form-actions">
+            <div class="col-md-12 text-right">
+                <button type="submit" class="btn btn-sm btn-warning btn-submit2"> @StaticFunction.GetTranslation("Model.Add")</button>
+                <button type="button" class="btn btn-sm btn-primary" data-dismiss="modal"> @StaticFunction.GetTranslation("Model.CLose")</button>
+            </div>
+        </div>
+    </form>
+</div>
+@section Scripts{
+    <script>
+
+          $(function () {
+            var startBtn = $('.btn-submit2');
+            // On start button click start loading again
+            startBtn.on('click', function () {
+                $(this).button('loading');
+            });
+
+            /* Validate */
+
+            $('form#frm-add-server').each(function () {
+                $(this).validate({
+                    errorClass: 'help-block animation-slideDown',
+                    errorElement: 'div',
+                    errorPlacement: function (error, e) {
+                        e.parents('.form-group > div').append(error);
+                    },
+                    highlight: function (e) {
+                        $(e).closest('.form-group').removeClass('has-success has-error').addClass('has-error');
+                        $(e).closest('.help-block').remove();
+                        startBtn.button('reset');
+                    },
+                    success: function (e) {
+                        e.closest('.form-group').removeClass('has-success has-error');
+                        e.closest('.help-block').remove();
+                    },
+                    submitHandler: function (e) {
+                        $('#loading-bgr').show();
+                        $.ajax({
+                            url: e.action,
+                            type: e.method,
+                            data: $(e).serialize(),
+                            success: function (result) {
+                                $('#loading-bgr').hide();
+                                $('#response-hodler').html(result);
+                                startBtn.button('reset');
+                                reloadChannel();
+                            },
+                            error: function (xhr) {
+                                $('#loading-bgr').hide();
+                                showGrowl('Error: ' + xhr.status + ' ' + xhr.statusText, 'danger');
+                                startBtn.button('reset');
+                            }
+                        });
+                        return false;
+                    }
+                });
+            });
+        });
+
+    </script>
+}

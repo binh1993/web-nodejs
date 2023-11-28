@@ -1,0 +1,161 @@
+2023-04-04 15:06:02,003 - [50] - ERROR - Tank.Request.csFunction - CreateCompressXml TemplateAlllist.xml is fail!
+System.IO.IOException: The process cannot access the file 'C:\gunviet\Source_Server\website3.8-nodejs\Request\TemplateAlllist.xml' because it is being used by another process.
+   at System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   at System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   at System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy)
+   at System.IO.FileStream..ctor(String path, FileMode mode)
+   at Tank.Request.csFunction.CreateCompressXml(String path, XElement result, String file, Boolean isCompress)
+2023-04-04 15:18:50,594 - [29] - ERROR - Bussiness.BaseBussiness - Init Register
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Bussiness.PlayerBussiness.RegisterUser(String UserName, String NickName, String Password, Boolean Sex, Int32 Money, Int32 GiftToken, Int32 Gold)
+2023-04-04 15:19:02,738 - [50] - ERROR - Tank.Request.IMListLoad - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.IMListLoad.ProcessRequest(HttpContext context)
+2023-04-04 15:19:04,765 - [43] - ERROR - Tank.Request.AdvanceQuestTime - IMListLoad
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AdvanceQuestTime.ProcessRequest(HttpContext context)
+2023-04-04 15:19:06,917 - [35] - ERROR - Tank.Request.AuctionPageList - AuctionPageList
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.AuctionPageList.ProcessRequest(HttpContext context)
+2023-04-04 15:19:29,177 - [49] - ERROR - Tank.Request.ConsortiaAllyList - ConsortiaAllyList
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.ConsortiaAllyList.ProcessRequest(HttpContext context)
+2023-04-04 15:19:34,365 - [22] - ERROR - Tank.Request.ConsortiaDutyList - ConsortiaDutyList
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.ConsortiaDutyList.ProcessRequest(HttpContext context)
+2023-04-04 15:19:35,521 - [29] - ERROR - Tank.Request.ConsortiaEventList - ConsortiaEventList
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.ConsortiaEventList.ProcessRequest(HttpContext context)
+2023-04-04 15:19:36,364 - [50] - ERROR - Tank.Request.ConsortiaIMList - ConsortiaIMList
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.ConsortiaIMList.ProcessRequest(HttpContext context)
+2023-04-04 15:19:40,557 - [41] - ERROR - Tank.Request.ConsortiaList - ConsortiaList
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.ConsortiaList.ProcessRequest(HttpContext context)
+2023-04-04 15:19:41,960 - [27] - ERROR - Tank.Request.ConsortiaNameCheck - ConsortiaCheck
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Tank.Request.csFunction.ConvertSql(String inputString)
+   at Tank.Request.ConsortiaNameCheck.ProcessRequest(HttpContext context)
+2023-04-04 15:19:42,723 - [44] - ERROR - Tank.Request.ConsortiaUsersList - ConsortiaUsersList
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.ConsortiaUsersList.ProcessRequest(HttpContext context)
+2023-04-04 15:19:51,168 - [40] - ERROR - Tank.Request.dailyloglist - dailyloglist
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.dailyloglist.ProcessRequest(HttpContext context)
+2023-04-04 15:20:05,608 - [27] - ERROR - Tank.Request.GiftRecieveLog - giftrecievelog
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.GiftRecieveLog.ProcessRequest(HttpContext context)
+2023-04-04 15:20:06,679 - [48] - ERROR - Tank.Request.giftsendlog - giftsendlog
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.giftsendlog.ProcessRequest(HttpContext context)
+2023-04-04 15:20:10,844 - [33] - ERROR - Tank.Request.giftsendlog - giftsendlog
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.giftsendlog.ProcessRequest(HttpContext context)
+2023-04-04 15:20:15,206 - [33] - ERROR - Bussiness.BaseBussiness - Init
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Bussiness.PlayerBussiness.GetFriendsGood(String UserName)
+2023-04-04 15:20:18,835 - [40] - ERROR - Tank.Request.IMFriendsBbs - Normal:
+System.Exception: The remote name could not be resolved: 'ddt.the9.com'
+   at Tank.Request.IMFriendsBbs.Normal.FriendsString(String uid)
+2023-04-04 15:20:36,912 - [38] - ERROR - Tank.Request.LoadUserEquip - LoadUserEquip
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.LoadUserEquip.ProcessRequest(HttpContext context)
+2023-04-04 15:20:39,310 - [27] - ERROR - Tank.Request.LoadUserMail - LoadUserMail
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.LoadUserMail.ProcessRequest(HttpContext context)
+2023-04-04 15:20:40,106 - [38] - ERROR - Tank.Request.LoadUserItems - LoadUserItems
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.LoadUserItems.ProcessRequest(HttpContext context)
+2023-04-04 15:20:41,219 - [42] - ERROR - Tank.Request.LoadUsersSort - LoadUsersSort
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.LoadUsersSort.ProcessRequest(HttpContext context)
+2023-04-04 15:20:45,839 - [34] - ERROR - Bussiness.BaseBussiness - Init
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Bussiness.PlayerBussiness.GetUserLoginList(String userName)
+2023-04-04 15:20:51,529 - [41] - ERROR - Tank.Request.MailSenderList - MailSenderList
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.MailSenderList.ProcessRequest(HttpContext context)
+2023-04-04 15:20:53,160 - [34] - ERROR - Tank.Request.MarryInfoPageList - MarryInfoPageList
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.MarryInfoPageList.ProcessRequest(HttpContext context)
+2023-04-04 15:21:14,915 - [46] - ERROR - Bussiness.Interface.BaseInterface - UnEncryptSentReward
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Bussiness.Interface.BaseInterface.UnEncryptSentReward(String content, Int32& result, String key)
+2023-04-04 15:21:41,981 - [29] - ERROR - Tank.Request.UserGoodsInfo - UserGoodsInfo
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.UserGoodsInfo.ProcessRequest(HttpContext context)
+2023-04-04 15:21:48,314 - [33] - ERROR - Tank.Request.UserQuestList - UserQuestList
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.UserQuestList.ProcessRequest(HttpContext context)
+2023-04-04 15:21:54,365 - [50] - ERROR - Tank.Request.VisualizeRegister - VisualizeRegister
+System.NullReferenceException: Object reference not set to an instance of an object.
+   at Tank.Request.VisualizeRegister.ProcessRequest(HttpContext context)
+2023-04-04 15:26:10,727 - [33] - ERROR - Tank.Request.ConsortiaEventList - ConsortiaEventList
+System.ArgumentNullException: Value cannot be null.
+Parameter name: String
+   at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at Tank.Request.ConsortiaEventList.ProcessRequest(HttpContext context)

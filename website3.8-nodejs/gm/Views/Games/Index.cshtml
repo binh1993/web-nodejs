@@ -1,0 +1,206 @@
+﻿@using SqlDataProvider.Data;
+@model GM.Service.Models.GameViewModel
+@{
+    ViewBag.Title = "Dữ liệu game";
+}
+<!-- Header -->
+<div class="content-header">
+    <div class="header-section">
+        <h1>
+            <i class="gi gi-server"></i>@ViewBag.Title<br><small>Quản lý dữ liệu game hiệu quả và nhanh chóng @ViewBag.Message</small>
+        </h1>
+    </div>
+</div>
+<ul class="breadcrumb breadcrumb-top">
+    <li>Trang</li>
+    <li><a href="javascript:void(0)">@ViewBag.Title</a></li>
+</ul>
+<!-- END Header -->
+
+ <!--Styles Block -->
+<div class="block">
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="form-horizontal form-control-borderless">
+                <div class="form-group">
+                    <div class="col-md-8">
+                        <select id="tables-chosen" name="tables-chosen" class="select-chosen" data-placeholder="Chọn table...">
+                            <option value="-1"></option>
+                            <optgroup label="Truy cập nhanh">
+                                <option value="Shop">Shop</option>
+                                <option value="Shop_Goods">Shop Goods</option>
+                                <option value="Shop_Goods_Box">Shop Goods Box</option>
+                                <option value="Shop_Goods_Show_List">Shop Goods Show List</option>
+                                <option value="Shop_Cheap_Items">Shop Cheap Items</option>
+                                <option value="Battle_Bonus">Battle Bonus</option>
+                                <option value="Server_Config">Server Config</option>
+                            </optgroup>
+                            <optgroup label="Tất cả table(s)">
+                                @foreach (TableInfo item in Model.TableInfo)
+                                {
+                                    <option value="@item.Name">@item.Name.Replace("_", " ")</option>
+                                }
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" class="btn btn-primary btn-sm" id="btn-refresh"><i class="hi hi-refresh"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 text-left">
+            <div id="cart-holder" style="display:none">
+                <a href="@Html.Raw(Url.Action("Index", "Cart"))" data-modal="showcart">
+                    <i style="font-size:22px" class="hi hi-shopping-cart cart-anchor"></i>
+                    Item in cart (<span id="items-in-cart">@Model.CartCount</span>)
+                </a>                
+            </div>            
+        </div>
+        <div class="col-lg-4">
+            <div class="pull-right">
+                <form action="./" method="post" class="form-horizontal" id="frm-quick-search-all" onsubmit="return false;">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <input type="text" id="quick-search-all" name="key" class="form-control" placeholder="Tìm kiếm...">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ENDStyles Block -->
+
+<!-- Table Styles Block -->
+<div class="block">
+    <!-- Table Styles Title -->
+    <div class="block-title">
+        <h2>Table <strong id="table-name">Chưa chọn</strong></h2>
+        <div id="total-items-content" class="pull-right" style="margin-top:10px; margin-right:15px;"></div>
+    </div>
+    <!-- END Table Styles Title -->
+    <!-- Table Styles Content -->
+    <!-- Changing classes functionality initialized in js/pages/tablesGeneral.js -->
+    <div class="table-responsive" id="table-content" style="min-height:670px">
+        <div class="text-center text-warning">
+            <p>@Html.Raw(StaticFunction.GetTranslation("Views.Empty"))</p>
+        </div>
+    </div>
+    <!-- END Table Styles Content -->
+</div>
+<!-- END Table Styles Block -->
+
+@section Scripts{
+    <script>
+        $(function () {
+
+            var tbName = 'Shop_Goods';
+            loadGameData(tbName);
+            $('#tables-chosen').val(tbName);
+            $('#tables-chosen').trigger("chosen:updated");
+
+            $('#btn-refresh').bind("click", function (e) {
+                var table = $("#tables-chosen").val();
+                loadGameData(table);
+            });
+
+            //Select Table
+            $("#tables-chosen").change(function (e) {
+                var table = $(this).val();
+                loadGameData(table);
+            });
+
+            //live search
+            $("#quick-search-all").keyup(function (e) {
+                e.preventDefault();
+                var key = $(this).val();
+                var loadurl = '@Url.Action("LoadData", "Games")?table=' + $("#tables-chosen").val();
+                $.ajax({
+                    url: loadurl,
+                    type: 'POST',
+                    data: $('#frm-quick-search-all').serialize(),
+                    success: function (data) {
+                        $('#table-content').html(data);
+                        $("#loading-bgr").hide();
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        var text = "Error: " + xhr.status + " " + xhr.statusText;
+                        showGrowl(text, 'danger');
+                    }
+                });
+            });
+
+        });
+        function loadGameData(table) {
+            var loadurl = '@Url.Action("LoadData", "Games")?table=' + table;
+            switch(table)
+            {
+                case "Shop_Goods":
+                    $('#cart-holder').show();
+                    break;
+                default:
+                    $('#cart-holder').hide();
+                    break;
+            }
+            $("#loading-bgr").show();
+            $.get(loadurl, function (data) {
+                $("#table-content").html(data);
+                $("#table-name").html(table);
+                $("#loading-bgr").hide();
+            })
+            .fail(function (data) {
+                $("#table-content").html(getError(data.status, data.statusText));
+                $("#loading-bgr").hide();
+            });
+        }
+        //selecet Category
+        function loadCategory(cid) {
+            $("#loading-bgr").show();
+            var loadurl = '@Url.Action("LoadData", "Games")?table=Shop_Goods&cid=' + cid;
+            $.get(loadurl, function (data) {
+                $("#table-content").html(data);
+                $("#loading-bgr").hide();
+            })
+            .fail(function (data) {
+                $("#table-content").html(getError(data.status, data.statusText));
+                $("#loading-bgr").hide();
+            });
+            return false;
+        }
+        /*reload*/
+        function reloadData(table , key, cid, currentPage, tagId, tagName) {
+            /*TO DO*/
+            $("#loading-bgr").show();
+            var loadurl = '@Url.Action("LoadData", "Games")?table=' + table;
+            if (key != '') {
+                loadurl += '&key=' + key;
+            }
+            if (cid != '-1') {
+                loadurl += '&cid=' + cid;
+            }
+            if (currentPage != '-1') {
+                loadurl += '&page=' + currentPage;
+            }
+            if (tagId != undefined) {
+                loadurl += '&tagId=' + tagId;
+            }
+            if (tagName != undefined) {
+                loadurl += '&tagName=' + tagName;
+            }
+            $.get(loadurl, function (data) {
+                $("#table-content").html(data);
+                $("#loading-bgr").hide();
+            })
+            .fail(function (data) {
+                showGrowl(getError(data.status, data.statusText));
+                $("#loading-bgr").hide();
+            });
+        }
+    </script>
+}

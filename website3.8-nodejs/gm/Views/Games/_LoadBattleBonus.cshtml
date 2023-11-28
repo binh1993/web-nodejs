@@ -1,0 +1,114 @@
+﻿@using MvcPaging;
+@model IPagedList<SqlDataProvider.Data.BattleBonusInfo>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "LoadBattleBonus";
+    string activeStr = "active";
+}
+@if (Model.TotalItemCount > 0)
+{
+    <div style="display: none" id="total-items">
+        @if (string.IsNullOrWhiteSpace((string)ViewData["key"]))
+        {
+            <p class="text-info" style="font-size:14px"> Có tổng cộng <strong class="text-danger">@Model.TotalItemCount</strong> item(s)</p>
+        }
+        else
+        {
+            <p class="text-info" style="font-size:14px"> Có tổng cộng <strong class="text-danger">@Model.TotalItemCount</strong> item(s) thỏa điều kiện</p>
+        }
+    </div>
+}
+<div class="block">
+    @if (Model.Any())
+    {
+        <div class="row">
+            <div class="col-md-4" style="border-right: 1px dotted gray">
+                <p class="text-warning" style="font-size: 18px;">
+                    <i class="gi gi-log_in"></i><small> Danh sách</small>
+                    <a href="@Html.Raw(Url.Action("CreateBattleBonus", "Games"))" class="btn btn-alt btn-sm btn-default pull-right" data-dialog="-1"
+                       id="btn-add-battle-bonus" data-modal="addbattlebonus">
+                        <i class="gi gi-circle_plus text-primary"></i> Thêm battle bonus mới
+                    </a>
+                </p>
+                <div id="box-list" style="min-height: 592px">
+                    <table id="general-table" class="table table-hover table-vcenter">
+
+                        <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="@activeStr menu-tr" id="tr-@item.ID">
+                                <td>
+                                    <label class="col-xs-2">
+                                        <span class="text-success" style="font-size: 12px">@item.ID.ToString()</span>
+                                    </label>
+                                    <div class="col-xs-10" style="margin-bottom: 2px">
+                                        <a href="javascript:void(0)" data-show="@item.ID" class="menu-a"><strong>@item.Detail</strong></a>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <div class="btn-group btn-group-xs">
+                                        <a href="@Url.Action("DeleteBattleBonus", "Games", routeValues: new {@id = item.ID})" data-toggle="tooltip" data-modal="show"
+                                           title="Delete this record" class="btn btn-danger"><i class="fa fa-times"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            activeStr = "";
+                        }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="text-center">
+                            @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount, new AjaxOptions { LoadingElementId = "loading-bgr", OnSuccess = "AjaxBattleBonusSuccess", OnFailure = "AjaxBattleBonusFailure" }).Options(o => o
+                                .DisplayTemplate("_Pagination")
+                                .Action("LoadData")
+                                .AddRouteValue("key", ViewData["key"])
+                                .AddRouteValue("cid", ViewData["cid"])
+                                .AddRouteValue("table", ViewData["table"])
+                                .MaxNrOfPages(3))
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8" id="list-box-items">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="text-warning" style="font-size: 18px">
+                            <i class="gi gi-log_out"></i><small> Chi tiết</small> <strong><span id="box-items-header" class="text-danger">..</span></strong>
+                        </p>
+                    </div>
+                </div>
+                <div id="box-award-list">
+                    <div class="text-center text-danger">
+                        @Html.Raw(StaticFunction.GetTranslation("Views.WaitLoading"))
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="text-center">
+            @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+        </div>
+    }
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+            /*add some code here!*/
+            var total = $("#total-items").html();
+            $("#total-items-content").html(total);
+            ModelGeneral.init('data-modal="addbattlebonus"', 'large2');
+        });
+        function AjaxBattleBonusSuccess(data) {
+            $('#table-content').html(data);
+        }
+        function AjaxBattleBonusFailure(xhr) {
+            var text = "Error: " + xhr.status + " " + xhr.statusText;
+            showGrowl(text, 'danger');
+        }
+    </script>
+}

@@ -1,0 +1,146 @@
+﻿@{
+    ViewBag.Title = "Events";
+}
+
+<!-- Blank Alternative Header -->
+<div class="content-header">
+    <div class="header-section">
+        <h1>
+            <i class="gi gi-gift"></i>@ViewBag.Title<br><small>Quản lý các sự kiện trong game!</small>
+        </h1>
+    </div>
+</div>
+<ul class="breadcrumb breadcrumb-top">
+    <li>Trang</li>
+    <li>Games</li>
+    <li><a href="">Events</a></li>
+</ul>
+<!-- END Blank Alternative Header -->
+<!-- Blank Alternative Content -->
+<div class="block block-alt-noborder">
+    <div class="sub-header">
+        <div class="row">
+            <div class="col-md-4">
+                <form action="./" method="post" id="frm-event-quick-search" onsubmit="return false;">
+                    <div class="input-group">
+                        <input type="text" id="event-quick-search" name="key" class="form-control" placeholder="Tìm kiếm...">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-4">
+                <select id="event-enddate-chosen" name="event-enddate-chosen" class="select-chosen" data-placeholder="Chọn..">
+                    <option value="0">Tất cả</option>
+                    <option value="1">Active còn hạn</option>
+                    <option value="2">Active hết hạn</option>
+                </select>
+            </div>            
+            <div class="col-md-4">
+                <a href="@Html.Raw(Url.Action("SendReloadToService", "Service", new { cmd = "active" }))" class="btn btn-sm btn-success" id="btn-schema-xml">Cập nhật xml</a>
+                <a href="#modal-tutorial" data-toggle="modal" class="text-danger pull-right" style="margin-top:15px"><small>Trợ giúp <i class="gi gi-circle_question_mark" style="font-size:12px"></i></small></a>                  
+            </div>
+        </div>
+    </div>
+    <!-- HTML -->
+    <div id="modal-tutorial" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h3 class="modal-title">Trợ giúp</h3>
+                </div>
+                <div class="modal-body">
+                    <p class="text-danger">Không được mở nhiều tab hoặc cửa sổ trình duyệt chạy cùng 1 chức năng trên cùng 1 tài khoản. Vd: Mở nhiều tab chạy chức năng <em class="text-primary">Sự kiện</em></p>
+                    <p> Để <em class="text-warning">Xóa</em> hoặc <em class="text-danger">Sửa</em> vật phẩm rê chuột vào vật phẩm cần thao tác sẽ hiện 2 nút để thực hiện hành động <em class="text-warning">Xóa</em> hoặc <em class="text-danger">Sửa</em></p>
+                    <p>Đối với các hoạt động <em class="text-warning">Đổi vật phẩm</em> khi click vào các ô <em class="text-primary">phần thưởng</em> tương ứng sẽ hiện <em class="text-info">vật phẩm cần có</em> tương ứng</p>
+                    <p class="text-success">Đối với các hoạt động <em class="text-warning">Đổi vật phẩm</em> khi số lượng <em class="text-info">vật phẩm cần có</em> lớn hơn 8 sẽ có khung màu đỏ. Phải xóa ngay vật phẩm có khung màu đỏ vì
+                     game chỉ hổ trợ tối đa 8 <em class="text-info">vật phẩm cần có</em></p>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+    <div class="row">
+        <div class="col-md-4" style="border-right:1px dotted gray">
+            <p class="text-warning" style="font-size:18px;">
+                <i class="gi gi-log_in"></i><small> Danh sách Event</small>
+                <a href="@Html.Raw(Url.Action("CreateActive","Games"))" class="btn btn-alt btn-sm btn-default pull-right" data-dialog="-1"
+                   id="btn-add-event">
+                    <i class="gi gi-circle_plus text-primary"></i> Thêm hoạt động mới
+                </a>
+            </p>       
+            <div id="event-list">
+                <div class="text-center text-warning">
+                    <p>@Html.Raw(StaticFunction.GetTranslation("Views.WaitLoading"))</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <p class="text-warning" style="font-size:18px">
+                <i class="gi gi-log_out"></i><small> Phần thưởng</small> <strong><span id="event-header" class="text-danger">..</span></strong>
+                <a href="@Html.Raw(Url.Action("AddItemsModel","Games", new { type = "active" }))" class="btn btn-alt btn-sm btn-default pull-right" data-dialog="-1"
+                   id="btn-add-event-award">
+                    <i class="gi gi-circle_plus text-primary"></i> Thêm phần thưởng mới
+                </a>
+            </p>  
+            <div id="event-award-list">
+                <div class="text-center text-warning">
+                    <p>@Html.Raw(StaticFunction.GetTranslation("Views.WaitLoading"))</p>
+                </div>
+            </div>           
+        </div>
+    </div>
+    
+    <!-- END HTML -->
+</div>
+<!-- END Blank Alternative Content -->
+
+@section Scripts {
+ <script>
+     $(function () {
+         /*add some code here!*/
+         loadEventsList();
+         GMApp.initSchema("#btn-schema-xml");
+         $('#btn-add-event').bind('click', function (e) {
+             var _url = $(this).attr("href")
+             GMApp.Dialog(_url, e, null, 'large3');
+             return false;
+         });
+
+         $('#btn-add-event-award').bind('click', function (e) {
+             var _id = $(this).attr("data-dialog");
+             var _url = $(this).attr("href") + '&name=' + $("#event-header").text();
+             GMApp.Dialog(_url, e, 'tid=' + _id, 'large');
+             return false;
+         });
+
+         $("#event-enddate-chosen").change(function (e) {
+             var cid = $(this).val();
+             GMApp.GetJson('#event-list', '@Html.Raw(Url.Action("EventList", "Games"))?cid=' + cid);
+         });
+         //live search
+         $("#event-quick-search").keyup(function (e) {
+             e.preventDefault();
+             var loadurl = '@Html.Raw(Url.Action("EventList", "Games"))';
+             $.ajax({
+                 url: loadurl,
+                 type: 'POST',
+                 data: $('#frm-event-quick-search').serialize(),
+                 success: function (data) {
+                     $('#event-list').html(data.Html);
+                 },
+                 error: function (xhr, textStatus, errorThrown) {
+                     $('#event-list').html(getError(xhr.status, xhr.statusText));
+                 }
+             });
+         });
+         //END live search     
+     });
+     function loadEventsList() {
+         var _val = $("#event-enddate-chosen option:selected").val();
+         GMApp.GetJson('#event-list', '@Html.Raw(Url.Action("EventList","Games"))?cid=' + _val);
+     }
+ </script>
+}

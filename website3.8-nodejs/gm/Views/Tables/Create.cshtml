@@ -1,0 +1,108 @@
+﻿@{
+    ViewBag.Title = "Thêm table mới";
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+}
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">
+        @ViewBag.Title
+</h4>
+</div>
+<div class="modal-body">
+        <form action="@Html.Raw(Url.Action("Create", "Tables"))" method="post" class="form-horizontal form-bordered" id="frm-add-table">
+
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="Name">Name</label>
+                <div class="col-md-8">
+                    <input type="text" id="Name" name="Name" class="form-control input-sm must-required" value="" placeholder="Nhập vào tên, vd: LevelInfo">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="Type">Type</label>
+                <div class="col-md-8">
+                    <input type="text" id="Type" name="Type" class="form-control input-sm must-digits" value="" placeholder="Nhập vào một số, vd: 1,2,3..">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="Class">Class</label>
+                <div class="col-md-8">
+                    <input type="text" id="Class" name="Class" class="form-control input-sm" value="" placeholder="Nhập vào tên class c#, vd: LevelInfo">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="Keys">Keys</label>
+                <div class="col-md-8">
+                    <input type="text" id="Keys" name="Keys" class="form-control input-sm" value="" placeholder="Nhập vào khóa chính, vd: ID,UserID ">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="XmlName">XmlName</label>
+                <div class="col-md-8">
+                    <input type="text" id="XmlName" name="XmlName" class="form-control input-sm" value="" placeholder="Nhập vào xml name, vd: levellist">
+                </div>
+            </div>
+            <div class="form-group form-actions">
+                <div class="col-md-12 text-right">
+                    <button type="reset" class="btn btn-sm btn-warning"> Tạo lại</button>
+                    <button type="submit" class="btn btn-sm btn-primary btn-submit"> Thêm mới</button>
+                    <button type="button" class="btn btn-sm btn-success" data-dismiss="modal"> Đóng</button>
+                </div>
+            </div>
+        </form>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+
+            var startBtn = $('.btn-submit');
+            // On start button click start loading again
+            startBtn.on('click', function () {
+                $(this).button('loading');
+            });
+
+            /* Validate required: true*/           
+
+            $('form#frm-add-table').each(function () {   // <- selects every <form> on page
+                $(this).validate({        // <- initialize validate() on each form
+                    errorClass: 'help-block animation-slideDown', // You can change the animation class for a different entrance animation - check animations page
+                    errorElement: 'div',
+                    errorPlacement: function (error, e) {
+                        e.parents('.form-group > div').append(error);
+                    },
+                    highlight: function (e) {
+                        $(e).closest('.form-group').removeClass('has-success has-error').addClass('has-error');
+                        $(e).closest('.help-block').remove();
+                        startBtn.button('reset');
+                    },
+                    success: function (e) {
+                        e.closest('.form-group').removeClass('has-success has-error');
+                        e.closest('.help-block').remove();
+                    },
+                    submitHandler: function (e) {
+                        $.ajax({
+                            url: e.action,
+                            type: e.method,
+                            data: $(e).serialize(),
+                            success: function (data) {
+                                if (data.Result) {
+                                    $('#response-hodler').html(data.Html);
+                                    reloadTableList(true);
+                                }
+                                else {
+                                    showGrowl(data.Html, 'danger');
+                                }
+                                startBtn.button('reset');
+                            },
+                            error: function (xhr) {
+                                showGrowl('Error: ' + xhr.status + ' ' + xhr.statusText, 'danger');
+                                startBtn.button('reset');
+                            }
+                        });
+                        return false;
+                    }
+                });
+            });
+        });
+    </script>
+}

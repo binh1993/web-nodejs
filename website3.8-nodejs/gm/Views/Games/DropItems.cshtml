@@ -1,0 +1,171 @@
+﻿@{
+    ViewBag.Title = "DropItems";
+}
+
+<!-- Blank Alternative Header -->
+<div class="content-header">
+    <div class="header-section">
+        <h1>
+            <i class="gi gi-cloud-download"></i>@ViewBag.Title<br><small>Quản lý hệ thống Drop Items trong game!</small>
+        </h1>
+    </div>
+</div>
+<ul class="breadcrumb breadcrumb-top">
+    <li>Trang</li>
+    <li>Games</li>
+    <li><a href="javascript:void(0)">DropItems</a></li>
+</ul>
+<!-- END Blank Alternative Header -->
+
+<!-- Blank Alternative Content -->
+<div class="block block-alt-noborder">
+    <h3 class="sub-header">Drop System<small> Hỗ trợ tạo Drop conditon và tự động thêm item nhanh chóng</small> 
+    <a class="pull-right" href="#modal-tutorial" data-toggle="modal"><small>chi tiết <i class="gi gi-circle_question_mark" style="font-size:12px"></i></small></a>
+    </h3>
+    <!-- HTML -->   
+        <div class="row">
+            <div class="col-lg-4">
+                <!-- Edit Award Block -->
+                <div class="block">
+                    <!-- Edit Award Title -->
+                    <div class="block-title clearfix">
+                        <div class="block-options">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <a href="@Html.Raw(Url.Action("CreateDropCondiction","Games"))" class="btn btn-alt btn-sm btn-default" data-dialog="adddrop"
+                                       data-toggle="tooltip" title="Thêm Drop mới">
+                                        <i class="gi gi-circle_plus text-primary"></i> Thêm
+                                    </a>
+                                </div>
+                                <div class="col-md-8">      
+                                    <form action="./" method="post" class="form-horizontal" id="frm-quick-search-drop" onsubmit="return false;">
+                                        <input type="text" id="quick-search-drop" name="key" style="margin-top:3px"  class="form-control" placeholder="Tìm kiếm...">
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- END Edit Award Title -->
+                    <!-- Edit Award Content -->
+                    <div id="drop-content">
+                        <div class="text-center text-warning">
+                            <p>@Html.Raw(StaticFunction.GetTranslation("Views.WaitLoading"))</p>
+                        </div>
+                    </div>
+                    <!-- END Edit Award Content -->
+                </div>
+                <!-- END Edit Award Block -->
+            </div>
+            <div class="col-lg-8">
+                <!-- TopAward Block -->
+                <div class="block">
+                    <!-- TopAward Title -->
+                    <div class="block-title clearfix">
+                        <div class="block-options">
+                            Drop Condition <i class="gi gi-chevron-right" style="font-size:8px"></i> <span id="drop-items-header" class="text-success">Chưa chọn..</span>
+                            <a href="@Html.Raw(Url.Action("AddItemsModel","Games", new { type = "dropitems" }))" class="btn btn-alt btn-sm btn-default pull-right"
+                               data-dialog="-1" id="btn-add-drop-items" style="margin-top:4px">
+                                <i class="fa fa-pencil text-success"></i> Thêm phần thưởng
+                            </a>
+                        </div>
+                    </div>
+                    <!-- END TopAward Title -->
+                    <!-- TopAward Content -->
+                    <div id="drop-items-content">
+                        <div class="text-center text-warning">
+                            <p>@Html.Raw(StaticFunction.GetTranslation("Views.WaitLoading"))</p>
+                        </div>
+                    </div>
+                    <!-- END TopAward Content -->
+                </div>
+                <!-- END TopAward Block -->
+            </div>
+        </div>
+
+    <!-- END HTML -->
+</div>
+<!-- END Blank Alternative Content -->
+<!-- Regular Modal -->
+<div id="modal-tutorial" class="modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h3 class="modal-title">Demo Drop Systerm</h3>
+            </div>
+            <div class="modal-body">
+                <!-- Default Tabs -->
+                <ul class="nav nav-tabs push" data-toggle="tabs">
+                    <li class="active"><a href="#example-tabs-news">Add Drop Condition</a></li>
+                    <li><a href="#example-tabs-profile">Auto Add Option</a></li>
+                    <li><a href="#example-tabs-settings" data-toggle="tooltip" title="Settings"><i class="gi gi-circle_question_mark"></i></a></li>
+
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="example-tabs-news">
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/u9X8KYEQWUE" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="example-tabs-profile">
+                        <div class="embed-responsive embed-responsive-16by9">                            
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/fuBREoQOp6g" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="tab-pane text-warning" id="example-tabs-settings">
+                        <p>Những điều cần lưu ý khi dùng Drop Systerm</p>
+                        <p>
+                            <ul>
+                                <li>Không được xóa Drop Condtion trong database</li>
+                                <li>Khi xóa 1 Drop Condion trên Drop Systerm, tool cũng sẽ xóa các drop item tương ứng.</li>
+                                <li>Không được mở nhiều cửa sổ hoặc tabs sử dụng cùng một chức năng ví dụ: mở hai tabs chạy Drop Systerm</li>
+                            </ul>
+                        </p>
+                    </div>
+                </div>
+                <!-- END Default Tabs -->
+            </div>           
+        </div>
+    </div>
+</div>
+<!-- END Regular Modal -->
+
+@section Scripts {
+    <script> 
+        $(function () {
+            GMApp.GetJson('#drop-content', '@Html.Raw(Url.Action("LoadDrop","Games"))');
+
+            /*call add dailog*/
+            $('a[data-dialog="adddrop"]').bind('click', function (e) {
+                var _url = $(this).attr("href");
+                GMApp.Dialog(_url, e);
+                return false;
+            });
+
+            $('#btn-add-drop-items').bind('click', function (e) {
+                var _id = $(this).attr("data-dialog");
+                var _url = $(this).attr("href") + '&name=' + $("#drop-items-header").text();
+                GMApp.Dialog(_url, e, 'tid=' + _id, 'large');
+                return false;
+            });
+
+            //live search
+            $("#quick-search-drop").keyup(function (e) {
+                e.preventDefault();
+                var loadurl = '@Html.Raw(Url.Action("LoadDrop", "Games"))';
+                $.ajax({
+                    url: loadurl,
+                    type: 'POST',
+                    data: $('#frm-quick-search-drop').serialize(),
+                    success: function (data) {
+                        $('#drop-content').html(data.Html);
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        $('#drop-content').html(getError(xhr.status, xhr.statusText));
+                    }
+                });
+            });
+
+        });
+    </script>
+}

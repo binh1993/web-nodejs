@@ -1,0 +1,8 @@
+2023-02-07 20:07:09 Error: GetAllAreaConfig System.NullReferenceException: Object reference not set to an instance of an object.
+   at Tank.Data.ServerBussiness.GetAllAreaConfig()
+2023-02-07 20:07:16 Error: GetAllShopItem System.NullReferenceException: Object reference not set to an instance of an object.
+   at Tank.Data.ProduceBussiness.GetAllShopItem()
+2023-02-07 20:07:18 Error: GetAllShopGoodsShowList System.NullReferenceException: Object reference not set to an instance of an object.
+   at Tank.Data.ProduceBussiness.GetAllShopGoodsShowList()
+2023-02-07 20:07:18 Error: GetAllShopGoodsShowList System.NullReferenceException: Object reference not set to an instance of an object.
+   at Tank.Data.ProduceBussiness.GetAllShopGoodsShowList()

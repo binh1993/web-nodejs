@@ -1,0 +1,21 @@
+﻿@{
+    ViewBag.Title = "Giới hạn quyền truy cập";
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+}
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+<div class="modal-body">
+    <!-- Warning Alert -->
+    <div class="alert alert-warning">
+        <p>Bạn không thể truy cập chức năng này do giới hạn quyền truy cập! Liên hệ Quản lý site để biết thêm chi tiêt.</p>
+    </div>
+    <!-- END Warning Alert -->
+    <div class="form-actions">
+        <div class="text-right">
+            @Html.ActionLink("Đăng xuất", "LogOff", "Account", routeValues: null, htmlAttributes: new { id = "login-link", @class = "btn btn-sm btn-success" })
+            <button type="button" class="btn btn-sm btn-success" data-dismiss="modal">Huỷ</button>
+        </div>
+    </div>
+</div>

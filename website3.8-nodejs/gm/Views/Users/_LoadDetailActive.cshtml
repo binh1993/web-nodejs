@@ -1,0 +1,383 @@
+﻿@model SqlDataProvider.Data.ActiveSystemInfo
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "_EditActiveSystem";
+    var item = Model;
+    string chek = string.Empty;
+}
+<form action="@Html.Raw(Url.Action("UpdateUsersData", "Users", routeValues: new {@zid = Request.QueryString["zid"], @type = "ActiveSystemInfo" }))"
+      method="post" class="form-horizontal" id="frm-activesystem">
+    <input type="hidden" id="ID" name="ID" value="@item.ID">
+    <input type="hidden" id="UserID" name="UserID" value="@item.UserID">
+
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="useableScore">useableScore</label>
+        <div class="col-md-7">
+            <input type="text" id="useableScore" name="useableScore" class="form-control input-sm" value="@item.useableScore">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="totalScore">totalScore</label>
+        <div class="col-md-7">
+            <input type="text" id="totalScore" name="totalScore" class="form-control input-sm" value="@item.totalScore">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="AvailTime">AvailTime</label>
+        <div class="col-md-7">
+            <input type="text" id="AvailTime" name="AvailTime" class="form-control input-sm" value="@item.AvailTime">
+        </div>
+    </div>
+
+    <input type="hidden" id="NickName" name="NickName" value="@item.NickName">
+
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="dayScore">dayScore</label>
+        <div class="col-md-7">
+            <input type="text" id="dayScore" name="dayScore" class="form-control input-sm" value="@item.dayScore">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="CanGetGift">CanGetGift</label>
+        <div class="col-md-7">
+            <label class="switch switch-primary">
+                @{
+                    chek = string.Empty;
+                    if (item.CanGetGift) { chek = "checked"; }
+                }
+                <input type="checkbox" id="CanGetGift" name="CanGetGift" value="true" @chek>
+                <span></span>
+                <input type="hidden" id="CanGetGift" name="CanGetGift" value="false">
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="canOpenCounts">canOpenCounts</label>
+        <div class="col-md-7">
+            <input type="text" id="canOpenCounts" name="canOpenCounts" class="form-control input-sm" value="@item.canOpenCounts">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="canEagleEyeCounts">canEagleEyeCounts</label>
+        <div class="col-md-7">
+            <input type="text" id="canEagleEyeCounts" name="canEagleEyeCounts" class="form-control input-sm" value="@item.canEagleEyeCounts">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="lastFlushTime">lastFlushTime</label>
+        <div class="col-md-7">
+            <input type="text" id="lastFlushTime" name="lastFlushTime" class="form-control input-sm" value="@item.lastFlushTime">
+        </div>
+    </div>
+    <div class="form-group">       
+        <label class="col-md-5 control-label" for="isShowAll">isShowAll</label>
+        <div class="col-md-7">
+            <label class="switch switch-primary">
+                @{
+                    chek = string.Empty;
+                    if (item.isShowAll) { chek = "checked"; }
+                }
+                <input type="checkbox" id="isShowAll" name="isShowAll" value="true" @chek>
+                <span></span>
+                <input type="hidden" id="isShowAll" name="isShowAll" value="false">
+            </label>
+        </div>
+    </div>    
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="activityTanabataNum">activityTanabataNum</label>
+        <div class="col-md-7">
+            <input type="text" id="activityTanabataNum" name="activityTanabataNum" class="form-control input-sm" value="@item.activityTanabataNum">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="ChallengeNum">ChallengeNum</label>
+        <div class="col-md-7">
+            <input type="text" id="ChallengeNum" name="ChallengeNum" class="form-control input-sm" value="@item.ChallengeNum">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="BuyBuffNum">BuyBuffNum</label>
+        <div class="col-md-7">
+            <input type="text" id="BuyBuffNum" name="BuyBuffNum" class="form-control input-sm" value="@item.BuyBuffNum">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="lastEnterYearMonter">lastEnterYearMonter</label>
+        <div class="col-md-7">
+            <input type="text" id="lastEnterYearMonter" name="lastEnterYearMonter" class="form-control input-sm" value="@item.lastEnterYearMonter">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="DamageNum">DamageNum</label>
+        <div class="col-md-7">
+            <input type="text" id="DamageNum" name="DamageNum" class="form-control input-sm" value="@item.DamageNum">
+        </div>
+    </div>    
+    <input type="hidden" id="BoxState" name="BoxState" value="@item.BoxState">
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="LuckystarCoins">LuckystarCoins</label>
+        <div class="col-md-7">
+            <input type="text" id="LuckystarCoins" name="LuckystarCoins" class="form-control input-sm" value="@item.LuckystarCoins">
+        </div>
+    </div>    
+    <input type="hidden" id="CryptBoss" name="CryptBoss" value="@item.CryptBoss">
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="DDPlayPoint">DDPlayPoint</label>
+        <div class="col-md-7">
+            <input type="text" id="DDPlayPoint" name="DDPlayPoint" class="form-control input-sm" value="@item.DDPlayPoint">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="updateFreeCounts">updateFreeCounts</label>
+        <div class="col-md-7">
+            <input type="text" id="updateFreeCounts" name="updateFreeCounts" class="form-control input-sm" value="@item.updateFreeCounts">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="updateWorshipedCounts">updateWorshipedCounts</label>
+        <div class="col-md-7">
+            <input type="text" id="updateWorshipedCounts" name="updateWorshipedCounts" class="form-control input-sm" value="@item.updateWorshipedCounts">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="update200State">update200State</label>
+        <div class="col-md-7">
+            <input type="text" id="update200State" name="update200State" class="form-control input-sm" value="@item.update200State">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="lastEnterWorshiped">lastEnterWorshiped</label>
+        <div class="col-md-7">
+            <input type="text" id="lastEnterWorshiped" name="lastEnterWorshiped" class="form-control input-sm" value="@item.lastEnterWorshiped">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="luckCount">luckCount</label>
+        <div class="col-md-7">
+            <input type="text" id="luckCount" name="luckCount" class="form-control input-sm" value="@item.luckCount">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="remainTimes">remainTimes</label>
+        <div class="col-md-7">
+            <input type="text" id="remainTimes" name="remainTimes" class="form-control input-sm" value="@item.remainTimes">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="LastRefresh">LastRefresh</label>
+        <div class="col-md-7">
+            <input type="text" id="LastRefresh" name="LastRefresh" class="form-control input-sm" value="@item.LastRefresh">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="CurRefreshedTimes">CurRefreshedTimes</label>
+        <div class="col-md-7">
+            <input type="text" id="CurRefreshedTimes" name="CurRefreshedTimes" class="form-control input-sm" value="@item.CurRefreshedTimes">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-5 control-label" for="EntertamentPoint">EntertamentPoint</label>
+        <div class="col-md-7">
+            <input type="text" id="EntertamentPoint" name="EntertamentPoint" class="form-control input-sm" value="@item.EntertamentPoint">
+        </div>
+    </div>    
+    <input type="hidden" id="ChickActiveData" name="ChickActiveData" value="@item.ChickActiveData">
+    <div class="form-group form-actions">
+        <div class="col-md-12 text-right">
+            <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-ok"></i> Lưu thay đổi</button>
+        </div>
+    </div>
+</form>
+@section Scripts{
+    <script>
+        //$('#lastFlushTime').mask('99/99/9999 99:99:99 AM');
+        //$('#lastEnterYearMonter').mask('99/99/9999 99:99:99 AM');
+        //$('#lastEnterWorshiped').mask('99/99/9999 99:99:99 AM');
+        //$('#LastRefresh').mask('99/99/9999 99:99:99 AM');
+        $.validator.setDefaults({
+            submitHandler: function (e) {
+                $('#loading-bgr').show();
+                $.ajax({
+                    url: e.action,
+                    type: e.method,
+                    data: $(e).serialize(),
+                    success: function (result) {
+                        $('#loading-bgr').hide();
+                        $('#response-hodler').html(result);
+                    },
+                    error: function (result) {
+                        $('#loading-bgr').hide();
+                        showAjaxResponse("@StaticFunction.GetTranslation("Views.ErrorRequest")");
+                    }
+                });
+                return false;
+            }
+        });
+        $('#frm-activesystem').validate({
+            errorClass: 'help-block animation-slideDown',
+            errorElement: 'div',
+            errorPlacement: function (error, e) {
+                e.parents('.form-group > div').append(error);
+            },
+            highlight: function (e) {
+                $(e).closest('.form-group').removeClass('has-success has-error').addClass('has-error');
+                $(e).closest('.help-block').remove();
+            },
+            success: function (e) {
+                e.closest('.form-group').removeClass('has-success has-error');
+                e.closest('.help-block').remove();
+            },
+            rules: {
+                'ID': {
+                    required: true,
+                    digits: true
+                },
+                'UserID': {
+                    required: true,
+                    digits: true
+                },
+                'useableScore': {
+                    required: true,
+                    digits: true
+                },
+                'totalScore': {
+                    required: true,
+                    digits: true
+                },
+                'AvailTime': {
+                    required: true,
+                    digits: true
+                },
+                'NickName': {
+                    required: true,
+                },
+                'dayScore': {
+                    required: true,
+                    digits: true
+                },                
+                'canOpenCounts': {
+                    required: true,
+                    digits: true
+                },
+                'canEagleEyeCounts': {
+                    required: true,
+                    digits: true
+                },
+                'lastFlushTime': {
+                    required: true,
+                    date: true
+                },                
+                'AvtiveMoney': {
+                    required: true,
+                    digits: true
+                },
+                'activityTanabataNum': {
+                    required: true,
+                    digits: true
+                },
+                'ChallengeNum': {
+                    required: true,
+                    digits: true
+                },
+                'BuyBuffNum': {
+                    required: true,
+                    digits: true
+                },
+                'lastEnterYearMonter': {
+                    required: true,
+                    date: true
+                },
+                'DamageNum': {
+                    required: true,
+                    digits: true
+                },
+                'BoxState': {
+                    required: true,
+                },
+                'LuckystarCoins': {
+                    required: true,
+                    digits: true
+                },
+                'CryptBoss': {
+                    required: true,
+                },
+                'DDPlayPoint': {
+                    required: true,
+                    digits: true
+                },
+                'updateFreeCounts': {
+                    required: true,
+                    digits: true
+                },
+                'updateWorshipedCounts': {
+                    required: true,
+                    digits: true
+                },
+                'update200State': {
+                    required: true,
+                    digits: true
+                },
+                'lastEnterWorshiped': {
+                    required: true,
+                    date: true
+                },
+                'luckCount': {
+                    required: true,
+                    digits: true
+                },
+                'remainTimes': {
+                    required: true,
+                    digits: true
+                },
+                'LastRefresh': {
+                    required: true,
+                    date: true
+                },
+                'CurRefreshedTimes': {
+                    required: true,
+                    digits: true
+                },
+                'EntertamentPoint': {
+                    required: true,
+                    digits: true
+                },
+                'ChickActiveData': {
+                    required: true,
+                }
+            },
+            messages: {
+                'ID': 'Vui lòng nhập vào 1 số',
+                'UserID': 'Vui lòng nhập vào 1 số',
+                'useableScore': 'Vui lòng nhập vào 1 số',
+                'totalScore': 'Vui lòng nhập vào 1 số',
+                'AvailTime': 'Vui lòng nhập vào 1 số',
+                'NickName': 'Vui lòng nhập vào 1 số',
+                'dayScore': 'Vui lòng nhập vào 1 số',
+                'canOpenCounts': 'Vui lòng nhập vào 1 số',
+                'canEagleEyeCounts': 'Vui lòng nhập vào 1 số',
+                'lastFlushTime': 'Vui lòng nhập vào theo mẫu 1/30/2015 12:59:00 AM',
+                'AvtiveMoney': 'Vui lòng nhập vào 1 số',
+                'activityTanabataNum': 'Vui lòng nhập vào 1 số',
+                'ChallengeNum': 'Vui lòng nhập vào 1 số',
+                'BuyBuffNum': 'Vui lòng nhập vào 1 số',
+                'lastEnterYearMonter': 'Vui lòng nhập vào theo mẫu 1/30/2015 12:59:00 AM',
+                'DamageNum': 'Vui lòng nhập vào 1 số',
+                'BoxState': 'Vui lòng nhập vào 1 số',
+                'LuckystarCoins': 'Vui lòng nhập vào 1 số',
+                'CryptBoss': 'Vui lòng nhập vào 1 số',
+                'DDPlayPoint': 'Vui lòng nhập vào 1 số',
+                'updateFreeCounts': 'Vui lòng nhập vào 1 số',
+                'updateWorshipedCounts': 'Vui lòng nhập vào 1 số',
+                'update200State': 'Vui lòng nhập vào 1 số',
+                'lastEnterWorshiped': 'Vui lòng nhập vào theo mẫu 1/30/2015 12:59:00 AM',
+                'luckCount': 'Vui lòng nhập vào 1 số',
+                'remainTimes': 'Vui lòng nhập vào 1 số',
+                'LastRefresh': 'Vui lòng nhập vào theo mẫu 1/30/2015 12:59:00 AM',
+                'CurRefreshedTimes': 'Vui lòng nhập vào 1 số',
+                'EntertamentPoint': 'Vui lòng nhập vào 1 số',
+                'ChickActiveData': 'Vui lòng nhập vào 1 số'
+            }
+        });
+    </script>
+}
+

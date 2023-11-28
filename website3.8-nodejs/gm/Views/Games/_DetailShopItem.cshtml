@@ -1,0 +1,241 @@
+﻿@model SqlDataProvider.Data.ShopItemInfo
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "Chi tiết ";
+    var item = Model;
+    string chek = string.Empty;
+}
+<div class="modal-header themed-background-default">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">
+        @ViewBag.Title
+        <i class="gi gi-chevron-right" style="font-size:10px"></i>
+        <span style="color:white"><strong> @Html.TItemName(item.TemplateID)</strong></span>
+    </h4>
+</div>
+<div class="modal-body">
+    <!-- Block -->
+    <div style="overflow-y:auto; overflow-x:hidden; height:595px">
+        <div class="block-section text-center">
+            <a href="javascript:void(0)">
+                @Html.ItemImage(item.TemplateID, "", "", "auto")
+            </a>
+            <h3>
+                <strong>@Html.TItemName(item.TemplateID)</strong><br><small></small>
+            </h3>
+        </div>
+        <div>
+            <table class="table table-borderless table-striped table-vcenter">
+                <tbody>
+                    <tr>
+                        <td class="text-right"><strong>ShopItemID</strong></td>
+                        <td>@item.ID</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><strong>TemplateID</strong></td>
+                        <td>@item.TemplateID </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><strong>ShopID</strong></td>
+                        <td>@item.ShopID</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><strong>StartDate</strong></td>
+                        <td>@item.StartDate</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><strong>EndDate</strong></td>
+                        <td>@item.EndDate</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><strong>BuyType</strong></td>
+                        <td>@item.BuyType</td>
+                    </tr>                   
+                    <tr>
+                        <td class="text-right"><strong>IsCheap</strong></td>
+                        <td>
+                            <label class="switch switch-primary">
+                                @{
+                                    chek = "";
+                                    if (item.IsCheap) { chek = "checked"; }
+                                }
+                                <input type="checkbox" value="true" @chek disabled>
+                                <span></span>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><strong>CanBuy</strong></td>
+                        <td>
+                            @if (item.CanBuy)
+                            {
+                                <span class="label label-success"><i class="fa fa-check"></i> Có thể mua</span>
+                            }
+                            else
+                            {
+                                <span class="label label-danger"><i class="fa fa-times"></i> Không thể mua</span>
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><strong>LimitPersonalCount</strong></td>
+                        <td>
+                            @if (item.LimitPersonalCount != -1)
+                            {
+                                <span class="label label-danger"><i class="fa fa-times"></i> Giới hạn mua @item.LimitPersonalCount lần</span>
+                            }
+                            else
+                            {
+                                <span class="label label-success"><i class="fa fa-check"></i> Không giới hạn</span>
+                            }
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h4 class="sub-header"><strong>Thông tin khác</strong></h4>
+            <div class="row">
+                <div class="col-xs-6">
+                    <table class="table table-borderless table-striped table-vcenter">
+                        <tbody>
+                            <tr>
+                                <td class="text-right"><strong>AUnit</strong></td>
+                                <td>@item.AUnit</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right"><strong>APrice1</strong></td>
+                                <td>@item.APrice1</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right"><strong>AValue1</strong></td>
+                                <td>@item.AValue1</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right"><strong>APrice2</strong></td>
+                                <td>@item.APrice2</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right"><strong>AValue2</strong></td>
+                                <td>@item.AValue2</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right"><strong>APrice3</strong></td>
+                                <td>@item.APrice3</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right"><strong>AValue3</strong></td>
+                                <td>@item.AValue3</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right"><strong>BUnit</strong></td>
+                                <td>@item.BUnit</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right"><strong>BPrice1</strong></td>
+                                <td>@item.BPrice1</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right"><strong>BValue1</strong></td>
+                                <td>@item.BValue1</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right"><strong>BPrice2</strong></td>
+                                <td>@item.BPrice2</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right"><strong>BValue2</strong></td>
+                                <td>@item.BValue2</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right"><strong>BPrice3</strong></td>
+                                <td>@item.BPrice3</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right"><strong>BValue3</strong></td>
+                                <td>@item.BValue3</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-xs-6">
+                    <table class="table table-borderless table-striped table-vcenter">
+                        <tbody>                            
+                            <tr>
+                                <td class="text-right"><strong>CUnit</strong></td>
+                                <td>@item.CUnit</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right"><strong>CPrice1</strong></td>
+                                <td>@item.CPrice1</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right"><strong>CValue1</strong></td>
+                                <td>@item.CValue1</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right"><strong>CPrice2</strong></td>
+                                <td>@item.CPrice2</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right"><strong>CValue2</strong></td>
+                                <td>@item.CValue2</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right"><strong>CPrice3</strong></td>
+                                <td>@item.CPrice3</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right"><strong>CValue3</strong></td>
+                                <td>@item.CValue3</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right"><strong>GroupID</strong></td>
+                                <td>@item.GroupID</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right"><strong>IsContinue</strong></td>
+                                <td>
+                                    @item.IsContinue
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-right"><strong>IsBind</strong></td>
+                                <td>@item.IsBind</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right"><strong>Label</strong></td>
+                                <td>@item.Label</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right"><strong>Beat</strong></td>
+                                <td>@item.Beat</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right"><strong>LimitCount</strong></td>
+                                <td>@item.LimitCount</td>
+                            </tr>
+                            <tr>
+                                <td class="text-right"><strong>LimitGrade</strong></td>
+                                <td>@item.LimitGrade</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>            
+        </div>
+    </div>
+</div>
+<!-- END Block -->
+
+<div class="modal-footer">
+    <div class="form-actions">
+        <div class="text-left">
+            <button type="button" class="btn btn-sm btn-primary pull-right btn-dismiss" data-dismiss="modal">Đóng</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(function () {});
+    </script>
+}

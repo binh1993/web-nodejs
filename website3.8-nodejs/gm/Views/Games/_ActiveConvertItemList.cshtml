@@ -1,0 +1,360 @@
+﻿@using SqlDataProvider.Data;
+@model List<ActiveConvertItemInfo>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "LoadDropItems";
+    Dictionary<int, List<ActiveConvertItemInfo>> list = new Dictionary<int, List<ActiveConvertItemInfo>>();
+    foreach (ActiveConvertItemInfo citem in Model)
+    {
+        if (!list.ContainsKey(citem.ItemType))
+        {
+            IEnumerable<ActiveConvertItemInfo> temp = Model.Where(s => s.ItemType == citem.ItemType);
+            list.Add(citem.ItemType, temp.ToList());
+        }
+    }
+    var ani = "animation-fadeInQuickInv";
+    var bgc = "background-color: #fb6d71;";
+}
+
+<style>
+    .nav-horizontal-c {
+        padding: 10px 7px 1px;
+        margin: 0;
+        list-style: none;
+    }
+
+        .nav-horizontal-c li {
+            position: relative;
+            display: inline-block;
+            margin: 0 3px 9px;
+        }
+
+        .nav-horizontal-c a {           
+            display: block;
+            min-width: 140px;
+            border-radius: 3px;
+            font-weight: bold;
+            text-align: left;
+            padding: 8px 10px;
+            background-color: #f9fafc;
+        }
+
+            .nav-horizontal-c a:hover,
+            .nav-horizontal-c li.active a {
+                text-decoration: none;
+            }
+
+            .nav-horizontal-c a:focus {
+                text-decoration: none;
+            }
+
+            .nav-horizontal-c a:hover img,
+            .nav-horizontal li.active a img {
+                opacity: .8;
+                filter: alpha(opacity=80);
+            }
+
+        .nav-horizontal-c img {
+            display: inline-block;
+            margin-right: 5px;
+        }
+
+        .nav-horizontal-c a {
+            text-align: center;
+            padding: 17px 15px;
+        }
+
+        .nav-horizontal-c em, .span-count {
+            font-weight: normal;
+            font-size: 11px;
+        }
+
+        .nav-horizontal-c img {
+            display: block;
+            height: 75px;
+            margin: 0px auto;
+            padding: 10px;
+            text-align: center;
+        }
+        .nav-horizontal-c li:hover .span-action {
+            display: block;
+        }
+        .span-action {
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: none;
+        }
+</style>
+
+<!-- Files Content -->
+<div id="media-filter-items" style="height:543px;">
+    @if (Model.Count() > 0)
+    {
+        <!-- eCommerce Dashboard Header -->
+        <div class="block" style="min-height:230px;">
+            <!-- Title -->
+            <div class="block-title">
+                <h2><strong>Vật phẩm</strong> cần có</h2>               
+            </div>
+            <!-- END Title -->
+            <ul class="nav-horizontal-c text-center" id="list-convert">
+                @if (list.ContainsKey(0))
+                {
+                    var items = list[0];
+                    var counter = 0;
+                    var cssstr = "";
+                    foreach (ActiveConvertItemInfo item in items)
+                    {                        
+                        <li data-link="tabs-item-1" class="@ani">
+                            <span class="btn-group btn-group-xs span-action">
+                                <button class="btn btn-warning open-model" data-link="@Html.Raw(Url.Action("EditActiveConvertItem","Games", new { id = item.ID, tid = item.ActiveID}))"><i class="gi gi-edit"></i></button>
+                                <button class="btn btn-danger open-model" data-link="@Html.Raw(Url.Action("DeleteActiveConvertItem","Games", new { id = item.ID, tid = item.ActiveID}))"><i class="fa fa-times"></i></button>
+                            </span>     
+                            <a href="javscript:void(0)" style="@cssstr">
+                                @Html.ItemImage(item.TemplateID, "", "", "auto") <em>Số lượng: </em> <span class="span-count">@item.ItemCount</span><br /> @Html.TItemName(item.TemplateID)
+                            </a>
+                        </li>                                              
+                        cssstr = counter < 8 ? "" : bgc;
+                        counter++;
+                    }
+                }
+                else
+                {
+                    <li data-link="tabs-item-1" class="@ani">
+                        @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+                    </li>
+                }
+                @if (list.ContainsKey(2))
+                {
+                    var items = list[2];
+                    var counter = 0;
+                    var cssstr = "";
+                    foreach (ActiveConvertItemInfo item in items)
+                    {
+                        <li style="display:none" data-link="tabs-item-2" class="@ani">
+                            <span class="btn-group btn-group-xs span-action">
+                                <button class="btn btn-warning open-model" data-link="@Html.Raw(Url.Action("EditActiveConvertItem","Games", new { id = item.ID, tid = item.ActiveID}))"><i class="gi gi-edit"></i></button>
+                                <button class="btn btn-danger open-model" data-link="@Html.Raw(Url.Action("DeleteActiveConvertItem","Games", new { id = item.ID, tid = item.ActiveID}))"><i class="fa fa-times"></i></button>
+                            </span>
+                            <a href="javscript:void(0)" style="@cssstr">
+                                @Html.ItemImage(item.TemplateID, "", "", "auto") <em>Số lượng: </em> <span class="span-count">@item.ItemCount</span><br /> @Html.TItemName(item.TemplateID)
+                            </a>
+                        </li>
+                        cssstr = counter < 8 ? "" : bgc;
+                        counter++;
+                    }
+                }
+                else
+                {
+                    <li style="display:none" data-link="tabs-item-2" class="@ani">
+                        @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+                    </li>
+                }
+                @if (list.ContainsKey(4))
+                {
+                    var items = list[4];
+                    var counter = 0;
+                    var cssstr = "";
+                    foreach (ActiveConvertItemInfo item in items)
+                    {
+                        <li style="display:none" data-link="tabs-item-3" class="@ani">
+                            <span class="btn-group btn-group-xs span-action">
+                                <button class="btn btn-warning open-model" data-link="@Html.Raw(Url.Action("EditActiveConvertItem","Games", new { id = item.ID, tid = item.ActiveID}))"><i class="gi gi-edit"></i></button>
+                                <button class="btn btn-danger open-model" data-link="@Html.Raw(Url.Action("DeleteActiveConvertItem","Games", new { id = item.ID, tid = item.ActiveID}))"><i class="fa fa-times"></i></button>
+                            </span>
+                            <a href="javscript:void(0)" style="@cssstr">
+                                @Html.ItemImage(item.TemplateID, "", "", "auto") <em>Số lượng: </em> <span class="span-count">@item.ItemCount</span><br /> @Html.TItemName(item.TemplateID)
+                            </a>
+                        </li>
+                        cssstr = counter < 8 ? "" : bgc;
+                        counter++;
+                    }
+                }
+                else
+                {
+                    <li style="display:none" data-link="tabs-item-3" class="@ani">
+                        @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+                    </li>
+                }
+                @if (list.ContainsKey(6))
+                {
+                    var items = list[6];
+                    var counter = 0;
+                    var cssstr = "";
+                    foreach (ActiveConvertItemInfo item in items)
+                    {
+                        <li style="display:none" data-link="tabs-item-4" class="@ani">
+                            <span class="btn-group btn-group-xs span-action">
+                                <button class="btn btn-warning open-model" data-link="@Html.Raw(Url.Action("EditActiveConvertItem","Games", new { id = item.ID, tid = item.ActiveID}))"><i class="gi gi-edit"></i></button>
+                                <button class="btn btn-danger open-model" data-link="@Html.Raw(Url.Action("DeleteActiveConvertItem","Games", new { id = item.ID, tid = item.ActiveID}))"><i class="fa fa-times"></i></button>
+                            </span>
+                            <a href="javscript:void(0)" style="@cssstr">
+                                @Html.ItemImage(item.TemplateID, "", "", "auto") <em>Số lượng: </em> <span class="span-count">@item.ItemCount</span><br /> @Html.TItemName(item.TemplateID)
+                            </a>
+                        </li>
+                        cssstr = counter < 8 ? "" : bgc;
+                        counter++;
+                    }
+                }
+                else
+                {
+                    <li style="display:none" data-link="tabs-item-4" class="@ani">
+                        @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="block" style="min-height:305px;">
+            <!-- Title -->
+            <div class="block-title">
+                <h2><strong>Vật phẩm</strong> đổi được</h2>                
+            </div>
+            <!-- END Title -->
+            <!-- Default Tabs -->
+            <ul class="nav nav-tabs push" data-toggle="tabs">
+                <li class="active"><a href="#tabs-item-1">Phần thưởng 1</a></li>
+                <li><a href="#tabs-item-2">Phần thưởng 2</a></li>
+                <li><a href="#tabs-item-3">Phần thưởng 3</a></li>
+                <li><a href="#tabs-item-4">Phần thưởng 4</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="tabs-item-1">
+                    <ul class="nav-horizontal-c text-center @ani" data-toggle="tabs">
+                        @if (list.ContainsKey(1))
+                        {
+                            var items = list[1];
+                            foreach (ActiveConvertItemInfo item in items)
+                            {
+                                <li>
+                                    <span class="btn-group btn-group-xs span-action">
+                                        <button class="btn btn-warning open-model" data-link="@Html.Raw(Url.Action("EditActiveConvertItem","Games", new { id = item.ID, tid = item.ActiveID}))"><i class="gi gi-edit"></i></button>
+                                        <button class="btn btn-danger open-model"  data-link="@Html.Raw(Url.Action("DeleteActiveConvertItem","Games", new { id = item.ID, tid = item.ActiveID}))"><i class="fa fa-times"></i></button>
+                                    </span>     
+                                    <a href="javscript:void(0)">                                       
+                                        @Html.ItemImage(item.TemplateID, "", "", "auto") <em>Số lượng: </em> <span class="span-count">@item.ItemCount</span><br /> @Html.TItemName(item.TemplateID) <br />                                                                          
+                                    </a>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li>
+                                @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <div class="tab-pane" id="tabs-item-2">
+                    <ul class="nav-horizontal-c text-center @ani" data-toggle="tabs">
+                        @if (list.ContainsKey(3))
+                        {
+                            var items = list[3];
+                            foreach (ActiveConvertItemInfo item in items)
+                            {
+                                <li>
+                                    <span class="btn-group btn-group-xs span-action">
+                                        <button class="btn btn-warning open-model" data-link="@Html.Raw(Url.Action("EditActiveConvertItem","Games", new { id = item.ID, tid = item.ActiveID}))"><i class="gi gi-edit"></i></button>
+                                        <button class="btn btn-danger open-model" data-link="@Html.Raw(Url.Action("DeleteActiveConvertItem","Games", new { id = item.ID, tid = item.ActiveID}))"><i class="fa fa-times"></i></button>
+                                    </span>     
+                                    <a href="javscript:void(0)">
+                                        @Html.ItemImage(item.TemplateID, "", "", "auto") <em>Số lượng: </em> <span class="span-count">@item.ItemCount</span><br /> @Html.TItemName(item.TemplateID)
+                                    </a>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li>
+                                @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <div class="tab-pane" id="tabs-item-3">
+                    <ul class="nav-horizontal-c text-center @ani" data-toggle="tabs">
+                        @if (list.ContainsKey(5))
+                        {
+                            var items = list[5];
+                            foreach (ActiveConvertItemInfo item in items)
+                            {
+                                <li>
+                                    <span class="btn-group btn-group-xs span-action">
+                                        <button class="btn btn-warning open-model" data-link="@Html.Raw(Url.Action("EditActiveConvertItem","Games", new { id = item.ID, tid = item.ActiveID}))"><i class="gi gi-edit"></i></button>
+                                        <button class="btn btn-danger open-model" data-link="@Html.Raw(Url.Action("DeleteActiveConvertItem","Games", new { id = item.ID, tid = item.ActiveID}))"><i class="fa fa-times"></i></button>
+                                    </span>     
+                                    <a href="javscript:void(0)">
+                                        @Html.ItemImage(item.TemplateID, "", "", "auto") <em>Số lượng: </em> <span class="span-count">@item.ItemCount</span><br /> @Html.TItemName(item.TemplateID)
+                                    </a>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li>
+                                @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <div class="tab-pane" id="tabs-item-4">
+                    <ul class="nav-horizontal-c text-center @ani" data-toggle="tabs">
+                        @if (list.ContainsKey(7))
+                        {
+                            var items = list[7];
+                            foreach (ActiveConvertItemInfo item in items)
+                            {
+                                <li>
+                                    <span class="btn-group btn-group-xs span-action">
+                                        <button class="btn btn-warning open-model" data-link="@Html.Raw(Url.Action("EditActiveConvertItem","Games", new { id = item.ID, tid = item.ActiveID}))"><i class="gi gi-edit"></i></button>
+                                        <button class="btn btn-danger open-model" data-link="@Html.Raw(Url.Action("DeleteActiveConvertItem","Games", new { id = item.ID, tid = item.ActiveID}))"><i class="fa fa-times"></i></button>
+                                    </span>     
+                                    <a href="javscript:void(0)">
+                                        @Html.ItemImage(item.TemplateID, "", "", "auto") <em>Số lượng: </em> <span class="span-count">@item.ItemCount</span><br /> @Html.TItemName(item.TemplateID)
+                                    </a>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li>
+                                @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <!-- END Default Tabs -->
+        </div>        
+        <!-- END eCommerce Dashboard Header -->
+    }
+    else
+    {
+        <div class="text-center">
+            @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+        </div>
+    }
+    <!-- END Files Content -->
+</div>
+
+@section Scripts{
+    <script>
+        $(function () {
+            ModelGeneral.init('data-modal="editConvertItem"');
+            ModelGeneral.init('data-modal="deleteConvertItem"');
+            ModelGeneral.initBtn();
+            $(".nav-tabs").on("click", "li a", function () {
+                var tab = $(this).attr("href").replace('#', '');
+                $('#list-convert li').hide();
+                $('#list-convert').find('[data-link="' + tab + '"]').show();
+                return false;
+            });
+            //$(".open-model").on("click", function () {
+            //    var url = $(this).attr("data-link");
+            //    console.log('url: ', url);
+            //    return false;
+            //});
+        });
+    </script>
+}
+

@@ -1,0 +1,138 @@
+﻿@using SqlDataProvider.Data;
+@model List<AreaConfigInfo>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    var title = Request.QueryString["title"];
+    ViewBag.Title = "GiftCode ";
+    List<AreaConfigInfo> areas = Model;
+    var activeId = ViewContext.RouteData.Values["id"];
+}
+<div class="modal-header themed-background-default">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">
+        @ViewBag.Title <span class="text-light"><i class="gi gi-log_out"></i> <strong>@title</strong></span>
+    </h4>
+</div>
+<div class="modal-body">
+    
+    <div class="sub-header">
+        <div class="row text-warning" style="font-size:18px">           
+            <div class="col-md-2">
+                <select id="server-chosen" name="server-chosen" class="select-chosen" data-placeholder="Chọn server.." style="width: 250px;">
+                    <option value="-1"></option>
+                    @foreach (AreaConfigInfo item in areas)
+                    {
+                        <option value="@item.AreaID">@item.AreaName</option>
+                    }
+                </select>
+
+            </div>
+            <div class="col-md-3">
+                <select id="code-view-chosen" name="code_chosen" class="select-chosen" data-placeholder="Chọn..">
+                    <option value="0">Tất cả code</option>
+                    <option value="1">Code đã dùng</option>
+                    <option value="2">Code chưa dùng</option>
+                </select>
+            </div>  
+            <div class="col-md-4 text-right">
+                <form action="./" method="post" class="form-horizontal" id="frm-quick-search" onsubmit="return false;">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <input type="text" id="quick-search" name="key" class="form-control" placeholder="Tìm kiếm...">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>           
+            <div class="col-md-3">    
+                <div class="row">
+                    <div class="col-md-6">                        
+                        <select id="code-count-chosen" name="code_count_chosen" class="select-chosen" data-placeholder="Số lượng..">
+                            <option value="-1"></option>
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="250">250</option>
+                            <option value="500">500</option>
+                            <option value="1000">1000</option>
+                            <option value="5000">5000</option>
+                            <option value="10000">10000</option>
+                        </select>
+                    </div>  
+                    <div class="col-md-4">
+                        <a href="@Url.Action("LoadActiveNumber", "Games", new { id = activeId })" id="create-giftcode" class="btn btn-alt btn btn-warning">
+                            Tạo Giftcode
+                        </a>
+                    </div>  
+                </div>  
+            </div>      
+        </div>
+    </div>
+
+    <div id="activenumber-list">
+        <div class="text-center text-warning">
+            @Html.Raw(StaticFunction.GetTranslation("Views.Select.Server"))
+        </div>
+    </div>           
+
+</div>
+@section Scripts{
+<script>
+    $(function () {
+        /*select server!*/
+        $("#code-view-chosen").change(function (e) {
+            var zoneID = $("#server-chosen").val();
+            if (zoneID != -1) {
+                var viewType = $(this).val();
+                var url = '@Url.Action("LoadActiveNumber", "Games", new { id = activeId })?zid=' + zoneID + '&cid=' + viewType;
+                loadActiveNumber(url);
+            }
+        });
+
+        /*select server!*/
+        $("#server-chosen").change(function (e) {
+            var zoneID = $(this).val();
+            var url = '@Url.Action("LoadActiveNumber", "Games", new { id = activeId })?zid=' + zoneID;
+            loadActiveNumber(url);
+        });
+
+        /*add code here!*/
+        $("#create-giftcode").bind("click", function (e) {
+            var zoneID = $("#server-chosen").val();
+            if (zoneID == -1) {
+                showGrowl("Bạn chưa chọn server. Vui lòng chọn và thử lại", 'danger');
+                return false;
+            }
+            var codeCount = $("#code-count-chosen").val();
+            if (codeCount == -1) {
+                showGrowl("Bạn chưa chọn số lượng Giftcode phát hành. Vui lòng chọn và thử lại", 'danger');
+                return false;
+            }
+            var url = this.href + '?zid=' + zoneID + '&opt=' + codeCount;
+            loadActiveNumber(url);
+            return false;
+        });
+
+        //live search
+        $("#quick-search").keyup(function (e) {
+            e.preventDefault();
+            var key = $(this).val();
+            var zoneID = $("#server-chosen").val();
+            if (zoneID == -1) {
+                showGrowl('Bạn chưa chọn server', 'danger');
+            }
+            else {
+                var url = '@Url.Action("LoadActiveNumber", "Games", new { id = activeId })?zid=' + zoneID + '&key=' + key;
+                loadActiveNumber(url);
+            }
+        });
+    });
+    function loadActiveNumber(url)
+    {
+        GMApp.GetJson('#activenumber-list', url);
+    }
+</script>
+}

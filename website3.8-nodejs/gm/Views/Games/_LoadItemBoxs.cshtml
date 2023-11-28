@@ -1,0 +1,234 @@
+﻿@using MvcPaging;
+@model IPagedList<GM.Service.Models.ItemBoxModel>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "LoadItemBox";
+    string activeStr = "active";
+}
+<div class="block">
+    @if (Model.TotalItemCount > 0)
+    {
+        <div style="display: none" id="total-items">
+            @if (string.IsNullOrWhiteSpace((string)ViewData["key"]))
+            {
+                <p class="text-info" style="font-size:14px"> Có tổng cộng <strong class="text-danger">@Model.TotalItemCount</strong> item(s)</p>
+            }
+            else
+            {
+                <p class="text-info" style="font-size:14px"> Có tổng cộng <strong class="text-danger">@Model.TotalItemCount</strong> item(s) thỏa điều kiện</p>
+            }
+        </div>
+    }
+    @if (Model.Any())
+    {
+            <div class="row">
+                <div class="col-md-4" style="border-right:1px dotted gray">
+                    <p class="text-warning" style="font-size:18px;">
+                        <i class="gi gi-log_in"></i><small> Danh sách box</small>
+                        <a href="@Html.Raw(Url.Action("AddNewBox","Games"))" class="btn btn-alt btn-sm btn-default pull-right" data-dialog="-1"
+                           id="btn-add-box">
+                            <i class="gi gi-circle_plus text-primary"></i> Thêm box mới
+                        </a>
+                    </p>
+                    <div id="box-list" style="min-height: 592px">
+                        <table id="general-table" class="table table-hover table-vcenter">
+
+                            <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr class="@activeStr menu-tr" id="tr-@item.ID">
+                                    <td>
+                                        <label class="col-xs-2">
+                                            @Html.ItemImage(item.ID, "img-" + item.ID, "", "37")
+                                        </label>
+                                        <div class="col-xs-10" style="margin-bottom: -15px">
+                                            <a href="javascript:void(0)" data-show="@item.ID" class="menu-a"><strong>@item.Name</strong></a>
+                                            <p>
+                                                <span class="text-success" style="font-size: 12px">@item.ID.ToString()</span>
+                                                <span class="pull-right text-warning" style="font-size: 12px"><em>category: </em>@item.CategoryID</span>
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="btn-group btn-group-xs">
+                                            <a href="@Url.Action("ReadDetail", "Games", routeValues: new {table = ViewData["table"], id = item.ID})" data-toggle="tooltip" data-dialog="detailItems"
+                                               title="Thông tin vật phẩm" class="btn btn-default"><i class="fa fa-pencil"></i></a>
+                                            <a href="@Url.Action("DeleteData", "Games", routeValues: new {@id = item.ID, table = ViewData["table"], ids=-1})" data-toggle="tooltip" data-dialog="deleteBox"
+                                               title="Xóa (bao gồm item trong box)" class="btn btn-danger"><i class="fa fa-times"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                activeStr = "";
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="text-center">
+                                @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount, new AjaxOptions { UpdateTargetId = "table-content", LoadingElementId = "loading-bgr" }).Options(o => o
+                                .DisplayTemplate("_Pagination")
+                                .MaxNrOfPages(3)
+                                .Action("LoadData")
+                                .AddRouteValue("key", ViewData["key"])
+                                .AddRouteValue("table", ViewData["table"])
+                                .AddRouteValue("cid", ViewData["cid"]))
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8" id="list-box-items">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="text-warning" style="font-size: 18px">
+                                <i class="gi gi-log_out"></i><small> Phần thưởng</small> <strong><span id="box-items-header" class="text-danger">..</span></strong>
+                            </p>
+                        </div>
+                        <div class="col-md-2">
+                            <a href="@Html.Raw(Url.Action("AddItemsModel", "Games", new {type = "boxitem"}))" class="btn btn-alt btn-default pull-right" data-dialog="-1" id="btn-add-box-award">
+                                <i class="gi gi-circle_plus text-primary"></i> Thêm item mới
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="pull-right">
+                                <form action="./" method="post" class="form-horizontal" id="frm-quick-search-box-award" onsubmit="return false;">
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                            <div class="input-group">
+                                                <input type="text" id="quick-search-box-award" name="searchKey" class="form-control" placeholder="Tìm kiếm..." value="@ViewData["searchKey"]">
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="box-award-list">
+                        <div class="text-center text-danger">
+                            @Html.Raw(StaticFunction.GetTranslation("Views.WaitLoading"))
+                        </div>
+                    </div>
+                </div>
+            </div>
+    }
+    else
+    {
+        <div class="text-center">
+            @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+        </div>
+    }
+</div>
+ <!-- Normal Modal -->
+<div id='modal-delete-box' class='modal fade in' tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id='modal-content-delete-box'>
+            <!-- modal content here-->
+        </div>
+    </div>
+</div>
+<!-- END Normal Modal -->
+@section Scripts{
+    <script>
+        $(function () {
+            //call add dailog
+            ModelGeneral.init('data-dialog="deleteBox"', 'delete-box');
+
+            $('#btn-add-box').bind("click", function (e) {
+                var url = $(this).attr("href");
+                var params = {};
+                GMApp.DialogJson(url, e, params, 'large3');
+                return false;
+            });
+
+            var curentAvtive = $("#general-table").find('.menu-a');
+            if (curentAvtive.length > 0) {
+
+                var boxid = curentAvtive.attr("data-show");
+                loadBoxAward(boxid);
+                $('#btn-add-box-award').attr("data-dialog", boxid);
+                $("#box-items-header").text($('a[data-show="' + boxid + '"]').text());
+            }
+
+            /*thêm item mới vào box hiện tại*/
+            $('#btn-add-box-award').bind('click', function (e) {
+                var _id = $(this).attr("data-dialog");
+                var _url = $(this).attr("href") + '&name=' + $("#box-items-header").text();
+                GMApp.Dialog(_url, e, 'tid=' + _id, 'large');
+                return false;
+            });
+
+            /*add some code here!*/
+            $('a[data-dialog="detailItems"]').bind("click", function(e) {
+                var url = $(this).attr("href");
+                var params = {};
+                GMApp.DialogJson(url, e, params, 'large3');
+                return false;
+            });
+
+            /* sử lý hiện item với box tương ứng*/
+            $('a[data-show]').bind("click", function(e) {
+                var boxid = $(this).attr("data-show");
+
+                $(".menu-tr").removeClass("active");
+                var trName = "#tr-" + boxid;
+                $(trName).addClass("active");
+                loadBoxAward(boxid);
+                $('#btn-add-box-award').attr("data-dialog", boxid);
+                $("#box-items-header").text($('a[data-show="' + boxid + '"]').text());
+                return false;
+            });
+
+            //live search
+            $("#quick-search-box-award").keyup(function (e) {
+                e.preventDefault();
+                var loadurl = '@Url.Action("ItemsBox", "GetSingleData")?id=' + $('#btn-add-box-award').attr("data-dialog");
+                $.ajax({
+                    url: loadurl,
+                    type: 'POST',
+                    data: $('#frm-quick-search-box-award').serialize(),
+                    success: function (data) {
+                        $('#box-award-list').html(data);
+                        $("#loading-bgr").hide();
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        var text = "Error: " + xhr.status + " " + xhr.statusText;
+                        showGrowl(text, 'danger');
+                    }
+                });
+            });
+
+        });
+
+        function loadBoxItemsList() {
+            /*TO DO*/
+            var table = $("#tables-chosen").val();
+            $("#loading-bgr").show();
+            var loadurl = '@Url.Action("LoadData", "Games")?page=@Model.PageNumber&table=' + table;
+            $.get(loadurl, function (data) {
+                $("#table-content").html(data);
+                $("#loading-bgr").hide();
+            })
+            .fail(function (data) {
+                $("#table-content").html(getError(data.status, data.statusText));
+                $("#loading-bgr").hide();
+            });
+        }
+        function loadBoxAward(boxId) {
+            /*TO DO*/
+            $("#loading-bgr").show();
+            var loadurl = '@Url.Action("ItemsBox", "GetSingleData")?id=' + boxId;
+            $.get(loadurl, function (data) {
+                $("#box-award-list").html(data);
+                $("#loading-bgr").hide();
+            })
+            .fail(function (data) {
+                $("#box-award-list").html(getError(data.status, data.statusText));
+                $("#loading-bgr").hide();
+            });
+        }
+    </script>
+}

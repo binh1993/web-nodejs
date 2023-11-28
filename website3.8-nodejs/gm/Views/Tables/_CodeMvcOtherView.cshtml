@@ -1,0 +1,166 @@
+﻿@using SqlDataProvider.Data;
+@using System.Text;
+@model GM.Service.Models.TableModel
+
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    TableInfo item = Model.Info;
+    string name = item.Class.Replace("Info", "");
+    StringBuilder sb = new StringBuilder();
+
+    sb.AppendLine(" ");
+    sb.AppendLine("                    case \"" + item.Name + "\":");
+    sb.AppendLine("                        #region " + name + " ");
+    sb.AppendLine("                        swhere = \"ID <> 0\";");
+    sb.AppendLine("                        if (!string.IsNullOrWhiteSpace(key))");
+    sb.AppendLine("                        {");
+    sb.AppendLine("                            swhere = \"ID LIKE N'%key%' OR Name LIKE N'%key%'\";");
+    sb.AppendLine("                        }");
+    sb.AppendLine("                        IEnumerable<" + name + "Info> " + TableTool.LowerFirstChar(name) + "s = db.GetAll" + name + "(swhere, currentPageIndex, pagesize, ref totalCount);");
+    sb.AppendLine("                        " + TableTool.LowerFirstChar(name) + "s = " + TableTool.LowerFirstChar(name) + "s.ToPagedList(currentPageIndex, pagesize, totalCount);");
+    sb.AppendLine("                        #endregion");
+    sb.AppendLine("                        return PartialView(\"_Load" + name + "s\", " + TableTool.LowerFirstChar(name) + "s);");
+
+    sb.AppendLine("                case \"" + name.ToLower() + "\":");
+    sb.AppendLine("                    if (client." + name + "s.Count == 0)");
+    sb.AppendLine("                    {");
+    sb.AppendLine("                        _model.Message = StaticFunction.GetTranslation(\"Controllers.Save.Empty\");");
+    sb.AppendLine("                    }");
+    sb.AppendLine("                    else");
+    sb.AppendLine("                    {");
+    sb.AppendLine("                        _model.Message = StaticFunction.GetTranslation(\"Controllers.Save.OK\", msg);");
+    sb.AppendLine("                        _model.InfoType = InfoType.Success;");
+    sb.AppendLine("                        client.Save" + name + "();");
+    sb.AppendLine("                        " + name + "Mgr.Init();");
+    sb.AppendLine("                    }");
+    sb.AppendLine("                    break;");
+
+    sb.AppendLine("                case \"" + name.ToLower() + "\":");
+    sb.AppendLine("                    #region " + name.ToLower() + "");
+    sb.AppendLine("                    List<" + item.Class + "> list" + name + "s = new List<" + item.Class + ">();");
+    sb.AppendLine("                    foreach (string id in idArray)");
+    sb.AppendLine("                    {");
+    sb.AppendLine("                        try");
+    sb.AppendLine("                        {");
+    sb.AppendLine("                            ItemTemplateInfo item = ItemTemplateMgr.FindItemTemplate(int.Parse(id));");
+    sb.AppendLine("                            if (item != null)");
+    sb.AppendLine("                            {");
+    sb.AppendLine("                                " + item.Class + " info = new " + item.Class + "();");
+    sb.AppendLine("                                info.Id = client.NextId();");
+    sb.AppendLine("                                info.DropId = tid;");
+    sb.AppendLine("                                info.ItemId = item.TemplateID;");
+    sb.AppendLine("                                info.ValueDate = item.CanEquip ? 7 : 0;");
+    sb.AppendLine("                                info.BeginData = 1;");
+    sb.AppendLine("                                info.EndData = 1;");
+    sb.AppendLine("                                info.IsBind = !item.CanEquip;");
+    sb.AppendLine("                                list" + name + "s.Add(info);");
+    sb.AppendLine("                            }");
+    sb.AppendLine("                        }");
+    sb.AppendLine("                        catch");
+    sb.AppendLine("                        {");
+    sb.AppendLine("                            continue;");
+    sb.AppendLine("                        }");
+    sb.AppendLine("                    }");
+    sb.AppendLine("                    if (list" + name + "s.Count > 0)");
+    sb.AppendLine("                    {");
+    sb.AppendLine("                        client.Add" + name + "s(list" + name + "s);");
+    sb.AppendLine("                    }");
+    sb.AppendLine("                    #endregion");
+    sb.AppendLine("                    return PartialView(\"_EditOption" + name + "s\", list" + name + "s);");
+
+    sb.AppendLine("--XmlManager--");
+    sb.AppendLine(" public static " + name + "ModelView m_" + TableTool.LowerFirstChar(name) + "Model;");
+    sb.AppendLine(" public static " + name + "ModelView " + name + "Model");
+    sb.AppendLine(" {");
+    sb.AppendLine("     set { m_" + TableTool.LowerFirstChar(name) + "Model = value; }");
+    sb.AppendLine("     get { return m_" + TableTool.LowerFirstChar(name) + "Model; }");
+    sb.AppendLine(" }");
+    sb.AppendLine(" m_" + TableTool.LowerFirstChar(name) + "Model = new " + name + "ModelView();");
+
+    sb.AppendLine("--XmlControl LoadData--");
+    sb.AppendLine("                case \"" + item.XmlName + "\":");
+    sb.AppendLine("                    #region");
+    sb.AppendLine("                    XmlManager." + name + "Model.Setup(url, xml, ref msg);");
+    sb.AppendLine("                    if (string.IsNullOrEmpty(msg))");
+    sb.AppendLine("                    {");
+    sb.AppendLine("                        IEnumerable<" + name + "Info> infos = XmlManager." + name + "Model.Get(getNew);");
+    sb.AppendLine("                        if (!string.IsNullOrWhiteSpace(key))");
+    sb.AppendLine("                        {");
+    sb.AppendLine("                            key = key.ToLower();");
+    sb.AppendLine("                            infos = from p in infos where p.Name.ToLower().IndexOf(key) >= 0 || p.TemplateID.ToString().IndexOf(key) >= 0 select p;");
+    sb.AppendLine("                        }");
+    sb.AppendLine("                        return PartialView(\"_Load" + name + "s\", infos.ToPagedList(currentPageIndex, pagesize));");
+    sb.AppendLine("                    }");
+    sb.AppendLine("                    #endregion");
+    sb.AppendLine("                    break;");
+
+    sb.AppendLine("--XmlControl Import--");
+    sb.AppendLine("                case \"" + item.XmlName + "\":");
+    sb.AppendLine("                    #region");
+    sb.AppendLine("                     XmlManager." + name + "Model.Setup(url, xml, ref msg);");
+    sb.AppendLine("                     if (string.IsNullOrEmpty(ids))");
+    sb.AppendLine("                         XmlManager." + name + "Model.Import(isNew, ref sb);");
+    sb.AppendLine("                     else");
+    sb.AppendLine("                         XmlManager." + name + "Model.ImportSelected(ids, ref sb);");
+    sb.AppendLine("                    #endregion");
+    sb.AppendLine("                    break;");
+
+    sb.AppendLine("--XmlControl Rip--");
+    sb.AppendLine("                case \"" + item.XmlName + "\":");
+    sb.AppendLine("                    #region");
+    sb.AppendLine("                     if (status == \"0\")");
+    sb.AppendLine("                    {");
+    sb.AppendLine("                        XmlManager." + name + "Model.Reset();");
+    sb.AppendLine("                        XmlManager." + name + "Model.Setup(url, xml, ref msg);");
+    sb.AppendLine("                        if (string.IsNullOrEmpty(ids))");
+    sb.AppendLine("                        {");
+    sb.AppendLine("                            XmlManager." + name + "Model.BuildResource(ress, isNew, ref sb);");
+    sb.AppendLine("                        }");
+    sb.AppendLine("                        else");
+    sb.AppendLine("                        {");
+    sb.AppendLine("                            XmlManager." + name + "Model.BuildResourceSelected(ids, ress, ref sb);");
+    sb.AppendLine("                        }                 ");
+    sb.AppendLine("                        status = \"1\";");
+    sb.AppendLine("                        result = true;");
+    sb.AppendLine("                    }");
+    sb.AppendLine("                    else");
+    sb.AppendLine("                    {");
+    sb.AppendLine("                        if (continuos == \"false\")");
+    sb.AppendLine("                        {");
+    sb.AppendLine("                            XmlManager." + name + "Model.Reset();");
+    sb.AppendLine("                        }");
+    sb.AppendLine("                        result = XmlManager." + name + "Model.RipResource(ress, isNew, ref sb, ref index, ref total);");
+    sb.AppendLine("                        continuos = \"true\";");
+    sb.AppendLine("                    }");
+    sb.AppendLine("                    #endregion");
+    sb.AppendLine("                    break;");
+
+    sb.AppendLine("--XmlControl Save--");
+    sb.AppendLine("                case \"" + item.XmlName + "\":");
+    sb.AppendLine("                    #region");
+    sb.AppendLine("                     XmlManager." + name + "Model.Setup(url, xml, ref msg);");
+    sb.AppendLine("                     XmlManager." + name + "Model.SaveToXml(xml, ref sb);");
+    sb.AppendLine("                    #endregion");
+    sb.AppendLine("                    break;");
+}
+<h4>@item.Name <i class="fa fa-angle-right"></i><span class="text-danger"> MVC Other</span></h4>
+<div style="overflow-y:auto; height:450px">
+<pre class="line-numbers">
+    <code class="language-csharp" id="highlight-code">
+        @sb.ToString()
+    </code>
+</pre>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+
+            navActive('MVC');
+
+            var code = $('#highlight-code')[0];
+            Prism.highlightElement(code);
+
+            ZeroCopy.init();
+        });
+    </script>
+}

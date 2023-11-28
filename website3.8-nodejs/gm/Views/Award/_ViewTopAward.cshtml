@@ -1,0 +1,130 @@
+﻿@using SqlDataProvider.Data;
+@model List<TopAwardInfo>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "Phần thưởng";
+    Dictionary<int, List<TopAwardInfo>> list = new Dictionary<int, List<TopAwardInfo>>();
+    foreach (TopAwardInfo top in Model)
+    {
+        if (!list.ContainsKey(top.Rank))
+        {
+            IEnumerable<TopAwardInfo> temp = Model.Where(s => s.Rank == top.Rank);
+            list.Add(top.Rank, temp.ToList());
+        }
+    }
+    var sortedDict = from entry in list orderby entry.Key ascending select entry;
+}
+<div class="modal-header">
+    <button type="button" class="close btn-dismiss" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title <i class="gi gi-chevron-right" style="font-size:10px"></i><span class="text-warning"> <strong>@Request.QueryString["name"]</strong></span>
+    </h4>
+</div>
+<div class="modal-body" style="min-height:550px">
+    @if (Model.Count() > 0)
+    {
+         <!-- Main Row -->
+        <div class="row">
+            <div class="col-md-4 col-lg-3">
+                <!-- Navigation Block -->
+                <div class="block full" id="media-filter" style="height:555px;">
+                    <!-- Navigation Title -->
+                    <div class="block-title">
+                        <h2><i class="fa fa-compass"></i><strong> Xếp Hạng</strong></h2>
+                    </div>
+                    <!-- END Navigation Title -->
+                    <!-- Filter by Type links -->
+                    <!-- Custom files functionality is initialized in js/pages/readyFiles.js -->
+                    <!-- Add the category value you want each link in .media-filter to filter out in its data-category attribute. Add the value 'all' to show all items -->
+                    <ul class="nav nav-pills nav-stacked nav-icons media-filter">
+                        <li class="active">
+                            <a href="javascript:void(0)" data-category="all">
+                                <i class="fa fa-fw fa-folder-open themed-color-fancy icon-push"></i> <strong>Tất cả</strong>
+                            </a>
+                        </li>
+                        @foreach (var item in sortedDict)
+                        {
+                            <li>
+                                <a href="javascript:void(0)" data-category="rank-@item.Key">
+                                    <i class="fa fa-fw fa-th-large text-warning icon-push"></i> <strong>Hạng @item.Key</strong>
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                    <!-- END Filter by Type links -->
+                </div>
+                <!-- END Navigation Block -->
+
+            </div>
+            <div class="col-md-8 col-lg-9">
+                <!-- Files Block -->
+                <div class="block">
+                    <!-- Files Content -->
+                    <!-- Add the category value for each item in its data-category attribute (for the filter functionality to work) -->
+                    <div class="row media-filter-items" id="media-filter-items" style="height:535px; overflow-y:auto">
+                        @foreach (var item in Model)
+                        {
+                            <div class="col-sm-6 col-lg-4">
+                                <div class="media-items animation-fadeInQuickInv" data-category="rank-@item.Rank" style="height:250px;">
+
+                                    <div class="media-items-options text-left">
+                                        <span class="text-warning"><em>Hạng <i class="gi gi-chevron-right" style="font-size:8px"></i></em> @item.Rank</span>
+                                        <span class="text-warning pull-right" style="font-size:11px"><em>@item.TemplateID</em></span>
+                                    </div>
+                                    <div class="media-items-content" style="margin-top:-10px; margin-bottom:-15px">
+                                        @Html.ItemImage(item.TemplateID, "", "", "75")
+                                    </div>
+                                    <h4>
+                                        <span class="text-info" style="font-size:14px">@item.Name</span><br>
+                                        <small style="font-size:12px"><em>Số lượng:</em> @item.Count</small><br>
+                                        <small style="font-size:12px">
+                                            <em>Hiệu lực:</em> @if (item.ValidDate == 0)
+                                            { <span class="text-success"> Vĩnh viễn </span> }
+                                            else
+                                            { <span class="text-info">@item.ValidDate ngày </span> }
+                                        </small><br>
+                                        <small style="font-size:12px">
+                                            <em>Trạng thái:</em> @if (item.IsBinds)
+                                            { <span class="text-danger"> Khóa</span> }
+                                            else
+                                            { <span class="text-success"> Không khóa </span> }
+                                        </small>
+                                    </h4>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <!-- END Files Content -->
+                </div>
+                <!-- END Files Block -->
+            </div>
+        </div>
+        <!-- END Main Row -->
+    }
+    else
+    {
+        <div class="text-center" id="avatar-empty-body" style="position:relative; width:890px">
+            @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+            <div style="position:absolute; width:410px" id="avatar-empty-content">
+                @Html.Partial("_Empty")
+            </div>
+        </div>
+    }
+</div>
+<div class="modal-footer">
+    <div class="form-actions">
+        <div class="text-left">           
+            <button type="button" class="btn btn-sm btn-primary pull-right btn-dismiss" data-dismiss="modal">Đóng</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(function () {
+            ReadyFiles.init();
+            GMApp.initResize('#avatar-empty-body', '#avatar-empty-content');
+        });
+        
+    </script>
+}
+

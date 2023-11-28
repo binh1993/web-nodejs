@@ -1,0 +1,147 @@
+﻿@using SqlDataProvider.Data;
+@using System.Text;
+@model GM.Service.Models.TableModel
+
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    TableInfo item = Model.Info;
+    List<TableDesignInfo> designs = Model.Designs;
+    string name = item.Class.Replace("Info", "");
+    int count = 0;
+    StringBuilder sb = new StringBuilder();
+    StringBuilder th = new StringBuilder();
+    StringBuilder td = new StringBuilder();
+
+    foreach (TableDesignInfo d in designs)
+    {
+        if (count < 8)
+        {
+            th.AppendLine("                <th>" + d.Name + "</th>");
+            td.AppendLine("                            <td>@item." + d.Name + "</td>");
+        }
+        count++;
+    }
+    sb.AppendLine(" ");
+    sb.AppendLine("@using MvcPaging;");
+    sb.AppendLine("@model IPagedList<SqlDataProvider.Data." + name + "Info>");
+    sb.AppendLine("@{");
+    sb.AppendLine("    Layout = \"~/Views/Shared/_RenderLayout.cshtml\";");
+    sb.AppendLine("    ViewBag.Title = \"Load" + name + "\";");
+    sb.AppendLine("    int zoneId = -1;");
+    sb.AppendLine("    int id = 0;");
+    sb.AppendLine("}");
+    sb.AppendLine("@if (Model.Count() > 0)");
+    sb.AppendLine("{");
+    sb.AppendLine("    <div style=\"min-height:532px\">");
+    sb.AppendLine("        <table id=\"general-table\" class=\"table table-striped table-vcenter\">");
+    sb.AppendLine("            <thead>");
+    sb.AppendLine("                <tr>");
+    sb.AppendLine("                    <th style=\"width: 80px;\" class=\"text-center\">");
+    sb.AppendLine("                        <label class=\"switch switch-primary\" data-toggle=\"tooltip\" title=\"Chọn tất cả\">");
+    sb.AppendLine("                            <input type=\"checkbox\">");
+    sb.AppendLine("                            <span></span>");
+    sb.AppendLine("                        </label>");
+    sb.AppendLine("                    </th>");
+    sb.Append(th.ToString());
+    sb.AppendLine("                    <th style=\"width: 80px;\" class=\"text-center\">Actions</th>");
+    sb.AppendLine("                </tr>");
+    sb.AppendLine("            </thead>");
+    sb.AppendLine("            <tbody>");
+    sb.AppendLine("                @foreach (var item in Model)");
+    sb.AppendLine("                {");
+    sb.AppendLine("                    zoneId = item.ZoneID;");
+    sb.AppendLine("                    id = item.ActiveID;");
+    sb.AppendLine("                    <tr>");
+    sb.AppendLine("                        <td class=\"text-center\">");
+    sb.AppendLine("                            <label class=\"switch switch-primary\">");
+    sb.AppendLine("                                <input type=\"checkbox\" id=\"@id\" name=\"@id\" value=\"@id\">");
+    sb.AppendLine("                                <span></span>");
+    sb.AppendLine("                            </label>");
+    sb.AppendLine("                        </td>       ");
+    sb.Append(td.ToString());
+    sb.AppendLine("                        <td class=\"text-center\">");
+    sb.AppendLine("                            <div class=\"btn-group btn-group-xs\">");
+    sb.AppendLine("                                <a href=\"@Url.Action(\"Edit" + name + "\", \"Users\", routeValues: new { @id = id })\" data-toggle=\"tooltip\" data-modal=\"show\"");
+    sb.AppendLine("                                   title=\"Chỉnh sửa\" class=\"btn btn-default\"><i class=\"fa fa-pencil\"></i></a>");
+    sb.AppendLine("                                <a href=\"@Url.Action(\"Delete" + name + "\", \"Users\", routeValues: new { @id = id })\" data-toggle=\"tooltip\" data-modal=\"show\"");
+    sb.AppendLine("                                   title=\"Xóa\" class=\"btn btn-danger\"><i class=\"fa fa-times\"></i></a>");
+    sb.AppendLine("                            </div>");
+    sb.AppendLine("                        </td>");
+    sb.AppendLine("                    </tr>");
+    sb.AppendLine("                }");
+    sb.AppendLine("            </tbody>       ");
+    sb.AppendLine("        </table>");
+    sb.AppendLine("    </div>");
+    sb.AppendLine("    <div class=\"row\">");
+    sb.AppendLine("        <div class=\"col-md-3\">");
+    sb.AppendLine("            <div class=\"btn-group btn-group-sm\">");
+    sb.AppendLine("                <a href=\"javascript:void(0)\" class=\"btn btn-primary\" data-toggle=\"tooltip\" style=\"margin-left:15px\" title=\"Xóa Items được chọn\"><i class=\"fa fa-times\"></i></a>");
+    sb.AppendLine("            </div>");
+    sb.AppendLine("        </div>");
+    sb.AppendLine("        <div class=\"col-md-7\">");
+    sb.AppendLine("            <div class=\"text-center\">");
+    sb.AppendLine("                @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount, new AjaxOptions { LoadingElementId = \"loading-bgr\", OnSuccess = \"Ajax" + name + "Success\", OnFailure = \"Ajax" + name + "Failure\" }).Options(o => o");
+    sb.AppendLine("                                .DisplayTemplate(\"_Pagination\")");
+    sb.AppendLine("                                .Action(\"Load" + name + "\")");
+    sb.AppendLine("                                .AddRouteValue(\"key\", ViewData[\"key\"])");
+    sb.AppendLine("                                .AddRouteValue(\"zid\", ViewData[\"zid\"])");
+    sb.AppendLine("                                .MaxNrOfPages(3))");
+    sb.AppendLine("            </div>");
+    sb.AppendLine("        </div>");
+    sb.AppendLine("        <div class=\"col-md-2\">   ");
+    sb.AppendLine("        </div>");
+    sb.AppendLine("    </div>");
+    sb.AppendLine("}");
+    sb.AppendLine("else");
+    sb.AppendLine("{");
+    sb.AppendLine("    <div class=\"text-center\">");
+    sb.AppendLine("         @Html.Raw(StaticFunction.GetTranslation(\"Views.Empty\"))");
+    sb.AppendLine("    </div>");
+    sb.AppendLine("}");
+
+    sb.AppendLine("@section Scripts{");
+    sb.AppendLine("    <script>");
+    sb.AppendLine("        $(function () {");
+    sb.AppendLine("            /*add some code here!*/");
+    sb.AppendLine("        });");
+
+    sb.AppendLine("        function Ajax" + name + "Success(data) {");
+    sb.AppendLine("            if (data.Result) {");
+    sb.AppendLine("                $('#" + name.ToLower() + "-list').html(data.Html);");
+    sb.AppendLine("            }");
+    sb.AppendLine("            else {");
+    sb.AppendLine("                showGrowl(data.Html, 'danger');");
+    sb.AppendLine("            }");
+    sb.AppendLine("        }");
+
+    sb.AppendLine("        function Ajax" + name + "Failure(xhr) {");
+    sb.AppendLine("            var text = \"Error: \" + xhr.status + \" \" + xhr.statusText;");
+    sb.AppendLine("            showGrowl(text, 'danger');");
+    sb.AppendLine("        }");
+    sb.AppendLine("    </script>");
+    sb.AppendLine("}");
+
+
+
+}
+<h4>@item.Name <i class="fa fa-angle-right"></i><span class="text-danger"> MVC List View</span></h4>
+<div style="overflow-y:auto; height:450px">
+<pre class="line-numbers">
+    <code class="language-markup" id="highlight-code">
+        @sb.ToString()
+    </code>
+</pre>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+
+            navActive('MVC');
+
+            var code = $('#highlight-code')[0];
+            Prism.highlightElement(code);
+
+            ZeroCopy.init();
+        });
+    </script>
+}

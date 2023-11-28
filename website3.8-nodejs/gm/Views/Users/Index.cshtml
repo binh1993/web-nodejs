@@ -1,0 +1,147 @@
+﻿@using SqlDataProvider.Data;
+@model List<AreaConfigInfo>
+@{
+    ViewBag.Title = "Dữ liệu người dùng";
+}
+<!-- Header -->
+<div class="content-header">
+    <div class="header-section">
+        <h1>
+            <i class="gi gi-server"></i>@ViewBag.Title<br><small>Quản lý tài khoản người chơi.</small>
+        </h1>
+    </div>
+</div>
+<ul class="breadcrumb breadcrumb-top">
+    <li>Trang</li>
+    <li><a href="javascript:void(0)">@ViewBag.Title</a></li>
+</ul>
+<!-- END Header -->
+
+<!-- Input Groups Row -->
+<div class="block">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="form-horizontal form-control-borderless">
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="server-chosen">Server</label>
+                    <div class="col-md-8">
+                        <select id="server-chosen" name="server-chosen" class="select-chosen" data-placeholder="Chọn server..." style="width: 250px;">
+                            <option value="-1"></option>
+                            @foreach (AreaConfigInfo item in Model)
+                            {
+                                <option value="@item.AreaID">@item.AreaName</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-horizontal form-control-borderless">
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="tables-chosen">Tables</label>
+                    <div class="col-md-8" id="select-table-name">
+                        <select id="tables-chosen" name="tables-chosen" class="select-chosen" data-placeholder="Chọn server xong sẽ có..." style="width: 250px;">
+                            <option value="-1"></option><!-- Required for data-placeholder attribute to work with Chosen plugin -->                            
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="pull-right">
+                <form action="./" method="post" class="form-horizontal" id="frm-quick-search" onsubmit="return false;">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <input type="text" id="quick-search" name="key" class="form-control" placeholder="Tìm kiếm...">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END Input Groups Row -->
+
+<!-- Table Styles Block -->
+<div class="block">
+    <!-- Table Styles Title -->
+    <div class="block-title">
+        <h2>Table <strong id="table-name">Chưa chọn</strong></h2>
+    </div>    
+    <!-- END Table Styles Title -->
+    <!-- Table Styles Content -->
+    <!-- Changing classes functionality initialized in js/pages/tablesGeneral.js -->
+    <div class="table-responsive" id="table-content" style="min-height:670px">
+        <div class="text-center text-warning">
+            <p>@Html.Raw(StaticFunction.GetTranslation("Views.Empty"))</p>
+        </div>
+    </div>
+    <!-- END Table Styles Content -->
+</div>
+<!-- END Table Styles Block -->
+
+@section Scripts{
+    <script>
+        $(function () {
+            var empContent = '#table-content';
+            var avatarUrl = '@Url.Action("Avatar","Users")';
+            GMApp.GetJson(empContent, avatarUrl);
+            //select server
+            $("#server-chosen").change(function (e) {
+                var zoneID = $(this).val();
+                var loadurl = '@Url.Action("LoadTableNames", "Users")';
+                $("#loading-bgr").show();
+                $.get(loadurl, function (data) {
+                    $("#select-table-name").html(data);
+                    GMApp.GetJson(empContent, avatarUrl);
+                    $("#loading-bgr").hide();
+                })
+                .fail(function (data) {
+                    $("#table-content").html(getError(data.status, data.statusText));
+                    $("#loading-bgr").hide();
+                });
+            });
+
+            //live search
+            $("#quick-search").keyup(function (e) {
+                e.preventDefault();
+                var key = $(this).val();
+                if (key.length > 2) { // && e.keyCode != 13) 
+                    var zoneID = $("#server-chosen").val();
+                    var table = $("#tables-chosen").val();
+                    if (zoneID == -1) {
+                        showGrowl('Bạn chưa chọn server', 'danger');
+                    }
+                    else if (table == -1) {
+                        showGrowl('Bạn chưa chọn Table', 'danger');
+                    }
+                    else {
+                        var loadurl = '@Url.Action("LoadData", "Users")?id=' + zoneID + '&table=' + table;
+                        $("#loading-bgr").show();
+                        $.ajax({
+                            url: loadurl,
+                            type: 'POST',
+                            data: $('#frm-quick-search').serialize(),
+                            success: function (data) {
+                                $('#table-content').html(data);
+                                $("#loading-bgr").hide();
+                            },
+                            error: function (xhr, textStatus, errorThrown) {
+                                var text = "Error: " + xhr.status + " " + xhr.statusText;
+                                showGrowl(text, 'danger');
+                                $("#loading-bgr").hide();
+                            }
+                        });
+                    }
+                }
+            });
+
+        });
+    </script>
+}

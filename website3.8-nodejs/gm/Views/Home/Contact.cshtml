@@ -1,0 +1,98 @@
+﻿@{
+    ViewBag.Title = "Blank Alternative";
+}
+
+<!-- Blank Alternative Header -->
+<div class="content-header">
+    <div class="header-section">
+        <h1>
+            <i class="gi gi-brush"></i>Blank Alternative<br><small>A clean page to help you start!</small>
+        </h1>
+    </div>
+</div>
+<ul class="breadcrumb breadcrumb-top">
+    <li>Trang</li>
+    <li>Get Started</li>
+    <li><a href="">Blank Alternative</a></li>
+</ul>
+<!-- END Blank Alternative Header -->
+<!-- Blank Alternative Content -->
+<div class="block block-alt-noborder">
+    <h3 class="sub-header">HTML <small>Highlight Code</small></h3>
+    <!-- HTML -->
+    <pre class="line-numbers"><code class="language-markup">
+                &lt;pre class=&quot;line-numbers&quot;&gt;&lt;code class=&quot;language-markup&quot;&gt;
+                    HTML code..
+                &lt;/code&gt;&lt;/pre&gt;</code>
+    </pre>
+    <form action="./" method="post" class="form-horizontal form-bordered" id="form-confirm" onsubmit="return false;">
+        <fieldset>
+            @Html.Raw(StaticFunction.GetTranslation("SendSeletedItems.LeftPanel"))
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="nickname-chosen-multiple">Danh sách Nickname</label>
+                <div class="col-md-8" id="nickname-chosen-multiple">
+                    <select name="nickname-chosen-multiple" class="select2-ajax" style="width:100%" data-placeholder="Chọn.." multiple>
+                        <option value="-1"></option>
+                    </select>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+    <!-- END HTML -->
+</div>
+<!-- END Blank Alternative Content -->
+
+@section Scripts {
+    <script type="text/javascript">
+        $(function () {
+            var url = '@Html.Raw(Url.Action("SearchItems", "Games"))';
+            $('.select2-ajax').select2({
+                ajax: {
+                    url: url,
+                    dataType: 'json',
+                    delay: 250,
+                    data: function (params) {
+                        return {
+                            key: params.term, // search term
+                            page: params.page
+                        };
+                    },
+                    processResults: function (data, page) {
+                        return {
+                            results: data.items
+                        };
+                    },
+                    cache: true
+                },
+                escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                minimumInputLength: 1,
+                templateResult: formatRepo, // omitted for brevity, see the source of this page
+                templateSelection: formatRepoSelection // omitted for brevity, see the source of this page
+            });
+        });        
+        function formatRepo(repo) {
+            if (repo.loading) return repo.text;
+
+            var markup = '<div class="clearfix">' +
+            '<div class="col-sm-1">' +
+            '<img src="' + repo.Pic + '" style="max-width: 100%" />' +
+            '</div>' +
+            '<div clas="col-sm-10">' +
+            '<div class="clearfix">' +
+            '<div class="col-sm-6">' + repo.Name + '</div>' +
+            '<div class="col-sm-3"><i class="fa fa-code-fork"></i> ' + repo.TemplateID + '</div>' +
+            '<div class="col-sm-2"><i class="fa fa-star"></i> ' + repo.CategoryID + '</div>' +
+            '</div>';
+
+            if (repo.Description) {
+                markup += '<div>' + repo.Description + '</div>';
+            }
+            markup += '</div></div>';
+            return markup;
+        }
+
+        function formatRepoSelection(repo) {
+            return repo.Name || repo.text;
+        }
+    </script>
+}

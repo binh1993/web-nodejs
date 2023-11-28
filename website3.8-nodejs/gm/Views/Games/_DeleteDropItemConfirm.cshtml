@@ -1,0 +1,44 @@
+﻿@model SqlDataProvider.Data.DropItem
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "Xác nhận";
+
+    string name = StaticFunction.ItemName(Model.ItemId);
+}
+<div class="modal-header themed-background-fire" style="color:white;">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title</h4>
+</div>
+<div class="modal-body">
+    <!-- Danger Alert Content -->
+    <div class="alert alert-danger">
+        @Html.Raw(StaticFunction.GetTranslation("Controllers.DeleteConfirm", name))
+    </div>
+    <!-- END Danger Alert Content -->
+    <form action="@Html.Raw(Url.Action("DeleteDropItem", "Games",  new { id = Model.Id, func = "loadDropItems()"}))" 
+          class="form-horizontal" id="form-confirm" method="post" role="form">
+        <input type="hidden" value="@name" id="Name" name="Name" />
+        <input type="hidden" value="@Model.Id" id="Id" name="Id" />
+        <div class="form-actions text-right">      
+            <input class="btn btn-sm btn-danger " type="submit" value="Xác nhận" />
+            <input class="btn btn-sm btn-success " type="button" value="Huỷ bỏ" data-dismiss="modal" />
+        </div>
+    </form>
+</div>
+@section Scripts{
+    <script>
+        $('#form-confirm').on('submit', function (e) {
+            $('#loading-bgr').show();
+            $.ajax({
+                url: this.action,
+                type: this.method,
+                data: $(this).serialize(),
+                success: function (result) {
+                    $('#loading-bgr').hide();
+                    $('#modal-content').html(result);
+                }
+            });
+            return false;
+        });
+    </script>
+}

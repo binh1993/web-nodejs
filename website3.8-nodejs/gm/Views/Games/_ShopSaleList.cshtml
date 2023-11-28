@@ -1,0 +1,188 @@
+﻿@using MvcPaging;
+@model IPagedList<SqlDataProvider.Data.ShopItemInfo>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "List Item";
+}
+<div style="min-height:452px">
+    <table class="table table-hover" id="list-items">
+        <thead>
+            <tr>
+                <th class="text-center" style="width: 20px;">
+                    <label>
+                        <input type="checkbox" id="check-all" name="check-all"><span></span>
+                    </label>
+                </th>
+                <th style="width: 346px;" class="text-center">Name</th>
+                <th class="text-center">
+                    AValue
+                </th>
+                <th class="text-center">
+                    BValue
+                </th>
+                <th class="text-center">
+                    CValue
+                </th>
+                <th>
+                    EndDate
+                </th>
+                <th>
+                    Action
+                </th>
+            </tr>
+        </thead>
+        @if (Model.Count() > 0)
+        {
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="text-center">
+                            <label>
+                                <input type="checkbox" id="@item.TemplateID" name="@item.TemplateID" value="@item.TemplateID"><span></span>
+                            </label>
+                        </td>
+                        <td>
+                            <label class="col-xs-2">
+                                @Html.ItemImage(item.TemplateID, "", "", "37")
+                            </label>
+                            <div class="col-xs-10" style="margin-bottom:-15px">
+                                <a href="javascript:void(0)" class="over-popup" data-link="@Url.Action("BuildAvatar", "Games", new { ids = item.TemplateID, type = 2 })">
+                                    <strong>@Html.TItemName(item.TemplateID)</strong>
+                                </a>
+                                <p>
+                                    <span class="text-success">@item.TemplateID.ToString()</span>
+                                    <span class="pull-right text-warning" style="font-size:11px"><em>id:</em> @item.ID</span>
+                                </p>
+
+                            </div>
+                        </td>
+                        <td>
+                            <div class="col-xs-12" style="margin-bottom:-15px">
+                                <span class="text-primary">
+                                    <em>Giá: </em>@Html.TUnset(item.AValue1)
+                                </span>
+                                <p>
+                                    <span class="text-success"><em>Loại: </em>@Html.TPayment(item.APrice1)</span>
+                                    @if (item.AUnit > 0)
+                                    {
+                                        <span class="pull-right text-warning" style="font-size:11px">@Html.TBuyType(item.AUnit, item.BuyType)</span>
+                                    }
+                                </p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="col-xs-12" style="margin-bottom:-15px">
+                                <span class="text-primary">
+                                    <em>Giá: </em>@Html.TUnset(item.BValue1)
+                                </span>
+                                <p>
+                                    <span class="text-success"><em>Loại: </em>@Html.TPayment(item.BPrice1)</span>
+                                    @if (item.BUnit > 0)
+                                    {
+                                        <span class="pull-right text-warning" style="font-size:11px">@Html.TBuyType(item.BUnit, item.BuyType)</span>
+                                    }
+                                </p>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="col-xs-12" style="margin-bottom:-15px">
+                                <span class="text-primary">
+                                    <em>Giá: </em>@Html.TUnset(item.CValue1)
+                                </span>
+                                <p>
+                                    <span class="text-success"><em>Loại: </em>@Html.TPayment(item.CPrice1)</span>
+                                    @if (item.CUnit > 0)
+                                    {
+                                        <span class="pull-right text-warning" style="font-size:11px">@Html.TBuyType(item.CUnit, item.BuyType)</span>
+                                    }
+                                </p>
+                            </div>
+                        </td>
+                        <td>
+                            @Html.TOnline(item.EndDate)
+                        </td>
+                        <td class="text-center">
+                            <div class="btn-group btn-group-xs">
+                                <a href="@Html.Raw(Url.Action("EditShopItem","Games", new { id = item.ID, type = "shopsale"}))" class="btn btn-xs btn-warning"
+                                   data-toggle="tooltip" title="Chỉnh sửa" data-modal="editshopsale"><i class="gi gi-edit"></i></a>
+                                <a href="@Url.Action("DeleteShopItem", "Users", routeValues: new { id = item.TemplateID })" data-modal="deleteshopsale"
+                                 data-toggle="tooltip"  title="Xóa" class="btn btn-danger"><i class="fa fa-times"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+            }
+                </tbody>
+        }
+        else
+        {
+            <tbody>
+                <tr>
+                    <td colspan="7" class="text-center" id="insert-avatar">
+                        @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+                    </td>
+                </tr>
+            </tbody>
+        }
+    </table>
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="btn-group btn-group-sm">
+            <a href="javascript:void(0)" class="btn btn-warning" data-toggle="tooltip" title="Xóa items được chọn" data-dialog="get"><i class="fa fa-times"></i></a>
+            <a href="javascript:void(0)" class="btn btn-info" data-toggle="tooltip" title="Gia hạn items được chọn" data-dialog="get"><i class="hi hi-repeat"></i></a>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="text-center">
+            @Html.Pager(Model.PageSize, Model.PageNumber, Model.TotalItemCount, new AjaxOptions { LoadingElementId = "loading-bgr", OnSuccess = "AjaxShopSaleSuccess", OnFailure = "AjaxShopSaleFailure" }).Options(o => o
+                    .DisplayTemplate("_Pagination")
+                    .MaxNrOfPages(3)
+                    .Action("ShopSaleList")
+                    .AddRouteValue("key", ViewData["key"])
+                    .AddRouteValue("cid", ViewData["cid"])
+                    .AlwaysAddFirstPageNumber())
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="btn-group btn-group-sm pull-right">
+            <div class="btn-group btn-group-sm dropup">
+                <a href="javascript:void(0)" class="btn btn-primary pull-right dropdown-toggle" data-toggle="dropdown">Nhiều hơn</a>
+                <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
+                    <li class="dropdown-header"><i class="fa fa-share pull-right"></i>Lựa chọn</li>
+                    <li>
+                        <a href="javascript:void(0)">Huỷ bán tất cả items</a>
+                        <a href="javascript:void(0)">Gia hạn tất cả items</a>
+                        <a href="javascript:void(0)">Xóa hết item hết hạn</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+            /* page load*/
+            $('.popover:visible').popover('destroy');
+            ModelGeneral.init('data-modal="deleteshopsale"');
+            ModelGeneral.init('data-modal="editshopsale"', 'large3');
+            PopOver.initJson('#page-content');
+        });        
+        function AjaxShopSaleSuccess(data) {//OnSuccess = "AjaxSuccess"
+            if (data.Result) {
+                $('#shop-sale-list').html(data.Html);
+            }
+            else {
+                showGrowl(data.Html, 'danger');
+            }
+        }
+
+        function AjaxShopSaleFailure(xhr) {//OnFailure = "AjaxFailure"
+            var text = "Error: " + xhr.status + " " + xhr.statusText;
+            showGrowl(text, 'danger');
+        }
+    </script>
+}
+

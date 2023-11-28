@@ -1,0 +1,82 @@
+﻿@using SqlDataProvider.Data;
+@model List<TopAwardInfo>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "Phần thưởng";
+    Dictionary<int, List<TopAwardInfo>> list = new Dictionary<int, List<TopAwardInfo>>();
+    foreach (TopAwardInfo top in Model)
+    {
+        if (!list.ContainsKey(top.Rank))
+        {
+            IEnumerable<TopAwardInfo> temp = Model.Where(s => s.Rank == top.Rank);
+            list.Add(top.Rank, temp.ToList());
+        }
+    }
+    var sortedDict = from entry in list orderby entry.Key ascending select entry;
+}
+<div class="modal-header">
+    <button type="button" class="close btn-dismiss" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">@ViewBag.Title <i class="gi gi-chevron-right" style="font-size:10px"></i><span class="text-warning"> <strong>@Request.QueryString["name"]</strong></span>
+    </h4>
+</div>
+<div class="modal-body" style="min-height:550px">
+    @if (Model.Count() > 0)
+    {
+            <div class="row media-filter-items" id="media-filter-items" style="height:535px; overflow-y:auto">
+                @foreach (var item in Model)
+                {
+                    <div class="col-sm-6 col-lg-4">
+                        <div class="media-items animation-fadeInQuickInv" data-category="rank-@item.Rank" style="height:250px;">
+                            <div class="media-items-content" style="margin-top:-10px; margin-bottom:-15px">
+                                @Html.ItemImage(item.TemplateID, "", "", "75")
+                            </div>
+                            <h4>
+                                <span class="text-info" style="font-size:14px">@item.Name</span><br>
+                                <small style="font-size:12px"><em>Số lượng:</em> @item.Count</small><br>
+                                <small style="font-size:12px">
+                                    <em>Hiệu lực:</em> @if (item.ValidDate == 0)
+                                    { <span class="text-success"> Vĩnh viễn </span> }
+                                    else
+                                    { <span class="text-info">@item.ValidDate ngày </span> }
+                                </small><br>
+                                <small style="font-size:12px">
+                                    <em>Trạng thái:</em> @if (item.IsBinds)
+                                    { <span class="text-danger"> Khóa</span> }
+                                    else
+                                    { <span class="text-success"> Không khóa </span> }
+                                </small>
+                            </h4>
+                        </div>
+                    </div>
+                }
+            </div>
+            <!-- END Files Content -->
+    }
+    else
+    {
+        <div class="text-center" id="avatar-empty-body" style="position:relative; width:890px">
+            @Html.Raw(StaticFunction.GetTranslation("Views.Empty"))
+            <div style="position:absolute; width:410px" id="avatar-empty-content">
+                @Html.Partial("_Empty")
+            </div>
+        </div>
+    }
+</div>
+<div class="modal-footer">
+    <div class="form-actions">
+        <div class="text-left">           
+            <button type="button" class="btn btn-sm btn-primary pull-right btn-dismiss" data-dismiss="modal">Đóng</button>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(function () {
+            ReadyFiles.init();
+            GMApp.initResize('#avatar-empty-body', '#avatar-empty-content');
+        });
+        
+    </script>
+}
+

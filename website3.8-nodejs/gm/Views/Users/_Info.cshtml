@@ -1,0 +1,246 @@
+﻿@using GM.Service.Models;
+@model SqlDataProvider.Data.PlayerInfo
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "Thông tin chính";
+    var item = Model;
+    AvatarViewModel settingAvatar = new AvatarViewModel
+    {
+        Style = item.Style,
+        Nimbus = item.Nimbus,
+        Sex = item.Sex
+    };
+}
+<!-- Customer Content -->
+<div class="row" style="overflow-y:auto; max-height: 598px">
+    <div class="col-lg-5" style="max-width:440px">
+        <!-- Customer Info Block -->
+        <div class="block">
+            <!-- Customer Info Title -->
+            <div class="block-title">
+                <h2><i class="fa fa-file-o"></i> <strong>Thông tin chính</strong></h2>
+            </div>
+            <!-- END Customer Info Title -->
+            <div class="block-section text-center">
+                <h3>
+                    <span data-type="text" data-pk="@item.ID" id="NickName" data-url="@Html.Raw(Url.Action("UpdateEditable", "Users", new { @id = item.ID, zId=item.ZoneID }))" class="text-success">
+                        <strong class="text-warning">@item.NickName</strong>
+                    </span><br>
+                </h3>
+            </div>
+            <!--Avatar -->
+            <div style="margin-left:-15px">
+                @Html.Partial("Avatar", settingAvatar)
+            </div>            
+            <!--END Avatar-->
+            <!-- Customer Info -->           
+            <table class="table table-borderless table-striped table-vcenter">
+                <tbody>
+                    <tr>
+                        <td class="text-right"><strong>UserName</strong></td>
+                        <td>
+                            <span data-type="text" data-pk="@item.ID" id="UserName" data-url="@Html.Raw(Url.Action("UpdateEditable", "Users", new { @id = item.ID, zId=item.ZoneID }))" class="text-success">@item.UserName</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><strong>PasswordTwo</strong></td>
+                        <td>
+                            <span data-type="text" data-pk="@item.ID" id="PasswordTwo" data-url="@Html.Raw(Url.Action("UpdateEditable", "Users", new { @id = item.ID, zId=item.ZoneID }))" class="text-success">@item.PasswordTwo</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right" style="width: 50%;"><strong>Level</strong></td>
+                        <td>@item.Grade</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><strong>FightPower</strong></td>
+                        <td>@item.FightPower</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><strong>Money</strong></td>
+                        <td>
+                            <span data-type="text" data-pk="@item.ID" id="Money" data-url="@Html.Raw(Url.Action("UpdateEditable", "Users", new { @id = item.ID, zId=item.ZoneID }))" class="text-success">@item.Money</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><strong>Gold</strong></td>
+                        <td><span data-type="text" data-pk="@item.ID" id="Gold" data-url="@Html.Raw(Url.Action("UpdateEditable", "Users", new { @id = item.ID, zId=item.ZoneID }))" class="text-success">@item.Gold</span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><strong>DDTMoney</strong></td>
+                        <td><span data-type="text" data-pk="@item.ID" id="DDTMoney" data-url="@Html.Raw(Url.Action("UpdateEditable", "Users", new { @id = item.ID, zId=item.ZoneID }))" class="text-success">@item.DDTMoney</span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><strong>Attack</strong></td>
+                        <td>@item.Attack</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><strong>Defence</strong></td>
+                        <td>@item.Defence</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><strong>Agility</strong></td>
+                        <td>@item.Agility</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><strong>Luck</strong></td>
+                        <td>@item.Luck</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><strong>MagicAttack</strong></td>
+                        <td>@item.MagicAttack</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><strong>MagicDefence</strong></td>
+                        <td>@item.MagicDefence</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><strong>MountLv</strong></td>
+                        <td>@Html.TUnEquip(item.MountLv)</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><strong>PetsID</strong></td>
+                        <td>@Html.TUnEquip(item.PetsID)</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><strong>honorId</strong></td>
+                        <td>@Html.TUnEquip(item.honorId)</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><strong>CardSoul</strong></td>
+                        <td><span data-type="text" data-pk="@item.ID" id="CardSoul" data-url="@Html.Raw(Url.Action("UpdateEditable", "Users", new { @id = item.ID, zId=item.ZoneID }))" class="text-success">@item.CardSoul</span></td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><strong>Nimbus</strong></td>
+                        <td>@item.Nimbus</td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- END Customer Info -->
+        </div>
+        <!-- END Customer Info Block -->
+        <!-- Texp Block -->
+        <div class="block">
+            <!-- Texp Title -->
+            <div class="block-title">
+                <h2><i class="fa fa-line-chart"></i> <strong>Tu luyện</strong></h2>
+            </div>
+            <!-- END Texp Title -->
+            <!-- Texp Content -->
+            <div id="texp-content">
+                <div class="text-center text-warning">
+                    <p>@Html.Raw(StaticFunction.GetTranslation("Views.WaitLoading"))</p>
+                </div>
+            </div>
+            <!-- END Texp Content -->
+        </div>
+        <!-- END Texp Block -->
+    </div>
+    <div class="col-lg-7" style="min-width:750px">
+        <!-- Equips Block -->
+        <div class="block">
+            <!-- Equips Title -->
+            <div class="block-title">
+                <h2><i class="fa fa-truck"></i> <strong>Item(s)</strong>  Đang Trang Bị</h2>
+            </div>
+            <!-- END Equips Title -->
+            <!-- Equips Content -->
+            <div id="equip-content" style="min-height:422px">
+                <div class="text-center text-warning">
+                    <p> @Html.Raw(StaticFunction.GetTranslation("Views.WaitLoading"))</p>
+                </div>
+            </div>
+            <!-- END Equips Content -->
+        </div>
+        <!-- END Equips Block -->
+        <!-- Customer  Block -->
+        <!-- Customer  Content -->
+        <div class="row">
+            <div class="col-lg-6">
+                <!-- Active System Data Block -->
+                <div class="block">
+                    <!-- Active System Data Title -->
+                    <div class="block-title">
+                        <h2>Active System Data</h2>
+                    </div>
+                    <!-- END Active System Data Title -->
+                    <!-- Active System Data Content -->
+                    <div id="activesystem-content">
+                        <div class="text-center text-warning">
+                            <p> @Html.Raw(StaticFunction.GetTranslation("Views.WaitLoading"))</p>
+                        </div>
+                    </div>
+                    <!-- END Active System Data Content -->
+                </div>
+                <!-- END Active System Data Block -->
+            </div>
+            <div class="col-lg-6">
+                <!-- User Extra Block -->
+                <div class="block">
+                    <!-- User Extra Title -->
+                    <div class="block-title">
+                        <h2>User Extra</h2>
+                    </div>
+                    <!-- END User Extra Title -->
+                    <!-- User Extra Content -->
+                    <div id="user-extra-content">
+                        <div class="text-center text-warning">
+                            <p> @Html.Raw(StaticFunction.GetTranslation("Views.WaitLoading"))</p>
+                        </div>
+                    </div>
+                    <!-- END User Extra Content -->
+                </div>
+                <!-- END User Extra Block -->
+            </div>
+        </div>
+        <!-- END Customer Content -->
+        <!-- END Customer Block -->
+    </div>
+</div>
+<!-- END Customer Content -->
+@section Scripts{
+    <script>
+        $(function () {
+            //$.fn.editable.defaults.mode = 'inline';
+            //$.fn.editable.defaults.validate = function (value) {
+            //    var v = valib.String.isNumeric(value);
+            //    if (v === false) return '@Html.Raw(StaticFunction.GetTranslation("validate.isNumber"))';
+            //};
+
+            $('#Money').editable({
+                validate: function (value) {
+                    var v = valib.String.isNumeric(value);
+                    if (v === false) return '@Html.Raw(StaticFunction.GetTranslation("validate.isNumber"))';
+                }
+            });
+            $('#DDTMoney').editable({
+                validate: function (value) {
+                    var v = valib.String.isNumeric(value);
+                    if (v === false) return '@Html.Raw(StaticFunction.GetTranslation("validate.isNumber"))';
+                }
+            });
+            $('#Gold').editable({
+                validate: function (value) {
+                    var v = valib.String.isNumeric(value);
+                    if (v === false) return '@Html.Raw(StaticFunction.GetTranslation("validate.isNumber"))';
+                }
+            });
+            $('#CardSoul').editable({
+                validate: function (value) {
+                    var v = valib.String.isNumeric(value);
+                    if (v === false) return '@Html.Raw(StaticFunction.GetTranslation("validate.isNumber"))';
+                }
+            });
+            $('#UserName').editable();
+            $('#NickName').editable();
+            $('#PasswordTwo').editable();
+
+            navActive('info');
+            //load data
+            loadDetailUserData("Equip", "equip-content");
+            loadDetailUserData("Texp", "texp-content");
+            loadDetailUserData("Extra", "user-extra-content");
+            loadDetailUserData("Active", "activesystem-content");
+        });
+    </script>
+}

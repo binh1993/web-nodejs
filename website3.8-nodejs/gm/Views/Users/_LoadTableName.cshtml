@@ -1,0 +1,50 @@
+﻿@model List<SqlDataProvider.Data.TableInfo>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "LoadTableName";
+}
+<select id="tables-chosen" name="tables-chosen" class="select-chosen" data-placeholder="Chọn table..." style="width: 250px;">
+    <option value="-1"></option>   
+    <optgroup label="Truy cập nhanh">
+        <option value="Sys_Users_Detail">Sys Users Detail</option>
+        <option value="Consortia">Consortia</option>
+        <option value="Marry_Apply">Marry Apply</option>
+        <option value="Marry_Info">Marry Info</option>
+        <option value="Marry_Room_Info">Marry Room Info</option>
+        <option value="Rename_Consortia">Rename Consortia</option>
+        <option value="Rename_Nick">Rename Nick</option>
+        <option value="AdoptPetList">AdoptPetList</option>
+        <option value="Active_Number">Active Number</option>
+        <option value="ChickActive_Number">ChickActive Number</option>
+        <option value="Cloud_Buy_Log">Cloud Buy Log</option>
+        <option value="Halloween_Rank">Halloween Rank</option>
+        <option value="LuckStarRankInfo">LuckStarRankInfo</option>
+        <option value="Ringstation_Config">Ringstation Config</option>
+        <option value="Ringstation_Battle_Field">Ringstation Battle Field</option>
+    </optgroup>
+    <optgroup label="Tất cả table(s)">
+        @foreach (SqlDataProvider.Data.TableInfo item in Model)
+        {
+            <option value="@item.Name">@item.Name.Replace("_", " ")</option>
+        }
+    </optgroup>
+</select>
+@section Scripts{
+    <script>        
+        $("#tables-chosen").change(function (e) {
+            var zoneID = $("#server-chosen").val();
+            var table = $(this).val();
+            var loadurl = 'Users/LoadData/' + zoneID + '?table=' + table;
+            $("#loading-bgr").show();
+            $.get(loadurl, function (data) {
+                $("#table-content").html(data);
+                $("#table-name").html(table);
+                $("#loading-bgr").hide();
+            })
+            .fail(function (data) {
+                $("#table-content").html(getError(data.status, data.statusText));
+                $("#loading-bgr").hide();
+            });
+        });       
+    </script>
+}

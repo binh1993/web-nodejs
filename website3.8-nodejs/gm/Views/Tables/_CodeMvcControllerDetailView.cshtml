@@ -1,0 +1,64 @@
+﻿@using SqlDataProvider.Data;
+@using System.Text;
+@model GM.Service.Models.TableModel
+
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    TableInfo item = Model.Info;
+    List<TableDesignInfo> designs = Model.Designs;
+    string name = item.Class.Replace("Info", "");
+    StringBuilder sb = new StringBuilder();
+    string usingStr = "Web";
+    if (item.Type == 1)
+    {
+        usingStr = "Player";
+    }
+    if (item.Type == 2)
+    {
+        usingStr = "Produce";
+    }
+
+    sb.AppendLine(" ");
+    sb.AppendLine(" ");
+    sb.AppendLine("        // GET: ../Detail" + name + "");
+    sb.AppendLine("        [RolesAjaxAuthorize(Roles = \"Develop, Admin, Moderator\")]");
+    sb.AppendLine("        public ActionResult Detail" + name + "(int id)");
+    sb.AppendLine("        {");
+    sb.AppendLine("            RequestResultModel _model = new RequestResultModel();");
+    sb.AppendLine("            _model.ThemedType = ThemeType.Fire;");
+    sb.AppendLine("            _model.InfoType = InfoType.Danger;");
+
+    sb.AppendLine("            using (" + usingStr + "Bussiness wb = new " + usingStr + "Bussiness())");
+    sb.AppendLine("            {");
+    sb.AppendLine("                " + name + "Info model = wb.GetSingle" + name + "(id);");
+    sb.AppendLine("                if (model != null)");
+    sb.AppendLine("                {");
+    sb.AppendLine("                    return PartialView(\"_Detail" + name + "\", model);");
+    sb.AppendLine("                }");
+    sb.AppendLine("            }");
+    sb.AppendLine("            _model.Message = StaticFunction.GetTranslation(\"Views.LoadTable.Fail\", id);");
+    sb.AppendLine("            return PartialView(\"_RequestResultModel\", _model);");
+    sb.AppendLine("        }");
+
+}
+<h4>@item.Name <i class="fa fa-angle-right"></i><span class="text-danger"> MVC Control Detail</span></h4>
+<div style="overflow-y:auto; height:450px">
+<pre class="line-numbers">
+    <code class="language-csharp" id="highlight-code">
+        @sb.ToString()
+    </code>
+</pre>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+
+            navActive('MVC');
+
+            var code = $('#highlight-code')[0];
+            Prism.highlightElement(code);
+
+            ZeroCopy.init();
+        });
+    </script>
+}

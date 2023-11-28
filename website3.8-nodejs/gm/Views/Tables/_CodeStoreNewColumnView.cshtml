@@ -1,0 +1,64 @@
+﻿@using SqlDataProvider.Data;
+@using System.Text;
+@model GM.Service.Models.TableModel
+
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    TableInfo item = Model.Info;
+    List<TableDesignInfo> designs = Model.Designs;
+
+    StringBuilder sb = new StringBuilder();
+    sb.AppendLine("  ");
+    foreach (var d in designs)
+    {
+        sb.AppendLine(" ----- Add Column & Contraint");
+        sb.AppendLine(" IF EXISTS (");
+        sb.AppendLine("        SELECT 1");
+        sb.AppendLine("        FROM INFORMATION_SCHEMA.COLUMNS");
+        sb.AppendLine("        WHERE TABLE_NAME = '" + item.Name + "'");
+        sb.AppendLine("      )");
+        sb.AppendLine(" BEGIN");
+        sb.AppendLine("	IF NOT EXISTS ( SELECT 1 FROM sys.default_constraints");
+        sb.AppendLine("            WHERE object_id = OBJECT_ID('[dbo].[DF_" + item.Name + "_" + d.Name + "]')");
+        sb.AppendLine("            AND");
+        sb.AppendLine("            parent_object_id = OBJECT_ID('[dbo].[" + item.Name + "]')");
+        sb.AppendLine("          )");
+        sb.AppendLine("	BEGIN");
+        sb.AppendLine("	ALTER TABLE [dbo].[" + item.Name + "]");
+        sb.AppendLine("		ADD " + d.Name + " " + d.Type + " NOT NULL");
+        sb.AppendLine("		CONSTRAINT [DF_" + item.Name + "_" + d.Name + "]  DEFAULT " + TableTool.GetDefaultValue(d.Type));
+        sb.AppendLine("		PRINT 'Contraint [DF_" + item.Name + "_" + d.Name + "] was Added to [dbo]." + item.Name + "]'");
+        sb.AppendLine("	END");
+        sb.AppendLine("	ELSE");
+        sb.AppendLine("		BEGIN");
+        sb.AppendLine("			PRINT 'Contraint [DF_" + item.Name + "_" + d.Name + "] in [dbo].[" + item.Name + "] was exit'");
+        sb.AppendLine("		END");
+        sb.AppendLine(" END");
+        sb.AppendLine(" ELSE");
+        sb.AppendLine(" BEGIN");
+        sb.AppendLine("	    PRINT '[dbo].[" + item.Name + "] do not exit'");
+        sb.AppendLine(" END");
+        sb.AppendLine("  ");
+    }
+}
+<h4>@item.Name <i class="fa fa-angle-right"></i><span class="text-danger"> Store Add New Column</span></h4>
+<div style="overflow-y:auto; height:450px">
+<pre class="line-numbers">
+    <code class="language-sql" id="highlight-code">
+        @sb.ToString()
+    </code>
+</pre>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+
+            navActive('SQLCRUD');
+
+            var code = $('#highlight-code')[0];
+            Prism.highlightElement(code);
+
+            ZeroCopy.init();
+        });
+    </script>
+}

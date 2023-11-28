@@ -1,0 +1,384 @@
+﻿@model List<SqlDataProvider.Data.DropItem>
+@{
+    Layout = "~/Views/Shared/_RenderLayout.cshtml";
+    ViewBag.Title = "Cập nhật thông số";
+    string cssActive = "active";
+
+    string chek = string.Empty;
+    bool showAutoAdd = false;
+}
+<div class="modal-header themed-background-default">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">
+        @ViewBag.Title <i class="gi gi-chevron-right" style="font-size:10px"></i>
+        <span style="color:white"> Phần thưởng<strong> @Request.QueryString["name"]</strong></span>
+    </h4>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-4">
+            <!-- Navigation Block -->
+            <div class="block full">
+                <!-- Navigation Title -->
+                <div class="block-title">
+                    <h2><i class="fa fa-compass"></i><strong> Danh sách</strong></h2>
+                </div>
+                <!-- END Navigation Title -->
+                <!-- Filter by Type links -->
+                <ul class="nav nav-pills nav-stacked nav-icons media-filter media-filter-aw" style="height:548px; overflow-y:auto">
+                    @foreach (var item in Model)
+                    {
+                        <li class="@cssActive">
+                            <a href="javascript:void(0)" data-category="id-@item.Id">
+                                @Html.ItemImage(item.ItemId) @Html.TItemName(item.ItemId)
+                            </a>
+                        </li>
+                        cssActive = string.Empty;
+                    }
+                </ul>
+                <!-- END Filter by Type links -->
+            </div>
+            <!-- END Navigation Block -->
+            <span class="text-warning" id="error-response"></span>
+        </div>
+        <div class="col-md-8">
+            <!-- Awards Block -->
+            <div class="block">
+                <!-- Awards Content  style="height:535px; overflow-y:auto"-->
+                <!-- Add the category value for each item in its data-category attribute (for the filter functionality to work) -->
+                <div class="row media-filter-items-aw">
+                    @foreach (var item in Model)
+                    {
+                        var name = StaticFunction.ItemName(item.ItemId);
+                        var drop = StaticFunction.GetDropCondiction(item.DropId);
+                        <div class="col-md-12">
+                            <h4>
+                                Cập nhật thông tin <i class="gi gi-chevron-right" style="font-size:10px"></i>
+                                <span class="text-warning"><strong> @name</strong></span>
+                            </h4>
+                            <div class="media-items animation-fadeInRight" data-category="id-@item.Id">
+                                <!-- From Block -->
+                                <form action="@Html.Raw(Url.Action("UpdateItemInBag", "Games", routeValues: new { id = item.Id, type = Request.QueryString["type"]}))"
+                                      method="post" class="form-horizontal multi-post" id="frm-update-@item.Id" data-title="@name" onsubmit="return false;">
+
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="TopID">DropId</label>
+                                        <div class="col-md-8">
+                                            <input type="text" id="DropId" name="DropId" class="form-control input-sm" value="@item.DropId" disabled>
+                                        </div>
+                                        <input type="hidden" id="DropId" name="DropId" value="@item.DropId">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="ItemId">TemplateID</label>
+                                        <div class="col-md-8">
+                                            <input type="text" id="ItemId" name="ItemId" class="form-control input-sm" value="@item.ItemId" disabled>
+                                        </div>
+                                        <input type="hidden" id="ItemId" name="ItemId" value="@item.ItemId">
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="BeginData">BeginData</label>
+                                        <div class="col-md-8">
+                                            <input type="text" id="BeginData" name="BeginData" class="form-control input-sm must-digits" value="@item.BeginData">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="EndData">EndData</label>
+                                        <div class="col-md-8">
+                                            <input type="text" id="EndData" name="EndData" class="form-control input-sm must-digits" value="@item.EndData">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="Random">Random</label>
+                                        <div class="col-md-8">
+                                            <input type="text" id="Random" name="Random" class="form-control input-sm must-digits" value="@item.Random">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="ValueDate">ValidDate</label>
+                                        <div class="col-md-8">
+                                            <input type="text" id="ValueDate" name="ValueDate" class="form-control input-sm must-digits" value="@item.ValueDate">
+                                        </div>
+                                    </div>
+                                    @if (drop != null && drop.CondictionType == 5 && drop.Para2 == ",1,")
+                                    {
+                                        <div class="form-group">
+                                            <label class="col-md-4 control-label" for="AutoAdd">Thêm tự động</label>
+                                            <div class="col-md-8">
+                                                <select id="AutoAdd" name="AutoAdd" class="form-control" style="width: 100%;">
+                                                    <option>Không chọn..</option>
+                                                    <option value=",2,">Tự động thêm vào DropId @item.DropId có Para2 = ,2,</option>
+                                                    <option value=",3,">Tự động thêm vào DropId @item.DropId có Para2 = ,3,</option>
+                                                    <option value=",4,">Tự động thêm vào DropId @item.DropId có Para2 = ,4,</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        showAutoAdd = true;
+                                    }
+                                    <div class="form-group">
+                                        <label class="col-md-4 control-label" for="ValueDate">IsBinds</label>
+                                        <div class="col-md-8">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <div class="col-md-8 text-left">
+                                                            <label class="switch switch-primary">
+                                                                @{
+                                                                    if (item.IsBind) { chek = "checked"; }
+                                                                }
+                                                                <input type="checkbox" id="IsBind" name="IsBind" value="true" @chek>
+                                                                <span></span>
+                                                                <input type="hidden" id="IsBind" name="IsBind" value="false">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 control-label" for="IsTips">IsTips</label>
+                                                        <div class="col-md-8 text-left">
+                                                            <label class="switch switch-primary">
+                                                                @{
+                                                                    chek = "";
+                                                                    if (item.IsTips) { chek = "checked"; }
+                                                                }
+                                                                <input type="checkbox" id="IsTips" name="IsTips" value="true" @chek>
+                                                                <span></span>
+                                                                <input type="hidden" id="IsTips" name="IsTips" value="false">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="form-group">
+                                                        <label class="col-md-4 control-label" for="IsLogs">IsLogs</label>
+                                                        <div class="col-md-8 text-left">
+                                                            <label class="switch switch-primary">
+                                                                @{
+                                                                    chek = "";
+                                                                    if (item.IsLogs) { chek = "checked"; }
+                                                                }
+                                                                <input type="checkbox" id="IsLogs" name="IsLogs" value="true" @chek>
+                                                                <span></span>
+                                                                <input type="hidden" id="IsLogs" name="IsLogs" value="false">
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group form-actions">
+                                        <div class="col-md-12 text-right">
+                                            <button type="submit" class="btn btn-sm btn-primary btn-submit"> Cập nhật</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <!-- END From Block -->
+                            </div>
+                        </div>
+                     }
+                </div>
+                <!-- END Awards Content -->
+            </div>
+            <div class="block full">
+                <!-- Navigation Title -->
+                <div class="block-title">
+                    <h2><i class="fa fa-compass"></i><strong> Thần tốc</strong></h2>
+                    <span class="text-info">
+                        <span class="text-warning"><em>Thiết lập</em></span> và
+                        <span class="text-warning"><em>Cập nhật</em></span> nhanh tất cả item có trong danh sách
+                    </span>
+                </div>
+                <!-- END Navigation Title -->
+                <div class="form-actions">
+                    <div class="text-right">
+                        @if (showAutoAdd)
+                        {
+                            <div class="btn-group btn-group-sm quick-set">
+                                <div class="btn-group btn-group-sm dropup">
+                                    <a href="javascript:void(0)" class="btn btn-warning pull-right dropdown-toggle" data-toggle="dropdown"><span class="caret"></span> Thêm tự động nhanh</a>
+                                    <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
+                                        <li class="dropdown-header"><i class="fa fa-share pull-right"></i> Item(s) trong danh dách</li>
+                                        <li>
+                                            <a href="javascript:SetAutoAdd(2)">Tự động thêm vào para2 = 2</a>
+                                            <a href="javascript:SetAutoAdd(3)">Tự động thêm vào para2 = 3</a>
+                                            <a href="javascript:SetAutoAdd(4)">Tự động thêm vào para2 = 4</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        }
+                        <div class="btn-group btn-group-sm quick-set">
+                            <div class="btn-group btn-group-sm dropup">
+                                <a href="javascript:void(0)" class="btn btn-success pull-right dropdown-toggle" data-toggle="dropdown"><span class="caret"></span> Random nhanh</a>
+                                <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
+                                    <li class="dropdown-header"><i class="fa fa-share pull-right"></i> Item(s) trong danh dách</li>
+                                    <li>
+                                        <a href="javascript:SetRandom(118256)">Mức bình thường</a>
+                                        <a href="javascript:SetRandom(61257)">Mức vừa</a>
+                                        <a href="javascript:SetRandom(26682)">Mức thấp</a>
+                                        <a href="javascript:SetRandom(682)">Mức rất thấp</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="btn-group btn-group-sm quick-set">
+                            <div class="btn-group btn-group-sm dropup">
+                                <a href="javascript:void(0)" class="btn btn-primary pull-right dropdown-toggle" data-toggle="dropdown"><span class="caret"></span> Thời hạn nhanh</a>
+                                <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
+                                    <li class="dropdown-header"><i class="fa fa-share pull-right"></i> Item(s) trong danh dách</li>
+                                    <li>
+                                        <a href="javascript:SetValidate(0)">Tất cả vĩnh viễn</a>
+                                        <a href="javascript:SetValidate(3)">Tất cả 3 ngày</a>
+                                        <a href="javascript:SetValidate(7)">Tất cả 7 ngày</a>
+                                        <a href="javascript:SetValidate(15)">Tất cả 15 ngày</a>
+                                        <a href="javascript:SetValidate(30)">Tất cả 30 ngày</a>
+                                        <a href="javascript:SetValidate(365)">Tất cả 360 ngày</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-warning btn-submit-all">Cập nhật tất cả Item(s)</button>
+                    </div>
+                </div>
+            </div>
+            <!-- END Awards Block -->
+        </div>
+        <!-- END Main Row -->
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="form-actions">
+        <div class="text-left">
+            <button type="button" class="btn btn-sm btn-primary pull-right btn-close" data-dismiss="modal">Đóng</button>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $(function () {
+
+            ReadyFiles.init2('aw');
+            LoadStoreBag();
+            var startBtn = $('.btn-submit');
+            // On start button click start loading again
+            startBtn.on('click', function () {
+                $(this).button('loading');
+            });
+
+            /* Validate */
+
+            $('form.multi-post').each(function () {   // <- selects every <form> on page
+                $(this).validate({        // <- initialize validate() on each form
+                    errorClass: 'help-block animation-slideDown', // You can change the animation class for a different entrance animation - check animations page
+                    errorElement: 'div',
+                    errorPlacement: function (error, e) {
+                        e.parents('.form-group > div').append(error);
+                    },
+                    highlight: function (e) {
+                        $(e).closest('.form-group').removeClass('has-success has-error').addClass('has-error');
+                        $(e).closest('.help-block').remove();
+                    },
+                    success: function (e) {
+                        e.closest('.form-group').removeClass('has-success has-error');
+                        e.closest('.help-block').remove();
+                    },
+                    submitHandler: function (e) {
+                        $('#loading-bgr').show();
+                        $.ajax({
+                            url: e.action,
+                            type: e.method,
+                            data: $(e).serialize(),
+                            success: function (result) {
+                                $('#loading-bgr').hide();
+                                startBtn.button('reset');
+                                $('#response-hodler').html(result);
+                                LoadStoreBag();
+                            },
+                            error: function (result) {
+                                $('#loading-bgr').hide();
+                                showGrowl(getError2(result.status, result.statusText), 'danger');
+                                startBtn.button('reset');
+                            }
+                        });
+                        return false;
+                    }
+                });
+            });
+        });
+
+        function SetAutoAdd(value) {
+            $('input[name="AutoAdd"]').val(value);
+        }
+        function SetRandom(value) {
+            var tem_val = value;
+            $('input[name="Random"]').each(function () {
+                $(this).val(Math.round(tem_val));
+                tem_val -= value / @Model.Count;
+            });
+        }
+        function SetValidate(value) {
+            $('input[name="ValueDate"]').val(value);
+        }
+        var btnSubmitAll = $('.btn-submit-all');
+        // On start button click start loading again
+        btnSubmitAll.on('click', function () {
+            btnSubmitAll.button('loading');
+            var errorCount = 0;
+            var mediaItems = $('.media-filter-items-aw');
+            var mediaFilter = $('.media-filter-aw');
+            mediaFilter.find('a').parent().removeClass('active');
+            var realId = "";
+            $('form.multi-post').each(function () {
+                var form = $(this);
+                realId = form.attr("id").replace('frm-update-', '');
+                //console.log('realId =>' + realId);
+                mediaItems.find('.media-items')
+                            .parent()
+                            .hide(0, function () {
+                                mediaItems
+                                    .find('[data-category="id-' + realId + '"]')
+                                    .parent('div')
+                                    .show(0, function () {
+                                        if (!form.valid()) {
+                                            mediaFilter.find('[data-category="id-' + realId + '"]').parent().addClass('active');
+                                            errorCount++;
+                                        }
+                                    });
+                            });
+                if (errorCount > 0){
+                    btnSubmitAll.button('reset');
+                    return false;
+                }
+            });
+            if (errorCount === 0) {
+                //$('.media-filter-aw li:first a').parent().addClass('active');
+                if (realId !== "")
+                    mediaFilter.find('[data-category="id-' + realId + '"]').parent().addClass('active');
+
+                var collection = $('.multi-post');
+                //btnSubmitAll.button('loading');
+                $('.quick-set').hide();
+                $('.btn-close').prop( "disabled", true );
+                if (collection.length > 0) {
+                    var i = 0;
+                    var fn = function () {
+                        var element = $(collection[i]);
+                        //console.log(i + ' (' + element.attr("id") + ')');
+                        element.submit();
+                        // Do whatever
+                        if (++i < collection.length) {
+                            setTimeout(fn, 1000);
+                        }
+                        else {
+                            btnSubmitAll.button('reset');
+                            $('.quick-set').show();
+                            $('.btn-close').prop("disabled", false);
+                        }
+                    };
+                    fn();
+                }
+            }
+        });
+    </script>
+}

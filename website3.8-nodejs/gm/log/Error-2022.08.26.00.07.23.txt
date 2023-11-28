@@ -1,0 +1,24 @@
+2022-08-26 00:07:23 Error: Version 3.6
+2022-08-26 00:07:23 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-26 00:07:23 Error: zoneId1001
+2022-08-26 00:07:24 Error: Version 3.6
+2022-08-26 00:07:24 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-26 00:07:24 Error: zoneId1001
+2022-08-26 00:09:04 Error: Version 3.6
+2022-08-26 00:09:04 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-26 00:09:04 Error: zoneId1001
+2022-08-26 00:09:04 Error: Version 3.6
+2022-08-26 00:09:04 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-26 00:09:04 Error: zoneId1001
+2022-08-26 00:12:15 Error: Version 3.6
+2022-08-26 00:12:15 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-26 00:12:15 Error: zoneId1001
+2022-08-26 00:12:15 Error: Version 3.6
+2022-08-26 00:12:15 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-26 00:12:15 Error: zoneId1001
+2022-08-26 00:12:15 Error: Version 3.6
+2022-08-26 00:12:15 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-26 00:12:15 Error: zoneId1001
+2022-08-26 00:12:15 Error: Version 3.6
+2022-08-26 00:12:15 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-26 00:12:15 Error: zoneId1001

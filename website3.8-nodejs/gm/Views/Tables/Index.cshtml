@@ -1,0 +1,100 @@
+﻿@model IPagedList<SqlDataProvider.Data.TableInfo>
+@{
+    ViewBag.Title = "Table Game Manager";
+    ViewBag.Message = "Quản lý các table trong game DDT";
+}
+<!-- Header -->
+<div class="content-header">
+    <div class="header-section">
+        <h1>
+            <i class="gi gi-circle_info"></i>@ViewBag.Title<br><small>@ViewBag.Message</small>
+        </h1>
+    </div>
+</div>
+<ul class="breadcrumb breadcrumb-top">
+    <li>Trang</li>
+    <li><a href="javascript:void(0)">@ViewBag.Title</a></li>
+</ul>
+<!-- END Header -->
+<div class="block">
+    <div class="block-header">
+        <div class="row">
+            <div class="col-md-8">
+                @Html.ActionLink("Thêm Table Mới", "Create", "Tables", null, new { data_modal = "showCreate", id = "btn-create", @class = "btn btn-sm btn-square btn-primary push-10-l push-10" })
+            </div>
+
+            <div class="col-md-4">
+                <form action="./" method="post" class="form-horizontal" id="frm-quick-search" onsubmit="return false;">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div class="input-group">
+                                <input type="text" id="quick-search" name="key" class="form-control" placeholder="Tìm kiếm...">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="block">
+        <div class="block-header text-right">
+        </div>
+        <div id="table-list-content" style="min-height:490px">
+            <div class="text-center text-warning">
+                <p>@Html.Raw(StaticFunction.GetTranslation("Views.WaitLoading"))</p>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+    $(function () {
+            ModelGeneral.init('data-modal="showCreate"');
+            $.ajax({
+                url: '@Url.Action("TableList", "Tables")?type=-1',
+                type: 'GET',
+                success: function (data) {
+                    $('#table-list-content').html(data);
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    var text = "Error: " + xhr.status + " " + xhr.statusText;
+                    showGrowl(text, 'danger');
+                }
+            });
+            //live search
+            $("#quick-search").keyup(function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: '@Url.Action("TableList", "Tables")?type=-1',
+                    type: 'POST',
+                    data: $('#frm-quick-search').serialize(),
+                    success: function (data) {
+                        $('#table-list-content').html(data);
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        var text = "Error: " + xhr.status + " " + xhr.statusText;
+                        showGrowl(text, 'danger');
+                    }
+                });
+            });
+
+    });
+
+        function navActive(name) {
+            var nav = $('.navbar-nav > li');
+            $(nav).each(function () {
+                var trigger = $(this).attr("data-link");
+                if (trigger == name) {
+                    $(this).addClass("active");
+                }
+                else {
+                    $(this).removeClass('active');
+                }
+            });
+        }
+    </script>
+}

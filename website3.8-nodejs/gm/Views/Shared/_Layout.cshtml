@@ -1,0 +1,465 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - GM.Service</title>
+
+    <meta name="description" content="GM.Service For DDT">
+    <meta name="author" content="pixelcave">
+    <meta name="robots" content="noindex, nofollow">
+
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0">
+
+    <!-- Icons -->
+    <!-- The following icons can be replaced with your own, they are used by desktop and mobile browsers -->
+    <link rel="shortcut icon" href="@StaticFunction.Host("gm/Backend/img/favicon.png")">
+    <link rel="apple-touch-icon" href="@StaticFunction.Host("gm/Backend/img/icon57.png")" sizes="57x57">
+    <link rel="apple-touch-icon" href="@StaticFunction.Host("gm/Backend/img/icon72.png")" sizes="72x72">
+    <link rel="apple-touch-icon" href="@StaticFunction.Host("gm/Backend/img/icon76.png")" sizes="76x76">
+    <link rel="apple-touch-icon" href="@StaticFunction.Host("gm/Backend/img/icon114.png")" sizes="114x114">
+    <link rel="apple-touch-icon" href="@StaticFunction.Host("gm/Backend/img/icon120.png")" sizes="120x120">
+    <link rel="apple-touch-icon" href="@StaticFunction.Host("gm/Backend/img/icon144.png")" sizes="144x144">
+    <link rel="apple-touch-icon" href="@StaticFunction.Host("gm/Backend/img/icon152.png")" sizes="152x152">
+    <link rel="apple-touch-icon" href="@StaticFunction.Host("gm/Backend/img/icon180.png")" sizes="180x180">
+    <!-- END Icons -->
+    <style>
+        #loading {
+            z-index: 99999;
+            height: 50px;
+            width: 50px;
+            text-align: center;
+        }
+
+        #loading-bgr {
+            position: fixed;
+            z-index: 99990;
+            top: 0px;
+            left: 0px;
+            height: 100%;
+            width: 100%;
+            background-color: #000;
+            filter: alpha(opacity=25);
+            -moz-opacity: 0.35;
+            opacity: 0.35;
+        }
+    </style>
+    @*Styles.Render("~/Content/css")
+     Scripts.Render("~/bundles/modernizr")
+    *@
+    <link rel="stylesheet" href="@StaticFunction.Host("gm/Backend/css/bootstrap.min.css")">
+    <link rel="stylesheet" href="@StaticFunction.Host("gm/Backend/css/plugins.css")">
+    <link rel="stylesheet" href="@StaticFunction.Host("gm/Backend/css/main.css")">
+    <link rel="stylesheet" href="@StaticFunction.Host("gm/Backend/css/themes.css")">
+    <link href="@StaticFunction.Host("gm/Backend/js/helpers/bootstrap3-editable/css/bootstrap-editable.css")" rel="stylesheet">
+</head>
+<body>
+   
+    <!-- Page Wrapper -->
+    <!--
+        Available classes:
+        'page-loading'      enables page preloader
+    -->
+    <div id="page-wrapper" class="page-loading">
+        <!-- Preloader -->
+        <!-- Preloader functionality (initialized in js/app.js) - pageLoading() -->
+        <div class="preloader themed-background">
+            <h1 class="push-top-bottom text-light text-center"><strong>GM</strong> Service</h1>
+            <div class="inner">
+                <h3 class="text-light visible-lt-ie9 visible-lt-ie10"><strong>Loading..</strong></h3>
+                <div class="preloader-spinner hidden-lt-ie9 hidden-lt-ie10"></div>
+            </div>
+        </div>
+        <!-- END Preloader -->
+
+        <!-- Page Container -->
+        <!--
+            Available #page-container classes:
+
+            '' (None)                                       for a full main and alternative sidebar hidden by default (> 991px)
+
+            'sidebar-visible-lg'                            for a full main sidebar visible by default (> 991px)
+            'sidebar-partial'                               for a partial main sidebar which opens on mouse hover, hidden by default (> 991px)
+            'sidebar-partial sidebar-visible-lg'            for a partial main sidebar which opens on mouse hover, visible by default (> 991px)
+            'sidebar-mini sidebar-visible-lg-mini'          for a mini main sidebar with a flyout menu, enabled by default (> 991px + Best with static layout)
+            'sidebar-mini sidebar-visible-lg'               for a mini main sidebar with a flyout menu, disabled by default (> 991px + Best with static layout)
+
+            'sidebar-alt-visible-lg'                        for a full alternative sidebar visible by default (> 991px)
+            'sidebar-alt-partial'                           for a partial alternative sidebar which opens on mouse hover, hidden by default (> 991px)
+            'sidebar-alt-partial sidebar-alt-visible-lg'    for a partial alternative sidebar which opens on mouse hover, visible by default (> 991px)
+
+            'sidebar-partial sidebar-alt-partial'           for both sidebars partial which open on mouse hover, hidden by default (> 991px)
+
+            'sidebar-no-animations'                         add this as extra for disabling sidebar animations on large screens (> 991px) - Better performance with heavy pages!
+
+            'style-alt'                                     for an alternative main style (without it: the default style)
+            'footer-fixed'                                  for a fixed footer (without it: a static footer)
+
+            'disable-menu-autoscroll'                       add this to disable the main menu auto scrolling when opening a submenu
+
+            'header-fixed-top'                              has to be added only if the class 'navbar-fixed-top' was added on header.navbar
+            'header-fixed-bottom'                           has to be added only if the class 'navbar-fixed-bottom' was added on header.navbar
+
+            'enable-cookies'                                enables cookies for remembering active color theme when changed from the sidebar links
+        -->
+        <div id="page-container" class="sidebar-partial sidebar-visible-lg sidebar-no-animations footer-fixed header-fixed-top">            
+            <!-- Main Sidebar -->
+            <div id="sidebar">
+                <!-- Wrapper for scrolling functionality -->
+                <div id="sidebar-scroll">
+                    <!-- Sidebar Content -->
+                    <div class="sidebar-content">
+                        <!-- Brand -->
+                        <a href="@Url.Action("Index","Home")" class="sidebar-brand">
+                            <i class="gi gi-flash"></i><span class="sidebar-nav-mini-hide"><strong>GM</strong> Service</span>
+                        </a>
+                        <!-- END Brand -->
+                        @Html.Partial("_LoginPartial")       
+                        <!-- Sidebar Navigation -->
+                        <ul class="sidebar-nav">
+                           <!-- <li>
+                                <a href="@Url.Action("RemoteControl","Service")" class="@Url.TSubActive("RemoteControl")"><i class="hi hi-wrench sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Remote</span></a>
+                            </li>-->
+                            <li>
+                                <a href="@Url.Action("Index","Service")" class="@Url.TActive("Service")"><i class="gi gi-server sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Service</span></a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index","Games")" class="@Url.TActive("Games")"><i class="gi gi-database_minus sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Dữ liệu Games</span></a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index","Users")" class="@Url.TActive("Users")"><i class="hi hi-user sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Dữ liệu Users</span></a>
+                            </li>                            
+                            <li class="sidebar-header">
+                                <span class="sidebar-header-options clearfix">
+                                  <!--  <a href="javascript:void(0)" data-toggle="tooltip" title="Quick Settings"><i class="gi gi-settings"></i></a>
+                                    <a href="javascript:void(0)" data-toggle="tooltip" title="Create the most amazing pages with the widget kit!"><i class="gi gi-lightbulb"></i></a>-->
+                                </span>
+                                <span class="sidebar-header-title">WIDGET KIT</span>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index","Actives")" class="@Url.TActive("Actives")"><i class="fa fa-buysellads sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Hoạt động</span></a>
+                            </li> 
+                            <li>
+                                <a href="@Url.Action("Events","Games")" class="@Url.TSubActive("Events")"><i class="gi gi-gift sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Sự kiện</span></a>
+                            </li> 
+                            <li>
+                                <a href="@Url.Action("ShopSale","Games")" class="@Url.TSubActive("ShopSale")"><i class="gi gi-cart_in sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Shop Giá rẻ</span></a>
+                            </li>                 
+                            <li>
+                                <a href="@Url.Action("ShopGame","Games")" class="@Url.TSubActive("ShopGame")"><i class="gi gi-shopping_bag sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Shop InGame</span></a>
+                            </li>    
+                            <li>
+                                <a href="@Url.Action("DropItems","Games")" class="@Url.TSubActive("DropItems")"><i class="gi gi-cloud-download sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Drop Items</span></a>
+                            </li>  
+                            <li>
+                                <a href="@Url.Action("OnlineAward","Award")" class="@Url.TSubActive("OnlineAward")"><i class="gi gi-table sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Phần thưởng Online</span></a>
+                            </li>  
+                            <li>
+                                <a href="@Url.Action("SendOnlineAward","Award")" class="@Url.TSubActive("SendOnlineAward")"><i class="gi gi-envelope sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Trao thưởng Online</span></a>
+                            </li>                
+                            <li>
+                                <a href="@Url.Action("Index","Award")" class="@Url.TActive("Award")"><i class="gi gi-film sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Phần thưởng đua Top</span></a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("SendAward","Award")" class="@Url.TSubActive("SendAward")"><i class="gi gi-share_alt sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Trao thưởng đua Top</span></a>
+                            </li>                            
+                            <li class="sidebar-header">
+                                <span class="sidebar-header-title">DEVELOP KIT</span>
+                            </li> 
+                            <li>
+                                <a href="@Url.Action("Index","XML")" class="@Url.TActive("XML")"><i class="fi fi-xml sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">XML Helper</span></a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Index","Settings")" class="@Url.TActive("Settings")"><i class="gi gi-settings sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">GM Settings</span></a>
+                            </li>
+                            <li class="@Url.TActives("Tables,Convert,RipFlash")">
+                                <a href="javascript:void(0)" class="sidebar-nav-menu"><i class="fa fa-angle-left sidebar-nav-indicator sidebar-nav-mini-hide"></i>
+                                <i class="hi hi-wrench sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Tools</span>
+                                </a>
+                                <ul>                                   
+                                    <li>
+                                        <a href="@Url.Action("Index","Convert")" class="@Url.TActive("Convert")">Convert Map or Bomb</a>
+                                    </li>
+                                    <li>
+                                        <a href="@Url.Action("Index","RipFlash")" class="@Url.TActive("RipFlash")">Rip Flash</a>
+                                    </li>      
+                                </ul>
+                            </li>                            
+                            <li class="sidebar-header">                               
+                                <span class="sidebar-header-title">Help</span>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Notification","Home")" class="@Url.TSubActive("Notification")"><i class="gi gi-envelope sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Notification</span></a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("index2.html","Backend")"><i class="gi gi-certificate sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">User Interface</span></a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("Contact","Home")" class="@Url.TSubActive("Contact")"><i class="gi gi-address_book sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">Contact</span></a>
+                            </li>
+                            <li>
+                                <a href="@Url.Action("About","Home")" class="@Url.TSubActive("About")"><i class="gi gi-circle_info sidebar-nav-icon"></i><span class="sidebar-nav-mini-hide">About</span></a>
+                            </li>   
+                        </ul>
+                        <!-- END Sidebar Navigation -->                       
+                    </div>
+                    <!-- END Sidebar Content -->
+                </div>
+                <!-- END Wrapper for scrolling functionality -->
+            </div>
+            <!-- END Main Sidebar -->
+            <!-- Main Container -->
+            <div id="main-container">
+                <!-- Header -->
+                <!--
+                    Available header.navbar classes:
+
+                    'navbar-default'            for the default light header
+                    'navbar-inverse'            for an alternative dark header
+
+                    'navbar-fixed-top'          for a top fixed header (fixed sidebars with scroll will be auto initialized, functionality can be found in js/app.js - handleSidebar())
+                        'header-fixed-top'      has to be added on #page-container only if the class 'navbar-fixed-top' was added
+
+                    'navbar-fixed-bottom'       for a bottom fixed header (fixed sidebars with scroll will be auto initialized, functionality can be found in js/app.js - handleSidebar()))
+                        'header-fixed-bottom'   has to be added on #page-container only if the class 'navbar-fixed-bottom' was added
+                -->
+                <header class="navbar navbar-inverse navbar-fixed-top">
+                    <!-- Left Header Navigation -->
+                    <ul class="nav navbar-nav-custom">
+                        <!-- Main Sidebar Toggle Button -->
+                        <li>
+                            <a href="javascript:void(0)" onclick="App.sidebar('toggle-sidebar');this.blur();">
+                                <i class="fa fa-bars fa-fw"></i>
+                            </a>
+                        </li>
+                        <!-- END Main Sidebar Toggle Button -->
+                        <!-- Template Options -->
+                        <!-- Change Options functionality can be found in js/app.js - templateOptions() -->
+                        <li class="dropdown">
+                            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="gi gi-settings"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-custom dropdown-options">
+                                <li class="dropdown-header text-center">Header Style</li>
+                                <li>
+                                    <div class="btn-group btn-group-justified btn-group-sm">
+                                        <a href="javascript:void(0)" class="btn btn-primary" id="options-header-default">Light</a>
+                                        <a href="javascript:void(0)" class="btn btn-primary" id="options-header-inverse">Dark</a>
+                                    </div>
+                                </li>
+                                <li class="dropdown-header text-center">Page Style</li>
+                                <li>
+                                    <div class="btn-group btn-group-justified btn-group-sm">
+                                        <a href="javascript:void(0)" class="btn btn-primary" id="options-main-style">Default</a>
+                                        <a href="javascript:void(0)" class="btn btn-primary" id="options-main-style-alt">Alternative</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- END Template Options -->
+                    </ul>
+                    <!-- END Left Header Navigation -->   
+                    
+                    <!-- Search Form -->
+                    @Html.Partial("_Search")      
+                    <!-- END Search Form -->
+                     
+                     <!-- Right Header Navigation -->
+                    <ul class="nav navbar-nav-custom pull-right">
+                        <!-- User Dropdown -->
+                        <li class="dropdown">
+                            <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-cog fa-fw"></i> <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
+                                <li class="dropdown-header text-center">Làm mới dữ liệu</li>
+                                <li>                                   
+                                    <a href="@Url.Action("ReloadData", "Home", routeValues: new { @type = "GameData" })" data-modal = "reload">
+                                        <i class="fa fa-cog fa-fw pull-right"></i>
+                                        Game Data
+                                    </a>
+                                    <a href="@Url.Action("ReloadData", "Home", routeValues: new { @type = "WebData" })" data-modal = "reload">
+                                        <i class="fa fa-cog fa-fw pull-right"></i>
+                                        Web Data
+                                    </a>                                    
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="@Url.Action("ReloadData", "Home", routeValues: new { @type = "AreaCongfig" })" data-modal = "reload">
+                                        <i class="fa fa-cog fa-fw pull-right"></i>
+                                        Areas
+                                    </a>
+                                    <a href="@Url.Action("ReloadData", "Home", routeValues: new { @type = "Languages" })" data-modal = "reload">
+                                        <i class="fa fa-cog fa-fw pull-right"></i>
+                                        Languages
+                                    </a>
+                                    <a href="@Url.Action("ReloadData", "Home", routeValues: new { @type = "TableData" })" data-modal = "reload">
+                                        <i class="fa fa-cog fa-fw pull-right"></i>
+                                        Tables
+                                    </a>
+                                </li>                                
+                            </ul>
+                        </li>
+                        <!-- END User Dropdown -->
+                    </ul>
+                    <!-- END Right Header Navigation -->
+                </header>
+                <!-- END Header -->
+                <!-- Page content -->
+                <div id="page-content">                   
+                    @RenderBody()
+                </div>
+                <!-- END Page Content -->
+                <!-- Footer -->
+                <footer class="clearfix">
+                    <div class="pull-right">
+                        Crafted with <i class="fa fa-heart text-danger"></i> by <a href="javascript:void(0)" target="_blank">pixelcave</a>
+                    </div>
+                    <div class="pull-left">
+                        <span id="year-copy"></span> &copy; <a href="javascript:void(0)" target="_blank">GM.Service 3.3</a>
+                    </div>
+                </footer>
+                <!-- END Footer -->
+            </div>
+            <!-- END Main Container -->
+        </div>
+        <!-- END Page Container -->
+    </div>
+    <!-- END Page Wrapper -->
+    <!-- Scroll to top link, initialized in js/app.js - scrollToTop() -->
+    <a href="#" id="to-top"><i class="fa fa-angle-double-up"></i></a>
+
+    <!-- User Settings, modal which opens from Settings link (found in top right user menu) and the Cog link (found in sidebar user info) -->
+    <div id="modal-user-settings" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header text-center">
+                    <h2 class="modal-title"><i class="fa fa-pencil"></i> Settings</h2>
+                </div>
+                <!-- END Modal Header -->
+                <!-- Modal Body -->
+                <div class="modal-body" id="setting-content">
+                   
+                </div>
+                <!-- END Modal Body -->
+            </div>
+        </div>
+    </div>
+    <!-- END User Settings -->
+    <!-- loader holder-->
+    <div id="loading-bgr" style="display:none;">
+        <div id="loading">
+            <i class="fa fa-spinner fa-4x fa-spin"></i>
+        </div>
+    </div>
+    <!-- END loader holder-->
+
+    <!-- Normal Modal -->
+    <div id='modal' class='modal fade in' tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" id='modal-content'>
+                <!-- modal content here-->
+            </div>
+        </div>
+    </div>
+    <!-- END Normal Modal -->
+
+    <!-- Small Modal -->
+    <div class="modal fade in" id="modal-small" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm" style="width:480px">
+            <div class="modal-content" id='modal-content-small'>
+            </div>
+        </div>
+    </div>
+    <!-- END Small Modal -->
+
+    <!-- Response Modal -->
+    <div class="modal fade in" id="modal-response" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm" style="width:480px">
+            <div class="modal-content" id='modal-content-response'>
+            </div>
+        </div>
+    </div>
+    <!-- END Response Modal -->
+
+    <!-- Large Modal -->
+    <div class="modal fade in" id="modal-large" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" style="width:1366px">
+            <div class="modal-content" id='modal-content-large'>
+                <!-- modal content here-->
+            </div>
+        </div>
+    </div>
+    <!-- END Large Modal -->
+
+    <!-- Large2 Modal -->
+    <div class="modal fade in" id="modal-large2" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" style="width:1366px">
+            <div class="modal-content" id='modal-content-large2'>
+                <!-- modal content here-->
+            </div>
+        </div>
+    </div>
+    <!-- END Large2 Modal -->
+
+    <!-- Large2 Modal -->
+    <div class="modal fade in" id="modal-large3" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg" style="width:1151px">
+            <div class="modal-content" id='modal-content-large3'>
+                <!-- modal content here-->
+            </div>
+        </div>
+    </div>
+    <!-- END Large2 Modal -->
+
+    <!-- Response Hodler -->
+    <div id="response-hodler"></div>
+    <!-- END Response Hodler -->
+
+    <!-- Remember to include excanvas for IE8 chart support -->
+    <!--[if IE 8]><script src="js/helpers/excanvas.min.js"></script><![endif]-->
+
+    @*Scripts.Render("~/bundles/jquery")
+     Scripts.Render("~/bundles/unobtrusive")    
+     Scripts.Render("~/bundles/bootstrap") 
+     Scripts.Render("~/bundles/ajax")
+     Scripts.Render("~/bundles/zero")*@
+
+    <script src="@StaticFunction.Host("gm/Backend/js/vendor/jquery-1.11.3.min.js")"></script>
+    <script src="@StaticFunction.Host("gm/Backend/js/vendor/modernizr-respond.min.js")"></script>
+    <script src="@StaticFunction.Host("gm/Backend/js/vendor/bootstrap.min.js")"></script>
+    
+    <script src="@StaticFunction.Host("gm/Backend/js/plugins.js")"></script>
+    <script src="@StaticFunction.Host("gm/Backend/js/app.js")"></script>
+    <script src="@StaticFunction.Host("gm/Scripts/jquery.unobtrusive-ajax.min.js")"></script>
+    <script src="@StaticFunction.Host("gm/Scripts/app.gm.service.js")"></script>
+    <script src="@StaticFunction.Host("gm/Scripts/zerocopy/ZeroClipboard.min.js")"></script>
+    <script src="@StaticFunction.Host("gm/Backend/js/helpers/bootstrap3-editable/js/bootstrap-editable.min.js")"></script>
+    <script>
+        //run when load
+        $(function () {
+            //set loading center
+            $("#loading").center("absolute");
+            ModelGeneral.init('data-modal = "reload"', 'small');
+        });
+        function CallSetting()
+        {
+            //load change pass
+            $("#loading-bgr").show();
+            var url = "@Url.Action("ChangePassword", "Manage")";
+            $.get(url, function (data) {
+                $("#setting-content").html(data);
+                $("#loading-bgr").hide();
+                $('#modal-user-settings').modal('show');
+            })
+            .fail(function (data) {
+                $("#setting-content").html(getError(data.status, data.statusText));
+                $("#loading-bgr").hide();
+            });
+        }       
+    </script>
+    @RenderSection("scripts", required: false)
+</body>
+</html>

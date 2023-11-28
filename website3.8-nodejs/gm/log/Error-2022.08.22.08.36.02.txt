@@ -1,0 +1,44 @@
+2022-08-22 08:36:02 Error: GetSingleUsersExtra System.IndexOutOfRangeException: ID
+   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at Tank.Data.PlayerBussiness.InitUsersExtraInfo(SqlDataReader reader)
+   at Tank.Data.PlayerBussiness.GetSigleUsersExtra(String swhere)
+2022-08-22 08:36:03 Error: ICenterService{"AreaID":1001,"AreaServer":"Gà Sát Thủ","AreaName":"Gà Sát Thủ","DataSource":"dTaJjfKP","Catalog":"Project_Player34","UserID":"sa","Password":"abc@123","RequestUrl":null,"CrossChatAllow":false,"CrossPrivateChat":false,"Version":"3.6"}
+2022-08-22 08:36:03 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-22 08:36:03 Error: zoneId1001
+2022-08-22 08:49:11 Error: Version 3.6
+2022-08-22 08:49:11 Error: Version 3.6
+2022-08-22 08:49:11 Error: Version 3.6
+2022-08-22 08:49:11 Error: Version 3.6
+2022-08-22 08:49:11 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-22 08:49:11 Error: zoneId1001
+2022-08-22 08:49:11 Error: Version 3.6
+2022-08-22 08:49:11 Error: Version 3.6
+2022-08-22 08:49:11 Error: Version 3.6
+2022-08-22 08:49:11 Error: Version 3.6
+2022-08-22 08:49:11 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-22 08:49:11 Error: zoneId1001
+2022-08-22 08:49:31 Error: Version 3.6
+2022-08-22 08:49:31 Error: Version 3.6
+2022-08-22 08:49:31 Error: Version 3.6
+2022-08-22 08:49:31 Error: Version 3.6
+2022-08-22 08:49:31 Error: configurationNameNetTcpBinding_ICenterService_1001
+2022-08-22 08:49:31 Error: zoneId1001
+2022-08-22 09:16:36 Error: GetAllDailyLeagueRewardGroup System.NullReferenceException: Object reference not set to an instance of an object.
+   at Tank.Data.ProduceBussiness.GetAllDailyLeagueRewardGroup()
+2022-08-22 09:16:36 Error: GetAllDailyLeagueRewardItem System.NullReferenceException: Object reference not set to an instance of an object.
+   at Tank.Data.ProduceBussiness.GetAllDailyLeagueRewardItem()
+2022-08-22 09:16:36 Error: GetAllDailyLeagueRewardItem System.NullReferenceException: Object reference not set to an instance of an object.
+   at Tank.Data.ProduceBussiness.GetAllDailyLeagueRewardItem()
+2022-08-22 09:16:36 Error: GetAllMap System.InvalidCastException: Specified cast is not valid.
+   at Tank.Data.ProduceBussiness.InitMapInfo(SqlDataReader reader)
+   at Tank.Data.ProduceBussiness.GetAllMap()
+2022-08-22 09:16:36 Error: GetAllPve System.IndexOutOfRangeException: NightmareTemplateIds
+   at System.Data.ProviderBase.FieldNameLookup.GetOrdinal(String fieldName)
+   at System.Data.SqlClient.SqlDataReader.GetOrdinal(String name)
+   at System.Data.SqlClient.SqlDataReader.get_Item(String name)
+   at Tank.Data.ProduceBussiness.InitPveInfo(SqlDataReader reader)
+   at Tank.Data.ProduceBussiness.GetAllPve()
+2022-08-22 09:16:36 Error: GetAllBattleBonus System.NullReferenceException: Object reference not set to an instance of an object.
+   at Tank.Data.ProduceBussiness.GetAllBattleBonus()

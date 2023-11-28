@@ -1,0 +1,12 @@
+2022-08-13 03:30:42 Error: Combine error in line 0: System.Collections.Generic.KeyNotFoundException: The given key was not present in the dictionary.
+   at System.ThrowHelper.ThrowKeyNotFoundException()
+   at System.Collections.Generic.Dictionary`2.get_Item(TKey key)
+   at Tank.Data.CombineBussiness.Combine(String tableName, CombineTableInfo info, Dictionary`2 tableIdentity)
+2022-08-13 03:30:43 Error: Combine error in line 0: System.Collections.Generic.KeyNotFoundException: The given key was not present in the dictionary.
+   at System.ThrowHelper.ThrowKeyNotFoundException()
+   at System.Collections.Generic.Dictionary`2.get_Item(TKey key)
+   at Tank.Data.CombineBussiness.Combine(String tableName, CombineTableInfo info, Dictionary`2 tableIdentity)
+2022-08-13 03:30:44 Error: Combine error in line 0: System.Collections.Generic.KeyNotFoundException: The given key was not present in the dictionary.
+   at System.ThrowHelper.ThrowKeyNotFoundException()
+   at System.Collections.Generic.Dictionary`2.get_Item(TKey key)
+   at Tank.Data.CombineBussiness.Combine(String tableName, CombineTableInfo info, Dictionary`2 tableIdentity)
